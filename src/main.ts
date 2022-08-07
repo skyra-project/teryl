@@ -1,17 +1,20 @@
+import { setup } from '#lib/setup/all';
+
 import { Emojis } from '#lib/common/constants';
 import { registerCommands } from '#lib/utilities/register-commands';
-import { envParseInteger, envParseString, setup } from '@skyra/env-utilities';
-import { Client } from '@skyra/http-framework';
+import { envParseInteger, envParseString, setup as envSetup } from '@skyra/env-utilities';
+import { Client, container } from '@skyra/http-framework';
 import { init, load } from '@skyra/http-framework-i18n';
 import { setInvite, setRepository } from '@skyra/shared-http-pieces';
 import '@skyra/shared-http-pieces/register';
 import { createBanner } from '@skyra/start-banner';
-import { blue, blueBright, bold } from 'colorette';
+import gradient from 'gradient-string';
 
+setup();
 setRepository('teryl');
 setInvite('948377583626637343', 'TODO');
 
-setup(new URL('../src/.env', import.meta.url));
+envSetup(new URL('../src/.env', import.meta.url));
 
 await load(new URL('../src/locales', import.meta.url));
 await init({
@@ -40,23 +43,33 @@ const port = envParseInteger('HTTP_PORT', 3000);
 await client.listen({ address, port });
 
 console.log(
-	createBanner({
-		logo: [
-			bold(blueBright('      ::::    :::')),
-			bold(blueBright('     :+:+:   :+:')),
-			blueBright('    :+:+:+  +:+'),
-			blueBright('   +#+ +:+ +#+'),
-			blue('  +#+  +#+#+#'),
-			blue(' #+#   #+#+#'),
-			blue('###    ####')
-		],
-		name: [
-			blue(String.raw`     __     _         _         _`),
-			blue(String.raw`  /\ \ \___| | _____ | | ____ _(_)`),
-			blue(String.raw` /  \/ / _ \ |/ / _ \| |/ / _' | |`),
-			blue(String.raw`/ /\  /  __/   < (_) |   < (_| | |`),
-			blue(String.raw`\_\ \/ \___|_|\_\___/|_|\_\__,_|_|`)
-		],
-		extra: [`Listening on ${address}:${port}`]
-	})
+	gradient.vice.multiline(
+		createBanner({
+			logo: [
+				String.raw`   ╱╲  ╱╲  ╱╲ `,
+				String.raw`  ╱  ╲╱  ╲╱  ╲ `,
+				String.raw` ╱ ╱╲╱ ╱╲╱ ╱╲ ╲ `,
+				String.raw`╱ ╱ ╱ ╱╲╱ ╱╲ ╲ ╲ `,
+				String.raw`╲ ╲ ╲╱ ╱╲╱ ╱ ╱ ╱ `,
+				String.raw` ╲ ╲╱ ╱╲╱ ╱╲╱ ╱ `,
+				String.raw`  ╲  ╱╲  ╱╲  ╱ `,
+				String.raw`   ╲╱  ╲╱  ╲╱ `,
+				''
+			],
+			name: [
+				String.raw`d888888b d88888b d8888b. db    db db`,
+				String.raw`'~~88~~' 88'     88  '8D '8b  d8' 88`,
+				String.raw`   88    88ooooo 88oobY'  '8bd8'  88`,
+				String.raw`   88    88~~~~~ 88'8b      88    88`,
+				String.raw`   88    88.     88 '88.    88    88booo.`,
+				String.raw`   YP    Y88888P 88   YD    YP    Y88888P`
+			],
+			extra: [
+				'',
+				`Loaded: ${container.stores.get('commands').size} commands`,
+				`      : ${container.stores.get('interaction-handlers').size} interaction handlers`,
+				`Listening: ${address}:${port}`
+			]
+		})
+	)
 );

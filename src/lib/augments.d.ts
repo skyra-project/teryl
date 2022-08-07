@@ -8,5 +8,10 @@ declare module '@skyra/env-utilities' {
 		HTTP_PORT: IntegerString;
 
 		REGISTRY_GUILD_ID: string;
+
+		REDIS_PORT: IntegerString;
+		REDIS_PASSWORD: string;
+		REDIS_HOST: string;
+		REDIS_DB: IntegerString;
 	}
 }

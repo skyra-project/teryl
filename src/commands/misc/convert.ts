@@ -5,68 +5,6 @@ import { applyLocalizedBuilder, createSelectMenuChoiceName, LocalePrefixKey, res
 import { MessageFlags } from 'discord-api-types/v10';
 import JSBD, { Decimal } from 'jsbd';
 
-@RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
-export class UserCommand extends Command {
-	@RegisterSubCommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Length)
-			.addNumberOption(UserCommand.makeAmountOption())
-			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
-	)
-	public length(interaction: Command.Interaction, options: Length.Options) {
-		return this.shared(interaction, options.amount, Length.Units[options.from], Length.Units[options.to]);
-	}
-
-	@RegisterSubCommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Mass)
-			.addNumberOption(UserCommand.makeAmountOption())
-			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.To))
-	)
-	public mass(interaction: Command.Interaction, options: Mass.Options) {
-		return this.shared(interaction, options.amount, Mass.Units[options.from], Mass.Units[options.to]);
-	}
-
-	@RegisterSubCommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Time)
-			.addNumberOption(UserCommand.makeAmountOption())
-			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
-	)
-	public time(interaction: Command.Interaction, options: Time.Options) {
-		return this.shared(interaction, options.amount, Time.Units[options.from], Time.Units[options.to]);
-	}
-
-	@RegisterSubCommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Temperature)
-			.addNumberOption(UserCommand.makeAmountOption())
-			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.To))
-	)
-	public temperature(interaction: Command.Interaction, options: Temperature.Options) {
-		const kelvin = Temperature.Formulas[options.from].to(options.amount ?? 0);
-		const value = Temperature.Formulas[options.to].from(kelvin);
-		return this.sharedSend(interaction, value);
-	}
-
-	private shared(interaction: Command.Interaction, amount: number | undefined, from: Decimal, to: Decimal) {
-		const ratio = JSBD.divide(to, from);
-		const value = Number(JSBD.multiply(ratio, new Decimal(amount ?? 1)));
-		return this.sharedSend(interaction, value);
-	}
-
-	private sharedSend(interaction: Command.Interaction, value: number) {
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { value });
-		return this.message({ content, flags: MessageFlags.Ephemeral });
-	}
-
-	public static makeAmountOption() {
-		return applyLocalizedBuilder(new SlashCommandNumberOption(), LanguageKeys.Commands.Convert.Amount) //
-			.setMinValue(0)
-			.setRequired(false);
-	}
-}
-
 namespace Length {
 	export interface Options {
 		amount?: number;
@@ -275,5 +213,67 @@ namespace Temperature {
 			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureRomer, { value: Unit.Romer }),
 			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureKelvin, { value: Unit.Kelvin })
 		);
+	}
+}
+
+@RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
+export class UserCommand extends Command {
+	@RegisterSubCommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Length)
+			.addNumberOption(UserCommand.makeAmountOption())
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
+	)
+	public length(interaction: Command.Interaction, options: Length.Options) {
+		return this.shared(interaction, options.amount, Length.Units[options.from], Length.Units[options.to]);
+	}
+
+	@RegisterSubCommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Mass)
+			.addNumberOption(UserCommand.makeAmountOption())
+			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.To))
+	)
+	public mass(interaction: Command.Interaction, options: Mass.Options) {
+		return this.shared(interaction, options.amount, Mass.Units[options.from], Mass.Units[options.to]);
+	}
+
+	@RegisterSubCommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Time)
+			.addNumberOption(UserCommand.makeAmountOption())
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
+	)
+	public time(interaction: Command.Interaction, options: Time.Options) {
+		return this.shared(interaction, options.amount, Time.Units[options.from], Time.Units[options.to]);
+	}
+
+	@RegisterSubCommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Temperature)
+			.addNumberOption(UserCommand.makeAmountOption())
+			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.To))
+	)
+	public temperature(interaction: Command.Interaction, options: Temperature.Options) {
+		const kelvin = Temperature.Formulas[options.from].to(options.amount ?? 0);
+		const value = Temperature.Formulas[options.to].from(kelvin);
+		return this.sharedSend(interaction, value);
+	}
+
+	private shared(interaction: Command.Interaction, amount: number | undefined, from: Decimal, to: Decimal) {
+		const ratio = JSBD.divide(to, from);
+		const value = Number(JSBD.multiply(ratio, new Decimal(amount ?? 1)));
+		return this.sharedSend(interaction, value);
+	}
+
+	private sharedSend(interaction: Command.Interaction, value: number) {
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { value });
+		return this.message({ content, flags: MessageFlags.Ephemeral });
+	}
+
+	public static makeAmountOption() {
+		return applyLocalizedBuilder(new SlashCommandNumberOption(), LanguageKeys.Commands.Convert.Amount) //
+			.setMinValue(0)
+			.setRequired(false);
 	}
 }

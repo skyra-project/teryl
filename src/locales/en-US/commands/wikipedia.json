@@ -1,0 +1,7 @@
+{
+	"name": "wikipedia",
+	"description": "Gets information about a Wikipedia article",
+	"optionsInputName": "input",
+	"optionsInputDescription": "Search for an article",
+	"noResults": "Wikipedia returned no results, please try again with other search terms."
+}

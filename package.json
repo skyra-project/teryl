@@ -36,6 +36,8 @@
 		"@skyra/shared-http-pieces": "^0.0.42",
 		"@skyra/start-banner": "^1.0.2",
 		"discord-api-types": "^0.36.3",
+		"gradient-string": "^2.0.1",
+		"ioredis": "^5.2.2",
 		"jsbd": "^0.0.8",
 		"tslib": "^2.4.0"
 	},
@@ -45,6 +47,7 @@
 		"@sapphire/eslint-config": "^4.3.7",
 		"@sapphire/prettier-config": "^1.4.3",
 		"@sapphire/ts-config": "^3.3.4",
+		"@types/gradient-string": "^1.1.2",
 		"@types/node": "^18.6.4",
 		"@typescript-eslint/eslint-plugin": "^5.32.0",
 		"@typescript-eslint/parser": "^5.32.0",
