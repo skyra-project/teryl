@@ -8,6 +8,7 @@
 	"toName": "to",
 	"toDescription": "The unit to convert to",
 	"result": "The result of the conversion is: `{{value, number}}`",
+
 	"lengthName": "length",
 	"lengthDescription": "Converts one unit of length to another",
 	"lengthAstronomicalUnit": "Astronomical Unit",
@@ -20,6 +21,7 @@
 	"lengthMile": "Mile",
 	"lengthNauticalMile": "Nautical Mile",
 	"lengthParsec": "Parsec",
+
 	"massName": "mass",
 	"massDescription": "Converts one unit of mass to another",
 	"massElectronVolt": "Electron Volt",
@@ -28,5 +30,31 @@
 	"massKilogram": "Kilogram",
 	"massOunce": "Ounce",
 	"massTon": "Ton",
-	"massTonne": "Tonne"
+	"massTonne": "Tonne",
+
+	"timeName": "time",
+	"timeDescription": "Converts one unit of time to another",
+	"timeCentury": "Century",
+	"timeDay": "Day",
+	"timeDecade": "Decade",
+	"timeHour": "Hour",
+	"timeLunarYear": "Lunar Year",
+	"timeMillennium": "Millennium",
+	"timeMinute": "Minute",
+	"timeMonth": "Month",
+	"timeSecond": "Second",
+	"timeTropicalMonth": "Tropical Month",
+	"timeTropicalYear": "Tropical Year",
+	"timeWeek": "Week",
+
+	"temperatureName": "temperature",
+	"temperatureDescription": "Converts one unit of temperature to another",
+	"temperatureCelsius": "Celsius",
+	"temperatureDelisle": "Delisle",
+	"temperatureFahrenheit": "Fahrenheit",
+	"temperatureNewton": "Newton",
+	"temperatureRankine": "Rankine",
+	"temperatureReaumur": "Réaumur",
+	"temperatureRomer": "Rømer",
+	"temperatureKelvin": "Kelvin"
 }

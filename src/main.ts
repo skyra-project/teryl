@@ -1,3 +1,4 @@
+import { Emojis } from '#lib/common/constants';
 import { registerCommands } from '#lib/utilities/register-commands';
 import { envParseInteger, envParseString, setup } from '@skyra/env-utilities';
 import { Client } from '@skyra/http-framework';
@@ -13,7 +14,21 @@ setInvite('948377583626637343', 'TODO');
 setup(new URL('../src/.env', import.meta.url));
 
 await load(new URL('../src/locales', import.meta.url));
-await init({ fallbackLng: 'en-US', returnNull: false, returnEmptyString: false, returnObjects: true });
+await init({
+	fallbackLng: 'en-US',
+	returnNull: false,
+	returnEmptyString: false,
+	returnObjects: true,
+	interpolation: {
+		defaultVariables: {
+			MessageAttachmentIcon: Emojis.MessageAttachmentIcon,
+			MessageLinkIcon: Emojis.MessageLinkIcon,
+			MessagePinIcon: Emojis.MessagePinIcon,
+			MessageIconSlashCommandsIcon: Emojis.MessageIconSlashCommandsIcon,
+			IdIcon: Emojis.IdIcon
+		}
+	}
+});
 
 const client = new Client();
 await client.load();

@@ -1,0 +1,14 @@
+{
+	"name": "Get Message Content",
+	"fieldsInteraction": "{{MessageIconSlashCommandsIcon}} {{user}} used {{command}}",
+	"fieldsContent": "**Content**:\n{{content}}",
+	"fieldsEmbedTitle": "**Title**:",
+	"fieldsEmbedUrl": "{{MessageLinkIcon}} **URL**: {{url}}",
+	"fieldsEmbedAuthor": "**Author**:",
+	"fieldsEmbedDescription": "**Description**:",
+	"fieldsEmbedField": "**Field** (`{{index, number}}`/`{{total, number}}`):",
+	"fieldsEmbedImage": "{{MessageAttachmentIcon}} **Image**: {{url}}",
+	"fieldsEmbedThumbnail": "{{MessageAttachmentIcon}} **Thumbnail**: {{url}}",
+	"fieldsEmbedVideo": "{{MessageAttachmentIcon}} **Video**: {{url}}",
+	"fieldsEmbedFooter": "**Footer**:"
+}
