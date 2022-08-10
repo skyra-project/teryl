@@ -1,6 +1,15 @@
 import '#lib/setup/logger';
 import { run as redisRun } from '#lib/setup/redis';
+import { setup as envRun } from '@skyra/env-utilities';
+import { setInvite, setRepository } from '@skyra/shared-http-pieces';
+
+import '@skyra/shared-http-pieces/register';
 
 export function setup() {
+	envRun(new URL('../../../src/.env', import.meta.url));
+
+	setRepository('teryl');
+	setInvite('948377583626637343', 'TODO');
+
 	redisRun();
 }

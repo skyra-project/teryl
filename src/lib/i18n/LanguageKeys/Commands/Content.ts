@@ -4,6 +4,7 @@ import { FT, T } from '@skyra/http-framework-i18n';
 export const RootName = T('commands/content:name');
 export const FieldsInteraction = FT<{ user: string; command: string }>('commands/content:fieldsInteraction');
 export const FieldsContent = FT<{ content: string }>('commands/content:fieldsContent');
+export const FieldsEmbed = FT<{ index: number; total: number }>('commands/content:fieldsEmbed');
 export const FieldsEmbedTitle = T('commands/content:fieldsEmbedTitle');
 export const FieldsEmbedUrl = FT<{ url: string }>('commands/content:fieldsEmbedUrl');
 export const FieldsEmbedAuthor = T('commands/content:fieldsEmbedAuthor');

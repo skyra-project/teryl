@@ -57,7 +57,7 @@ export class UserCommand extends Command {
 
 		return result
 			.map((results) => results[1])
-			.inspectAsync((results) => this.container.redis.psetex(key, Time.Hour, JSON.stringify(results[1])))
+			.inspectAsync((results) => this.container.redis.psetex(key, Time.Hour, JSON.stringify(results)))
 			.then((result) => result.unwrapOr([]));
 	}
 
@@ -89,9 +89,7 @@ export class UserCommand extends Command {
 				if (!UserCommand.isSuccessfulQuery(value.query)) return null;
 
 				const page = value.query.pages[value.query.pageids[0]];
-				const entry = { id: page.pageid, title: page.title, extract: page.extract };
-
-				return entry;
+				return { id: page.pageid, title: page.title, extract: page.extract };
 			},
 			err: (error) => {
 				this.container.logger.error(error);

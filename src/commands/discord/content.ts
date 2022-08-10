@@ -38,16 +38,20 @@ export class UserCommand extends Command {
 	}
 
 	private formatContent(t: TFunction, content: string) {
-		return t(LanguageKeys.Commands.Content.FieldsContent, { content: this.makeBlock(content) });
+		return `${t(LanguageKeys.Commands.Content.FieldsContent, { content: this.makeBlock(content) })}\n`;
 	}
 
 	private *formatEmbeds(t: TFunction, embeds: APIEmbed[]) {
-		for (const embed of embeds) {
+		for (const [index, embed] of embeds.entries()) {
+			yield t(LanguageKeys.Commands.Content.FieldsEmbed, { index: index + 1, total: embeds.length });
+
 			if (embed.title) {
 				yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedTitle));
 				yield this.makeBlock(embed.title);
 			}
-			if (embed.url) yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedUrl, { url: hideLinkEmbed(embed.url) }));
+			if (embed.url) {
+				yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedUrl, { url: hideLinkEmbed(embed.url) }));
+			}
 
 			if (embed.author) {
 				yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedAuthor));
@@ -59,7 +63,7 @@ export class UserCommand extends Command {
 			}
 			if (embed.fields) {
 				for (const [index, field] of embed.fields.entries()) {
-					yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedField, { index, total: embed.fields.length }));
+					yield quote(t(LanguageKeys.Commands.Content.FieldsEmbedField, { index: index + 1, total: embed.fields.length }));
 					yield this.makeBlock(field.name);
 					yield this.makeBlock(field.value);
 				}
@@ -82,6 +86,6 @@ export class UserCommand extends Command {
 	// }
 
 	private makeBlock(content: string, prefix = '> ') {
-		return prefix + codeBlock(content.replaceAll('```', '῾῾῾')).replaceAll('\n', `${prefix}\n`);
+		return prefix + codeBlock('md', content.replaceAll('```', '῾῾῾')).replaceAll('\n', `\n${prefix}`);
 	}
 }

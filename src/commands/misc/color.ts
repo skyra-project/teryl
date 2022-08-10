@@ -8,7 +8,7 @@ import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Color.RootName, LanguageKeys.Commands.Color.RootDescription) //
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Color.Input).setMaxLength(32))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Color.Input).setRequired(true).setMaxLength(32))
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.Interaction, options: Options): Promise<Command.MessageResponseResult> {

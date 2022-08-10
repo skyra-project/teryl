@@ -2,6 +2,7 @@
 	"name": "Get Message Content",
 	"fieldsInteraction": "{{MessageIconSlashCommandsIcon}} {{user}} used {{command}}",
 	"fieldsContent": "**Content**:\n{{content}}",
+	"fieldsEmbed": "**Embed** (`{{index, number}}`/`{{total, number}}`):",
 	"fieldsEmbedTitle": "**Title**:",
 	"fieldsEmbedUrl": "{{MessageLinkIcon}} **URL**: {{url}}",
 	"fieldsEmbedAuthor": "**Author**:",

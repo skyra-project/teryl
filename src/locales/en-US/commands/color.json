@@ -14,5 +14,5 @@
 	"invalidRgbGreen": "I couldn't parse the **green** component in {{input}}, it's either not a number, negative, or higher than 255.",
 	"invalidRgbBlue": "I couldn't parse the **blue** component in {{input}}, it's either not a number, negative, or higher than 255.",
 	"invalidColor": "I couldn't parse {{input}} to any supported color format or name. Please try again with a different color.",
-	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CYMK**: `{{cymk.value}}`"
+	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
 }

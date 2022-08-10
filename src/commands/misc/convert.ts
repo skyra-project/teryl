@@ -1,9 +1,19 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, createSelectMenuChoiceName, LocalePrefixKey, resolveUserKey } from '@skyra/http-framework-i18n';
+import {
+	applyLocalizedBuilder,
+	createSelectMenuChoiceName,
+	getSupportedUserLanguageT,
+	resolveUserKey,
+	type LocalePrefixKey,
+	type TypedFT
+} from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
-import JSBD, { Decimal } from 'jsbd';
+import { Decimal, default as jsbd } from 'jsbd';
+
+// https://github.com/yukinotech/JSBD/issues/18
+const JSBD = (jsbd as unknown as typeof import('jsbd')).default;
 
 namespace Length {
 	export interface Options {
@@ -38,19 +48,34 @@ namespace Length {
 		[Unit.Parsec]: new Decimal(3.0856776e16)
 	};
 
+	export const Keys = {
+		[Unit.AstronomicalUnit]: LanguageKeys.Commands.Convert.UnitAstronomicalUnit,
+		[Unit.Feet]: LanguageKeys.Commands.Convert.UnitFeet,
+		[Unit.Inch]: LanguageKeys.Commands.Convert.UnitInch,
+		[Unit.Kilometer]: LanguageKeys.Commands.Convert.UnitKilometer,
+		[Unit.LightSecond]: LanguageKeys.Commands.Convert.UnitLightSecond,
+		[Unit.LightYear]: LanguageKeys.Commands.Convert.UnitLightYear,
+		[Unit.Meter]: LanguageKeys.Commands.Convert.UnitMeter,
+		[Unit.Mile]: LanguageKeys.Commands.Convert.UnitMile,
+		[Unit.NauticalMile]: LanguageKeys.Commands.Convert.UnitNauticalMile,
+		[Unit.Parsec]: LanguageKeys.Commands.Convert.UnitParsec
+	};
+
 	export function makeOption(key: LocalePrefixKey) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key).addChoices(
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthAstronomicalUnit, { value: Unit.AstronomicalUnit }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthFeet, { value: Unit.Feet }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthInch, { value: Unit.Inch }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthKilometer, { value: Unit.Kilometer }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightSecond, { value: Unit.LightSecond }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightYear, { value: Unit.LightYear }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMeter, { value: Unit.Meter }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMile, { value: Unit.Mile }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthNauticalMile, { value: Unit.NauticalMile }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthParsec, { value: Unit.Parsec })
-		);
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthAstronomicalUnit, { value: Unit.AstronomicalUnit }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthFeet, { value: Unit.Feet }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthInch, { value: Unit.Inch }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthKilometer, { value: Unit.Kilometer }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightSecond, { value: Unit.LightSecond }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightYear, { value: Unit.LightYear }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMeter, { value: Unit.Meter }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMile, { value: Unit.Mile }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthNauticalMile, { value: Unit.NauticalMile }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthParsec, { value: Unit.Parsec })
+			);
 	}
 }
 
@@ -81,16 +106,28 @@ namespace Mass {
 		[Unit.Tonne]: new Decimal(1000n)
 	};
 
+	export const Keys = {
+		[Unit.ElectronVolt]: LanguageKeys.Commands.Convert.UnitElectronVolt,
+		[Unit.Grain]: LanguageKeys.Commands.Convert.UnitGrain,
+		[Unit.Gram]: LanguageKeys.Commands.Convert.UnitGram,
+		[Unit.Kilogram]: LanguageKeys.Commands.Convert.UnitKilogram,
+		[Unit.Ounce]: LanguageKeys.Commands.Convert.UnitOunce,
+		[Unit.Ton]: LanguageKeys.Commands.Convert.UnitTon,
+		[Unit.Tonne]: LanguageKeys.Commands.Convert.UnitTonne
+	};
+
 	export function makeOption(key: LocalePrefixKey) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key).addChoices(
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassElectronVolt, { value: Unit.ElectronVolt }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassGrain, { value: Unit.Grain }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassGram, { value: Unit.Gram }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassKilogram, { value: Unit.Kilogram }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassOunce, { value: Unit.Ounce }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTon, { value: Unit.Ton }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTonne, { value: Unit.Tonne })
-		);
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassElectronVolt, { value: Unit.ElectronVolt }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassGrain, { value: Unit.Grain }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassGram, { value: Unit.Gram }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassKilogram, { value: Unit.Kilogram }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassOunce, { value: Unit.Ounce }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTon, { value: Unit.Ton }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTonne, { value: Unit.Tonne })
+			);
 	}
 }
 
@@ -131,21 +168,38 @@ namespace Time {
 		[Unit.Week]: new Decimal(604800n)
 	};
 
+	export const Keys = {
+		[Unit.Century]: LanguageKeys.Commands.Convert.UnitCentury,
+		[Unit.Day]: LanguageKeys.Commands.Convert.UnitDay,
+		[Unit.Decade]: LanguageKeys.Commands.Convert.UnitDecade,
+		[Unit.Hour]: LanguageKeys.Commands.Convert.UnitHour,
+		[Unit.LunarYear]: LanguageKeys.Commands.Convert.UnitLunarYear,
+		[Unit.Millennium]: LanguageKeys.Commands.Convert.UnitMillennium,
+		[Unit.Minute]: LanguageKeys.Commands.Convert.UnitMinute,
+		[Unit.Month]: LanguageKeys.Commands.Convert.UnitMonth,
+		[Unit.Second]: LanguageKeys.Commands.Convert.UnitSecond,
+		[Unit.TropicalMonth]: LanguageKeys.Commands.Convert.UnitTropicalMonth,
+		[Unit.TropicalYear]: LanguageKeys.Commands.Convert.UnitTropicalYear,
+		[Unit.Week]: LanguageKeys.Commands.Convert.UnitWeek
+	};
+
 	export function makeOption(key: LocalePrefixKey) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key).addChoices(
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeCentury, { value: Unit.Century }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeDay, { value: Unit.Day }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeDecade, { value: Unit.Decade }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeHour, { value: Unit.Hour }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeLunarYear, { value: Unit.LunarYear }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMillennium, { value: Unit.Millennium }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMinute, { value: Unit.Minute }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMonth, { value: Unit.Month }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeSecond, { value: Unit.Second }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeTropicalMonth, { value: Unit.TropicalMonth }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeTropicalYear, { value: Unit.TropicalYear }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeWeek, { value: Unit.Week })
-		);
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeCentury, { value: Unit.Century }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeDay, { value: Unit.Day }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeDecade, { value: Unit.Decade }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeHour, { value: Unit.Hour }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeLunarYear, { value: Unit.LunarYear }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMillennium, { value: Unit.Millennium }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMinute, { value: Unit.Minute }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeMonth, { value: Unit.Month }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeSecond, { value: Unit.Second }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeTropicalMonth, { value: Unit.TropicalMonth }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeTropicalYear, { value: Unit.TropicalYear }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TimeWeek, { value: Unit.Week })
+			);
 	}
 }
 
@@ -202,17 +256,30 @@ namespace Temperature {
 		}
 	};
 
+	export const Keys = {
+		[Unit.Celsius]: LanguageKeys.Commands.Convert.UnitCelsius,
+		[Unit.Delisle]: LanguageKeys.Commands.Convert.UnitDelisle,
+		[Unit.Fahrenheit]: LanguageKeys.Commands.Convert.UnitFahrenheit,
+		[Unit.Newton]: LanguageKeys.Commands.Convert.UnitNewton,
+		[Unit.Rankine]: LanguageKeys.Commands.Convert.UnitRankine,
+		[Unit.Reaumur]: LanguageKeys.Commands.Convert.UnitReaumur,
+		[Unit.Romer]: LanguageKeys.Commands.Convert.UnitRomer,
+		[Unit.Kelvin]: LanguageKeys.Commands.Convert.UnitKelvin
+	};
+
 	export function makeOption(key: LocalePrefixKey) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key).addChoices(
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureCelsius, { value: Unit.Celsius }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureDelisle, { value: Unit.Delisle }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureFahrenheit, { value: Unit.Fahrenheit }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureNewton, { value: Unit.Newton }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureRankine, { value: Unit.Rankine }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureReaumur, { value: Unit.Reaumur }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureRomer, { value: Unit.Romer }),
-			createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureKelvin, { value: Unit.Kelvin })
-		);
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureCelsius, { value: Unit.Celsius }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureDelisle, { value: Unit.Delisle }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureFahrenheit, { value: Unit.Fahrenheit }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureNewton, { value: Unit.Newton }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureRankine, { value: Unit.Rankine }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureReaumur, { value: Unit.Reaumur }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureRomer, { value: Unit.Romer }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.TemperatureKelvin, { value: Unit.Kelvin })
+			);
 	}
 }
 
@@ -220,60 +287,114 @@ namespace Temperature {
 export class UserCommand extends Command {
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Length)
-			.addNumberOption(UserCommand.makeAmountOption())
 			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public length(interaction: Command.Interaction, options: Length.Options) {
-		return this.shared(interaction, options.amount, Length.Units[options.from], Length.Units[options.to]);
+		return this.shared({
+			interaction,
+			amount: options.amount ?? 1,
+			fromRatio: Length.Units[options.from],
+			fromUnit: Length.Keys[options.from],
+			toRatio: Length.Units[options.to],
+			toUnit: Length.Keys[options.to]
+		});
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Mass)
-			.addNumberOption(UserCommand.makeAmountOption())
 			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public mass(interaction: Command.Interaction, options: Mass.Options) {
-		return this.shared(interaction, options.amount, Mass.Units[options.from], Mass.Units[options.to]);
+		return this.shared({
+			interaction,
+			amount: options.amount ?? 1,
+			fromRatio: Mass.Units[options.from],
+			fromUnit: Mass.Keys[options.from],
+			toRatio: Mass.Units[options.to],
+			toUnit: Mass.Keys[options.to]
+		});
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Time)
-			.addNumberOption(UserCommand.makeAmountOption())
 			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public time(interaction: Command.Interaction, options: Time.Options) {
-		return this.shared(interaction, options.amount, Time.Units[options.from], Time.Units[options.to]);
+		return this.shared({
+			interaction,
+			amount: options.amount ?? 1,
+			fromRatio: Time.Units[options.from],
+			fromUnit: Time.Keys[options.from],
+			toRatio: Time.Units[options.to],
+			toUnit: Time.Keys[options.to]
+		});
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Temperature)
-			.addNumberOption(UserCommand.makeAmountOption())
 			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public temperature(interaction: Command.Interaction, options: Temperature.Options) {
-		const kelvin = Temperature.Formulas[options.from].to(options.amount ?? 0);
+		const amount = options.amount ?? 0;
+
+		const kelvin = Temperature.Formulas[options.from].to(amount);
 		const value = Temperature.Formulas[options.to].from(kelvin);
-		return this.sharedSend(interaction, value);
+		return this.sharedSend({
+			interaction,
+			amount,
+			fromUnit: Temperature.Keys[options.from],
+			toUnit: Temperature.Keys[options.to],
+			value
+		});
 	}
 
-	private shared(interaction: Command.Interaction, amount: number | undefined, from: Decimal, to: Decimal) {
-		const ratio = JSBD.divide(to, from);
-		const value = Number(JSBD.multiply(ratio, new Decimal(amount ?? 1)));
-		return this.sharedSend(interaction, value);
+	private shared(data: SharedData) {
+		const ratio = JSBD.divide(data.fromRatio, data.toRatio);
+		const value = Number(JSBD.multiply(ratio, new Decimal(data.amount)));
+		return this.sharedSend({
+			interaction: data.interaction,
+			amount: data.amount,
+			value,
+			fromUnit: data.fromUnit,
+			toUnit: data.toUnit
+		});
 	}
 
-	private sharedSend(interaction: Command.Interaction, value: number) {
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { value });
+	private sharedSend(data: SharedSendData) {
+		const t = getSupportedUserLanguageT(data.interaction);
+		const from = t(data.fromUnit, { value: data.amount });
+		const to = t(data.toUnit, { value: data.value });
+
+		const content = resolveUserKey(data.interaction, LanguageKeys.Commands.Convert.Result, { from, to });
 		return this.message({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	public static makeAmountOption() {
-		return applyLocalizedBuilder(new SlashCommandNumberOption(), LanguageKeys.Commands.Convert.Amount) //
-			.setMinValue(0)
-			.setRequired(false);
+		return applyLocalizedBuilder(new SlashCommandNumberOption(), LanguageKeys.Commands.Convert.Amount);
 	}
+}
+
+interface SharedData {
+	readonly interaction: Command.Interaction;
+	readonly amount: number;
+	readonly fromRatio: Decimal;
+	readonly fromUnit: TypedFT<{ value: number }>;
+	readonly toRatio: Decimal;
+	readonly toUnit: TypedFT<{ value: number }>;
+}
+
+interface SharedSendData {
+	readonly interaction: Command.Interaction;
+	readonly amount: number;
+	readonly value: number;
+	readonly fromUnit: TypedFT<{ value: number }>;
+	readonly toUnit: TypedFT<{ value: number }>;
 }

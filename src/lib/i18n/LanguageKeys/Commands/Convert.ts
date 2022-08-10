@@ -8,7 +8,7 @@ export const Amount = 'commands/convert:amount';
 export const From = 'commands/convert:from';
 export const To = 'commands/convert:to';
 
-export const Result = FT<{ value: number }>('commands/convert:result');
+export const Result = FT<{ from: string; to: string }>('commands/convert:result');
 
 export const Length = 'commands/convert:length';
 export const LengthAstronomicalUnit = T('commands/convert:lengthAstronomicalUnit');
@@ -54,3 +54,44 @@ export const TemperatureRankine = T('commands/convert:temperatureRankine');
 export const TemperatureReaumur = T('commands/convert:temperatureReaumur');
 export const TemperatureRomer = T('commands/convert:temperatureRomer');
 export const TemperatureKelvin = T('commands/convert:temperatureKelvin');
+
+export const UnitAstronomicalUnit = FT<{ value: number }>('commands/convert:unitAstronomicalUnit');
+export const UnitFeet = FT<{ value: number }>('commands/convert:unitFeet');
+export const UnitInch = FT<{ value: number }>('commands/convert:unitInch');
+export const UnitKilometer = FT<{ value: number }>('commands/convert:unitKilometer');
+export const UnitLightSecond = FT<{ value: number }>('commands/convert:unitLightSecond');
+export const UnitLightYear = FT<{ value: number }>('commands/convert:unitLightYear');
+export const UnitMeter = FT<{ value: number }>('commands/convert:unitMeter');
+export const UnitMile = FT<{ value: number }>('commands/convert:unitMile');
+export const UnitNauticalMile = FT<{ value: number }>('commands/convert:unitNauticalMile');
+export const UnitParsec = FT<{ value: number }>('commands/convert:unitParsec');
+
+export const UnitElectronVolt = FT<{ value: number }>('commands/convert:unitElectronVolt');
+export const UnitGrain = FT<{ value: number }>('commands/convert:unitGrain');
+export const UnitGram = FT<{ value: number }>('commands/convert:unitGram');
+export const UnitKilogram = FT<{ value: number }>('commands/convert:unitKilogram');
+export const UnitOunce = FT<{ value: number }>('commands/convert:unitOunce');
+export const UnitTon = FT<{ value: number }>('commands/convert:unitTon');
+export const UnitTonne = FT<{ value: number }>('commands/convert:unitTonne');
+
+export const UnitCentury = FT<{ value: number }>('commands/convert:unitCentury');
+export const UnitDay = FT<{ value: number }>('commands/convert:unitDay');
+export const UnitDecade = FT<{ value: number }>('commands/convert:unitDecade');
+export const UnitHour = FT<{ value: number }>('commands/convert:unitHour');
+export const UnitLunarYear = FT<{ value: number }>('commands/convert:unitLunarYear');
+export const UnitMillennium = FT<{ value: number }>('commands/convert:unitMillennium');
+export const UnitMinute = FT<{ value: number }>('commands/convert:unitMinute');
+export const UnitMonth = FT<{ value: number }>('commands/convert:unitMonth');
+export const UnitSecond = FT<{ value: number }>('commands/convert:unitSecond');
+export const UnitTropicalMonth = FT<{ value: number }>('commands/convert:unitTropicalMonth');
+export const UnitTropicalYear = FT<{ value: number }>('commands/convert:unitTropicalYear');
+export const UnitWeek = FT<{ value: number }>('commands/convert:unitWeek');
+
+export const UnitCelsius = FT<{ value: number }>('commands/convert:unitCelsius');
+export const UnitDelisle = FT<{ value: number }>('commands/convert:unitDelisle');
+export const UnitFahrenheit = FT<{ value: number }>('commands/convert:unitFahrenheit');
+export const UnitNewton = FT<{ value: number }>('commands/convert:unitNewton');
+export const UnitRankine = FT<{ value: number }>('commands/convert:unitRankine');
+export const UnitReaumur = FT<{ value: number }>('commands/convert:unitReaumur');
+export const UnitRomer = FT<{ value: number }>('commands/convert:unitRomer');
+export const UnitKelvin = FT<{ value: number }>('commands/convert:unitKelvin');

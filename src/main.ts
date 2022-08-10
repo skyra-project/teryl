@@ -1,20 +1,13 @@
-import { setup } from '#lib/setup/all';
-
 import { Emojis } from '#lib/common/constants';
+import { setup } from '#lib/setup/all';
 import { registerCommands } from '#lib/utilities/register-commands';
-import { envParseInteger, envParseString, setup as envSetup } from '@skyra/env-utilities';
+import { envParseInteger, envParseString } from '@skyra/env-utilities';
 import { Client, container } from '@skyra/http-framework';
 import { init, load } from '@skyra/http-framework-i18n';
-import { setInvite, setRepository } from '@skyra/shared-http-pieces';
-import '@skyra/shared-http-pieces/register';
 import { createBanner } from '@skyra/start-banner';
 import gradient from 'gradient-string';
 
 setup();
-setRepository('teryl');
-setInvite('948377583626637343', 'TODO');
-
-envSetup(new URL('../src/.env', import.meta.url));
 
 await load(new URL('../src/locales', import.meta.url));
 await init({
