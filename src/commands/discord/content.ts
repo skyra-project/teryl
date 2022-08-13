@@ -1,4 +1,5 @@
 import { Emojis } from '#lib/common/constants';
+import { escapeCodeBlock } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { codeBlock, hideLinkEmbed, hyperlink, quote, userMention } from '@discordjs/builders';
 import { Command, RegisterMessageCommand, type TransformedArguments } from '@skyra/http-framework';
@@ -86,6 +87,6 @@ export class UserCommand extends Command {
 	// }
 
 	private makeBlock(content: string, prefix = '> ') {
-		return prefix + codeBlock('md', content.replaceAll('```', '῾῾῾')).replaceAll('\n', `\n${prefix}`);
+		return prefix + codeBlock('md', escapeCodeBlock(content)).replaceAll('\n', `\n${prefix}`);
 	}
 }

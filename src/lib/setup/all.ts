@@ -9,7 +9,7 @@ export function setup() {
 	envRun(new URL('../../../src/.env', import.meta.url));
 
 	setRepository('teryl');
-	setInvite('948377583626637343', 'TODO');
+	setInvite('948377583626637343', '1074004032');
 
 	redisRun();
 }
