@@ -1,0 +1,157 @@
+import { none, Result, some, type Option } from '@sapphire/result';
+import { URL } from 'node:url';
+
+export const BaseUrlHelix = 'https://api.twitch.tv/helix';
+export const TwitchBrandingColor = 0x6441a4;
+export const TwitchLogoUrl = 'https://cdn.skyra.pw/skyra-assets/twitch_logo.png';
+
+const ClientId = process.env.TWITCH_CLIENT_ID;
+const ClientSecret = process.env.TWITCH_TOKEN;
+const TwitchRequestHeaders = {
+	'Content-Type': 'application/json',
+	Accept: 'application/json',
+	'Client-ID': ClientId
+};
+
+let BearerToken: Option<TwitchHelixBearerToken> = none;
+
+export async function fetchUsers(ids: Iterable<string> = [], logins: Iterable<string> = []) {
+	const search: string[] = [];
+	for (const id of ids) search.push(`id=${encodeURIComponent(id)}`);
+	for (const login of logins) search.push(`login=${encodeURIComponent(login)}`);
+	return getRequest<TwitchHelixResponse<TwitchHelixUsersSearchResult>>(`users?${search.join('&')}`);
+}
+
+export function fetchUserFollowage(userId: string, channelId: string) {
+	return getRequest<TwitchHelixResponse<TwitchHelixUserFollowsResult> & { total: number }>(`users/follows?from_id=${userId}&to_id=${channelId}`);
+}
+
+export function fetchBearer() {
+	return BearerToken.match({
+		some: (value) => (value.expiresAt < Date.now() ? generateBearerToken() : value.token),
+		none: generateBearerToken
+	});
+}
+
+function getRequest<T>(path: string): Promise<Result<T, Error>> {
+	return Result.fromAsync(async () => {
+		const response = await fetch(`${BaseUrlHelix}/${path}`, {
+			headers: { ...TwitchRequestHeaders, Authorization: `Bearer ${await fetchBearer()}` }
+		});
+
+		if (response.ok) return response.json() as Promise<T>;
+		throw new Error(`Received code ${response.status} at "/${path}" with body: ${await response.text()}`);
+	});
+}
+
+const bearerTokenUrl = new URL('https://id.twitch.tv/oauth2/token');
+bearerTokenUrl.searchParams.append('client_secret', ClientSecret);
+bearerTokenUrl.searchParams.append('client_id', ClientId);
+bearerTokenUrl.searchParams.append('grant_type', 'client_credentials');
+async function generateBearerToken() {
+	const response = await fetch(bearerTokenUrl.href, { method: 'POST' });
+	if (!response.ok) throw new Error(`Received code ${response.status} while getting a bearer token, with body: ${await response.text()}`);
+
+	const data = (await response.json()) as TwitchHelixOauth2Result;
+	const expires = Date.now() + data.expires_in * 1000;
+
+	BearerToken = some({ token: data.access_token, expiresAt: expires });
+	return data.access_token;
+}
+
+export const enum TwitchHelixUserType {
+	Staff = 'staff',
+	Admin = 'admin',
+	GlobalMod = 'global_mod',
+	Normal = ''
+}
+
+export const enum TwitchHelixBroadcasterType {
+	Partner = 'partner',
+	Affiliate = 'affiliate',
+	Normal = ''
+}
+
+export interface TwitchHelixBearerToken {
+	expiresAt: number;
+	token: string;
+}
+
+export interface TwitchHelixResponse<T> {
+	data: T[];
+}
+
+export interface TwitchHelixOauth2Result {
+	access_token: string;
+	expires_in: number;
+	refresh_token: string;
+	scope: string;
+}
+
+export interface TwitchHelixUsersSearchResult {
+	broadcaster_type: TwitchHelixBroadcasterType;
+	description: string;
+	display_name: string;
+	email?: string;
+	id: string;
+	login: string;
+	offline_image_url: string;
+	profile_image_url: string;
+	type: TwitchHelixUserType;
+	view_count: number;
+}
+
+export interface TwitchHelixUserFollowsResult {
+	/** In the format of YYYY-MM-DD[T]HH:mm:ssZ, so can be parsed to a Date */
+	followed_at: string;
+	/** The ID of the user following a streamer */
+	from_id: string;
+	/** The name of the user following a streamer */
+	from_name: string;
+	/** The ID of the channel that the user follows */
+	to_id: string;
+	/** The name of the channel that the user follows */
+	to_name: string;
+}
+
+export interface TwitchHelixGameSearchResult {
+	/** Template URL for the game’s box art. */
+	box_art_url: string;
+	/** ID of the game. */
+	id: string;
+	/** Name of the game. */
+	name: string;
+}
+
+export interface TwitchHelixStreamsResult {
+	/** Template URL for the game’s box art. */
+	game_box_art_url?: string;
+	/** ID of the game being played on the stream. */
+	game_id: string;
+	/** Name of the game being played. */
+	game_name: string;
+	/** Stream ID. */
+	id: string;
+	/** Indicates if the broadcaster has specified their channel contains mature content that may be inappropriate for younger audiences. */
+	is_mature: boolean;
+	/** Stream language. A language value is either the {@linkplain https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes ISO 639-1} two-letter code for a {@linkplain https://help.twitch.tv/s/article/languages-on-twitch#streamlang supported stream language} or “other”. */
+	language: string;
+	/** UTC timestamp. */
+	started_at: Date;
+	/** Shows tag IDs that apply to the stream. */
+	tag_ids: string[];
+	/** Thumbnail URL of the stream. All image URLs have variable width and height. You can replace `{width}` and `{height}` with any values to get that size image */
+	thumbnail_url: string;
+	/** Stream title. */
+	title: string;
+	/** Stream type: "live" or "" (in case of error). */
+	type: string;
+	/** ID of the user who is streaming. */
+	user_id: string;
+	/** Login of the user who is streaming. */
+	user_login: string;
+	/** Display name corresponding to {@link TwitchHelixStreamsResult.user_id}. */
+	user_name: string;
+	/** Number of viewers watching the stream at the time of the query. */
+	viewer_count: number;
+}

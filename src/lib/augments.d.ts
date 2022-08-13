@@ -13,5 +13,8 @@ declare module '@skyra/env-utilities' {
 		REDIS_PASSWORD: string;
 		REDIS_HOST: string;
 		REDIS_DB: IntegerString;
+
+		TWITCH_CLIENT_ID: string;
+		TWITCH_TOKEN: string;
 	}
 }
