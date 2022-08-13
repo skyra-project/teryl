@@ -599,7 +599,7 @@ __metadata:
     "@skyra/shared-http-pieces": ^0.0.42
     "@skyra/start-banner": ^1.0.2
     "@types/gradient-string": ^1.1.2
-    "@types/node": ^18.6.5
+    "@types/node": ^18.7.3
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.33.0
     cz-conventional-changelog: ^3.3.0
@@ -610,7 +610,7 @@ __metadata:
     gradient-string: ^2.0.1
     husky: ^8.0.1
     ioredis: ^5.2.2
-    jsbd: ^0.0.8
+    jsbd: ^0.0.9
     lint-staged: ^13.0.3
     prettier: ^2.7.1
     pretty-quick: ^3.1.3
@@ -684,10 +684,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:>=12, @types/node@npm:^18.6.5":
+"@types/node@npm:>=12":
   version: 18.6.5
   resolution: "@types/node@npm:18.6.5"
   checksum: e3e66c9a84b94010a57c1b9dac882c08484278d74f9d120dbe6a3e45d00740d178bd1d34a5deee28197c94b9f4359153b637bab9b305328e865027e9987a0f3d
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.7.3":
+  version: 18.7.3
+  resolution: "@types/node@npm:18.7.3"
+  checksum: f51ed436a112235ac068d739b4823090a37b869cc186b64dd5c250dd285139c286990fcbeff2fb3ecba5d605fa885de4275247d332e5b96eafdfbb1da62e3ced
   languageName: node
   linkType: hard
 
@@ -2717,10 +2724,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsbd@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "jsbd@npm:0.0.8"
-  checksum: c9a452ed6aaade845e3a141958fb9598a4b315835601f81c1da7d8d81b7c5376af364c532a21432a9e6ac63027bed18123329de302b274db742e77027a4e6f5b
+"jsbd@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "jsbd@npm:0.0.9"
+  checksum: 1254e5e99403c5cf6fd4dfe26a3b32a4e0482eaf54b500e5917ca781376fbe02d02e1f5a87c164bcb275057501422093bc7ae84436f7758d1c8aff7710a937aa
   languageName: node
   linkType: hard
 

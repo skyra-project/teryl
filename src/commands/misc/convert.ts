@@ -10,10 +10,7 @@ import {
 	type TypedFT
 } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
-import { Decimal, default as jsbd } from 'jsbd';
-
-// https://github.com/yukinotech/JSBD/issues/18
-const JSBD = (jsbd as unknown as typeof import('jsbd')).default;
+import JSBD from 'jsbd';
 
 namespace Length {
 	export interface Options {
@@ -36,16 +33,16 @@ namespace Length {
 	}
 
 	export const Units = {
-		[Unit.AstronomicalUnit]: new Decimal(149597870691),
-		[Unit.Feet]: new Decimal(0.3048),
-		[Unit.Inch]: new Decimal(0.0254),
-		[Unit.Kilometer]: new Decimal(1000n),
-		[Unit.LightSecond]: new Decimal(299792458n),
-		[Unit.LightYear]: new Decimal(9460730472580800n),
-		[Unit.Meter]: new Decimal(1n),
-		[Unit.Mile]: new Decimal(1609.344),
-		[Unit.NauticalMile]: new Decimal(1852n),
-		[Unit.Parsec]: new Decimal(3.0856776e16)
+		[Unit.AstronomicalUnit]: new JSBD.Decimal(149597870691),
+		[Unit.Feet]: new JSBD.Decimal(0.3048),
+		[Unit.Inch]: new JSBD.Decimal(0.0254),
+		[Unit.Kilometer]: new JSBD.Decimal(1000n),
+		[Unit.LightSecond]: new JSBD.Decimal(299792458n),
+		[Unit.LightYear]: new JSBD.Decimal(9460730472580800n),
+		[Unit.Meter]: new JSBD.Decimal(1n),
+		[Unit.Mile]: new JSBD.Decimal(1609.344),
+		[Unit.NauticalMile]: new JSBD.Decimal(1852n),
+		[Unit.Parsec]: new JSBD.Decimal(3.0856776e16)
 	};
 
 	export const Keys = {
@@ -97,13 +94,13 @@ namespace Mass {
 	}
 
 	export const Units = {
-		[Unit.ElectronVolt]: new Decimal(1.78266269594484e-36),
-		[Unit.Grain]: new Decimal(0.00006479891),
-		[Unit.Gram]: new Decimal(0.001),
-		[Unit.Kilogram]: new Decimal(1n),
-		[Unit.Ounce]: new Decimal(0.028349523125),
-		[Unit.Ton]: new Decimal(1016.0469088),
-		[Unit.Tonne]: new Decimal(1000n)
+		[Unit.ElectronVolt]: new JSBD.Decimal(1.78266269594484e-36),
+		[Unit.Grain]: new JSBD.Decimal(0.00006479891),
+		[Unit.Gram]: new JSBD.Decimal(0.001),
+		[Unit.Kilogram]: new JSBD.Decimal(1n),
+		[Unit.Ounce]: new JSBD.Decimal(0.028349523125),
+		[Unit.Ton]: new JSBD.Decimal(1016.0469088),
+		[Unit.Tonne]: new JSBD.Decimal(1000n)
 	};
 
 	export const Keys = {
@@ -154,18 +151,18 @@ namespace Time {
 	}
 
 	export const Units = {
-		[Unit.Century]: new Decimal(3155760000n),
-		[Unit.Day]: new Decimal(86400n),
-		[Unit.Decade]: new Decimal(315360000n),
-		[Unit.Hour]: new Decimal(3600n),
-		[Unit.LunarYear]: new Decimal(30617568n),
-		[Unit.Millennium]: new Decimal(31536000000n),
-		[Unit.Minute]: new Decimal(60n),
-		[Unit.Month]: new Decimal(2629746n),
-		[Unit.Second]: new Decimal(1n),
-		[Unit.TropicalMonth]: new Decimal(2360584.512),
-		[Unit.TropicalYear]: new Decimal(31556925.445),
-		[Unit.Week]: new Decimal(604800n)
+		[Unit.Century]: new JSBD.Decimal(3155760000n),
+		[Unit.Day]: new JSBD.Decimal(86400n),
+		[Unit.Decade]: new JSBD.Decimal(315360000n),
+		[Unit.Hour]: new JSBD.Decimal(3600n),
+		[Unit.LunarYear]: new JSBD.Decimal(30617568n),
+		[Unit.Millennium]: new JSBD.Decimal(31536000000n),
+		[Unit.Minute]: new JSBD.Decimal(60n),
+		[Unit.Month]: new JSBD.Decimal(2629746n),
+		[Unit.Second]: new JSBD.Decimal(1n),
+		[Unit.TropicalMonth]: new JSBD.Decimal(2360584.512),
+		[Unit.TropicalYear]: new JSBD.Decimal(31556925.445),
+		[Unit.Week]: new JSBD.Decimal(604800n)
 	};
 
 	export const Keys = {
@@ -358,7 +355,7 @@ export class UserCommand extends Command {
 
 	private shared(data: SharedData) {
 		const ratio = JSBD.divide(data.fromRatio, data.toRatio);
-		const value = Number(JSBD.multiply(ratio, new Decimal(data.amount)));
+		const value = Number(JSBD.multiply(ratio, new JSBD.Decimal(data.amount)));
 		return this.sharedSend({
 			interaction: data.interaction,
 			amount: data.amount,
@@ -385,9 +382,9 @@ export class UserCommand extends Command {
 interface SharedData {
 	readonly interaction: Command.Interaction;
 	readonly amount: number;
-	readonly fromRatio: Decimal;
+	readonly fromRatio: InstanceType<typeof JSBD.Decimal>;
 	readonly fromUnit: TypedFT<{ value: number }>;
-	readonly toRatio: Decimal;
+	readonly toRatio: InstanceType<typeof JSBD.Decimal>;
 	readonly toUnit: TypedFT<{ value: number }>;
 }
 

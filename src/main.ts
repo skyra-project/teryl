@@ -1,6 +1,6 @@
 import { Emojis } from '#lib/common/constants';
 import { setup } from '#lib/setup/all';
-import { registerCommands } from '#lib/utilities/register-commands';
+// import { registerCommands } from '#lib/utilities/register-commands';
 import { envParseInteger, envParseString } from '@skyra/env-utilities';
 import { Client, container } from '@skyra/http-framework';
 import { init, load } from '@skyra/http-framework-i18n';
@@ -29,7 +29,7 @@ await init({
 const client = new Client();
 await client.load();
 
-void registerCommands();
+// void registerCommands();
 
 const address = envParseString('HTTP_ADDRESS', '0.0.0.0');
 const port = envParseInteger('HTTP_PORT', 3000);
