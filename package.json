@@ -38,7 +38,7 @@
 		"discord-api-types": "^0.36.3",
 		"gradient-string": "^2.0.1",
 		"ioredis": "^5.2.2",
-		"jsbd": "^0.0.9",
+		"jsbd": "^0.0.11",
 		"tslib": "^2.4.0"
 	},
 	"devDependencies": {
@@ -52,7 +52,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.33.0",
 		"@typescript-eslint/parser": "^5.33.0",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.21.0",
+		"eslint": "^8.22.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"husky": "^8.0.1",
