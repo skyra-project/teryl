@@ -1,4 +1,15 @@
 {
 	"name": "create-emoji",
-	"description": "Uploads an emoji to the server"
+	"description": "Uploads an emoji to the server",
+	"optionsEmojiName": "emoji",
+	"optionsEmojiDescription": "The emoji to re-upload",
+	"optionsFileName": "file",
+	"optionsFileDescription": "The file to upload",
+	"duplicated": "You have uploaded both an emoji and a file, please send only one.",
+	"none": "You have uploaded neither an emoji nor a file, please send any of them.",
+	"notAnImage": "The file you uploaded is not an image, so it cannot be uploaded.",
+	"failedToDownload": "I was unable to download the file. If you have sent an emoji, please make sure it's a valid one.",
+	"uploaded": "I have successfully uploaded {{emoji}}.",
+	"uploadedBy": "Upload of file authorized by {{user.username}} ({{user.id}})",
+	"failedToUpload": "I failed to upload the emoji, sorry for the inconvenience!"
 }

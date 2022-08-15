@@ -33,7 +33,11 @@ export class UserCommand extends Command {
 			.setAuthor({ name: channel.display_name, iconURL: TwitchLogoUrl, url: `https://twitch.tv/${channel.login}` })
 			.setDescription(channel.description)
 			.setThumbnail(channel.profile_image_url)
-			.addFields({ name: titles.followers, value: followers }, { name: titles.views, value: views }, { name: titles.partner, value: partner });
+			.addFields(
+				{ name: titles.followers, value: followers, inline: true },
+				{ name: titles.views, value: views, inline: true },
+				{ name: titles.partner, value: partner, inline: true }
+			);
 
 		return this.message({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
 	}

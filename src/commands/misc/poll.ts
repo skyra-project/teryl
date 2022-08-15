@@ -22,9 +22,10 @@ export class UserCommand extends Command {
 		if (options.fifth) set.add(options.fifth);
 
 		const choices = [...set];
-		const content = `${bold(options.title)}\n${choices.map((choice, index) => `• ${NumberEmojis[index]} ${choice}`)}`;
+		const content = `${bold(options.title)}\n${choices.map((choice, index) => `• ${NumberEmojis[index]} ${choice}`).join('\n')}`;
 		yield this.message({ content });
 
+		// TODO: Unknown Webhook error
 		const result = await Result.fromAsync(
 			this.container.rest.get(Routes.webhookMessage(interaction.id, interaction.token)) as Promise<RESTGetAPIChannelMessageResult>
 		);
