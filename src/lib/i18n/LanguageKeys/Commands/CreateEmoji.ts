@@ -8,6 +8,7 @@ export const RootDescription = T('commands/createEmoji:description');
 export const OptionsEmoji = 'commands/createEmoji:optionsEmoji';
 export const OptionsFile = 'commands/createEmoji:optionsFile';
 
+export const MissingPermissions = T('commands/createEmoji:missingPermissions');
 export const Duplicated = T('commands/createEmoji:duplicated');
 export const None = T('commands/createEmoji:none');
 export const NotAnImage = T('commands/createEmoji:notAnImage');
@@ -15,3 +16,8 @@ export const FailedToDownload = T('commands/createEmoji:failedToDownload');
 export const Uploaded = FT<{ emoji: string }>('commands/createEmoji:uploaded');
 export const UploadedBy = FT<{ user: APIUser }>('commands/createEmoji:uploadedBy');
 export const FailedToUpload = T('commands/createEmoji:failedToUpload');
+export const ContentLengthMissing = T('commands/createEmoji:contentLengthMissing');
+export const ContentLengthInvalid = T('commands/createEmoji:contentLengthInvalid');
+export const ContentLengthTooBig = T('commands/createEmoji:contentLengthTooBig');
+export const ContentTypeMissing = T('commands/createEmoji:contentTypeMissing');
+export const ContentTypeUnsupported = T('commands/createEmoji:contentTypeUnsupported');
