@@ -1,7 +1,9 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { TheColorApiResult } from '#lib/types/thecolorapi';
+import { json, safeTimedFetch } from '#lib/utilities/fetch';
 import { EmbedBuilder, inlineCode } from '@discordjs/builders';
 import { err, none, ok, Result, some, type Option } from '@sapphire/result';
+import { Time } from '@sapphire/time-utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey, type TypedFT } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -11,27 +13,18 @@ import { MessageFlags } from 'discord-api-types/v10';
 		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Color.Input).setRequired(true).setMaxLength(32))
 )
 export class UserCommand extends Command {
-	public override async chatInputRun(interaction: Command.Interaction, options: Options): Promise<Command.MessageResponseResult> {
+	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const result = this.parse(options.input);
-		return result.match({
+		const response = await result.match({
 			ok: (color) => this.makeRequest(interaction, color),
-			err: (error) =>
-				this.message({
-					content: resolveUserKey(interaction, error, { input: inlineCode(options.input) }),
-					flags: MessageFlags.Ephemeral
-				})
+			err: (error) => ({ content: resolveUserKey(interaction, error, { input: inlineCode(options.input) }), flags: MessageFlags.Ephemeral })
 		});
+		return interaction.sendMessage(response);
 	}
 
-	private async makeRequest(interaction: Command.Interaction, color: string): Promise<Command.MessageResponseResult> {
-		const controller = new AbortController();
-		const timeout = setTimeout(() => controller.abort(), 2000);
-
+	private async makeRequest(interaction: Command.ChatInputInteraction, color: string) {
 		const url = `https://www.thecolorapi.com/id?hex=${color}`;
-		const result = await Result.fromAsync(() =>
-			fetch(url, { signal: controller.signal }).then((result) => result.json() as Promise<TheColorApiResult>)
-		);
-		clearTimeout(timeout);
+		const result = await json<TheColorApiResult>(await safeTimedFetch(url, Time.Second * 2));
 
 		const embed = new EmbedBuilder().setColor(parseInt(color, 16)).setThumbnail(`https://www.colorhexa.com/${color}.png`);
 		result.inspect((data) =>
@@ -41,7 +34,7 @@ export class UserCommand extends Command {
 				.setDescription(resolveUserKey(interaction, LanguageKeys.Commands.Color.EmbedDescription, data))
 		);
 
-		return this.message({ embeds: [embed.toJSON()] });
+		return { embeds: [embed.toJSON()] };
 	}
 
 	private parse(value: string): Result<string, TypedFT<{ input: string }>> {

@@ -288,7 +288,7 @@ export class UserCommand extends Command {
 			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
-	public length(interaction: Command.Interaction, options: Length.Options) {
+	public length(interaction: Command.ChatInputInteraction, options: Length.Options) {
 		return this.shared({
 			interaction,
 			amount: options.amount ?? 1,
@@ -305,7 +305,7 @@ export class UserCommand extends Command {
 			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.To))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
-	public mass(interaction: Command.Interaction, options: Mass.Options) {
+	public mass(interaction: Command.ChatInputInteraction, options: Mass.Options) {
 		return this.shared({
 			interaction,
 			amount: options.amount ?? 1,
@@ -322,7 +322,7 @@ export class UserCommand extends Command {
 			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
-	public time(interaction: Command.Interaction, options: Time.Options) {
+	public time(interaction: Command.ChatInputInteraction, options: Time.Options) {
 		return this.shared({
 			interaction,
 			amount: options.amount ?? 1,
@@ -339,7 +339,7 @@ export class UserCommand extends Command {
 			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.To))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
-	public temperature(interaction: Command.Interaction, options: Temperature.Options) {
+	public temperature(interaction: Command.ChatInputInteraction, options: Temperature.Options) {
 		const amount = options.amount ?? 0;
 
 		const kelvin = Temperature.Formulas[options.from].to(amount);
@@ -371,7 +371,7 @@ export class UserCommand extends Command {
 		const to = t(data.toUnit, { value: data.value });
 
 		const content = resolveUserKey(data.interaction, LanguageKeys.Commands.Convert.Result, { from, to });
-		return this.message({ content, flags: MessageFlags.Ephemeral });
+		return data.interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	public static makeAmountOption() {
@@ -380,7 +380,7 @@ export class UserCommand extends Command {
 }
 
 interface SharedData {
-	readonly interaction: Command.Interaction;
+	readonly interaction: Command.ChatInputInteraction;
 	readonly amount: number;
 	readonly fromRatio: Decimal;
 	readonly fromUnit: TypedFT<{ value: number }>;
@@ -389,7 +389,7 @@ interface SharedData {
 }
 
 interface SharedSendData {
-	readonly interaction: Command.Interaction;
+	readonly interaction: Command.ChatInputInteraction;
 	readonly amount: number;
 	readonly value: number;
 	readonly fromUnit: TypedFT<{ value: number }>;

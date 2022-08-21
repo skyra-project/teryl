@@ -9,21 +9,21 @@ import { MessageFlags } from 'discord-api-types/v10';
 		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Choice.OptionsValues).setMinLength(3).setRequired(true))
 )
 export class UserCommand extends Command {
-	public override chatInputRun(interaction: Command.Interaction, args: Options): Command.Response {
+	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		const possibles = args.values.split(/ +/);
 		if (possibles.length === 1) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Choice.TooFewOptions);
-			return this.message({ content, flags: MessageFlags.Ephemeral });
+			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		if (possibles.length !== new Set(possibles).size) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Choice.DuplicatedOptions);
-			return this.message({ content, flags: MessageFlags.Ephemeral });
+			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const position = Math.floor(Math.random() * possibles.length);
 		const content = resolveKey(interaction, LanguageKeys.Commands.Choice.Result, { value: escapeInlineBlock(possibles[position]) });
-		return this.message({ content });
+		return interaction.sendMessage({ content });
 	}
 }
 

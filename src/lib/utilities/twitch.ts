@@ -1,3 +1,4 @@
+import { json, safeFetch } from '#lib/utilities/fetch';
 import { none, Result, some, type Option } from '@sapphire/result';
 import { URL } from 'node:url';
 
@@ -33,15 +34,12 @@ export function fetchBearer() {
 	});
 }
 
-function getRequest<T>(path: string): Promise<Result<T, Error>> {
-	return Result.fromAsync(async () => {
-		const response = await fetch(`${BaseUrlHelix}/${path}`, {
+async function getRequest<T>(path: string): Promise<Result<T, Error>> {
+	return json<T>(
+		safeFetch(`${BaseUrlHelix}/${path}`, {
 			headers: { ...TwitchRequestHeaders, Authorization: `Bearer ${await fetchBearer()}` }
-		});
-
-		if (response.ok) return response.json() as Promise<T>;
-		throw new Error(`Received code ${response.status} at "/${path}" with body: ${await response.text()}`);
-	});
+		})
+	);
 }
 
 const bearerTokenUrl = new URL('https://id.twitch.tv/oauth2/token');
@@ -49,10 +47,7 @@ bearerTokenUrl.searchParams.append('client_secret', ClientSecret);
 bearerTokenUrl.searchParams.append('client_id', ClientId);
 bearerTokenUrl.searchParams.append('grant_type', 'client_credentials');
 async function generateBearerToken() {
-	const response = await fetch(bearerTokenUrl.href, { method: 'POST' });
-	if (!response.ok) throw new Error(`Received code ${response.status} while getting a bearer token, with body: ${await response.text()}`);
-
-	const data = (await response.json()) as TwitchHelixOauth2Result;
+	const data = (await json<TwitchHelixOauth2Result>(safeFetch(bearerTokenUrl.href, { method: 'POST' }))).unwrap();
 	const expires = Date.now() + data.expires_in * 1000;
 
 	BearerToken = some({ token: data.access_token, expiresAt: expires });

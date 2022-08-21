@@ -1,6 +1,7 @@
 import { bitHas } from '#lib/common/bits';
 import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { safeTimedFetch } from '#lib/utilities/fetch';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
@@ -21,10 +22,10 @@ import {
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers)
 )
 export class UserCommand extends Command {
-	public override chatInputRun(interaction: Command.Interaction, args: Options): Command.Response {
-		if (!bitHas(BigInt(interaction.app_permissions ?? 0n), PermissionFlagsBits.ManageEmojisAndStickers)) {
+	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
+		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageEmojisAndStickers)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.MissingPermissions);
-			return this.message({ content, flags: MessageFlags.Ephemeral });
+			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		// !Emoji:
@@ -32,7 +33,7 @@ export class UserCommand extends Command {
 			// !Emoji && !File:
 			if (isNullish(args.file)) {
 				const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.None);
-				return this.message({ content, flags: MessageFlags.Ephemeral });
+				return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 			}
 
 			// !Emoji && File:
@@ -44,55 +45,52 @@ export class UserCommand extends Command {
 
 		// Emoji && File
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
-		return this.message({ content, flags: MessageFlags.Ephemeral });
+		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	private uploadEmoji(interaction: Command.Interaction, emoji: Options['emoji']): Command.Response {
+	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: Options['emoji']) {
 		const data = getDiscordEmojiData(emoji);
 		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji) : this.uploadDiscordEmoji(interaction, data);
 	}
 
-	private uploadBuiltInEmoji(interaction: Command.Interaction, emoji: string): Command.Response {
+	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string) {
 		return this.sharedUpload(interaction, getTwemojiId(emoji), getTwemojiUrl(emoji));
 	}
 
-	private uploadDiscordEmoji(interaction: Command.Interaction, emoji: DiscordEmoji): Command.Response {
+	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji) {
 		return this.sharedUpload(interaction, emoji.name, getDiscordEmojiUrl(emoji));
 	}
 
-	private uploadFile(interaction: Command.Interaction, file: Options['file']): Command.Response {
+	private uploadFile(interaction: Command.ChatInputInteraction, file: Options['file']) {
 		if (isNullishOrZero(file.width) || isNullishOrZero(file.height)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
-			return this.message({ content, flags: MessageFlags.Ephemeral });
+			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		return this.sharedUpload(interaction, this.sanitizeName(file.filename), this.getOptimalUrl(file));
 	}
 
-	private async *sharedUpload(interaction: Command.Interaction, name: string, url: string): Command.AsyncGeneratorResponse {
-		yield this.defer({ flags: MessageFlags.Ephemeral });
+	private async sharedUpload(interaction: Command.ChatInputInteraction, name: string, url: string) {
+		const deferred = await interaction.defer({ flags: MessageFlags.Ephemeral });
 
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-		const downloadResult = await Result.fromAsync(() => fetch(url, { signal: controller.signal }));
-		clearTimeout(timer);
-
-		if (downloadResult.isErr() || downloadResult.isOkAnd((response) => !response.ok)) {
+		const downloadResult = await safeTimedFetch(url, 5000);
+		if (downloadResult.isErr()) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToDownload);
-			return this.updateResponse({ content });
+			return deferred.update({ content });
 		}
 
 		const response = downloadResult.unwrap();
 		const validationResult = this.parseContentLength(response.headers.get('Content-Length')) //
 			.andThen(() => this.parseContentType(response.headers.get('Content-Type')));
 
-		return validationResult.match({
+		const content = await validationResult.match({
 			ok: (contentType) => this.performUpload(interaction, response, name, contentType),
-			err: (error) => this.updateResponse({ content: resolveUserKey(interaction, error) })
+			err: (error) => resolveUserKey(interaction, error)
 		});
+		return deferred.update({ content });
 	}
 
-	private async performUpload(interaction: Command.Interaction, response: Response, name: string, contentType: string) {
+	private async performUpload(interaction: Command.ChatInputInteraction, response: Response, name: string, contentType: string) {
 		const buffer = await response.arrayBuffer();
 		const body: RESTPostAPIGuildEmojiJSONBody = {
 			name,
@@ -103,15 +101,13 @@ export class UserCommand extends Command {
 			() => this.container.rest.post(Routes.guildEmojis(interaction.guild_id!), { body, reason }) as Promise<RESTPostAPIGuildEmojiResult>
 		);
 
-		const content = uploadResult
+		return uploadResult
 			.map((data) => `<${data.animated ? 'a' : ''}:${data.name}:${data.id}>`)
 			.match({
 				ok: (emoji) => resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Uploaded, { emoji }),
 				// TODO: Handle error codes
 				err: () => resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUpload)
 			});
-
-		return this.updateResponse({ content });
 	}
 
 	private sanitizeName(name: string) {

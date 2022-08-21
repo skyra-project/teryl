@@ -1,0 +1,10 @@
+{
+	"name": "emoji",
+	"description": "Get information about a built-in or custom emoji",
+	"optionsEmojiName": "emoji",
+	"optionsEmojiDescription": "The emoji to get information about",
+	"twemojiContent": "**Emoji**: `{{emoji}}`\n**Type**: Built-in\n**ID**: `{{id}}`",
+	"invalidTwemoji": "The built-in emoji you specified does not seem to exist in Twemoji's repository, please try another emoji.",
+	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: Custom\n**ID**: `{{emoji.id}}`",
+	"invalidDiscordEmoji": "The custom emoji you specified does not appear to exist in Discord's database, please try another emoji."
+}

@@ -1,5 +1,6 @@
 import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { json, safeTimedFetch } from '#lib/utilities/fetch';
 import { EmbedBuilder } from '@discordjs/builders';
 import { Result } from '@sapphire/result';
 import { Time } from '@sapphire/time-utilities';
@@ -17,20 +18,20 @@ import { MessageFlags } from 'discord-api-types/v10';
 		)
 )
 export class UserCommand extends Command {
-	public override async autocompleteRun(_: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
+	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
 		if (isNullishOrEmpty(options.input)) {
-			return this.autocompleteNoResults();
+			return interaction.sendEmptyAutocomplete();
 		}
 
 		const data = await this.search(options.input);
-		return this.autocomplete({ choices: data.map((entry) => ({ name: entry, value: entry })) });
+		return interaction.sendAutocomplete({ choices: data.map((entry) => ({ name: entry, value: entry })) });
 	}
 
-	public override async chatInputRun(interaction: Command.Interaction, options: Options): Command.AsyncResponse {
+	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const data = await this.query(options.input);
 		if (data === null) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Wikipedia.NoResults);
-			return this.message({ content, flags: MessageFlags.Ephemeral });
+			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const embed = new EmbedBuilder()
@@ -39,7 +40,7 @@ export class UserCommand extends Command {
 			.setURL(UserCommand.titleToUrl(data.title))
 			.setDescription(data.extract);
 
-		return this.message({ embeds: [embed.toJSON()] });
+		return interaction.sendMessage({ embeds: [embed.toJSON()] });
 	}
 
 	private async search(input: string): Promise<SearchCacheValue> {
@@ -50,10 +51,7 @@ export class UserCommand extends Command {
 		const url = new URL('https://en.wikipedia.org/w/api.php');
 		url.searchParams.append('action', 'opensearch');
 		url.searchParams.append('search', input);
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), Time.Second * 2);
-		const result = await Result.fromAsync(fetch(url, { signal: controller.signal }).then((result) => result.json() as Promise<SearchResult>));
-		clearTimeout(timer);
+		const result = await json<SearchResult>(safeTimedFetch(url, Time.Second * 2));
 
 		return result
 			.map((results) => results[1])
