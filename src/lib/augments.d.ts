@@ -16,5 +16,7 @@ declare module '@skyra/env-utilities' {
 
 		TWITCH_CLIENT_ID: string;
 		TWITCH_TOKEN: string;
+
+		OWLBOT_TOKEN: string;
 	}
 }

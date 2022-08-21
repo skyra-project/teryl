@@ -1,4 +1,16 @@
 {
 	"name": "dictionary",
-	"description": "Get the definition of a word"
+	"description": "Get the definition of a word",
+	"optionsInputName": "input",
+	"optionsInputDescription": "The word to get the definition of",
+	"contentTitle": "{{OwlbotIcon}} **Owlbot Dictionary** - `{{value}}`",
+	"contentPronunciation": "Pronunciation: `{{value}}`",
+	"contentType": "Type: `{{value}}`",
+	"contentEmoji": "Emoji: {{value}}",
+	"fetchAbort": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot did not respond within 2 seconds, please try again later.",
+	"fetchAuthorizationFailed": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot does not seem to recognize me and rejected my authorization. Please contact my developers about this.",
+	"fetchNoResults": "{{OwlbotIcon}} Owlbot did not return any results for `{{value}}`.",
+	"fetchRateLimited": "I couldn't search for `{{value}}` because I have made too many requests recently to {{OwlbotIcon}} Owlbot. Please try again in around a minute.",
+	"fetchServerError": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot's server is not available. Please try again later.",
+	"fetchUnknownError": "I couldn't search for `{{value}}` because of an unknown error. Please contact my developers about this."
 }

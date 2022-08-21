@@ -11,6 +11,10 @@ export class HttpError extends Error {
 		this.body = body;
 	}
 
+	public get code() {
+		return this.response.status;
+	}
+
 	public get jsonBody(): unknown {
 		return this.json.match({
 			some: (value) => value,

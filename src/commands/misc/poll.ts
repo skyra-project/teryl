@@ -24,7 +24,6 @@ export class UserCommand extends Command {
 		const choices = [...set];
 		const content = `${bold(options.title)}\n${choices.map((choice, index) => `• ${NumberEmojis[index]} ${choice}`).join('\n')}`;
 
-		// TODO: Unknown Webhook error
 		const result = await (await interaction.sendMessage({ content })).get();
 		await result.match({
 			ok: (message) => this.addReactions(message, set.size),

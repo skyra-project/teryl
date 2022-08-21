@@ -21,7 +21,8 @@ await init({
 			MessageLinkIcon: Emojis.MessageLinkIcon,
 			MessagePinIcon: Emojis.MessagePinIcon,
 			MessageIconSlashCommandsIcon: Emojis.MessageIconSlashCommandsIcon,
-			IdIcon: Emojis.IdIcon
+			IdIcon: Emojis.IdIcon,
+			OwlbotIcon: Emojis.OwlbotIcon
 		}
 	}
 });
