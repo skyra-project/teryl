@@ -408,6 +408,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/client@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "@prisma/client@npm:4.2.1"
+  dependencies:
+    "@prisma/engines-version": 4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826
+  peerDependencies:
+    prisma: "*"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+  checksum: 2eefe7182f2ebc26c35777e9ff22acb9c1d1f6e0988c518b32063d7677d066ab7258d13a0ee851addc77526dc0de9c05a02d5688c55377d65ddee1b6866b9e95
+  languageName: node
+  linkType: hard
+
+"@prisma/engines-version@npm:4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826":
+  version: 4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826
+  resolution: "@prisma/engines-version@npm:4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826"
+  checksum: 65975c69a361b56a85cf3652c8d7aec7549abe574158e423a64bc0be4bee83fe72ac2abd60133f776f3d410f97e7dc8c5dc516791ec963703cc6f914d378efc4
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:4.2.1":
+  version: 4.2.1
+  resolution: "@prisma/engines@npm:4.2.1"
+  checksum: 60a13c34412d875f803fbf6452df7dd811b92f9d08e0096629841f404b14e9830ff2e487c8e462d710a1a38a6b0a202e60369d804d0251ae139376772c64f00a
+  languageName: node
+  linkType: hard
+
 "@sapphire/async-queue@npm:^1.5.0":
   version: 1.5.0
   resolution: "@sapphire/async-queue@npm:1.5.0"
@@ -586,6 +614,7 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.3
     "@discordjs/builders": ^1.2.0
     "@discordjs/collection": ^1.1.0
+    "@prisma/client": ^4.2.1
     "@sapphire/eslint-config": ^4.3.8
     "@sapphire/prettier-config": ^1.4.4
     "@sapphire/result": ^2.4.0
@@ -602,6 +631,7 @@ __metadata:
     "@types/node": ^18.7.11
     "@typescript-eslint/eslint-plugin": ^5.34.0
     "@typescript-eslint/parser": ^5.34.0
+    "@vladfrangu/async_event_emitter": ^2.0.1
     cz-conventional-changelog: ^3.3.0
     discord-api-types: ^0.37.4
     eslint: ^8.22.0
@@ -609,11 +639,13 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     gradient-string: ^2.0.1
     husky: ^8.0.1
-    ioredis: ^5.2.2
+    ioredis: ^5.2.3
     jsbd: ^0.0.11
     lint-staged: ^13.0.3
+    nanoid: ^4.0.0
     prettier: ^2.7.1
     pretty-quick: ^3.1.3
+    prisma: ^4.2.1
     tslib: ^2.4.0
     typescript: ^4.7.4
   languageName: unknown
@@ -826,6 +858,13 @@ __metadata:
     "@typescript-eslint/types": 5.34.0
     eslint-visitor-keys: ^3.3.0
   checksum: b5574ce8363f905f0a11e14126ec606130bbcc151c326c004d0f510c8e4e884175a70e0299adb0a82ed817db469558d2d385137c09837249118e15cbfa47bff2
+  languageName: node
+  linkType: hard
+
+"@vladfrangu/async_event_emitter@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@vladfrangu/async_event_emitter@npm:2.0.1"
+  checksum: 96aec2c774676c3af47651167cb8ce1eba386c512aeac44731b09080f3a6faed7286993c37086da6cf600027f3281572d7beb8bc650f2fb257749ac99e6e2f6a
   languageName: node
   linkType: hard
 
@@ -2516,9 +2555,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ioredis@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "ioredis@npm:5.2.2"
+"ioredis@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "ioredis@npm:5.2.3"
   dependencies:
     "@ioredis/commands": ^1.1.1
     cluster-key-slot: ^1.1.0
@@ -2529,7 +2568,7 @@ __metadata:
     redis-errors: ^1.2.0
     redis-parser: ^3.0.0
     standard-as-callback: ^2.1.0
-  checksum: 8d650326063de4e37ec7ab38f00dde555284d9fc99fcbe698a4b0d65214920b8cb0f9483c0390fef8d81e9ee26e65380c93113cdedee184206815787bf88cec7
+  checksum: 2cb7f0f4217e6774accad3620af1b7114722721c1d1824be2c9f0c2a77ab9629f2e0848d18b1a7208bc37796ae1207cb3e0898fce61900cfe797da0382724ad1
   languageName: node
   linkType: hard
 
@@ -3075,6 +3114,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "nanoid@npm:4.0.0"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 7d5946df5c6d383694195b781ae7b5067c149d164ec71e910d6b06676309c3459b68af570b944fb5ecd5065d19df464f05700d141d70bb712ff8ca06642fd8df
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -3433,6 +3481,18 @@ __metadata:
   bin:
     pretty-quick: bin/pretty-quick.js
   checksum: 28bdc32571e6308e049497f58a9245f272275973782b6ed7fbcf98937101cc605a81b3ab48629dba4687b7e86c87a3733febacdc0746ca4da5d1c80a0b88cf45
+  languageName: node
+  linkType: hard
+
+"prisma@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "prisma@npm:4.2.1"
+  dependencies:
+    "@prisma/engines": 4.2.1
+  bin:
+    prisma: build/index.js
+    prisma2: build/index.js
+  checksum: 7f6fa164e153aa09f28f90420756831bb275a123ee0691fdd70bccee193ccc1d537cd14394cdf2ad549bb8773e06704025664948275d17f0fe4c139a470848e1
   languageName: node
   linkType: hard
 

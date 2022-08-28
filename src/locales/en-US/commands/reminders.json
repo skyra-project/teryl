@@ -1,4 +1,24 @@
 {
 	"name": "reminders",
-	"description": "Manage your personal reminders"
+	"description": "Manage your personal reminders",
+	"optionsIdName": "id",
+	"optionsIdDescription": "The ID of the reminder",
+	"optionsContentName": "content",
+	"optionsContentDescription": "The contents of the reminder",
+	"optionsDurationName": "duration",
+	"optionsDurationDescription": "The time after of which the reminder should be sent",
+	"createName": "create",
+	"createDescription": "Creates a new reminder",
+	"createContent": "Created a new reminder with ID {{id}}, I will send you a Direct Message on {{time}}.",
+	"updateName": "update",
+	"updateDescription": "Updates an existing reminder",
+	"updateMissingOptions": "You must specify either the time or the content.",
+	"deleteName": "delete",
+	"deleteDescription": "Deletes a reminder",
+	"deleteContent": "Successfully deleted the reminder {{id}} which was set to deliver on {{time}} with the following contents:{{content}}",
+	"listName": "list",
+	"listDescription": "Lists all of your reminders",
+	"listEmpty": "There are no reminders on your user, but you can create new ones using </reminders create:{{commandId}}>.",
+	"invalidId": "The ID you passed ({{id}}) is not valid.",
+	"invalidDuration": "I could not validate a duration from {{time}}, please try using words such as `2h`."
 }

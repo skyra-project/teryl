@@ -1,4 +1,4 @@
-import { escapeInlineBlock } from '#lib/common/escape';
+import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { isAbortError, json, safeTimedFetch, type FetchError } from '#lib/utilities/fetch';
 import { blockQuote } from '@discordjs/builders';
@@ -20,7 +20,7 @@ export class UserCommand extends Command {
 		const t = getSupportedLanguageT(interaction);
 		const content = result.match({
 			ok: (value) => this.makeContent(t, value),
-			err: (error) => t(this.getErrorKey(error), { value: escapeInlineBlock(args.input) })
+			err: (error) => t(this.getErrorKey(error), { value: escapeInlineCode(args.input) })
 		});
 
 		return interaction.sendMessage({ content });
@@ -47,7 +47,7 @@ export class UserCommand extends Command {
 	}
 
 	private makeContent(t: TFunction, result: OwlbotResult) {
-		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineBlock(result.word) })];
+		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
 		this.makeHeader(t, result).inspect((header) => lines.push(header));
 		lines.push(blockQuote(result.definitions[0].definition));
 		return lines.join('\n');

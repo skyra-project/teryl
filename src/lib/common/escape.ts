@@ -1,4 +1,4 @@
-export function escapeInlineBlock(text: string): string {
+export function escapeInlineCode(text: string): string {
 	return text.replaceAll('`', '῾');
 }
 

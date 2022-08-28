@@ -1,4 +1,4 @@
-import { escapeInlineBlock } from '#lib/common/escape';
+import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
@@ -22,7 +22,7 @@ export class UserCommand extends Command {
 		}
 
 		const position = Math.floor(Math.random() * possibles.length);
-		const content = resolveKey(interaction, LanguageKeys.Commands.Choice.Result, { value: escapeInlineBlock(possibles[position]) });
+		const content = resolveKey(interaction, LanguageKeys.Commands.Choice.Result, { value: escapeInlineCode(possibles[position]) });
 		return interaction.sendMessage({ content });
 	}
 }

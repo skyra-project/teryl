@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Reminder {
+  id      String   @id @db.VarChar(21)
+  /// The ID of the user who set the reminder.
+  userId  BigInt
+  /// The contents to send the user.
+  content String
+  /// The time at which the reminder is due for.
+  time    DateTime
+}

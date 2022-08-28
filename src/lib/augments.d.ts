@@ -14,6 +14,10 @@ declare module '@skyra/env-utilities' {
 		REDIS_HOST: string;
 		REDIS_DB: IntegerString;
 
+		REDIS_REMINDERS_DB: IntegerString;
+		REDIS_REMINDERS_QUEUE: string;
+		REDIS_REMINDERS_INTERVAL: IntegerString;
+
 		TWITCH_CLIENT_ID: string;
 		TWITCH_TOKEN: string;
 
