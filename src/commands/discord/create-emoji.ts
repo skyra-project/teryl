@@ -25,7 +25,7 @@ export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageEmojisAndStickers)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.MissingPermissions);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		// !Emoji:
@@ -33,7 +33,7 @@ export class UserCommand extends Command {
 			// !Emoji && !File:
 			if (isNullish(args.file)) {
 				const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.None);
-				return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+				return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 			}
 
 			// !Emoji && File:
@@ -45,7 +45,7 @@ export class UserCommand extends Command {
 
 		// Emoji && File
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
-		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: Options['emoji']) {
@@ -64,7 +64,7 @@ export class UserCommand extends Command {
 	private uploadFile(interaction: Command.ChatInputInteraction, file: Options['file']) {
 		if (isNullishOrZero(file.width) || isNullishOrZero(file.height)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		return this.sharedUpload(interaction, this.sanitizeName(file.filename), this.getOptimalUrl(file));

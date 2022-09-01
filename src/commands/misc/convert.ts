@@ -371,7 +371,7 @@ export class UserCommand extends Command {
 		const to = t(data.toUnit, { value: data.value });
 
 		const content = resolveUserKey(data.interaction, LanguageKeys.Commands.Convert.Result, { from, to });
-		return data.interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return data.interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	public static makeAmountOption() {

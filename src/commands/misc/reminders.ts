@@ -23,7 +23,7 @@ export class UserCommand extends Command {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, {
 				value: inlineCode(escapeInlineCode(options.duration))
 			});
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const date = new Date(Date.now() + duration.offset);
@@ -37,7 +37,7 @@ export class UserCommand extends Command {
 			id: inlineCode(id),
 			time: time(date, TimestampStyles.LongDateTime)
 		});
-		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) =>
@@ -49,7 +49,7 @@ export class UserCommand extends Command {
 	public async update(interaction: Command.ChatInputInteraction, options: UpdateOptions) {
 		if (isNullishOrEmpty(options.duration) && isNullishOrEmpty(options.content)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateMissingOptions);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const reminder = await this.getReminder(interaction, options.id);
@@ -57,11 +57,11 @@ export class UserCommand extends Command {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
 			});
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		// TODO: Finish logic
-		return interaction.sendMessage({ content: 'Coming soon:tm:', flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content: 'Coming soon:tm:', flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) =>
@@ -73,7 +73,7 @@ export class UserCommand extends Command {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
 			});
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		await this.container.reminders.remove(reminder.id);
@@ -82,7 +82,7 @@ export class UserCommand extends Command {
 			time: time(reminder.time, TimestampStyles.LongDateTime),
 			content: codeBlock(escapeCodeBlock(reminder.content))
 		});
-		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
@@ -90,11 +90,11 @@ export class UserCommand extends Command {
 		const reminders = await this.container.prisma.reminder.findMany({ where: { userId: BigInt(interaction.user.id) }, take: 10 });
 		if (isNullishOrEmpty(reminders)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.ListEmpty, { commandId: interaction.data.id });
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const content = reminders.map((reminder) => this.formatReminder(reminder)).join('\n');
-		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private async getReminder(interaction: Command.ChatInputInteraction, id: string) {

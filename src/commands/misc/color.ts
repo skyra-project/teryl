@@ -19,7 +19,7 @@ export class UserCommand extends Command {
 			ok: (color) => this.makeRequest(interaction, color),
 			err: (error) => ({ content: resolveUserKey(interaction, error, { input: inlineCode(options.input) }), flags: MessageFlags.Ephemeral })
 		});
-		return interaction.sendMessage(response);
+		return interaction.reply(response);
 	}
 
 	private async makeRequest(interaction: Command.ChatInputInteraction, color: string) {

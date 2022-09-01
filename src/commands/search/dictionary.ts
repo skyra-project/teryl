@@ -23,7 +23,7 @@ export class UserCommand extends Command {
 			err: (error) => t(this.getErrorKey(error), { value: escapeInlineCode(args.input) })
 		});
 
-		return interaction.sendMessage({ content });
+		return interaction.reply({ content });
 	}
 
 	private getErrorKey(error: FetchError) {

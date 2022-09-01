@@ -1,5 +1,6 @@
 import { json, safeFetch } from '#lib/utilities/fetch';
 import { none, Result, some, type Option } from '@sapphire/result';
+import type { NonNullObject } from '@sapphire/utilities';
 import { URL } from 'node:url';
 
 export const BaseUrlHelix = 'https://api.twitch.tv/helix';
@@ -34,7 +35,7 @@ export function fetchBearer() {
 	});
 }
 
-async function getRequest<T>(path: string): Promise<Result<T, Error>> {
+async function getRequest<T extends NonNullObject>(path: string): Promise<Result<T, Error>> {
 	return json<T>(
 		safeFetch(`${BaseUrlHelix}/${path}`, {
 			headers: { ...TwitchRequestHeaders, Authorization: `Bearer ${await fetchBearer()}` }

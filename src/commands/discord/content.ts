@@ -10,7 +10,7 @@ export class UserCommand extends Command {
 	@RegisterMessageCommand((builder) => applyNameLocalizedBuilder(builder, LanguageKeys.Commands.Content.RootName))
 	public run(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
 		const content = [...this.getFields(interaction, options.message)].join('\n');
-		return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private *getFields(interaction: Command.MessageInteraction, message: APIMessage): Generator<string> {

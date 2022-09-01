@@ -13,17 +13,17 @@ export class UserCommand extends Command {
 		const possibles = args.values.split(/ +/);
 		if (possibles.length === 1) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Choice.TooFewOptions);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		if (possibles.length !== new Set(possibles).size) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Choice.DuplicatedOptions);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const position = Math.floor(Math.random() * possibles.length);
 		const content = resolveKey(interaction, LanguageKeys.Commands.Choice.Result, { value: escapeInlineCode(possibles[position]) });
-		return interaction.sendMessage({ content });
+		return interaction.reply({ content });
 	}
 }
 

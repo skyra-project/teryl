@@ -24,7 +24,7 @@ export class UserCommand extends Command {
 		const choices = [...set];
 		const content = `${bold(options.title)}\n${choices.map((choice, index) => `• ${NumberEmojis[index]} ${choice}`).join('\n')}`;
 
-		const result = await (await interaction.sendMessage({ content })).get();
+		const result = await (await interaction.reply({ content })).get();
 		await result.match({
 			ok: (message) => this.addReactions(message, set.size),
 			err: (error) => this.container.logger.error(error)

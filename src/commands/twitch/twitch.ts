@@ -17,7 +17,7 @@ export class UserCommand extends Command {
 		const users = await fetchUsers([], [options.name]);
 		if (users.isErr() || users.isOkAnd((value) => value.data.length === 0)) {
 			const content = t(LanguageKeys.Commands.Twitch.UserDoesNotExist);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const [channel] = users.unwrap().data;
@@ -39,7 +39,7 @@ export class UserCommand extends Command {
 				{ name: titles.partner, value: partner, inline: true }
 			);
 
-		return interaction.sendMessage({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
+		return interaction.reply({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) =>
@@ -53,7 +53,7 @@ export class UserCommand extends Command {
 		const users = await fetchUsers([], [options.user, options.channel]);
 		if (users.isErr() || users.isOkAnd((value) => value.data.length < 2)) {
 			const content = t(LanguageKeys.Commands.Twitch.FollowageDoesNotExist);
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		// Get the User objects for the user and channel names:
@@ -61,7 +61,7 @@ export class UserCommand extends Command {
 		const followage = await fetchUserFollowage(user.id, channel.id);
 		if (followage.isErr() || followage.isOkAnd((data) => data.data.length === 0)) {
 			const content = t(LanguageKeys.Commands.Twitch.FollowageDoesNotFollow, { user: user.display_name, channel: channel.display_name });
-			return interaction.sendMessage({ content, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const [entry] = followage.unwrap().data;
@@ -75,7 +75,7 @@ export class UserCommand extends Command {
 			.setDescription(description)
 			.setTimestamp();
 
-		return interaction.sendMessage({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
+		return interaction.reply({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
 	}
 
 	private static readonly AffiliateTypes = {
