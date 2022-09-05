@@ -1,11 +1,11 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { TheColorApiResult } from '#lib/types/thecolorapi';
-import { json, safeTimedFetch } from '#lib/utilities/fetch';
 import { EmbedBuilder, inlineCode } from '@discordjs/builders';
 import { err, none, ok, Result, some, type Option } from '@sapphire/result';
 import { Time } from '@sapphire/time-utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey, type TypedFT } from '@skyra/http-framework-i18n';
+import { Json, safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
@@ -24,7 +24,7 @@ export class UserCommand extends Command {
 
 	private async makeRequest(interaction: Command.ChatInputInteraction, color: string) {
 		const url = `https://www.thecolorapi.com/id?hex=${color}`;
-		const result = await json<TheColorApiResult>(await safeTimedFetch(url, Time.Second * 2));
+		const result = await Json<TheColorApiResult>(await safeTimedFetch(url, Time.Second * 2));
 
 		const embed = new EmbedBuilder().setColor(parseInt(color, 16)).setThumbnail(`https://www.colorhexa.com/${color}.png`);
 		result.inspect((data) =>

@@ -1,11 +1,11 @@
 import { bitHas } from '#lib/common/bits';
 import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { safeTimedFetch } from '#lib/utilities/fetch';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
+import { safeTimedFetch } from '@skyra/safe-fetch';
 import {
 	MessageFlags,
 	PermissionFlagsBits,

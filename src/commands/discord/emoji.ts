@@ -1,11 +1,11 @@
 import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { safeTimedFetch } from '#lib/utilities/fetch';
 import type { RawFile } from '@discordjs/rest';
 import { Time } from '@sapphire/time-utilities';
 import { isNullish } from '@sapphire/utilities';
 import { Command, MakeArguments, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
+import { safeTimedFetch } from '@skyra/safe-fetch';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Emoji.RootName, LanguageKeys.Commands.Emoji.RootDescription) //

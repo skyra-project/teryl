@@ -1,12 +1,11 @@
 import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { json, safeTimedFetch } from '#lib/utilities/fetch';
 import { EmbedBuilder } from '@discordjs/builders';
-import { Result } from '@sapphire/result';
 import { Time } from '@sapphire/time-utilities';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
+import { Json, safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
@@ -51,7 +50,7 @@ export class UserCommand extends Command {
 		const url = new URL('https://en.wikipedia.org/w/api.php');
 		url.searchParams.append('action', 'opensearch');
 		url.searchParams.append('search', input);
-		const result = await json<SearchResult>(safeTimedFetch(url, Time.Second * 2));
+		const result = await Json<SearchResult>(safeTimedFetch(url, Time.Second * 2));
 
 		return result
 			.map((results) => results[1])
@@ -77,11 +76,7 @@ export class UserCommand extends Command {
 		url.searchParams.append('exsectionformat', 'plain');
 		url.searchParams.append('exchars', '300');
 
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), Time.Second * 2);
-		const result = await Result.fromAsync(fetch(url, { signal: controller.signal }).then((result) => result.json() as Promise<QueryResult>));
-		clearTimeout(timer);
-
+		const result = await Json<QueryResult>(safeTimedFetch(url, Time.Second * 2));
 		const entry = result.match({
 			ok: (value): QueryCacheValue | null => {
 				if (!UserCommand.isSuccessfulQuery(value.query)) return null;

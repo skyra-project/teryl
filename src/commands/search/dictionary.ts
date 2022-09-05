@@ -1,12 +1,12 @@
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { isAbortError, json, safeTimedFetch, type FetchError } from '#lib/utilities/fetch';
 import { blockQuote } from '@discordjs/builders';
 import { none, some } from '@sapphire/result';
 import { Time } from '@sapphire/time-utilities';
 import { envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
+import { isAbortError, Json, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Dictionary.RootName, LanguageKeys.Commands.Dictionary.RootDescription).addStringOption(
@@ -15,7 +15,7 @@ import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@s
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
-		const result = await this.fetch(args.input);
+		const result = await this.makeRequest(args.input);
 
 		const t = getSupportedLanguageT(interaction);
 		const content = result.match({
@@ -64,8 +64,8 @@ export class UserCommand extends Command {
 		return header.length ? some(header.join(' • ')) : none;
 	}
 
-	private fetch(input: string) {
-		return json<OwlbotResult>(
+	private makeRequest(input: string) {
+		return Json<OwlbotResult>(
 			safeTimedFetch(`https://owlbot.info/api/v4/dictionary/${encodeURIComponent(input.toLowerCase())}`, Time.Second * 2, {
 				headers: { Accept: 'application/json', Authorization: `Token ${envParseString('OWLBOT_TOKEN')}` }
 			})
