@@ -1,7 +1,7 @@
 import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { RawFile } from '@discordjs/rest';
-import { Time } from '@sapphire/time-utilities';
+import { Time } from '@sapphire/duration';
 import { isNullish } from '@sapphire/utilities';
 import { Command, MakeArguments, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';

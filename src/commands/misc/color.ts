@@ -1,8 +1,8 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { TheColorApiResult } from '#lib/types/thecolorapi';
 import { EmbedBuilder, inlineCode } from '@discordjs/builders';
+import { Time } from '@sapphire/duration';
 import { err, none, ok, Result, some, type Option } from '@sapphire/result';
-import { Time } from '@sapphire/time-utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey, type TypedFT } from '@skyra/http-framework-i18n';
 import { Json, safeTimedFetch } from '@skyra/safe-fetch';

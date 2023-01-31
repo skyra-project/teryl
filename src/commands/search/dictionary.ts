@@ -1,8 +1,8 @@
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { blockQuote } from '@discordjs/builders';
+import { Time } from '@sapphire/duration';
 import { none, some } from '@sapphire/result';
-import { Time } from '@sapphire/time-utilities';
 import { envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';

@@ -2,7 +2,7 @@ import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { codeBlock, inlineCode, SlashCommandStringOption, time, TimestampStyles } from '@discordjs/builders';
 import type { Reminder } from '@prisma/client';
-import { Duration } from '@sapphire/time-utilities';
+import { Duration } from '@sapphire/duration';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';

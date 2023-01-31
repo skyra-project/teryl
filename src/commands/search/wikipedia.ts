@@ -1,7 +1,7 @@
 import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder } from '@discordjs/builders';
-import { Time } from '@sapphire/time-utilities';
+import { Time } from '@sapphire/duration';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
