@@ -22,5 +22,7 @@ declare module '@skyra/env-utilities' {
 		TWITCH_TOKEN: string;
 
 		OWLBOT_TOKEN: string;
+		NINTENDO_ID: string;
+		NINTENDO_TOKEN: string;
 	}
 }

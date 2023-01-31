@@ -1,4 +1,7 @@
 {
 	"name": "eshop",
-	"description": "Get information about a game from Nintendo of America"
+	"description": "Get information about a game from Nintendo of America",
+	"optionsInputName": "input",
+	"optionsInputDescription": "The game to get information about",
+	"noResults": "EShop returned no results, please try again with other search terms."
 }

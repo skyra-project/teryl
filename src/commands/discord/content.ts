@@ -1,7 +1,7 @@
 import { Emojis } from '#lib/common/constants';
 import { escapeCodeBlock } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { codeBlock, hideLinkEmbed, hyperlink, quote, userMention } from '@discordjs/builders';
+import { codeBlock, hideLinkEmbed, hyperlink, messageLink, quote, userMention } from '@discordjs/builders';
 import { Command, RegisterMessageCommand, type TransformedArguments } from '@skyra/http-framework';
 import { applyNameLocalizedBuilder, getSupportedUserLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { MessageFlags, type APIEmbed, type APIMessage, type APIMessageInteraction } from 'discord-api-types/v10';
@@ -26,7 +26,7 @@ export class UserCommand extends Command {
 	}
 
 	private formatHeader(interaction: Command.MessageInteraction, message: APIMessage) {
-		const link = hyperlink(message.id, `https://discord.com/channels/${interaction.guild_id ?? '@me'}/${message.channel_id}/${message.id}`);
+		const link = hyperlink(message.id, messageLink(message.channel_id, message.id, interaction.guild_id ?? '@me'));
 		const pinned = message.pinned ? ` ${Emojis.MessagePinIcon}` : '';
 		return `${Emojis.IdIcon} ${link}${pinned}`;
 	}
