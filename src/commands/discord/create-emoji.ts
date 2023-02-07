@@ -9,11 +9,11 @@ import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framew
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch } from '@skyra/safe-fetch';
 import {
-	APIAttachment,
 	MessageFlags,
 	PermissionFlagsBits,
 	RESTJSONErrorCodes,
 	Routes,
+	type APIAttachment,
 	type RESTPostAPIGuildEmojiJSONBody,
 	type RESTPostAPIGuildEmojiResult
 } from 'discord-api-types/v10';
