@@ -2,6 +2,7 @@ import { bitHas } from '#lib/common/bits';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
 import { getUnicodeEmojiName } from '#lib/utilities/unicode';
+import { DiscordAPIError, HTTPError } from '@discordjs/rest';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
@@ -11,6 +12,7 @@ import {
 	APIAttachment,
 	MessageFlags,
 	PermissionFlagsBits,
+	RESTJSONErrorCodes,
 	Routes,
 	type RESTPostAPIGuildEmojiJSONBody,
 	type RESTPostAPIGuildEmojiResult
@@ -28,6 +30,11 @@ export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageEmojisAndStickers)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.MissingPermissions);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		if (args.name && !UserCommand.NameValidatorRegExp.test(args.name)) {
+			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.InvalidName);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -108,9 +115,31 @@ export class UserCommand extends Command {
 			.map((data) => `<${data.animated ? 'a' : ''}:${data.name}:${data.id}>`)
 			.match({
 				ok: (emoji) => resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Uploaded, { emoji }),
-				// TODO: Handle error codes
-				err: () => resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUpload)
+				err: (error) => this.getUploadError(interaction, error)
 			});
+	}
+
+	private getUploadError(interaction: Command.ChatInputInteraction, error: unknown) {
+		if (error instanceof HTTPError) {
+			this.container.logger.error(error);
+			return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadDiscordDown);
+		}
+
+		if (error instanceof DiscordAPIError) {
+			switch (error.code as number) {
+				case RESTJSONErrorCodes.MissingPermissions:
+					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMissingPermissions);
+				case RESTJSONErrorCodes.InvalidFormBodyOrContentType:
+					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadInvalidBody);
+				case RESTJSONErrorCodes.MaximumNumberOfEmojisReached:
+					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMaximumEmojis);
+				case RESTJSONErrorCodes.MaximumNumberOfAnimatedEmojisReached:
+					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMaximumAnimatedEmojis);
+			}
+		}
+
+		this.container.logger.error(error);
+		return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUpload);
 	}
 
 	private sanitizeName(name: string) {
@@ -172,6 +201,8 @@ export class UserCommand extends Command {
 
 		return err(LanguageKeys.Commands.CreateEmoji.ContentTypeUnsupported);
 	}
+
+	private static readonly NameValidatorRegExp = /^[0-9a-zA-Z_]{2,32}$/;
 }
 
 type Options = MakeArguments<{

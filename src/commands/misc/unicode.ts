@@ -43,9 +43,7 @@ export class UserCommand extends Command {
 							: t(UserCommand.UnicodeClassKeyMapper[unicode.class as keyof typeof UserCommand.UnicodeClassKeyMapper])
 				})
 			);
-			const value = unicode.value.decimal ?? unicode.value.digit ?? unicode.value.numeric;
-			if (value) lines.push(t(LanguageKeys.Commands.Unicode.InformationValue, { value }));
-
+			if (unicode.value) lines.push(t(LanguageKeys.Commands.Unicode.InformationValue, { value: unicode.value }));
 			if (unicode.mirrored) lines.push(t(LanguageKeys.Commands.Unicode.InformationMirrored));
 			if (unicode.mapping.base) {
 				lines.push(t(LanguageKeys.Commands.Unicode.InformationMappingBase, { value: this.parseMapping(unicode.mapping.base) }));

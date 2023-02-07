@@ -6,7 +6,7 @@ export function getTwemojiId(emoji: string): string {
 }
 
 export function getTwemojiUrl(emoji: string): string {
-	return `https://twemoji.maxcdn.com/v/latest/72x72/${getTwemojiId(emoji)}.png`;
+	return `https://cdn.jsdelivr.net/gh/twitter/twemoji/assets/72x72/${getTwemojiId(emoji)}.png`;
 }
 
 const DiscordEmoji = /^<(?<animated>a?):(?<name>[^:]+):(?<id>\d{17,20})>$/;

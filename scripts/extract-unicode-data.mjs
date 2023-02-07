@@ -75,6 +75,7 @@ for (const line of text.split('\n')) {
 	if (line.length === 0) continue;
 
 	const parts = line.split(';');
+	const value = parts[8] || parts[6] || parts[7];
 	output.push({
 		id: parseInt(parts[0], 16),
 		name: parts[1],
@@ -86,11 +87,7 @@ for (const line of text.split('\n')) {
 			uppercase: parts[12],
 			lowercase: parts[13]
 		},
-		value: {
-			decimal: parts[6] ? Number(parts[6]) : null,
-			digit: parts[7] ? Number(parts[7]) : null,
-			numeric: parts[8] ? Number(parts[8]) : null
-		},
+		value: value ? Number(value) : null,
 		mirrored: parts[9] === 'Y',
 		unicodeName: parts[10],
 		comment: parts[11]

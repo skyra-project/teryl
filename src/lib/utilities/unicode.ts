@@ -12,8 +12,8 @@ export function getUnicode(id: string | number) {
 export function getUnicodeEmojiName(id: string | number) {
 	const unicode = getUnicode(id);
 	if (isNullish(unicode)) return null;
-	if (!isNullishOrEmpty(unicode.unicodeName)) return unicode.unicodeName.toLowerCase().replaceAll(' ', '-').slice(0, 32);
-	return unicode.name.toLowerCase().replaceAll(' ', '-').slice(0, 32);
+	if (!isNullishOrEmpty(unicode.unicodeName)) return unicode.unicodeName.toLowerCase().replaceAll(' ', '_').slice(0, 32);
+	return unicode.name.toLowerCase().replaceAll(' ', '_').slice(0, 32);
 }
 
 export interface Unicode {
@@ -23,7 +23,7 @@ export interface Unicode {
 	class: Class;
 	bidirectionalCategory: BidirectionalCategory;
 	mapping: Mapping;
-	value: Value;
+	value: number | null;
 	mirrored: boolean;
 	unicodeName: string;
 	comment: string;
@@ -212,10 +212,4 @@ export interface Mapping {
 	uppercase: string;
 	lowercase: string;
 	titlecase: string;
-}
-
-export interface Value {
-	decimal: number | null;
-	digit: number | null;
-	numeric: number | null;
 }
