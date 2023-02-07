@@ -1,12 +1,14 @@
 import { bitHas } from '#lib/common/bits';
-import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
+import { getUnicodeEmojiName } from '#lib/utilities/unicode';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch } from '@skyra/safe-fetch';
 import {
+	APIAttachment,
 	MessageFlags,
 	PermissionFlagsBits,
 	Routes,
@@ -18,6 +20,7 @@ import {
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.RootName, LanguageKeys.Commands.CreateEmoji.RootDescription)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsEmoji))
 		.addAttachmentOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsFile))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsName))
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers)
 )
@@ -37,37 +40,37 @@ export class UserCommand extends Command {
 			}
 
 			// !Emoji && File:
-			return this.uploadFile(interaction, args.file);
+			return this.uploadFile(interaction, args.file, args.name);
 		}
 
 		// Emoji && !File:
-		if (isNullish(args.file)) return this.uploadEmoji(interaction, args.emoji);
+		if (isNullish(args.file)) return this.uploadEmoji(interaction, args.emoji, args.name);
 
 		// Emoji && File
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: Options['emoji']) {
+	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string) {
 		const data = getDiscordEmojiData(emoji);
-		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji) : this.uploadDiscordEmoji(interaction, data);
+		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji, name) : this.uploadDiscordEmoji(interaction, data, name);
 	}
 
-	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string) {
-		return this.sharedUpload(interaction, getTwemojiId(emoji), getTwemojiUrl(emoji));
+	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string) {
+		return this.sharedUpload(interaction, name ?? getUnicodeEmojiName(emoji) ?? getTwemojiId(emoji), getTwemojiUrl(emoji));
 	}
 
-	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji) {
-		return this.sharedUpload(interaction, emoji.name, getDiscordEmojiUrl(emoji));
+	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji, name?: string) {
+		return this.sharedUpload(interaction, name ?? emoji.name.replace(/~\d+/, ''), getDiscordEmojiUrl(emoji));
 	}
 
-	private uploadFile(interaction: Command.ChatInputInteraction, file: Options['file']) {
+	private uploadFile(interaction: Command.ChatInputInteraction, file: APIAttachment, name?: string) {
 		if (isNullishOrZero(file.width) || isNullishOrZero(file.height)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		return this.sharedUpload(interaction, this.sanitizeName(file.filename), this.getOptimalUrl(file));
+		return this.sharedUpload(interaction, this.sanitizeName(name ?? file.filename), this.getOptimalUrl(file));
 	}
 
 	private async sharedUpload(interaction: Command.ChatInputInteraction, name: string, url: string) {
@@ -174,4 +177,5 @@ export class UserCommand extends Command {
 type Options = MakeArguments<{
 	emoji: 'string';
 	file: 'attachment';
+	name: 'string';
 }>;

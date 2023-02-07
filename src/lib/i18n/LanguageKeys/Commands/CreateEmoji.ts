@@ -7,6 +7,7 @@ export const RootDescription = T('commands/createEmoji:description');
 
 export const OptionsEmoji = 'commands/createEmoji:optionsEmoji';
 export const OptionsFile = 'commands/createEmoji:optionsFile';
+export const OptionsName = 'commands/createEmoji:optionsName';
 
 export const MissingPermissions = T('commands/createEmoji:missingPermissions');
 export const Duplicated = T('commands/createEmoji:duplicated');

@@ -3,6 +3,10 @@ export const enum BrandingColors {
 	Secondary = 0xd4b8a3
 }
 
+export const enum EmbedColors {
+	Error = 0xff1744
+}
+
 export const enum Emojis {
 	MessageAttachmentIcon = '<:MessageAttachmentIcon:1006096566270033940>',
 	MessageLinkIcon = '<:MessageLinkIcon:1006096849201016852>',

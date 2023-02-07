@@ -1,4 +1,4 @@
-import type { DiscordEmoji } from '#lib/common/emoji';
+import type { DiscordEmoji } from '#lib/utilities/emoji';
 import { FT, T } from '@skyra/http-framework-i18n';
 
 // Root

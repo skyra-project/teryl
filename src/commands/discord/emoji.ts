@@ -1,5 +1,5 @@
-import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/common/emoji';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
 import type { RawFile } from '@discordjs/rest';
 import { Time } from '@sapphire/duration';
 import { isNullish } from '@sapphire/utilities';
