@@ -1,4 +1,14 @@
 {
 	"name": "price",
-	"description": "Get the price of a currency compared to others"
+	"description": "Get the price of a currency compared to others",
+	"optionsAmountName": "amount",
+	"optionsAmountDescription": "The amount of money to convert",
+	"optionsFromName": "from",
+	"optionsFromDescription": "The currency to convert from",
+	"optionsToName": "to",
+	"optionsToDescription": "The currencies to convert to, separated by spaces",
+	"abortError": "The server did not respond on time, please try again later.",
+	"unknownServerError": "I received an unexpected error from the server. Please try again later.",
+	"error": "The server returned an error with the given options, please make sure you wrote the correct names.",
+	"result": "**{{from}}** is worth {{amounts, list}}."
 }

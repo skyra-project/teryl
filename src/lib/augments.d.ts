@@ -2,6 +2,7 @@ import type { IntegerString } from '@skyra/env-utilities';
 
 declare module '@skyra/env-utilities' {
 	interface Env {
+		CLIENT_NAME: string;
 		CLIENT_VERSION: string;
 
 		HTTP_ADDRESS: string;
@@ -20,6 +21,7 @@ declare module '@skyra/env-utilities' {
 
 		TWITCH_CLIENT_ID: string;
 		TWITCH_TOKEN: string;
+		CRYPTOCOMPARE_TOKEN: string;
 
 		OWLBOT_TOKEN: string;
 		NINTENDO_ID: string;
