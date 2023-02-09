@@ -619,6 +619,7 @@ __metadata:
     "@skyra/shared-http-pieces": ^0.4.2
     "@skyra/start-banner": ^1.0.2
     "@types/gradient-string": ^1.1.2
+    "@types/he": ^1
     "@types/node": ^18.11.18
     "@typescript-eslint/eslint-plugin": ^5.49.0
     "@typescript-eslint/parser": ^5.49.0
@@ -629,6 +630,7 @@ __metadata:
     eslint-config-prettier: ^8.6.0
     eslint-plugin-prettier: ^4.2.1
     gradient-string: ^2.0.2
+    he: ^1.2.0
     husky: ^8.0.3
     ioredis: ^5.3.0
     jsbd: ^0.0.11
@@ -683,6 +685,13 @@ __metadata:
   dependencies:
     "@types/tinycolor2": "*"
   checksum: 8bc665bcf277b4da9d30eb1dc5d83990678145700df991a24441948cb86b8e9c453cb701a370d3363dddafdd365748ef3190140601c82916ea70ee577de98dc3
+  languageName: node
+  linkType: hard
+
+"@types/he@npm:^1":
+  version: 1.2.0
+  resolution: "@types/he@npm:1.2.0"
+  checksum: 0110608efe61a8fb710c5a344485d70dab48116e9529d10a3175985ad7a118a2547ffd708349681f3ecdbcd6ae91e63c674b73ed0e4bd2c9a57ca793f538c852
   languageName: node
   linkType: hard
 
@@ -2252,6 +2261,15 @@ __metadata:
   dependencies:
     function-bind: ^1.1.1
   checksum: b9ad53d53be4af90ce5d1c38331e712522417d017d5ef1ebd0507e07c2fbad8686fffb8e12ddecd4c39ca9b9b47431afbb975b8abf7f3c3b82c98e9aad052792
+  languageName: node
+  linkType: hard
+
+"he@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "he@npm:1.2.0"
+  bin:
+    he: bin/he
+  checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
   languageName: node
   linkType: hard
 
