@@ -49,7 +49,9 @@ export class UserCommand extends Command {
 	}
 
 	private async handleOkGetContent(interaction: Command.ChatInputInteraction, result: CacheHit): Promise<Result<CacheEntry, TypedT>> {
-		if (result.posts.length === 0) return err(LanguageKeys.Commands.Reddit.NoPosts);
+		if (result.posts.length === 0) {
+			return err(result.hasNsfl ? LanguageKeys.Commands.Reddit.AllNsfl : LanguageKeys.Commands.Reddit.NoPosts);
+		}
 
 		let { posts } = result;
 		if (result.hasNsfw) {
@@ -61,9 +63,7 @@ export class UserCommand extends Command {
 			}
 		}
 
-		return posts.length === 0
-			? err(result.hasNsfw ? LanguageKeys.Commands.Reddit.AllNsfw : LanguageKeys.Commands.Reddit.AllNsfl)
-			: ok(posts[Math.floor(Math.random() * posts.length)]);
+		return posts.length === 0 ? err(LanguageKeys.Commands.Reddit.AllNsfw) : ok(posts[Math.floor(Math.random() * posts.length)]);
 	}
 
 	private handleError(interaction: Command.ChatInputInteraction, reddit: string, error: FetchError): MessageResponseOptions {

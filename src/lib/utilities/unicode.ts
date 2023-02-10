@@ -1,8 +1,9 @@
+import { PathSrc } from '#lib/common/constants';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { readFile } from 'fs/promises';
 
-const outputFile = new URL('../../../assets/data/unicode.json', import.meta.url);
-const unicode = new Map((JSON.parse(await readFile(outputFile, 'utf8')) as Unicode[]).map((data) => [data.id, data] as const));
+const PathUnicode = new URL('./generated/data/unicode.json', PathSrc);
+const unicode = new Map((JSON.parse(await readFile(PathUnicode, 'utf8')) as Unicode[]).map((data) => [data.id, data] as const));
 
 export function getUnicode(id: string | number) {
 	if (typeof id === 'string') id = id.codePointAt(0) ?? 0;
