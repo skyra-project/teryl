@@ -30,7 +30,8 @@ export class UserCommand extends Command {
 		const id = await this.container.reminders.add({
 			userId: BigInt(interaction.user.id),
 			content: options.content.replaceAll('\\n', '\n'),
-			time: date
+			time: date,
+			targetChannelId: null
 		});
 
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.CreateContent, {

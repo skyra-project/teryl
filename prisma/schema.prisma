@@ -8,11 +8,58 @@ datasource db {
 }
 
 model Reminder {
-  id      String   @id @db.VarChar(21)
+  id              String                 @id @default(cuid())
   /// The ID of the user who set the reminder.
-  userId  BigInt
+  userId          BigInt                 @map("user_id")
+  /// The channel to send the message at.
+  targetChannelId BigInt?                @map("target_channel_id")
   /// The contents to send the user.
-  content String
+  content         String
   /// The time at which the reminder is due for.
-  time    DateTime
+  time            DateTime
+  /// The subscriptions, if any.
+  subscriptions   ReminderSubscription[]
+
+  @@index([time(sort: Asc)])
+  @@map("reminders")
+}
+
+model ReminderSubscription {
+  id         BigInt   @id @default(autoincrement())
+  /// The ID of the reminder.
+  reminderId String   @map("reminder_id")
+  reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  /// The ID of the user who subscribed to the reminder. Cannot be {@link reminder.userId}.
+  userId     BigInt   @map("user_id")
+
+  @@unique([userId, reminderId])
+  @@map("reminder_subscriptions")
+}
+
+model Tag {
+  id         BigInt     @id @default(autoincrement())
+  /// The name of the tag.
+  name       String
+  /// The guild the tag is for.
+  guildId    BigInt     @map("guild_id")
+  /// Whether or not the message should be sent as an embed.
+  embed      Boolean
+  /// The colour of the embed. Requires {@link embed} to be set as `true`.
+  embedColor Int        @map("embed_color")
+  /// The contents of the embed.
+  content    String
+  aliases    TagAlias[]
+
+  @@unique([name, guildId])
+  @@map("tags")
+}
+
+model TagAlias {
+  id    BigInt @id @default(autoincrement())
+  tagId BigInt @map("tag_id")
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  name  String
+
+  @@unique([tagId, name])
+  @@map("tag_aliases")
 }
