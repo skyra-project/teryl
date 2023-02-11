@@ -3,7 +3,7 @@ import { getLinkFromSelectMenu } from '#lib/utilities/youtube';
 import { InteractionHandler, Interactions } from '@skyra/http-framework';
 import { resolveUserKey } from '@skyra/http-framework-i18n';
 import type { Snowflake } from 'discord-api-types/globals';
-import { MessageFlags } from 'discord-api-types/v10';
+import { APIActionRowComponent, APIStringSelectComponent, MessageFlags } from 'discord-api-types/v10';
 
 export class UserHandler extends InteractionHandler {
 	public async run(interaction: Interaction, [id]: [Snowflake]) {
@@ -14,7 +14,10 @@ export class UserHandler extends InteractionHandler {
 
 		const [value] = interaction.values;
 		const content = getLinkFromSelectMenu(value);
-		return interaction.update({ content });
+		const row = interaction.message.components![0] as APIActionRowComponent<APIStringSelectComponent>;
+		const component = row.components[0];
+		const options = component.options.map((option) => ({ ...option, default: option.value === value }));
+		return interaction.update({ content, components: [{ ...row, components: [{ ...component, options }] }] });
 	}
 }
 
