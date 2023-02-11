@@ -12,7 +12,7 @@
 	"invalidJsonBody": "The server sent me a malformed response which I cannot process, please try again later.",
 	"unknownLocation": "The server does not seem to be aware of that place, please try somewhere else.",
 	"unknownError": "The server returned with an unknown error, please try again later.",
-	"abortError": "The server did not reply on time, please try again.",
+	"abortError": "<https://wttr.in> did not reply on time, please try again later.",
 	"blockedLocation": "The server blocked my request to receive data from that place, please try somewhere else.",
 	"rateLimited": "It seems I have exceeded the amount of requests I can do to the server, please try again later.",
 	"remoteServerError": "The server received an error while processing my request, please try again later.",

@@ -1,4 +1,9 @@
 {
 	"name": "youtube",
-	"description": "Get a link to a YouTube video, playlist, or profile"
+	"description": "Get a link to a YouTube video, playlist, or profile",
+	"optionsQueryName": "query",
+	"optionsQueryDescription": "The resource to search for in YouTube",
+	"noResults": "I received no results that I can process, please try with other words.",
+	"abortError": "YouTube did not reply on time, please try again later.",
+	"unknownError": "The server returned with an unknown error, please try again later."
 }
