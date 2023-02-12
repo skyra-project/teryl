@@ -1,12 +1,14 @@
 import { escapeCodeBlock } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { parseColor } from '#lib/utilities/color';
+import { DefaultLimits, fetchLimits } from '#lib/utilities/ring';
 import { getTag, makeTagChoices, sanitizeTagName, searchTag } from '#lib/utilities/tags';
 import { ActionRowBuilder, codeBlock, inlineCode, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder } from '@discordjs/builders';
-import { ok, Result } from '@sapphire/result';
+import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, TypedFT, TypedT, Value } from '@skyra/http-framework-i18n';
+import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
+import { isAbortError } from '@skyra/safe-fetch';
 import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
@@ -21,7 +23,6 @@ export class UserCommand extends Command {
 		return interaction.reply({ choices: makeTagChoices(tags) });
 	}
 
-	// TODO: Add tag limit
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Add)
 			.addStringOption(makeNameOption())
@@ -36,6 +37,9 @@ export class UserCommand extends Command {
 		const guildId = this.getGuildId(interaction);
 		const existing = await getTag(guildId, name);
 		if (!isNullish(existing)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Exists, inlineCode(name));
+
+		const countResult = await this.canAddMoreTags(interaction, guildId);
+		if (countResult.isErr()) return this.replyEphemeral(interaction, countResult.unwrapErr());
 
 		const embedColorResult = this.getEmbedColor(interaction, options);
 		if (embedColorResult.isErr()) return this.replyEphemeral(interaction, embedColorResult.unwrapErr());
@@ -147,7 +151,6 @@ export class UserCommand extends Command {
 		return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.EditSuccess, inlineCode(nextName));
 	}
 
-	// TODO: Add alias limit
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Alias)
 			.addStringOption(makeNameOption().setAutocomplete(true))
@@ -157,41 +160,45 @@ export class UserCommand extends Command {
 		const name = sanitizeTagName(options.name);
 		if (isNullishOrEmpty(name)) return this.replyInvalidName(interaction, options.name);
 
-		const guildId = this.getGuildId(interaction);
-		const tag = await getTag(guildId, name);
-		if (isNullish(tag)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name));
-
 		const alias = sanitizeTagName(options['new-name']);
 		if (isNullishOrEmpty(alias)) return this.replyInvalidName(interaction, options['new-name']);
 		if (name === alias) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AliasSame, inlineCode(name));
 
+		const guildId = this.getGuildId(interaction);
+		const tag = await getTag(guildId, name, true as const);
+		if (isNullish(tag)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name));
+
+		const aliasEntry = tag.aliases.find((entry) => entry.name === alias);
+		if (!isNullish(aliasEntry)) {
+			const result = await Result.fromAsync(this.container.prisma.tagAlias.delete({ where: { id: aliasEntry.id } }));
+			const content = result.match({
+				ok: () => resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.AliasRemoveSuccess, { value: inlineCode(alias) }),
+				err: (error) => {
+					this.container.logger.error('[TAG]', error);
+					return resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.AliasRemoveFailed, { value: inlineCode(alias) });
+				}
+			});
+			return this.replyEphemeral(interaction, content);
+		}
+
 		const target = await getTag(guildId, alias);
 		// No tag by name or alias of `alias`:
 		if (isNullish(target)) {
+			if (tag.aliases.length >= 10) {
+				return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.TooManyAliases, inlineCode(tag.name));
+			}
+
 			await this.container.prisma.tagAlias.create({ data: { name: alias, tagId: tag.id } });
 			return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AliasSuccess, inlineCode(alias));
 		}
 
-		// Tag by name of `alias`:
-		if (target.name === alias) {
-			return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AliasUsed, inlineCode(alias));
-		}
-
-		// Tag by alias of `alias`, different ID:
-		if (target.id !== tag.id) {
-			return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AliasIncompatible, inlineCode(alias));
-		}
-
-		// Tag by alias of `alias`, same ID:
-		const result = await Result.fromAsync(this.container.prisma.tagAlias.delete({ where: { tagId_name: { name: alias, tagId: tag.id } } }));
-		const content = result.match({
-			ok: () => resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.AliasRemoveSuccess, { value: inlineCode(alias) }),
-			err: (error) => {
-				this.container.logger.error('[TAG]', error);
-				return resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.AliasRemoveFailed, { value: inlineCode(alias) });
-			}
-		});
-		return this.replyEphemeral(interaction, content);
+		return this.replyLocalizedEphemeral(
+			interaction,
+			target.name === alias
+				? LanguageKeys.Commands.ManageTag.AliasUsed // Tag by name of `alias`
+				: LanguageKeys.Commands.ManageTag.AliasIncompatible, // Tag by alias of `alias`, different ID
+			inlineCode(alias)
+		);
 	}
 
 	@RegisterSubCommand((builder) =>
@@ -209,6 +216,23 @@ export class UserCommand extends Command {
 
 	private getGuildId(interaction: Command.Interaction) {
 		return BigInt(interaction.guildId!);
+	}
+
+	private async canAddMoreTags(interaction: Command.ChatInputInteraction, guildId: bigint) {
+		const count = await this.container.prisma.tag.count({ where: { guildId } });
+		if (count < DefaultLimits.maximumTagCount) return ok();
+
+		const result = await fetchLimits(guildId);
+		return result.match({
+			ok: (value) =>
+				count < value.maximumTagCount
+					? ok()
+					: err(resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.TooManyTags, { amount: count, limit: value.maximumTagCount })),
+			err: (error) => {
+				const key = isAbortError(error) ? LanguageKeys.Commands.ManageTag.AbortError : LanguageKeys.Commands.ManageTag.UnknownError;
+				return err(resolveUserKey(interaction, key));
+			}
+		});
 	}
 
 	private replyEphemeral(interaction: Command.ChatInputInteraction, content: string) {

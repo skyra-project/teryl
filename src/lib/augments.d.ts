@@ -19,6 +19,9 @@ declare module '@skyra/env-utilities' {
 		REDIS_REMINDERS_QUEUE: string;
 		REDIS_REMINDERS_INTERVAL: IntegerString;
 
+		INTERNAL_RING_URL: string;
+		INTERNAL_RING_TOKEN: string;
+
 		TWITCH_CLIENT_ID: string;
 		TWITCH_TOKEN: string;
 		CRYPTOCOMPARE_TOKEN: string;

@@ -36,6 +36,7 @@
 	"aliasRemoveSuccess": "Successfully removed the alias of {{value}}.",
 	"aliasSuccess": "Successfully edited {{value}}'s aliases.",
 	"aliasRemoveFailed": "I failed to remove the alias of {{value}} due to an unexpected error.",
+	"tooManyAliases": "You already reached the maximum number of aliases (10) for {{value}}.",
 	"exists": "There is already a tag with that name, please use another name.",
 	"unknown": "There is no such tag under the specified name. Please try again with a different name."
 }
