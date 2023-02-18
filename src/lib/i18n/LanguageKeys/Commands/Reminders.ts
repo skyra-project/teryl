@@ -12,6 +12,7 @@ export const Create = 'commands/reminders:create';
 export const CreateContent = FT<{ id: string; time: string }>('commands/reminders:createContent');
 
 export const Update = 'commands/reminders:update';
+export const UpdateContent = FT<{ id: string; time: string }>('commands/reminders:updateContent');
 export const UpdateMissingOptions = T('commands/reminders:updateMissingOptions');
 
 export const Delete = 'commands/reminders:delete';

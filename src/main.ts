@@ -36,7 +36,6 @@ const address = envParseString('HTTP_ADDRESS', '0.0.0.0');
 const port = envParseInteger('HTTP_PORT', 3000);
 await client.listen({ address, port });
 container.reminders.start();
-container.reminders.on('message', (message) => container.logger.info(message));
 
 console.log(
 	gradient.vice.multiline(

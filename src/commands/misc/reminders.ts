@@ -3,6 +3,7 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { codeBlock, inlineCode, SlashCommandStringOption, time, TimestampStyles } from '@discordjs/builders';
 import type { Reminder } from '@prisma/client';
 import { Duration } from '@sapphire/duration';
+import { err, ok } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
@@ -18,15 +19,10 @@ export class UserCommand extends Command {
 			.addStringOption(UserCommand.createTimeOption().setRequired(true))
 	)
 	public async create(interaction: Command.ChatInputInteraction, options: CreateOptions) {
-		const duration = new Duration(options.duration);
-		if (!Number.isInteger(duration.offset)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, {
-				value: inlineCode(escapeInlineCode(options.duration))
-			});
-			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		}
+		const dateResult = this.parseDate(interaction, options.duration);
+		if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
-		const date = new Date(Date.now() + duration.offset);
+		const date = dateResult.unwrap();
 		const id = await this.container.reminders.add({
 			userId: BigInt(interaction.user.id),
 			content: options.content.replaceAll('\\n', '\n'),
@@ -53,7 +49,7 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		const reminder = await this.getReminder(interaction, options.id);
+		const reminder = await this.container.prisma.reminder.findFirst({ where: { id: options.id, userId: BigInt(interaction.user.id) } });
 		if (isNullish(reminder)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
@@ -61,15 +57,27 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		// TODO: Finish logic
-		return interaction.reply({ content: 'Coming soon:tm:', flags: MessageFlags.Ephemeral });
+		let date = reminder.time;
+		if (!isNullishOrEmpty(options.duration)) {
+			const dateResult = this.parseDate(interaction, options.duration);
+			if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
+
+			date = dateResult.unwrap();
+		}
+
+		await this.container.reminders.reschedule(reminder.id, date.getTime(), { content: options.content });
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, {
+			id: inlineCode(reminder.id),
+			time: time(date, TimestampStyles.LongDateTime)
+		});
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(UserCommand.createIdOption().setRequired(true))
 	)
 	public async delete(interaction: Command.ChatInputInteraction, options: DeleteOptions) {
-		const reminder = await this.getReminder(interaction, options.id);
+		const reminder = await this.container.prisma.reminder.findFirst({ where: { id: options.id, userId: BigInt(interaction.user.id) } });
 		if (isNullish(reminder)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
@@ -98,9 +106,11 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	private async getReminder(interaction: Command.ChatInputInteraction, id: string) {
-		const values = await this.container.prisma.reminder.findMany({ where: { id, userId: BigInt(interaction.user.id) }, take: 1 });
-		return isNullishOrEmpty(values) ? null : values[0];
+	private parseDate(interaction: Command.ChatInputInteraction, input: string) {
+		const duration = new Duration(input);
+		return Number.isInteger(duration.offset)
+			? ok(new Date(Date.now() + duration.offset))
+			: err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
 	}
 
 	private formatReminder(reminder: Reminder) {

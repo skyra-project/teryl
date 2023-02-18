@@ -5,6 +5,7 @@ import { run as remindersRun } from '#lib/setup/reminders';
 import { setup as envRun } from '@skyra/env-utilities';
 import { setInvite, setRepository } from '@skyra/shared-http-pieces';
 
+import '#lib/setup/schedules';
 import '@skyra/shared-http-pieces/register';
 
 export function setup() {

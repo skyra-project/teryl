@@ -1,19 +1,17 @@
 import { isNullishOrEmpty } from '@sapphire/utilities';
-import { AsyncEventEmitter } from '@vladfrangu/async_event_emitter';
+import { container } from '@skyra/http-framework';
 import type Redis from 'ioredis';
 import { nanoid } from 'nanoid';
 
-export abstract class BaseScheduler<T extends BaseScheduler.Value> extends AsyncEventEmitter<{
-	message: [data: BaseScheduler.AddId<T>];
-}> {
+export abstract class BaseScheduler<T extends BaseScheduler.Value> {
+	public abstract readonly name: string;
 	public readonly redis: Redis;
 	public readonly queue: string;
 	public readonly interval: number;
+	public _lastMaximum = 0;
 	private _interval: NodeJS.Timer | null = null;
 
 	public constructor(options: BaseScheduler.Options) {
-		super();
-
 		this.redis = options.redis;
 		this.queue = options.queue;
 		this.interval = options.interval ?? 1000;
@@ -39,25 +37,37 @@ export abstract class BaseScheduler<T extends BaseScheduler.Value> extends Async
 	}
 
 	public async remove(id: string): Promise<boolean> {
+		const result = await this.onRemove(id);
 		const count = await this.redis.zrem(this.queue, id);
-		if (count === 0) return false;
+		return result || count !== 0;
+	}
 
-		return this.onRemove(id);
+	public async reschedule(id: string, time: number, extras?: Partial<T>): Promise<boolean> {
+		const result = await this.onReschedule(id, time, extras);
+		const count = await this.redis.zadd(this.queue, 'XX', 'CH', time, id);
+		return result || count !== 0;
 	}
 
 	protected abstract onAdd(id: string, value: T): Promise<void>;
 
 	protected abstract onRemove(id: string): Promise<boolean>;
 
+	protected abstract onReschedule(id: string, time: number, extras?: Partial<T>): Promise<boolean>;
+
 	protected abstract handle(ids: readonly string[]): Promise<BaseScheduler.AddId<T>[]>;
 
 	private async requestPendingItems() {
-		const ids = await this.redis.zrange(this.queue, 0, Date.now(), 'BYSCORE');
+		const min = this._lastMaximum;
+		// eslint-disable-next-line no-multi-assign
+		const max = (this._lastMaximum = Date.now());
+		const ids = await this.redis.zrange(this.queue, min, max, 'BYSCORE');
 		if (isNullishOrEmpty(ids)) return;
 
-		await this.redis.zrem(this.queue, ...ids);
 		const values = await this.handle(ids);
-		for (const value of values) this.emit('message', value);
+		const store = container.stores.get('schedule-handlers');
+		for (const value of values) {
+			void store.run(this, value);
+		}
 	}
 }
 

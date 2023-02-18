@@ -40,9 +40,6 @@ CREATE TABLE "tag_aliases" (
 );
 
 -- CreateIndex
-CREATE INDEX "reminders_time_idx" ON "reminders"("time" ASC);
-
--- CreateIndex
 CREATE UNIQUE INDEX "reminder_subscriptions_user_id_reminder_id_key" ON "reminder_subscriptions"("user_id", "reminder_id");
 
 -- CreateIndex

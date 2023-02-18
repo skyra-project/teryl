@@ -20,7 +20,6 @@ model Reminder {
   /// The subscriptions, if any.
   subscriptions   ReminderSubscription[]
 
-  @@index([time(sort: Asc)])
   @@map("reminders")
 }
 
