@@ -1,10 +1,10 @@
 import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { EmbedBuilder } from '@discordjs/builders';
+import { EmbedBuilder, hyperlink, inlineCode } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
-import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
+import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { Json, safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
@@ -33,11 +33,16 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		const embed = new EmbedBuilder()
+		const embed = new EmbedBuilder() //
 			.setColor(BrandingColors.Primary)
-			.setTitle(data.title)
-			.setURL(UserCommand.titleToUrl(data.title))
-			.setDescription(data.extract);
+			.setTitle(data.title);
+		if (data.type === QueryCacheType.Page) {
+			embed.setURL(UserCommand.titleToUrl(data.title)).setDescription(data.extract);
+		} else {
+			const url = UserCommand.titleToUrl(data.title, data.iw);
+			const link = hyperlink(inlineCode(`${data.iw}.wikipedia.org`), url);
+			embed.setURL(url).setDescription(resolveKey(interaction, LanguageKeys.Commands.Wikipedia.InterWiki, { link }));
+		}
 
 		return interaction.reply({ embeds: [embed.toJSON()] });
 	}
@@ -79,10 +84,17 @@ export class UserCommand extends Command {
 		const result = await Json<QueryResult>(safeTimedFetch(url, Time.Second * 2));
 		const entry = result.match({
 			ok: (value): QueryCacheValue | null => {
-				if (!UserCommand.isSuccessfulQuery(value.query)) return null;
+				if (UserCommand.isPage(value.query)) {
+					const page = value.query.pages[value.query.pageids[0]];
+					return { type: QueryCacheType.Page, id: page.pageid, title: page.title, extract: page.extract };
+				}
 
-				const page = value.query.pages[value.query.pageids[0]];
-				return { id: page.pageid, title: page.title, extract: page.extract };
+				if (UserCommand.isInterWiki(value.query)) {
+					const page = value.query.interwiki[0];
+					return { type: QueryCacheType.InterWiki, iw: page.iw, title: page.title };
+				}
+
+				return null;
 			},
 			err: (error) => {
 				this.container.logger.error(error);
@@ -104,13 +116,17 @@ export class UserCommand extends Command {
 		')': '%29'
 	} as const;
 
-	private static isSuccessfulQuery(query: QueryResultQuerySuccess | QueryResultQueryMissing): query is QueryResultQuerySuccess {
-		return query.pageids[0] !== '-1';
+	private static isPage(query: QueryResultQuery): query is QueryResultQueryPages {
+		return 'pageids' in query && query.pageids[0] !== '-1';
 	}
 
-	private static titleToUrl(title: string): string {
+	private static isInterWiki(query: QueryResultQuery): query is QueryResultQueryInterWiki {
+		return 'interwiki' in query;
+	}
+
+	private static titleToUrl(title: string, lang = 'en'): string {
 		const sanitized = title.replaceAll(/[ \(\)]/g, (character) => UserCommand.titleToUrlReplacers[character as ' ' | '(' | ')']);
-		return `https://en.wikipedia.org/wiki/${encodeURIComponent(sanitized)}`;
+		return `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(sanitized)}`;
 	}
 }
 
@@ -119,25 +135,49 @@ interface Options {
 }
 
 type SearchCacheValue = readonly string[];
-interface QueryCacheValue {
+type QueryCacheValue = QueryCacheValuePage | QueryCacheValueInterWiki;
+enum QueryCacheType {
+	Page,
+	InterWiki
+}
+
+interface QueryCacheValuePage {
+	readonly type: QueryCacheType.Page;
 	readonly id: number;
 	readonly title: string;
 	readonly extract: string;
+}
+
+interface QueryCacheValueInterWiki {
+	readonly type: QueryCacheType.InterWiki;
+	readonly iw: string;
+	readonly title: string;
 }
 
 type SearchResult = [name: string, results: string[], _: ''[], links: string[]];
 
 interface QueryResult {
 	batchcomplete: '';
-	query: QueryResultQuerySuccess | QueryResultQueryMissing;
+	query: QueryResultQuery;
 }
 
-interface QueryResultQuerySuccess {
+type QueryResultQuery = QueryResultQueryPages | QueryResultQueryInterWiki | QueryResultQueryMissing;
+
+interface QueryResultQueryPages {
 	pageids: [`${bigint}`];
 	pages: Record<`${bigint}`, { pageid: number; ns: 0; title: string; extract: string }>;
+}
+
+interface QueryResultQueryInterWiki {
+	interwiki: QueryResultQueryInterWikiEntry[];
 }
 
 interface QueryResultQueryMissing {
 	pageids: ['-1'];
 	pages: Record<'-1', { ns: 0; title: string; missing: '' }>;
+}
+
+interface QueryResultQueryInterWikiEntry {
+	iw: string;
+	title: string;
 }
