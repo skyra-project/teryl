@@ -1,4 +1,5 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { isEmptyObject } from '#lib/utilities/objects';
 import {
 	getColors,
 	getData,
@@ -50,17 +51,19 @@ export class UserCommand extends Command {
 	}
 
 	private async handleOk(interaction: Command.ChatInputInteraction, t: TFunction, base: string, args: Options, data: Weather) {
-		const useImperial = UserCommand.shouldUseImperial(t, args.system ?? 'auto');
-
-		const [current] = data.current_condition;
-		const resolved = useImperial
-			? resolveCurrentConditionsImperial(current, t)
-			: resolveCurrentConditionsSI(current, t, { kelvin: args.system === 'si' });
 		const [nearestArea] = data.nearest_area;
+		if (isEmptyObject(nearestArea)) return this.handleErr(interaction, LanguageKeys.Commands.Weather.UnknownLocation);
 
 		// Region can be an empty string, e.g. `Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu`:
 		const place = `${nearestArea.region[0].value || nearestArea.areaName[0].value}, ${nearestArea.country[0].value}`;
+		const [current] = data.current_condition;
 		const weatherDescription = UserCommand.getWeatherDescription(current, base);
+
+		const useImperial = UserCommand.shouldUseImperial(t, args.system ?? 'auto');
+
+		const resolved = useImperial
+			? resolveCurrentConditionsImperial(current, t)
+			: resolveCurrentConditionsSI(current, t, { kelvin: args.system === 'si' });
 
 		const response = await interaction.defer();
 		const file = await UserCommand.draw(weatherDescription, place, current, resolved);
