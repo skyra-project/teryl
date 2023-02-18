@@ -110,12 +110,6 @@ export class UserCommand extends Command {
 		return entry;
 	}
 
-	private static readonly titleToUrlReplacers = {
-		' ': '_',
-		'(': '%28',
-		')': '%29'
-	} as const;
-
 	private static isPage(query: QueryResultQuery): query is QueryResultQueryPages {
 		return 'pageids' in query && query.pageids[0] !== '-1';
 	}
@@ -125,8 +119,7 @@ export class UserCommand extends Command {
 	}
 
 	private static titleToUrl(title: string, lang = 'en'): string {
-		const sanitized = title.replaceAll(/[ \(\)]/g, (character) => UserCommand.titleToUrlReplacers[character as ' ' | '(' | ')']);
-		return `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(sanitized)}`;
+		return `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title.replaceAll(' ', '_'))}`;
 	}
 }
 
