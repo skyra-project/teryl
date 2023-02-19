@@ -7,9 +7,12 @@ export const RootDescription = T('commands/reminders:description');
 export const OptionsId = 'commands/reminders:optionsId';
 export const OptionsContent = 'commands/reminders:optionsContent';
 export const OptionsDuration = 'commands/reminders:optionsDuration';
+export const OptionsPublic = 'commands/reminders:optionsPublic';
 
 export const Create = 'commands/reminders:create';
 export const CreateContent = FT<{ id: string; time: string }>('commands/reminders:createContent');
+export const CreateContentPublic = FT<{ id: string; time: string }>('commands/reminders:createContentPublic');
+export const Subscribe = T('commands/reminders:subscribe');
 
 export const Update = 'commands/reminders:update';
 export const UpdateContent = FT<{ id: string; time: string }>('commands/reminders:updateContent');

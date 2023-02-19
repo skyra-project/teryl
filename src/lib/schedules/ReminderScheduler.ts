@@ -1,5 +1,5 @@
 import { BaseScheduler } from '#lib/schedules/BaseScheduler';
-import type { Reminder } from '@prisma/client';
+import type { Reminder, ReminderMetadata, ReminderSubscription } from '@prisma/client';
 import { Result } from '@sapphire/result';
 import { container } from '@skyra/http-framework';
 
@@ -22,12 +22,18 @@ export class ReminderScheduler extends BaseScheduler<ReminderScheduler.Data> {
 		return result.isOk();
 	}
 
-	protected async handle(ids: readonly string[]): Promise<Reminder[]> {
-		const values = await container.prisma.reminder.findMany({ where: { id: { in: ids as string[] } } });
-		return values;
+	protected async handle(ids: readonly string[]): Promise<ReminderScheduler.Full[]> {
+		return container.prisma.reminder.findMany({
+			where: { id: { in: ids as string[] } },
+			include: { metadata: true, subscriptions: true }
+		});
 	}
 }
 
 export namespace ReminderScheduler {
 	export type Data = Omit<Reminder, 'id'>;
+	export type Full = Reminder & {
+		metadata: ReminderMetadata | null;
+		subscriptions: ReminderSubscription[];
+	};
 }

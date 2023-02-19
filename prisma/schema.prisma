@@ -8,19 +8,31 @@ datasource db {
 }
 
 model Reminder {
-  id              String                 @id @default(cuid())
+  id            String                 @id @default(cuid())
   /// The ID of the user who set the reminder.
-  userId          BigInt                 @map("user_id")
-  /// The channel to send the message at.
-  targetChannelId BigInt?                @map("target_channel_id")
+  userId        BigInt                 @map("user_id")
   /// The contents to send the user.
-  content         String
+  content       String
   /// The time at which the reminder is due for.
-  time            DateTime
+  time          DateTime
+  /// The subscription metadata. If defined, the reminder is considered public and can be subscribed to.
+  metadata      ReminderMetadata?
   /// The subscriptions, if any.
-  subscriptions   ReminderSubscription[]
+  subscriptions ReminderSubscription[]
 
   @@map("reminders")
+}
+
+model ReminderMetadata {
+  /// The ID of the reminder.
+  reminderId String   @id @map("reminder_id")
+  reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  /// The channel to send the message at.
+  channelId  BigInt   @map("channel_id")
+  /// The subscription message.
+  messageId  BigInt   @map("message_id")
+
+  @@map("reminder_metadata")
 }
 
 model ReminderSubscription {

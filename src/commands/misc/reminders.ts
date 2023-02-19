@@ -1,13 +1,22 @@
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { codeBlock, inlineCode, SlashCommandStringOption, time, TimestampStyles } from '@discordjs/builders';
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	codeBlock,
+	inlineCode,
+	SlashCommandBooleanOption,
+	SlashCommandStringOption,
+	time,
+	TimestampStyles
+} from '@discordjs/builders';
 import type { Reminder } from '@prisma/client';
 import { Duration } from '@sapphire/duration';
 import { err, ok } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
-import { MessageFlags } from 'discord-api-types/v10';
+import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey } from '@skyra/http-framework-i18n';
+import { ButtonStyle, MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.RootName, LanguageKeys.Commands.Reminders.RootDescription)
@@ -15,8 +24,9 @@ import { MessageFlags } from 'discord-api-types/v10';
 export class UserCommand extends Command {
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Create)
-			.addStringOption(UserCommand.createContentOption().setRequired(true))
-			.addStringOption(UserCommand.createTimeOption().setRequired(true))
+			.addStringOption(createContentOption().setRequired(true))
+			.addStringOption(createTimeOption().setRequired(true))
+			.addBooleanOption(createPublicOption())
 	)
 	public async create(interaction: Command.ChatInputInteraction, options: CreateOptions) {
 		const dateResult = this.parseDate(interaction, options.duration);
@@ -26,22 +36,38 @@ export class UserCommand extends Command {
 		const id = await this.container.reminders.add({
 			userId: BigInt(interaction.user.id),
 			content: options.content.replaceAll('\\n', '\n'),
-			time: date,
-			targetChannelId: null
+			time: date
 		});
 
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.CreateContent, {
-			id: inlineCode(id),
-			time: time(date, TimestampStyles.LongDateTime)
+		const parameters = { id: inlineCode(id), time: time(date, TimestampStyles.LongDateTime) };
+		if (!options.public) {
+			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.CreateContent, parameters);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		const t = getSupportedLanguageT(interaction);
+		const content = t(LanguageKeys.Commands.Reminders.CreateContentPublic, parameters);
+		const response = await interaction.reply({ content });
+		const message = (await response.get()).unwrap();
+		await this.container.prisma.reminderMetadata.create({
+			data: { reminderId: id, channelId: BigInt(message.channelId), messageId: BigInt(message.id) },
+			select: null
 		});
-		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+
+		const components = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder() //
+				.setCustomId(`reminders.${id}`)
+				.setStyle(ButtonStyle.Primary)
+				.setLabel(t(LanguageKeys.Commands.Reminders.Subscribe))
+		);
+		return response.update({ components: [components.toJSON()] });
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Update)
-			.addStringOption(UserCommand.createIdOption().setRequired(true))
-			.addStringOption(UserCommand.createContentOption())
-			.addStringOption(UserCommand.createTimeOption())
+			.addStringOption(createIdOption().setRequired(true))
+			.addStringOption(createContentOption())
+			.addStringOption(createTimeOption())
 	)
 	public async update(interaction: Command.ChatInputInteraction, options: UpdateOptions) {
 		if (isNullishOrEmpty(options.duration) && isNullishOrEmpty(options.content)) {
@@ -63,6 +89,8 @@ export class UserCommand extends Command {
 			if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
 			date = dateResult.unwrap();
+
+			// TODO: Update public message, if any.
 		}
 
 		await this.container.reminders.reschedule(reminder.id, date.getTime(), { content: options.content });
@@ -74,7 +102,7 @@ export class UserCommand extends Command {
 	}
 
 	@RegisterSubCommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(UserCommand.createIdOption().setRequired(true))
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(createIdOption().setRequired(true))
 	)
 	public async delete(interaction: Command.ChatInputInteraction, options: DeleteOptions) {
 		const reminder = await this.container.prisma.reminder.findFirst({ where: { id: options.id, userId: BigInt(interaction.user.id) } });
@@ -84,6 +112,8 @@ export class UserCommand extends Command {
 			});
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
+
+		// TODO: Delete public message, if any.
 
 		await this.container.reminders.remove(reminder.id);
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DeleteContent, {
@@ -96,6 +126,7 @@ export class UserCommand extends Command {
 
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
 	public async list(interaction: Command.ChatInputInteraction) {
+		// TODO: Add subscription support.
 		const reminders = await this.container.prisma.reminder.findMany({ where: { userId: BigInt(interaction.user.id) }, take: 10 });
 		if (isNullishOrEmpty(reminders)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.ListEmpty, { commandId: interaction.data.id });
@@ -127,25 +158,28 @@ export class UserCommand extends Command {
 		const space = content.lastIndexOf(' ', 63);
 		return `${content.slice(0, space === -1 ? 63 : space)}…`;
 	}
+}
 
-	private static createIdOption() {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsId).setMinLength(21).setMaxLength(21);
-	}
+function createIdOption() {
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsId).setMinLength(21).setMaxLength(21);
+}
 
-	private static createContentOption() {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsContent).setMaxLength(256);
-	}
+function createContentOption() {
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsContent).setMaxLength(256);
+}
 
-	private static createTimeOption() {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsDuration)
-			.setMinLength(2)
-			.setMaxLength(256);
-	}
+function createTimeOption() {
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsDuration).setMinLength(2).setMaxLength(256);
+}
+
+function createPublicOption() {
+	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsPublic);
 }
 
 interface CreateOptions {
 	content: string;
 	duration: string;
+	public: boolean;
 }
 
 interface UpdateOptions {

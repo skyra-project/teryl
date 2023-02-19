@@ -2,11 +2,19 @@
 CREATE TABLE "reminders" (
     "id" TEXT NOT NULL,
     "user_id" BIGINT NOT NULL,
-    "target_channel_id" BIGINT,
     "content" TEXT NOT NULL,
     "time" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "reminders_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "reminder_metadata" (
+    "reminder_id" TEXT NOT NULL,
+    "channel_id" BIGINT NOT NULL,
+    "message_id" BIGINT NOT NULL,
+
+    CONSTRAINT "reminder_metadata_pkey" PRIMARY KEY ("reminder_id")
 );
 
 -- CreateTable
@@ -47,6 +55,9 @@ CREATE UNIQUE INDEX "tags_name_guild_id_key" ON "tags"("name", "guild_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "tag_aliases_tag_id_name_key" ON "tag_aliases"("tag_id", "name");
+
+-- AddForeignKey
+ALTER TABLE "reminder_metadata" ADD CONSTRAINT "reminder_metadata_reminder_id_fkey" FOREIGN KEY ("reminder_id") REFERENCES "reminders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reminder_subscriptions" ADD CONSTRAINT "reminder_subscriptions_reminder_id_fkey" FOREIGN KEY ("reminder_id") REFERENCES "reminders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
