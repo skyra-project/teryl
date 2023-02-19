@@ -12,11 +12,18 @@ import {
 } from '@discordjs/builders';
 import type { Reminder } from '@prisma/client';
 import { Duration } from '@sapphire/duration';
-import { err, ok } from '@sapphire/result';
+import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey } from '@skyra/http-framework-i18n';
-import { ButtonStyle, MessageFlags } from 'discord-api-types/v10';
+import {
+	applyLocalizedBuilder,
+	getSupportedLanguageName,
+	getSupportedLanguageT,
+	getSupportedUserLanguageName,
+	resolveKey,
+	resolveUserKey
+} from '@skyra/http-framework-i18n';
+import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.RootName, LanguageKeys.Commands.Reminders.RootDescription)
@@ -36,7 +43,9 @@ export class UserCommand extends Command {
 		const id = await this.container.reminders.add({
 			userId: BigInt(interaction.user.id),
 			content: options.content.replaceAll('\\n', '\n'),
-			time: date
+			time: date,
+			createdAt: new Date(),
+			language: options.public ? getSupportedLanguageName(interaction) : getSupportedUserLanguageName(interaction)
 		});
 
 		const parameters = { id: inlineCode(id), time: time(date, TimestampStyles.LongDateTime) };
@@ -75,7 +84,10 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		const reminder = await this.container.prisma.reminder.findFirst({ where: { id: options.id, userId: BigInt(interaction.user.id) } });
+		const reminder = await this.container.prisma.reminder.findFirst({
+			where: { id: options.id, userId: BigInt(interaction.user.id) },
+			include: { metadata: true }
+		});
 		if (isNullish(reminder)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
@@ -89,23 +101,33 @@ export class UserCommand extends Command {
 			if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
 			date = dateResult.unwrap();
-
-			// TODO: Update public message, if any.
 		}
 
-		await this.container.reminders.reschedule(reminder.id, date.getTime(), { content: options.content });
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, {
-			id: inlineCode(reminder.id),
-			time: time(date, TimestampStyles.LongDateTime)
-		});
-		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		const parameters = { id: inlineCode(reminder.id), time: time(date, TimestampStyles.LongDateTime) };
+		const rescheduled = await this.container.reminders.reschedule(reminder.id, date.getTime(), { content: options.content });
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, parameters);
+		const response = await interaction.reply({ content, flags: MessageFlags.Ephemeral });
+
+		if (rescheduled && reminder.metadata) {
+			const body = {
+				content: resolveKey(interaction, LanguageKeys.Commands.Reminders.CreateContentPublic, parameters)
+			} satisfies RESTPatchAPIChannelMessageJSONBody;
+
+			const route = Routes.channelMessage(reminder.metadata.channelId.toString(), reminder.metadata.messageId.toString());
+			await Result.fromAsync(this.container.rest.patch(route, { body }));
+		}
+
+		return response;
 	}
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(createIdOption().setRequired(true))
 	)
 	public async delete(interaction: Command.ChatInputInteraction, options: DeleteOptions) {
-		const reminder = await this.container.prisma.reminder.findFirst({ where: { id: options.id, userId: BigInt(interaction.user.id) } });
+		const reminder = await this.container.prisma.reminder.findFirst({
+			where: { id: options.id, userId: BigInt(interaction.user.id) },
+			include: { metadata: true }
+		});
 		if (isNullish(reminder)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
 				value: inlineCode(escapeInlineCode(options.id))
@@ -113,21 +135,29 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		// TODO: Delete public message, if any.
-
 		await this.container.reminders.remove(reminder.id);
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DeleteContent, {
 			id: inlineCode(reminder.id),
 			time: time(reminder.time, TimestampStyles.LongDateTime),
 			content: codeBlock(escapeCodeBlock(reminder.content))
 		});
-		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		const response = await interaction.reply({ content, flags: MessageFlags.Ephemeral });
+
+		if (reminder.metadata) {
+			const route = Routes.channelMessage(reminder.metadata.channelId.toString(), reminder.metadata.messageId.toString());
+			await Result.fromAsync(this.container.rest.delete(route));
+		}
+
+		return response;
 	}
 
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
 	public async list(interaction: Command.ChatInputInteraction) {
-		// TODO: Add subscription support.
-		const reminders = await this.container.prisma.reminder.findMany({ where: { userId: BigInt(interaction.user.id) }, take: 10 });
+		const userId = BigInt(interaction.user.id);
+		const reminders = await this.container.prisma.reminder.findMany({
+			where: { OR: [{ userId }, { subscriptions: { some: { userId } } }] },
+			take: 10
+		});
 		if (isNullishOrEmpty(reminders)) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.ListEmpty, { commandId: interaction.data.id });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });

@@ -8,11 +8,15 @@ datasource db {
 }
 
 model Reminder {
-  id            String                 @id @default(cuid())
+  id            String                 @id
   /// The ID of the user who set the reminder.
   userId        BigInt                 @map("user_id")
   /// The contents to send the user.
   content       String
+  /// The reminder's creation date.
+  createdAt     DateTime               @default(now()) @map("created_at")
+  /// The language to use, if public, it's the guild's locale, otherwise it's the user's locale.
+  language      String
   /// The time at which the reminder is due for.
   time          DateTime
   /// The subscription metadata. If defined, the reminder is considered public and can be subscribed to.

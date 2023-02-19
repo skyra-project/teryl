@@ -3,6 +3,8 @@ CREATE TABLE "reminders" (
     "id" TEXT NOT NULL,
     "user_id" BIGINT NOT NULL,
     "content" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "language" TEXT NOT NULL,
     "time" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "reminders_pkey" PRIMARY KEY ("id")
