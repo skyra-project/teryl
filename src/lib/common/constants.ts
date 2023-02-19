@@ -15,7 +15,8 @@ export const enum Emojis {
 	MessageAttachmentIcon = '<:MessageAttachmentIcon:1006096566270033940>',
 	MessageLinkIcon = '<:MessageLinkIcon:1006096849201016852>',
 	MessagePinIcon = '<:MessagePinIcon:1006096836882337822>',
-	MessageIconSlashCommandsIcon = '<:MessageIconSlashCommandsIcon:1006096757937143818> ',
+	MessageIconSlashCommandsIcon = '<:MessageIconSlashCommandsIcon:1006096757937143818>',
+	ReplyIcon = '<:ReplyIcon:1076886910405976245>',
 	IdIcon = '<:IdIcon:1006096811917836339>',
 	OwlbotIcon = '<:Owlbot:1011001367499919363>'
 }

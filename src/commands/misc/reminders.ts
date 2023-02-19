@@ -11,7 +11,7 @@ import {
 	TimestampStyles
 } from '@discordjs/builders';
 import type { Reminder } from '@prisma/client';
-import { Duration } from '@sapphire/duration';
+import { Duration, Time } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
@@ -168,10 +168,14 @@ export class UserCommand extends Command {
 	}
 
 	private parseDate(interaction: Command.ChatInputInteraction, input: string) {
-		const duration = new Duration(input);
-		return Number.isInteger(duration.offset)
-			? ok(new Date(Date.now() + duration.offset))
-			: err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
+		const { offset } = new Duration(input);
+		if (!Number.isInteger(offset)) {
+			return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
+		}
+
+		if (offset < Time.Minute) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooShort));
+		if (offset > Time.Year) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooLong));
+		return ok(new Date(Date.now() + offset));
 	}
 
 	private formatReminder(reminder: Reminder) {

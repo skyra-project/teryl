@@ -26,3 +26,5 @@ export const ListEmpty = FT<{ commandId: string }>('commands/reminders:listEmpty
 
 export const InvalidId = FT<Value>('commands/reminders:invalidId');
 export const InvalidDuration = FT<Value>('commands/reminders:invalidDuration');
+export const DurationTooShort = FT<Value>('commands/reminders:durationTooShort');
+export const DurationTooLong = FT<Value>('commands/reminders:durationTooLong');

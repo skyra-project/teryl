@@ -17,11 +17,6 @@ await init({
 	returnObjects: true,
 	interpolation: {
 		defaultVariables: {
-			MessageAttachmentIcon: Emojis.MessageAttachmentIcon,
-			MessageLinkIcon: Emojis.MessageLinkIcon,
-			MessagePinIcon: Emojis.MessagePinIcon,
-			MessageIconSlashCommandsIcon: Emojis.MessageIconSlashCommandsIcon,
-			IdIcon: Emojis.IdIcon,
 			OwlbotIcon: Emojis.OwlbotIcon
 		}
 	}

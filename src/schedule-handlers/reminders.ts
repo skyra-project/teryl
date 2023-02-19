@@ -30,7 +30,7 @@ export class UserScheduleHandler extends ScheduleHandler<ReminderScheduler.Data>
 		const route = Routes.channelMessages(channelId);
 		const t = getT(data.language as Locale);
 
-		const users = [data.userId.toString(), ...data.subscriptions.map((subscription) => subscription.userId.toString())].slice(0, 25);
+		const users = [data.userId.toString(), ...data.subscriptions.map((subscription) => subscription.userId.toString())].slice(0, 24);
 		const content = t(LanguageKeys.ScheduleHandlers.Reminders.Public, {
 			content: data.content,
 			time: time(data.createdAt),
