@@ -41,7 +41,7 @@ namespace Length {
 		[Unit.LightSecond]: JSBD.BigDecimal(299792458n),
 		[Unit.LightYear]: JSBD.BigDecimal(9460730472580800n),
 		[Unit.Meter]: JSBD.BigDecimal(1n),
-		[Unit.Centimeter]: JSBD.BigDecimal(0.01), // ????
+		[Unit.Centimeter]: JSBD.BigDecimal(0.01),
 		[Unit.Mile]: JSBD.BigDecimal(1609.344),
 		[Unit.NauticalMile]: JSBD.BigDecimal(1852n),
 		[Unit.Parsec]: JSBD.BigDecimal(3.0856776e16)
