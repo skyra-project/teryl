@@ -27,6 +27,7 @@ namespace Length {
 		LightSecond = 'light-second',
 		LightYear = 'light-year',
 		Meter = 'meter',
+		Centimeter = 'centimeter',
 		Mile = 'mile',
 		NauticalMile = 'nautical-mile',
 		Parsec = 'parsec'
@@ -40,6 +41,7 @@ namespace Length {
 		[Unit.LightSecond]: JSBD.BigDecimal(299792458n),
 		[Unit.LightYear]: JSBD.BigDecimal(9460730472580800n),
 		[Unit.Meter]: JSBD.BigDecimal(1n),
+		[Unit.Centimeter]: JSBD.BigDecimal(0.01), // ????
 		[Unit.Mile]: JSBD.BigDecimal(1609.344),
 		[Unit.NauticalMile]: JSBD.BigDecimal(1852n),
 		[Unit.Parsec]: JSBD.BigDecimal(3.0856776e16)
@@ -53,6 +55,7 @@ namespace Length {
 		[Unit.LightSecond]: LanguageKeys.Commands.Convert.UnitLightSecond,
 		[Unit.LightYear]: LanguageKeys.Commands.Convert.UnitLightYear,
 		[Unit.Meter]: LanguageKeys.Commands.Convert.UnitMeter,
+		[Unit.Centimeter]: LanguageKeys.Commands.Convert.UnitCentimeter,
 		[Unit.Mile]: LanguageKeys.Commands.Convert.UnitMile,
 		[Unit.NauticalMile]: LanguageKeys.Commands.Convert.UnitNauticalMile,
 		[Unit.Parsec]: LanguageKeys.Commands.Convert.UnitParsec
@@ -69,6 +72,7 @@ namespace Length {
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightSecond, { value: Unit.LightSecond }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthLightYear, { value: Unit.LightYear }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMeter, { value: Unit.Meter }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthCentimeter, { value: Unit.Centimeter }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMile, { value: Unit.Mile }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthNauticalMile, { value: Unit.NauticalMile }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthParsec, { value: Unit.Parsec })
