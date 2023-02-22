@@ -23,7 +23,7 @@
 	"failedToUploadMaximumAnimatedEmojis": "I failed to upload the emoji because this server already reached the animated emoji limit. Please remove one and try again.",
 	"contentLengthMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me how big the file is.",
 	"contentLengthInvalid": "The server I queried the file from sent me an invalid file size.",
-	"contentLengthTooBig": "The file you uploaded is too big and cannot be uploaded, please try again with a smaller image.",
+	"contentLengthTooBig": "The file you uploaded is too big (>256 kilobytes) and cannot be uploaded, please try again with a smaller image.",
 	"contentTypeMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me the type of the file.",
 	"contentTypeUnsupported": "The file you uploaded does not seem to be a supported image format."
 }
