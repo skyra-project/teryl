@@ -1,3 +1,4 @@
+import { escapeCodeBlock } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { codeBlock } from '@discordjs/builders';
 import type { RawFile } from '@discordjs/rest';
@@ -19,7 +20,7 @@ export class UserCommand extends Command {
 
 	private async shared(interaction: Command.MessageInteraction | Command.UserInteraction, data: object, id: string) {
 		const json = JSON.stringify(data, null, '\t');
-		if (json.length < 1988) return interaction.reply({ content: codeBlock('json', json), flags: MessageFlags.Ephemeral });
+		if (json.length < 1988) return interaction.reply({ content: codeBlock('json', escapeCodeBlock(json)), flags: MessageFlags.Ephemeral });
 
 		const response = await interaction.defer({ flags: MessageFlags.Ephemeral });
 		const file = { name: `${id}.json`, data: Buffer.from(json, 'utf8'), contentType: 'application/json' } satisfies RawFile;
