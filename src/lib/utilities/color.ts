@@ -44,14 +44,14 @@ function parseHexadecimal(value: string): Option<ColorResult> {
 function parseDecimal(value: string): Option<ColorResult> {
 	const number = Number(value);
 	if (Number.isNaN(number)) return none;
-	if (Number.isSafeInteger(number)) return some(err(LanguageKeys.Commands.Color.InvalidDecimalInteger));
+	if (!Number.isSafeInteger(number)) return some(err(LanguageKeys.Commands.Color.InvalidDecimalInteger));
 	if (number < 0) return some(err(LanguageKeys.Commands.Color.InvalidDecimalNegative));
 	if (number > 0xffffff) return some(err(LanguageKeys.Commands.Color.InvalidDecimalOverflow));
 	return some(ok(number));
 }
 
 function parseRGB(value: string): Option<ColorResult> {
-	if (!value.startsWith('rgb')) return none;
+	if (!value.toLowerCase().startsWith('rgb')) return none;
 
 	const result = rgba.exec(value);
 	if (!result) return some(err(LanguageKeys.Commands.Color.InvalidRgb));
@@ -69,9 +69,9 @@ function parseRGB(value: string): Option<ColorResult> {
 	return some(ok((nr << 16) | (ng << 8) | nb));
 }
 
-const hex3 = /^#[0-9a-f]{3,4}$/;
-const hex6 = /^#[0-9a-f]{6}(?:[0-9a-f]{2})?$/;
-const rgba = /^rgba?\( *(\d+) *, *(\d+) *, *(\d+) *(?:, *\d+ *)?\)$/;
+const hex3 = /^#[0-9a-f]{3,4}$/i;
+const hex6 = /^#[0-9a-f]{6}(?:[0-9a-f]{2})?$/i;
+const rgba = /^rgba?\( *(\d+) *, *(\d+) *, *(\d+) *(?:, *\d+ *)?\)$/i;
 const names = {
 	black: 0x000000,
 	silver: 0xc0c0c0,
