@@ -1,4 +1,5 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import type { CurrentCondition, ValueWrapper, Weather } from '#lib/types/weather-types';
 import { isEmptyObject } from '#lib/utilities/objects';
 import {
 	getColors,
@@ -10,7 +11,6 @@ import {
 	resolveCurrentConditionsSI,
 	type ResolvedConditions
 } from '#lib/utilities/weather';
-import type { CurrentCondition, ValueWrapper, Weather } from '#lib/utilities/weather-types';
 import type { RawFile } from '@discordjs/rest';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import {

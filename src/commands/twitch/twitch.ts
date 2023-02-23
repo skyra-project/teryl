@@ -1,8 +1,8 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { fetchUserFollowage, fetchUsers, TwitchBrandingColor, TwitchLogoUrl } from '#lib/utilities/twitch';
 import { EmbedBuilder, SlashCommandStringOption, time, TimestampStyles } from '@discordjs/builders';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type LocalePrefixKey } from '@skyra/http-framework-i18n';
+import { fetchUserFollowage, fetchUsers, TwitchBrandingColor, TwitchLogoUrl } from '@skyra/twitch-helpers';
 import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Twitch.RootName, LanguageKeys.Commands.Twitch.RootDescription))
@@ -14,7 +14,7 @@ export class UserCommand extends Command {
 	public async user(interaction: Command.ChatInputInteraction, options: UserOptions) {
 		const t = getSupportedLanguageT(interaction);
 
-		const users = await fetchUsers([], [options.name]);
+		const users = await fetchUsers({ logins: [options.name] });
 		if (users.isErr() || users.isOkAnd((value) => value.data.length === 0)) {
 			const content = t(LanguageKeys.Commands.Twitch.UserDoesNotExist);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
@@ -50,7 +50,7 @@ export class UserCommand extends Command {
 	public async followage(interaction: Command.ChatInputInteraction, options: FollowageOptions) {
 		const t = getSupportedLanguageT(interaction);
 
-		const users = await fetchUsers([], [options.user, options.channel]);
+		const users = await fetchUsers({ logins: [options.user, options.channel] });
 		if (users.isErr() || users.isOkAnd((value) => value.data.length < 2)) {
 			const content = t(LanguageKeys.Commands.Twitch.FollowageDoesNotExist);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });

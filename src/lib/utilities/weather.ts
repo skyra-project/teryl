@@ -1,6 +1,6 @@
 import { PathAssets } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { CurrentCondition, Weather, WeatherCode, WeatherName } from '#lib/utilities/weather-types';
+import { CurrentCondition, Weather, WeatherCode, WeatherName } from '#lib/types/weather-types';
 import { err, Result } from '@sapphire/result';
 import { container } from '@skyra/http-framework';
 import type { TypedT } from '@skyra/http-framework-i18n';

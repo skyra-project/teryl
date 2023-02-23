@@ -718,6 +718,7 @@ __metadata:
     "@skyra/safe-fetch": ^1.1.0
     "@skyra/shared-http-pieces": ^0.4.3
     "@skyra/start-banner": ^1.0.2
+    "@skyra/twitch-helpers": ^1.0.0
     "@types/gradient-string": ^1.1.2
     "@types/he": ^1.2.0
     "@types/node": ^18.14.0
@@ -744,6 +745,17 @@ __metadata:
     typescript: ^4.9.5
   languageName: unknown
   linkType: soft
+
+"@skyra/twitch-helpers@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@skyra/twitch-helpers@npm:1.0.0"
+  dependencies:
+    "@sapphire/result": ^2.5.0
+    "@skyra/env-utilities": ^1.1.0
+    "@skyra/safe-fetch": ^1.1.0
+  checksum: a939ea2760356c04f6260fe65f1519b803b88e4a81502f32dfeb738161b89f380c0d682419889e5d8bbc97f0d4e72f277f7d0617b3fe25c0c908e597559430fd
+  languageName: node
+  linkType: hard
 
 "@tokenizer/token@npm:^0.3.0":
   version: 0.3.0
