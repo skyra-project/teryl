@@ -68,9 +68,6 @@ export class UserCommand extends Command {
 				});
 				first ??= item.id;
 			});
-
-			// If it reached the maximum length, break:
-			if (options.length === 25) break;
 		}
 
 		if (options.length === 0) {

@@ -1,4 +1,4 @@
-import { writeFile } from 'fs/promises';
+import { writeFile } from 'node:fs/promises';
 
 const response = await fetch('https://unicode.org/Public/UNIDATA/UnicodeData.txt');
 const text = await response.text();
