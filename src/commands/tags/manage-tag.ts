@@ -19,7 +19,7 @@ import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-t
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
 		const name = sanitizeTagName(options.name);
-		const tags = name === null ? [] : await searchTag(this.getGuildId(interaction), name);
+		const tags = options.name.length > 0 && name === null ? [] : await searchTag(this.getGuildId(interaction), name);
 		return interaction.reply({ choices: makeTagChoices(tags) });
 	}
 
@@ -103,17 +103,14 @@ export class UserCommand extends Command {
 			.addStringOption(makeEmbedColorOption())
 	)
 	public async edit(interaction: Command.ChatInputInteraction, options: EditOptions) {
-		const name = sanitizeTagName(options.name);
-		if (isNullishOrEmpty(name)) return this.replyInvalidName(interaction, options.name);
-
 		const guildId = this.getGuildId(interaction);
-		const existing = await getTag(guildId, name);
-		if (isNullish(existing)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name));
+		const existing = await getTag(guildId, options.name.toLowerCase());
+		if (isNullish(existing)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(options.name));
 
 		const embedColorResult = this.getEmbedColor(interaction, options, existing.embedColor);
 		if (embedColorResult.isErr()) return this.replyEphemeral(interaction, inlineCode(embedColorResult.unwrapErr()));
 
-		let nextName = name;
+		let nextName = existing.name;
 		if (!isNullishOrEmpty(options['new-name'])) {
 			nextName = sanitizeTagName(options['new-name'])!;
 			if (isNullishOrEmpty(nextName)) return this.replyInvalidName(interaction, options['new-name']);
@@ -154,12 +151,10 @@ export class UserCommand extends Command {
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Alias)
 			.addStringOption(makeNameOption().setAutocomplete(true))
-			.addStringOption(makeNewNameOption())
+			.addStringOption(makeNewNameOption().setRequired(true))
 	)
 	public async alias(interaction: Command.ChatInputInteraction, options: AliasOptions) {
-		const name = sanitizeTagName(options.name);
-		if (isNullishOrEmpty(name)) return this.replyInvalidName(interaction, options.name);
-
+		const name = options.name.toLowerCase();
 		const alias = sanitizeTagName(options['new-name']);
 		if (isNullishOrEmpty(alias)) return this.replyInvalidName(interaction, options['new-name']);
 		if (name === alias) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AliasSame, inlineCode(name));
@@ -205,9 +200,7 @@ export class UserCommand extends Command {
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Source).addStringOption(makeNameOption().setAutocomplete(true))
 	)
 	public async source(interaction: Command.ChatInputInteraction, options: Options) {
-		const name = sanitizeTagName(options.name);
-		if (isNullishOrEmpty(name)) return this.replyInvalidName(interaction, options.name);
-
+		const name = options.name.toLowerCase();
 		const existing = await getTag(this.getGuildId(interaction), name);
 		return isNullish(existing)
 			? this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name))
@@ -286,7 +279,7 @@ function makeNameOption() {
 }
 
 function makeNewNameOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsNewName).setMaxLength(32).setRequired(true);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsNewName).setMaxLength(32);
 }
 
 function makeContentOption() {

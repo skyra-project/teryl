@@ -23,6 +23,7 @@
 	"optionsEmbedColorDescription": "The color to use in the tag",
 	"optionsNewNameName": "new-name",
 	"optionsNewNameDescription": "The new name for the tag",
+	"invalidTagName": "The tag name you are trying to use is not valid.",
 	"modal": "Tag Editor",
 	"modalContent": "Content",
 	"addSuccess": "Successfully added {{value}}.",
