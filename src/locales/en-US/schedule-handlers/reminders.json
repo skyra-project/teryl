@@ -1,0 +1,4 @@
+{
+	"public": "On {{time}}, {{users, list}} asked me to remind you of this:",
+	"private": "On {{time}}, you asked me to remind you of this:"
+}

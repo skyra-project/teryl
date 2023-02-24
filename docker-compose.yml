@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: teryl-postgres
+    image: 'postgres:15-alpine'
+    ports:
+      - '5432:5432'
+    restart: 'no'
+    volumes:
+      - 'teryl-postgres-data:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=teryl
+
+  redis:
+    command: 'redis-server --port 8287 --requirepass redis'
+    container_name: teryl-redis
+    image: 'redis:alpine'
+    ports:
+      - '8287:8287'
+    restart: 'no'
+
+volumes:
+  teryl-postgres-data:
