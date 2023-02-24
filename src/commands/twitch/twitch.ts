@@ -2,7 +2,7 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder, SlashCommandStringOption, time, TimestampStyles } from '@discordjs/builders';
 import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type LocalePrefixKey } from '@skyra/http-framework-i18n';
-import { fetchUserFollowage, fetchUsers, TwitchBrandingColor, TwitchHelixUsersSearchResult, TwitchLogoUrl } from '@skyra/twitch-helpers';
+import { fetchUserFollowage, fetchUsers, TwitchBrandingColor, TwitchLogoUrl, type TwitchHelixUsersSearchResult } from '@skyra/twitch-helpers';
 import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Twitch.RootName, LanguageKeys.Commands.Twitch.RootDescription))
