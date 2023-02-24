@@ -32,9 +32,11 @@ FROM base as builder
 ENV NODE_ENV="development"
 
 COPY --chown=node:node tsconfig.base.json .
+COPY --chown=node:node prisma/ prisma/
 COPY --chown=node:node src/ src/
 
 RUN yarn install --immutable
+RUN yarn run prisma:generate
 RUN yarn run build
 
 # ================ #
@@ -49,10 +51,13 @@ ENV NODE_OPTIONS="--enable-source-maps"
 WORKDIR /usr/src/app
 
 COPY --chown=node:node --from=builder /usr/src/app/dist dist
-COPY --chown=node:node --from=builder /usr/src/app/src/generated src/generated
 COPY --chown=node:node --from=builder /usr/src/app/src/locales src/locales
+COPY --chown=node:node --from=builder /usr/src/app/src/generated src/generated
 
 RUN yarn workspaces focus --all --production
+
+# Patch .prisma with the built files
+COPY --chown=node:node --from=builder /usr/src/app/node_modules/.prisma node_modules/.prisma
 
 USER node
 
