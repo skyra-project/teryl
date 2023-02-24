@@ -20,3 +20,8 @@ export const enum Emojis {
 	IdIcon = '<:IdIcon:1006096811917836339>',
 	OwlbotIcon = '<:Owlbot:1011001367499919363>'
 }
+
+export const enum Fonts {
+	Medium = 'Roboto-Medium, NotoSans-Medium, NotoEmoji-Medium',
+	Light = 'Roboto-Light, NotoSans-Light, NotoEmoji-Light'
+}

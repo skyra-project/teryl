@@ -1,26 +1,17 @@
 version: '3.9'
 
 services:
-  postgres:
-    container_name: teryl-postgres
-    image: 'postgres:15-alpine'
+  teryl:
+    container_name: teryl
+    build:
+      context: ./
     ports:
-      - '5432:5432'
+      - '3000:3000'
     restart: 'no'
-    volumes:
-      - 'teryl-postgres-data:/var/lib/postgresql/data'
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=teryl
-
-  redis:
-    command: 'redis-server --port 8287 --requirepass redis'
-    container_name: teryl-redis
-    image: 'redis:alpine'
-    ports:
-      - '8287:8287'
-    restart: 'no'
-
-volumes:
-  teryl-postgres-data:
+      DATABASE_URL: 'postgresql://postgres:postgres@host.docker.internal:5432/teryl?schema=public'
+      INTERNAL_RING_URL: http://host.docker.internal:3001/guilds
+      REDIS_HOST: host.docker.internal
+    env_file:
+      - src/.env
+      - src/.env.development.local
