@@ -1,3 +1,4 @@
+import { Fonts } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { CurrentCondition, ValueWrapper, Weather } from '#lib/types/weather-types';
 import { isEmptyObject } from '#lib/utilities/objects';
@@ -122,13 +123,13 @@ export class UserCommand extends Command {
 			.restore()
 
 			// Place Name
-			.setTextFont('24px RobotoRegular')
+			.setTextFont(`24px ${Fonts.Medium}`)
 			.setTextBaseline('middle')
 			.setColor(text)
 			.printResponsiveText(place, columns[0].left, rows[0].center, columns[2].right - columns[0].left)
 
 			// Weather Icon
-			.setTextFont('20px RobotoLight')
+			.setTextFont(`20px ${Fonts.Light}`)
 			.printImage(conditionImage, columns[0].center - halfImageSize, rows[2].center - halfImageSize)
 
 			// Temperature
