@@ -1,12 +1,12 @@
 {
-	"name": "poll",
-	"description": "Creates a reaction-based poll with a title and up to 5 options",
-	"optionsTitleName": "title",
-	"optionsTitleDescription": "The title to use in the poll",
-	"optionsFirstName": "first",
-	"optionsSecondName": "second",
-	"optionsThirdName": "third",
-	"optionsFourthName": "fourth",
-	"optionsFifthName": "fifth",
-	"optionsValueDescription": "An option for the poll"
+	"name": "पोल",
+	"description": "शीर्षक और अधिकतम 5 विकल्पों के साथ प्रतिक्रिया-आधारित पोल बनाता है",
+	"optionsTitleName": "शीर्षक",
+	"optionsTitleDescription": "पोल में उपयोग करने के लिए शीर्षक",
+	"optionsFirstName": "प्रथम",
+	"optionsSecondName": "द्वितीय",
+	"optionsThirdName": "तृतीय",
+	"optionsFourthName": "चौथा",
+	"optionsFifthName": "पाँचवाँ",
+	"optionsValueDescription": "मतदान के लिए एक विकल्प"
 }
