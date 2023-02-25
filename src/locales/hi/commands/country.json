@@ -1,6 +1,6 @@
 {
-	"name": "country",
-	"description": "Get information about a country",
-	"optionsCountryName": "country",
-	"optionsCountryDescription": "The name of the country"
+	"name": "देश",
+	"description": "किसी देश के बारे में जानकारी प्राप्त करें",
+	"optionsCountryName": "देश",
+	"optionsCountryDescription": "देश का नाम"
 }
