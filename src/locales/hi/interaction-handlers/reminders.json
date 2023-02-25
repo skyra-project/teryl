@@ -1,6 +1,6 @@
 {
-	"invalidId": "It seems the reminder expired but I failed to delete it, thanks for reminding me.",
-	"owner": "You cannot subscribe or unsubscribe to a reminder you are owner of.",
-	"subscribed": "You have successfully subscribed to this reminder. Click again to unsubscribe.",
-	"unsubscribed": "You have successfully unsubscribed to this reminder. Click again to subscribe."
+	"invalidId": "ऐसा लगता है कि रिमाइंडर की अवधि समाप्त हो गई है लेकिन मैं इसे हटाने में विफल रहा, मुझे याद दिलाने के लिए धन्यवाद।",
+	"owner": "आप उस रिमाइंडर को सब्सक्राइब या अनसब्सक्राइब नहीं कर सकते जिसके आप मालिक हैं।",
+	"subscribed": "आपने सफलतापूर्वक इस रिमाइंडर की सदस्यता ले ली है। सदस्यता समाप्त करने के लिए फिर से क्लिक करें।",
+	"unsubscribed": "आपने सफलतापूर्वक इस रिमाइंडर की सदस्यता छोड़ दी है। सदस्यता लेने के लिए फिर से क्लिक करें।"
 }
