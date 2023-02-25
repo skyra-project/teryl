@@ -1,0 +1,6 @@
+{
+	"name": "country",
+	"description": "Get information about a country",
+	"optionsCountryName": "country",
+	"optionsCountryDescription": "The name of the country"
+}
