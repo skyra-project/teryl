@@ -1,12 +1,12 @@
 {
-	"name": "tag",
-	"description": "Read the server's tags",
-	"optionsNameName": "name",
-	"optionsNameDescription": "The name of the tag to search for",
-	"optionsHideName": "hide",
-	"optionsHideDescription": "Whether or not to show the message publicly (default: False)",
-	"optionsTargetName": "target",
-	"optionsTargetDescription": "The user to mention, if any",
-	"unknown": "There is no such tag under the specified name. Please try again with a different name.",
-	"target": "**Tag suggestion for {{user}}**:"
+	"name": "टैग",
+	"description": "सर्वर के टैग पढ़ें",
+	"optionsNameName": "नाम",
+	"optionsNameDescription": "खोजे जाने वाले टैग का नाम",
+	"optionsHideName": "छुपाएं",
+	"optionsHideDescription": "संदेश को सार्वजनिक रूप से दिखाना है या नहीं (डिफ़ॉल्ट: नहीं)",
+	"optionsTargetName": "लक्ष्य",
+	"optionsTargetDescription": "उपयोगकर्ता का उल्लेख करना है, यदि कोई हो",
+	"unknown": "निर्दिष्ट नाम के तहत ऐसा कोई टैग नहीं है। कृपया किसी भिन्न नाम से पुन: प्रयास करें|",
+	"target": "**{{user}}** के लिए टैग सुझाव:"
 }
