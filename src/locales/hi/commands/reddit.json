@@ -18,5 +18,5 @@
 	"unavailableErrorBanned": "मुझे निर्दिष्ट सबरेड्डिट से कोई जानकारी नहीं मिल सकी क्योंकि इसे प्रतिबंधित के रूप में चिह्नित किया गया है।",
 	"unavailableForLegalReasons": "मुझे निर्दिष्ट सबरेड्डिट से कोई जानकारी नहीं मिल सकी क्योंकि यह कानूनी कारणों से अनुपलब्ध है।",
 	"unavailable": "मुझे रेड्डिट से कोई जानकारी नहीं मिल सकी क्योंकि उनके सर्वर फ़िलहाल अनुपलब्ध हैं।",
-	"unknownError": "I couldn't get any information from the specified subreddit due to an unknown error."
+	"unknownError": "अज्ञात त्रुटि के कारण मुझे निर्दिष्ट सबरेड्डिट से कोई जानकारी नहीं मिल सकी।"
 }
