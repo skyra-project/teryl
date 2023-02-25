@@ -1,0 +1,12 @@
+{
+	"name": "tag",
+	"description": "Read the server's tags",
+	"optionsNameName": "name",
+	"optionsNameDescription": "The name of the tag to search for",
+	"optionsHideName": "hide",
+	"optionsHideDescription": "Whether or not to show the message publicly (default: False)",
+	"optionsTargetName": "target",
+	"optionsTargetDescription": "The user to mention, if any",
+	"unknown": "There is no such tag under the specified name. Please try again with a different name.",
+	"target": "**Tag suggestion for {{user}}**:"
+}
