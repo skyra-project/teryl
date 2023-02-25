@@ -1,9 +1,9 @@
 {
 	"name": "चयन",
-	"description": "Get a random value from a set of choices",
-	"optionsValuesName": "values",
-	"optionsValuesDescription": "The choices to pick a random value from, separated by spaces",
-	"tooFewOptions": "There needs to be at least two values.",
-	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
-	"result": "👯 *Porcupine in pointy shoes, which one will my pointer choose?*... I choose: `{{value}}`"
+	"description": "विकल्पों के एक सेट से एक यादृच्छिक मूल्य प्राप्त करें",
+	"optionsValuesName": "मान",
+	"optionsValuesDescription": "यादृच्छिक मान चुनने के विकल्प, रिक्त स्थान द्वारा अलग किए गए",
+	"tooFewOptions": "कम से कम दो मान होने चाहिए|",
+	"duplicatedOptions": "आपके सेट में कम से कम एक मिलता-जुलता मान है, कृपया उन्हें हटा दें।",
+	"result": "👯 *नुकीले जूतों में साही, मेरा पॉइंटर किसे चुनेगा?*... मैं चुनता हूं: `{{value}}`"
 }
