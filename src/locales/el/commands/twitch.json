@@ -1,0 +1,28 @@
+{
+	"name": "twitch",
+	"description": "Get information from Twitch",
+	"userName": "user",
+	"userDescription": "Get information about a Twitch channel",
+	"userOptionsNameName": "name",
+	"userOptionsNameDescription": "The name of the Twitch channel",
+	"userDoesNotExist": "The specified channel does not exist.",
+	"userEmbedTitles": {
+		"followers": "Followers",
+		"views": "Views",
+		"partner": "Partner"
+	},
+	"userEmbedFieldFollowers": "{{value, number}}",
+	"userEmbedFieldViews": "{{value, number}}",
+	"userAffiliate": "Affiliate",
+	"userPartner": "Partner",
+	"userNotAffiliated": "This channel is not part of the Twitch affiliate program",
+	"followageName": "followage",
+	"followageDescription": "Gets information about a user's followage",
+	"followageOptionsUserName": "user",
+	"followageOptionsUserDescription": "The user who follows the channel",
+	"followageOptionsChannelName": "channel",
+	"followageOptionsChannelDescription": "The channel to get the followage from",
+	"followageDoesNotExist": "Either the user or the channel do not exist. Please check that you have written both names correctly.",
+	"followageDoesNotFollow": "`{{user}}` does not follow `{{channel}}` on Twitch.",
+	"followageEmbedDescription": "`{{user}}` started following this channel {{time}}"
+}
