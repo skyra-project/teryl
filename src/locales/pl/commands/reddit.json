@@ -1,0 +1,22 @@
+{
+	"name": "reddit",
+	"description": "Get information from Reddit",
+	"optionsRedditName": "reddit",
+	"optionsRedditDescription": "The subreddit to get a post from",
+	"invalidName": "Subreddits must be between 3 and 21 characters long, and contain only letters, numbers, or underscores. Additionally, the `/r/` and `r/` prefixes is also supported.",
+	"banned": "The specified subreddit is not deemed to be safe, please try another one.",
+	"post": "**{{title}}** submitted by {{author}}\n{{url}}",
+	"noPosts": "There are no posts available in the specified subreddit. Please make sure you have typed the name correctly.",
+	"nsfwFailedToFetchChannel": "",
+	"allNsfw": "All the posts from the specified subreddit are marked as NSFW, which can only be displayed on NSFW channels.",
+	"allNsfl": "All the posts from the specified subreddit are marked as NSFL, and as such, I cannot show any of them to you.",
+	"abortError": "Reddit didn't respond on time, please try again later.",
+	"unavailableErrorPrivate": "I couldn't get any information from the specified subreddit because it's marked as private.",
+	"unavailableErrorQuarantined": "I couldn't get any information from the specified subreddit because it's quarantined. Reason:\n>>> {{reason}}",
+	"unavailableErrorGated": "I couldn't get any information from the specified subreddit because it's gated. Reason:\n>>> {{reason}}",
+	"unavailableErrorNotFound": "I couldn't get any information from the specified subreddit because it doesn't exist.",
+	"unavailableErrorBanned": "I couldn't get any information from the specified subreddit because it's marked as banned.",
+	"unavailableForLegalReasons": "I couldn't get any information from the specified subreddit because it's unavailable for legal reasons.",
+	"unavailable": "I couldn't get any information from Reddit because their servers are currently unavailable.",
+	"unknownError": "I couldn't get any information from the specified subreddit due to an unknown error."
+}

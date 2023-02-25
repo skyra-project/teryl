@@ -1,0 +1,12 @@
+{
+	"name": "पोल",
+	"description": "शीर्षक और अधिकतम 5 विकल्पों के साथ प्रतिक्रिया-आधारित पोल बनाता है",
+	"optionsTitleName": "शीर्षक",
+	"optionsTitleDescription": "पोल में उपयोग करने के लिए शीर्षक",
+	"optionsFirstName": "प्रथम",
+	"optionsSecondName": "द्वितीय",
+	"optionsThirdName": "तृतीय",
+	"optionsFourthName": "चौथा",
+	"optionsFifthName": "पाँचवाँ",
+	"optionsValueDescription": "मतदान के लिए एक विकल्प"
+}

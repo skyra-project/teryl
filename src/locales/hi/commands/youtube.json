@@ -1,0 +1,22 @@
+{
+	"name": "यूट्यूब",
+	"description": "यूट्यूब वीडियो, प्लेलिस्ट या प्रोफ़ाइल का लिंक प्राप्त करें",
+	"optionsQueryName": "क्वेरी",
+	"optionsQueryDescription": "यूट्यूब में खोजने के लिए संसाधन",
+	"optionsOrderName": "ऑर्डर",
+	"optionsOrderDescription": "ऑर्डर करने के लिए उपयोग की जाने वाली विधि को परिभाषित करता है (डिफ़ॉल्ट: प्रासंगिकता)",
+	"optionsOrderDate": "दिनांक",
+	"optionsOrderRating": "रेटिंग",
+	"optionsOrderRelevance": "प्रासंगिकता",
+	"optionsOrderTitle": "शीर्षक",
+	"optionsOrderVideoCount": "वीडियो गणना",
+	"optionsOrderViewCount": "व्यूज गणना",
+	"optionsTypeName": "प्रकार",
+	"optionsTypeDescription": "खोजे जाने वाले संसाधनों के प्रकार को परिभाषित करता है",
+	"optionsTypeChannel": "चैनल",
+	"optionsTypePlaylist": "प्लेलिस्ट",
+	"optionsTypeVideo": "वीडियो",
+	"noResults": "मुझे कोई परिणाम नहीं मिला जिसे मैं प्रोसेस कर सकूं, कृपया दूसरे शब्दों के साथ प्रयास करें।",
+	"abortError": "यूट्यूब ने समय पर उत्तर नहीं दिया, कृपया बाद में पुनः प्रयास करें।",
+	"unknownError": "सर्वर एक अज्ञात त्रुटि के साथ लौटा, कृपया बाद में पुनः प्रयास करें।"
+}
