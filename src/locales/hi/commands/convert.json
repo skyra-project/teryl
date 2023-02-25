@@ -91,5 +91,5 @@
 	"unitRankine": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°R",
 	"unitReaumur": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
 	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Rø",
-	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}के॰"
+	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}के"
 }
