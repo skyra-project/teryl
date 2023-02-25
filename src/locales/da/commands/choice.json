@@ -1,0 +1,9 @@
+{
+	"name": "choice",
+	"description": "Get a random value from a set of choices",
+	"optionsValuesName": "values",
+	"optionsValuesDescription": "The choices to pick a random value from, separated by spaces",
+	"tooFewOptions": "There needs to be at least two values.",
+	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
+	"result": "👯 *Porcupine in pointy shoes, which one will my pointer choose?*... I choose: `{{value}}`"
+}
