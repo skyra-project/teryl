@@ -1,5 +1,5 @@
 {
-	"name": "choice",
+	"name": "चयन",
 	"description": "Get a random value from a set of choices",
 	"optionsValuesName": "values",
 	"optionsValuesDescription": "The choices to pick a random value from, separated by spaces",
