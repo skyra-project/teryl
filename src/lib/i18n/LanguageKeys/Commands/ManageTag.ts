@@ -33,6 +33,7 @@ export const AliasUsed = FT<Value>('commands/manage-tag:aliasUsed');
 export const AliasIncompatible = FT<Value>('commands/manage-tag:aliasIncompatible');
 export const AliasRemoveSuccess = FT<Value>('commands/manage-tag:aliasRemoveSuccess');
 export const AliasRemoveFailed = FT<Value>('commands/manage-tag:aliasRemoveFailed');
+export const TooManyCharacters = FT<Value<number>>('commands/manage-tag:tooManyCharacters');
 export const TooManyAliases = FT<Value>('commands/manage-tag:tooManyAliases');
 export const TooManyTags = FT<{ amount: number; limit: number }>('commands/manage-tag:tooManyTags');
 export const AbortError = T('commands/manage-tag:abortError');
