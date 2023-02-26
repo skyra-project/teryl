@@ -75,7 +75,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"minimist": "^1.2.6"
+		"minimist": "^1.2.8"
 	},
 	"engines": {
 		"node": ">=18.0.0"
