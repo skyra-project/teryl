@@ -11,6 +11,22 @@ import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type 
 import { isAbortError } from '@skyra/safe-fetch';
 import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
 
+/**
+ * The content's max length is set to 4096, which is exactly 2048 * 2, however, we still set limits internally:
+ * - ≤2048 (embed: true)
+ * - ≤2000 (embed: false)
+ *
+ * Said limits are measured in code points, not characters, matching the checks the Discord API does. For reference:
+ * - 'a'.repeat(2000);
+ *   str.length     : 2000
+ *   [...str].length: 2000
+ *
+ * - '🔥'.repeat(2000);
+ *   str.length     : 4000
+ *   [...str].length: 2000
+ */
+const MaximumContentLength = 4096;
+
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.RootName, LanguageKeys.Commands.ManageTag.RootDescription)
 		.setDMPermission(false)
@@ -291,22 +307,6 @@ function makeNameOption() {
 function makeNewNameOption() {
 	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsNewName).setMaxLength(32);
 }
-
-/**
- * The content's max length is set to 4096, which is exactly 2048 * 2, however, we still set limits internally:
- * - ≤2048 (embed: true)
- * - ≤2000 (embed: false)
- *
- * Said limits are measured in code points, not characters, matching the checks the Discord API does. For reference:
- * - 'a'.repeat(2000);
- *   str.length     : 2000
- *   [...str].length: 2000
- *
- * - '🔥'.repeat(2000);
- *   str.length     : 4000
- *   [...str].length: 2000
- */
-const MaximumContentLength = 4096;
 
 function makeContentOption() {
 	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsContent).setMaxLength(MaximumContentLength);
