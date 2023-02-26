@@ -59,7 +59,7 @@
 	"unitInch": "{{value, number(style: unit; unit: inch; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitKilometer": "{{value, number(style: unit; unit: kilometer; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitLightSecond": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} प्रकाश सेकंडस",
-	"unitLightYear": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}ly",
+	"unitLightYear": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} प्रकाश-वर्ष",
 	"unitMeter": "{{value, number(style: unit; unit: meter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitCentimeter": "{{value, number(style: unit; unit: centimeter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
