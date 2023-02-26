@@ -44,7 +44,7 @@ export class UserCommand extends Command {
 	private query(options: Options) {
 		const url = new URL('https://youtube.googleapis.com/youtube/v3/search');
 		url.searchParams.append('part', 'snippet');
-		url.searchParams.append('safeSearch', 'strict');
+		url.searchParams.append('safeSearch', 'moderate');
 		url.searchParams.append('maxResults', '25');
 		url.searchParams.append('q', options.query);
 		url.searchParams.append('key', envParseString('GOOGLE_API_TOKEN'));
