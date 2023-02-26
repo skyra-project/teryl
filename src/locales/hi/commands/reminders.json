@@ -25,7 +25,7 @@
 	"listDescription": "आपके सभी अनुस्मारक सूचीबद्ध करता है",
 	"listEmpty": "आपके उपयोगकर्ता के लिए कोई अनुस्मारक नहीं है, लेकिन आप </अनुस्मारक बनाएँ:{{commandId}}> का उपयोग करके नए अनुस्मारक बना सकते हैं।",
 	"invalidId": "आपके द्वारा पास किया गया क्रमांक ({{id}}) मान्य नहीं है।",
-	"invalidDuration": "मैं {{time}} से अवधि की पुष्टि नहीं कर सका, कृपया `2h` जैसे शब्दों का उपयोग करने का प्रयास करें।",
+	"invalidDuration": "I could not validate a duration from {{value}}, please try using words such as `2h`.",
 	"durationTooShort": "अवधि 1 मिनट से कम नहीं हो सकती।",
 	"durationTooLong": "अवधि 1 साल से कम नहीं हो सकती।"
 }
