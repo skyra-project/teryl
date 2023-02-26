@@ -5,11 +5,27 @@ import { DefaultLimits, fetchLimits } from '#lib/utilities/ring';
 import { getTag, makeTagChoices, sanitizeTagName, searchTag } from '#lib/utilities/tags';
 import { ActionRowBuilder, codeBlock, inlineCode, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder } from '@discordjs/builders';
 import { err, ok, Result } from '@sapphire/result';
-import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { cutText, isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
 import { isAbortError } from '@skyra/safe-fetch';
 import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
+
+/**
+ * The content's max length is set to 4096, which is exactly 2048 * 2, however, we still set limits internally:
+ * - ≤2048 (embed: true)
+ * - ≤2000 (embed: false)
+ *
+ * Said limits are measured in code points, not characters, matching the checks the Discord API does. For reference:
+ * - 'a'.repeat(2000);
+ *   str.length     : 2000
+ *   [...str].length: 2000
+ *
+ * - '🔥'.repeat(2000);
+ *   str.length     : 4000
+ *   [...str].length: 2000
+ */
+const MaximumContentLength = 4096;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.RootName, LanguageKeys.Commands.ManageTag.RootDescription)
@@ -44,7 +60,8 @@ export class UserCommand extends Command {
 		const embedColorResult = this.getEmbedColor(interaction, options);
 		if (embedColorResult.isErr()) return this.replyEphemeral(interaction, embedColorResult.unwrapErr());
 
-		const embed = options.embed ?? false;
+		// Default `embed` to `true` if `embed-color` is set.
+		const embed = options.embed ?? !isNullishOrEmpty(options['embed-color']);
 		const embedColor = embedColorResult.unwrap();
 		if (isNullishOrEmpty(options.content)) {
 			const t = getSupportedUserLanguageT(interaction);
@@ -52,7 +69,6 @@ export class UserCommand extends Command {
 				new TextInputBuilder()
 					.setCustomId('content')
 					.setLabel(t(LanguageKeys.Commands.ManageTag.ModalContent))
-					.setMaxLength(1900)
 					.setRequired(true)
 					.setStyle(TextInputStyle.Paragraph)
 			);
@@ -63,6 +79,11 @@ export class UserCommand extends Command {
 			});
 		}
 
+		const lengthLimit = embed ? 2048 : 2000;
+		if ([...options.content].length > lengthLimit) {
+			return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.TooManyCharacters, lengthLimit);
+		}
+
 		await this.container.prisma.tag.create({ data: { name, content: options.content, embed, embedColor, guildId } });
 		return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AddSuccess, inlineCode(name));
 	}
@@ -71,13 +92,11 @@ export class UserCommand extends Command {
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Remove).addStringOption(makeNameOption().setAutocomplete(true))
 	)
 	public async remove(interaction: Command.ChatInputInteraction, options: Options) {
-		const name = sanitizeTagName(options.name);
-		if (isNullishOrEmpty(name)) return this.replyInvalidName(interaction, options.name);
+		const guildId = this.getGuildId(interaction);
+		const existing = await getTag(guildId, options.name);
+		if (isNullish(existing)) return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(options.name));
 
-		const result = await Result.fromAsync(
-			this.container.prisma.tag.delete({ where: { name_guildId: { guildId: this.getGuildId(interaction), name } } })
-		);
-
+		const result = await Result.fromAsync(this.container.prisma.tag.delete({ where: { id: existing.id } }));
 		const content = result.match({
 			ok: (tag) => resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.RemoveSuccess, { value: inlineCode(tag.name) }),
 			err: () => LanguageKeys.Commands.ManageTag.Unknown
@@ -129,7 +148,6 @@ export class UserCommand extends Command {
 				new TextInputBuilder()
 					.setCustomId('content')
 					.setLabel(t(LanguageKeys.Commands.ManageTag.ModalContent))
-					.setMaxLength(1900)
 					.setRequired(true)
 					.setStyle(TextInputStyle.Paragraph)
 					.setValue(existing.content)
@@ -137,13 +155,19 @@ export class UserCommand extends Command {
 			return interaction.showModal({
 				title: t(LanguageKeys.Commands.ManageTag.Modal),
 				components: [row.toJSON()],
-				custom_id: `tag.edit.${embed ? 1 : 0}.${embedColor}.${name}.${nextName}`
+				custom_id: `tag.edit.${embed ? 1 : 0}.${embedColor}.${existing.name}.${nextName}`
 			});
+		}
+
+		const content = options.content ?? existing.content;
+		const lengthLimit = embed ? 2048 : 2000;
+		if ([...content].length > lengthLimit) {
+			return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.TooManyCharacters, lengthLimit);
 		}
 
 		await this.container.prisma.tag.update({
 			where: { id: existing.id },
-			data: { name: nextName, content: options.content, embed, embedColor }
+			data: { name: nextName, content, embed, embedColor }
 		});
 		return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.EditSuccess, inlineCode(nextName));
 	}
@@ -204,7 +228,7 @@ export class UserCommand extends Command {
 		const existing = await getTag(this.getGuildId(interaction), name);
 		return isNullish(existing)
 			? this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name))
-			: this.replyEphemeral(interaction, codeBlock('md', escapeCodeBlock(existing.content)));
+			: this.replyEphemeral(interaction, codeBlock('md', cutText(escapeCodeBlock(existing.content), 1980)));
 	}
 
 	private getGuildId(interaction: Command.Interaction) {
@@ -283,7 +307,7 @@ function makeNewNameOption() {
 }
 
 function makeContentOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsContent).setMaxLength(1900);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsContent).setMaxLength(MaximumContentLength);
 }
 
 function makeEmbedOption() {

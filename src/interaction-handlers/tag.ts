@@ -11,6 +11,12 @@ export class UserHandler extends InteractionHandler {
 	public async run(interaction: Interaction, parameters: Parameters) {
 		const content = interaction.data.components[0].components[0].value;
 		const embed = parameters[1] === '1';
+		const lengthLimit = embed ? 2048 : 2000;
+		if ([...content].length > lengthLimit) {
+			const content = resolveUserKey(interaction, LanguageKeys.Commands.ManageTag.TooManyCharacters, { value: lengthLimit });
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
 		const embedColor = Number(parameters[2]);
 		const name = parameters[3];
 		const guildId = BigInt(interaction.guildId!);
