@@ -37,7 +37,9 @@
 	"aliasRemoveSuccess": "{{value}} का उपनाम सफलतापूर्वक हटाया गया।",
 	"aliasSuccess": "{{value}} के उपनामों को सफलतापूर्वक संपादित किया गया।",
 	"aliasRemoveFailed": "मैं एक अनपेक्षित त्रुटि के कारण {{value}} के उपनाम को निकालने में विफल रहा।",
+	"tooManyCharacters": "The content is too long, it must be shorter than {{value, number}} characters.",
 	"tooManyAliases": "आप {{value}} के लिए उपनामों की अधिकतम संख्या (10) तक पहुंच चुके हैं।",
+	"tooManyTags": "You already reached the maximum number of tags ({{limit, number}}) with a total of {{amount, number}}",
 	"exists": "उस नाम का पहले से ही एक टैग है, कृपया किसी अन्य नाम का उपयोग करें।",
 	"unknown": "निर्दिष्ट नाम के तहत ऐसा कोई टैग नहीं है। कृपया किसी भिन्न नाम से पुन: प्रयास करें."
 }
