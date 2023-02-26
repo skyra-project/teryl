@@ -69,7 +69,6 @@ export class UserCommand extends Command {
 				new TextInputBuilder()
 					.setCustomId('content')
 					.setLabel(t(LanguageKeys.Commands.ManageTag.ModalContent))
-					.setMaxLength(MaximumContentLength)
 					.setRequired(true)
 					.setStyle(TextInputStyle.Paragraph)
 			);
@@ -149,7 +148,6 @@ export class UserCommand extends Command {
 				new TextInputBuilder()
 					.setCustomId('content')
 					.setLabel(t(LanguageKeys.Commands.ManageTag.ModalContent))
-					.setMaxLength(MaximumContentLength)
 					.setRequired(true)
 					.setStyle(TextInputStyle.Paragraph)
 					.setValue(existing.content)
@@ -157,7 +155,7 @@ export class UserCommand extends Command {
 			return interaction.showModal({
 				title: t(LanguageKeys.Commands.ManageTag.Modal),
 				components: [row.toJSON()],
-				custom_id: `tag.edit.${embed ? 1 : 0}.${embedColor}.${name}.${nextName}`
+				custom_id: `tag.edit.${embed ? 1 : 0}.${embedColor}.${existing.name}.${nextName}`
 			});
 		}
 
