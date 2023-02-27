@@ -24,5 +24,5 @@
 	"followageOptionsChannelDescription": "चैनल से अनुसरण प्राप्त करने के लिए",
 	"followageDoesNotExist": "या तो उपयोगकर्ता या चैनल मौजूद नहीं है। कृपया जांचें कि आपने दोनों नाम सही लिखे हैं।",
 	"followageDoesNotFollow": "`{{user}}` ट्विच पर `{{channel}}` का अनुसरण नहीं करता है।",
-	"followageEmbedDescription": "`{{user}}` ने इस चैनल का {{time}} अनुसरण करना शुरू किया"
+	"followageEmbedDescription": "`{{user}}` started following this channel {{time}} ({{relative}})"
 }
