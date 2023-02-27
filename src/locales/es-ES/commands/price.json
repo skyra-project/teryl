@@ -1,14 +1,14 @@
 {
-	"name": "price",
-	"description": "Get the price of a currency compared to others",
-	"optionsAmountName": "amount",
-	"optionsAmountDescription": "The amount of money to convert",
-	"optionsFromName": "from",
-	"optionsFromDescription": "The currency to convert from",
-	"optionsToName": "to",
-	"optionsToDescription": "The currencies to convert to, separated by spaces",
-	"abortError": "The server did not respond on time, please try again later.",
-	"unknownServerError": "I received an unexpected error from the server. Please try again later.",
-	"error": "The server returned an error with the given options, please make sure you wrote the correct names.",
-	"result": "**{{from}}** is worth {{amounts, list}}."
+	"name": "precio",
+	"description": "Provee el precio de una moneda en comparación con otros",
+	"optionsAmountName": "cantidad",
+	"optionsAmountDescription": "La cantidad de dinero a convertir",
+	"optionsFromName": "desde",
+	"optionsFromDescription": "La divisa de la que convertir",
+	"optionsToName": "a",
+	"optionsToDescription": "Las divisas a convertir, separadas por espacios",
+	"abortError": "El servidor no respondió a tiempo, por favor inténtelo de nuevo más tarde.",
+	"unknownServerError": "He recibido un error inesperado del servidor. Inténtalo de nuevo más tarde.",
+	"error": "El servidor devolvió un error con las opciones dadas, por favor asegúrese de escribir los nombres correctos.",
+	"result": "**{{from}}** vale {{amounts, list}}."
 }
