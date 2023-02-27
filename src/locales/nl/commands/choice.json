@@ -1,9 +1,9 @@
 {
-	"name": "choice",
-	"description": "Get a random value from a set of choices",
-	"optionsValuesName": "values",
-	"optionsValuesDescription": "The choices to pick a random value from, separated by spaces",
-	"tooFewOptions": "There needs to be at least two values.",
-	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
-	"result": "👯 *Porcupine in pointy shoes, which one will my pointer choose?*... I choose: `{{value}}`"
+	"name": "keuze",
+	"description": "Krijg een willekeurige keuze van een set van keuzes",
+	"optionsValuesName": "waarden",
+	"optionsValuesDescription": "De keuzes om een willekeurige waarde van te kiezen, gescheiden door spaties",
+	"tooFewOptions": "Er moeten tenminste twee waarden zijn.",
+	"duplicatedOptions": "Er is ten minste één dubbele waarde in de set. Verwijder deze alsjeblieft.",
+	"result": "👯 *Iene miene mutte. Tien pond grutten. Tien pond kaas. Iene miene mutte is de baas.*... Ik kies: `{{value}}`"
 }

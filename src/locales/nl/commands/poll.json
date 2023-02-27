@@ -1,12 +1,12 @@
 {
-	"name": "poll",
-	"description": "Creates a reaction-based poll with a title and up to 5 options",
-	"optionsTitleName": "title",
-	"optionsTitleDescription": "The title to use in the poll",
-	"optionsFirstName": "first",
-	"optionsSecondName": "second",
-	"optionsThirdName": "third",
-	"optionsFourthName": "fourth",
-	"optionsFifthName": "fifth",
-	"optionsValueDescription": "An option for the poll"
+	"name": "enquête",
+	"description": "Maakt een op reacties gebaseerde poll met een titel en maximaal 5 opties",
+	"optionsTitleName": "titel",
+	"optionsTitleDescription": "De titel die gebruikt moet worden in de enquête",
+	"optionsFirstName": "eerste",
+	"optionsSecondName": "tweede",
+	"optionsThirdName": "derde",
+	"optionsFourthName": "vierde",
+	"optionsFifthName": "vijfde",
+	"optionsValueDescription": "Een optie voor de enquête"
 }

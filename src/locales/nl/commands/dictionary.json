@@ -1,16 +1,16 @@
 {
-	"name": "dictionary",
-	"description": "Get the definition of a word",
-	"optionsInputName": "input",
-	"optionsInputDescription": "The word to get the definition of",
-	"contentTitle": "{{OwlbotIcon}} **Owlbot Dictionary** - `{{value}}`",
-	"contentPronunciation": "Pronunciation: `{{value}}`",
+	"name": "woordenboek",
+	"description": "Krijg de definitie van een woord",
+	"optionsInputName": "invoer",
+	"optionsInputDescription": "Het woord om de definitie van te krijgen",
+	"contentTitle": "{{OwlbotIcon}} **Owlbot Woordenboek** - `{{value}}`",
+	"contentPronunciation": "Uitspraak: `{{value}}`",
 	"contentType": "Type: `{{value}}`",
 	"contentEmoji": "Emoji: {{value}}",
-	"fetchAbort": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot did not respond within 2 seconds, please try again later.",
-	"fetchAuthorizationFailed": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot does not seem to recognize me and rejected my authorization. Please contact my developers about this.",
-	"fetchNoResults": "{{OwlbotIcon}} Owlbot did not return any results for `{{value}}`.",
-	"fetchRateLimited": "I couldn't search for `{{value}}` because I have made too many requests recently to {{OwlbotIcon}} Owlbot. Please try again in around a minute.",
-	"fetchServerError": "I couldn't search for `{{value}}` because {{OwlbotIcon}} Owlbot's server is not available. Please try again later.",
-	"fetchUnknownError": "I couldn't search for `{{value}}` because of an unknown error. Please contact my developers about this."
+	"fetchAbort": "Ik kon niet zoeken naar `{{value}}` omdat {{OwlbotIcon}} Owlbot niet binnen 2 seconden heeft gereageerd, probeer het later opnieuw.",
+	"fetchAuthorizationFailed": "Ik kon niet zoeken naar `{{value}}` omdat {{OwlbotIcon}} Owlbot me niet lijkt te herkennen en mij toestemming heeft geweigerd. Neem alsjeblieft contact op met mijn ontwikkelaars hierover.",
+	"fetchNoResults": "{{OwlbotIcon}} Owlbot heeft geen resultaten gegeven voor `{{value}}`.",
+	"fetchRateLimited": "Ik kon niet zoeken naar `{{value}}` omdat ik te veel aanvragen heb gedaan voor {{OwlbotIcon}} Owlbot. Probeer het over ongeveer een minuut opnieuw.",
+	"fetchServerError": "Ik kon niet zoeken naar `{{value}}` omdat de server van {{OwlbotIcon}} Owlbot niet beschikbaar is. Probeer het later nog eens.",
+	"fetchUnknownError": "Ik kon niet zoeken naar `{{value}}` vanwege een onbekende fout. Neem hierover contact op met mijn ontwikkelaars."
 }

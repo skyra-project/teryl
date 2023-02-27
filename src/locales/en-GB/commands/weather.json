@@ -8,7 +8,7 @@
 	"optionsSystemMetric": "Metric",
 	"optionsSystemSI": "SI (International System of Units)",
 	"optionsSystemImperial": "Imperial",
-	"optionsSystemAuto": "Auto (Imperial)",
+	"optionsSystemAuto": "Auto (Metric)",
 	"invalidJsonBody": "The server sent me a malformed response which I cannot process, please try again later.",
 	"unknownLocation": "The server does not seem to be aware of that place, please try somewhere else.",
 	"unknownError": "The server returned with an unknown error, please try again later.",
