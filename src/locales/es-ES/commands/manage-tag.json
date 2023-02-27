@@ -40,6 +40,6 @@
 	"tooManyCharacters": "El contenido es demasiado largo, debe ser más corto que {{value, number}} caracteres.",
 	"tooManyAliases": "Ya has alcanzado el número máximo de alias (10) para {{value}}.",
 	"tooManyTags": "Ya has alcanzado el número máximo de etiquetas ({{limit, number}}) con un total de {{amount, number}}",
-	"exists": "There is already a tag with that name, please use another name.",
-	"unknown": "There is no such tag under the specified name. Please try again with a different name."
+	"exists": "Ya hay una etiqueta con ese nombre, por favor utilice otro nombre.",
+	"unknown": "No existe tal etiqueta con el nombre especificado. Por favor, inténtelo de nuevo con un nombre diferente."
 }
