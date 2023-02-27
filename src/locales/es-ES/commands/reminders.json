@@ -1,6 +1,6 @@
 {
-	"name": "reminders",
-	"description": "Manage your personal reminders",
+	"name": "recordatorios",
+	"description": "Gestiona tus recordatorios",
 	"optionsIdName": "id",
 	"optionsIdDescription": "The ID of the reminder",
 	"optionsContentName": "content",
