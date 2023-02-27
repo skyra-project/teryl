@@ -23,8 +23,8 @@
 	"deleteContent": "Success van het verwijderen van de herinnering {{id}} die was ingesteld om te leveren op {{time}} met de inhoud: {{content}}",
 	"listName": "lijst",
 	"listDescription": "Geeft al je herinneringen weer",
-	"listEmpty": "There are no reminders on your user, but you can create new ones using </reminders create:{{commandId}}>.",
-	"invalidId": "The ID you passed ({{id}}) is not valid.",
+	"listEmpty": "Er zijn geen herinneringen voor jou, je kunt een nieuwe aanmaken met behulp van </reminders create:{{commandId}}>.",
+	"invalidId": "Het door jou opgegeven ID ({{id}}) is niet geldig.",
 	"invalidDuration": "I could not validate a duration from {{value}}, please try using words such as `2h`.",
 	"durationTooShort": "The duration cannot be shorter than 1 minute.",
 	"durationTooLong": "The duration cannot be longer than 1 year."
