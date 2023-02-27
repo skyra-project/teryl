@@ -39,7 +39,7 @@
 	"aliasRemoveFailed": "I failed to remove the alias of {{value}} due to an unexpected error.",
 	"tooManyCharacters": "The content is too long, it must be shorter than {{value, number}} characters.",
 	"tooManyAliases": "You already reached the maximum number of aliases (10) for {{value}}.",
-	"tooManyTags": "You already reached the maximum number of tags ({{limit, number}}) with a total of {{amount, number}}",
+	"tooManyTags": "You already reached the maximum number of tags ({{limit, number}}) with a total of {{amount, number}}.",
 	"exists": "There is already a tag with that name, please use another name.",
 	"unknown": "There is no such tag under the specified name. Please try again with a different name."
 }
