@@ -1,6 +1,6 @@
 {
 	"invalidId": "Het lijkt erop dat de herinnering is verlopen en het is me niet gelukt deze te verwijderen. Bedankt voor de herinnering.",
 	"owner": "Je kunt je niet aan- of afmelden voor een herinnering waarvan je eigenaar bent.",
-	"subscribed": "You have successfully subscribed to this reminder. Click again to unsubscribe.",
-	"unsubscribed": "You have successfully unsubscribed to this reminder. Click again to subscribe."
+	"subscribed": "Je bent succesvol geabonneerd op deze herinnering. Klik nogmaals om je uit te schrijven.",
+	"unsubscribed": "Je hebt je succesvol uitgeschreven voor deze herinnering. Klik nogmaals om je opnieuw te abonneren."
 }
