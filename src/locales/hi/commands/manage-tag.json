@@ -39,7 +39,7 @@
 	"aliasRemoveFailed": "मैं एक अनपेक्षित त्रुटि के कारण {{value}} के उपनाम को निकालने में विफल रहा।",
 	"tooManyCharacters": "कॉन्टेंट बहुत लंबा है, यह {{{value, number}} वर्णों से कम होना चाहिए।",
 	"tooManyAliases": "आप {{value}} के लिए उपनामों की अधिकतम संख्या (10) तक पहुंच चुके हैं।",
-	"tooManyTags": "You already reached the maximum number of tags ({{limit, number}}) with a total of {{amount, number}}",
+	"tooManyTags": "आप पहले ही कुल {{amount, number}} के साथ टैग की अधिकतम संख्या ({{limit, number}}) तक पहुंच चुके हैं|",
 	"exists": "उस नाम का पहले से ही एक टैग है, कृपया किसी अन्य नाम का उपयोग करें।",
 	"unknown": "निर्दिष्ट नाम के तहत ऐसा कोई टैग नहीं है। कृपया किसी भिन्न नाम से पुन: प्रयास करें."
 }
