@@ -1,8 +1,9 @@
+import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { YouTubeResult, YouTubeResultId, YouTubeResultSnippet } from '#lib/types/youtube';
 import { getLinkFromResultId, getSelectMenuValue } from '#lib/utilities/youtube';
 import { ActionRowBuilder, StringSelectMenuBuilder } from '@discordjs/builders';
-import { cutText, isNullishOrEmpty } from '@sapphire/utilities';
+import { isNullishOrEmpty } from '@sapphire/utilities';
 import { envParseString } from '@skyra/env-utilities';
 import { Command, MessageResponseOptions, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveUserKey } from '@skyra/http-framework-i18n';
@@ -62,7 +63,7 @@ export class UserCommand extends Command {
 				options.push({
 					// Handle edge case with channelTitle: ''.
 					label: this.getLabel(item.snippet),
-					description: cutText(he.decode(item.snippet.title), 50),
+					description: cut(he.decode(item.snippet.title), 50),
 					value,
 					default: first === null
 				});
@@ -81,7 +82,7 @@ export class UserCommand extends Command {
 	}
 
 	private getLabel(snippet: YouTubeResultSnippet): string {
-		if (!isNullishOrEmpty(snippet.channelTitle)) return cutText(he.decode(snippet.channelTitle), 25);
+		if (!isNullishOrEmpty(snippet.channelTitle)) return cut(he.decode(snippet.channelTitle), 25);
 		return snippet.channelId === 'UC' ? 'YouTube Music' : snippet.channelId;
 	}
 

@@ -1,11 +1,12 @@
 import { escapeCodeBlock } from '#lib/common/escape';
+import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { parseColor } from '#lib/utilities/color';
 import { DefaultLimits, fetchLimits } from '#lib/utilities/ring';
 import { getTag, makeTagChoices, sanitizeTagName, searchTag } from '#lib/utilities/tags';
 import { ActionRowBuilder, codeBlock, inlineCode, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder } from '@discordjs/builders';
 import { err, ok, Result } from '@sapphire/result';
-import { cutText, isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
 import { isAbortError } from '@skyra/safe-fetch';
@@ -228,7 +229,7 @@ export class UserCommand extends Command {
 		const existing = await getTag(this.getGuildId(interaction), name);
 		return isNullish(existing)
 			? this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.Unknown, inlineCode(name))
-			: this.replyEphemeral(interaction, codeBlock('md', cutText(escapeCodeBlock(existing.content), 1980)));
+			: this.replyEphemeral(interaction, codeBlock('md', cut(escapeCodeBlock(existing.content), 1980)));
 	}
 
 	private getGuildId(interaction: Command.Interaction) {
