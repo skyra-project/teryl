@@ -13,8 +13,8 @@ import {
 import type { Reminder } from '@prisma/client';
 import { Duration, Time } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
-import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
+import { cutText, isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
 	getSupportedLanguageName,
@@ -29,6 +29,21 @@ import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONB
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.RootName, LanguageKeys.Commands.Reminders.RootDescription)
 )
 export class UserCommand extends Command {
+	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
+		const reminders = await this.container.prisma.reminder.findMany({
+			where: { userId: BigInt(interaction.user.id), OR: options.id ? [{ id: options.id }, { content: { contains: options.id } }] : undefined },
+			orderBy: { createdAt: 'asc' },
+			select: { id: true, content: true },
+			take: 25
+		});
+		return interaction.reply({
+			choices: reminders.map((reminder) => ({
+				name: cutText(reminder.content, 100),
+				value: reminder.id
+			}))
+		});
+	}
+
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Create)
 			.addStringOption(createContentOption().setRequired(true))
@@ -156,6 +171,7 @@ export class UserCommand extends Command {
 		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({
 			where: { OR: [{ userId }, { subscriptions: { some: { userId } } }] },
+			orderBy: { createdAt: 'asc' },
 			take: 10
 		});
 		if (isNullishOrEmpty(reminders)) {
@@ -179,7 +195,7 @@ export class UserCommand extends Command {
 	}
 
 	private formatReminder(reminder: Reminder) {
-		return `• ${inlineCode(reminder.id)}: ${time(reminder.time, TimestampStyles.LongDateTime)} - ${inlineCode(
+		return `• ${inlineCode(reminder.id)}: ${time(reminder.time, TimestampStyles.ShortDateTime)} - ${inlineCode(
 			escapeInlineCode(this.formatReminderContent(reminder.content))
 		)}`;
 	}
@@ -195,7 +211,7 @@ export class UserCommand extends Command {
 }
 
 function createIdOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsId).setMinLength(21).setMaxLength(21);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsId).setAutocomplete(true);
 }
 
 function createContentOption() {
@@ -209,6 +225,8 @@ function createTimeOption() {
 function createPublicOption() {
 	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsPublic);
 }
+
+type AutoCompleteOptions = AutocompleteInteractionArguments<{ id: string }>;
 
 interface CreateOptions {
 	content: string;
