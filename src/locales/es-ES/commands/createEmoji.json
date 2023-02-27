@@ -21,9 +21,9 @@
 	"failedToUploadInvalidBody": "Parece que no he subido el emoji correctamente, por favor inténtalo de nuevo.",
 	"failedToUploadMaximumEmojis": "No he podido subir el emoji porque este servidor ya ha alcanzado el límite de emojis. Por favor, elimine uno y vuelva a intentarlo.",
 	"failedToUploadMaximumAnimatedEmojis": "No he podido subir el emoji porque este servidor ya ha alcanzado el límite de emojis animados. Por favor, elimine uno y vuelva a intentarlo.",
-	"contentLengthMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me how big the file is.",
-	"contentLengthInvalid": "The server I queried the file from sent me an invalid file size.",
-	"contentLengthTooBig": "The file you uploaded is too big (>256 kilobytes) and cannot be uploaded, please try again with a smaller image.",
-	"contentTypeMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me the type of the file.",
-	"contentTypeUnsupported": "The file you uploaded does not seem to be a supported image format."
+	"contentLengthMissing": "El servidor desde el que he consultado el archivo parece estar mal configurado y se me ha olvidado decirme cuán grande es el archivo.",
+	"contentLengthInvalid": "El servidor desde el que consulté el archivo me envió un tamaño de archivo no válido.",
+	"contentLengthTooBig": "El archivo que has subido es demasiado grande (>256 kilobytes) y no se puede subir, por favor inténtalo de nuevo con una imagen más pequeña.",
+	"contentTypeMissing": "El servidor desde el que he consultado el archivo parece estar mal configurado y se olvidó indicar el tipo del archivo.",
+	"contentTypeUnsupported": "El archivo que usted ha subido no parece ser un formato de imagen compatible."
 }
