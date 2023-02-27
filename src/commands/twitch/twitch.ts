@@ -64,9 +64,11 @@ export class UserCommand extends Command {
 		}
 
 		const [entry] = followage.unwrap().data;
+		const followedAt = new Date(entry.followed_at);
 		const description = t(LanguageKeys.Commands.Twitch.FollowageEmbedDescription, {
 			user: user.display_name,
-			time: time(new Date(entry.followed_at), TimestampStyles.LongDateTime)
+			time: time(followedAt, TimestampStyles.LongDateTime),
+			relative: time(followedAt, TimestampStyles.RelativeTime)
 		});
 		const embed = new EmbedBuilder()
 			.setColor(TwitchBrandingColor)
