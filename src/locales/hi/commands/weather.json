@@ -16,7 +16,7 @@
 	"blockedLocation": "सर्वर ने उस स्थान से डेटा प्राप्त करने के मेरे अनुरोध को ब्लॉक कर दिया है, कृपया किसी दूसरे स्थान का प्रयास करें।",
 	"rateLimited": "ऐसा लगता है कि मैं सर्वर से किए जा सकने वाले अनुरोधों की संख्या को पार कर गया हूं, कृपया बाद में पुनः प्रयास करें।",
 	"remoteServerError": "मेरे अनुरोध को संसाधित करते समय सर्वर को एक त्रुटि प्राप्त हुई, कृपया बाद में पुनः प्रयास करें।",
-	"serviceUnavailable": "सर्वर ने अपनी क्षमता सीमा को पार कर लिया है, जिसका अर्थ है कि वे शेष दिन में और अधिक अनुरोधों को पूरा नहीं कर सकते, कृपया बाद में पुनः प्रयास करें।",
+	"serviceUnavailable": "The server has hit its capacity limit, which means they can no longer serve any more requests for the rest of the current day. Please try again later.",
 	"inches": "{{value, number(style: unit; unit: inch)}}",
 	"temperatureFahrenheit": "{{value, number(style: unit; unit: fahrenheit)}}({{feelsLike, number(style: unit; unit: fahrenheit)}})",
 	"miles": "{{value, number(style: unit; unit: mile)}}",
