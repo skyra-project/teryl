@@ -16,7 +16,7 @@
 	"blockedLocation": "The server blocked my request to receive data from that place, please try somewhere else.",
 	"rateLimited": "It seems I have exceeded the amount of requests I can do to the server, please try again later.",
 	"remoteServerError": "The server received an error while processing my request, please try again later.",
-	"serviceUnavailable": "The server has hit its capacity limit, which means they can not longer serve any more requests in the remainder of the day, please try again later.",
+	"serviceUnavailable": "The server has hit its capacity limit, which means they can no longer serve any more requests for the rest of the current day. Please try again later.",
 	"inches": "{{value, number(style: unit; unit: inch)}}",
 	"temperatureFahrenheit": "{{value, number(style: unit; unit: fahrenheit)}} ({{feelsLike, number(style: unit; unit: fahrenheit)}})",
 	"miles": "{{value, number(style: unit; unit: mile)}}",
