@@ -1,12 +1,15 @@
+import { PathSrc } from '#lib/common/constants';
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { blockQuote } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
 import { none, some } from '@sapphire/result';
 import { envParseString } from '@skyra/env-utilities';
-import { Command, RegisterCommand } from '@skyra/http-framework';
+import { Command, MessageResponseOptions, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { isAbortError, Json, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
+import { MessageFlags } from 'discord-api-types/v10';
+import { readFile } from 'node:fs/promises';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Dictionary.RootName, LanguageKeys.Commands.Dictionary.RootDescription).addStringOption(
@@ -15,15 +18,29 @@ import { isAbortError, Json, safeTimedFetch, type FetchError } from '@skyra/safe
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
-		const result = await this.makeRequest(args.input);
+		const input = args.input.toLowerCase();
+		const result = await this.makeRequest(input);
 
 		const t = getSupportedLanguageT(interaction);
-		const content = result.match({
-			ok: (value) => this.makeContent(t, value),
-			err: (error) => t(this.getErrorKey(error), { value: escapeInlineCode(args.input) })
+		const body = result.match({
+			ok: (value) => this.handleOk(t, input, value),
+			err: (error) => this.handleError(t, input, error)
 		});
+		return interaction.reply(body);
+	}
 
-		return interaction.reply({ content });
+	private handleOk(t: TFunction, input: string, result: OwlbotResult) {
+		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
+		this.makeHeader(t, result).inspect((header) => lines.push(header));
+		lines.push(blockQuote(result.definitions[0].definition));
+		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
+	}
+
+	private handleError(t: TFunction, input: string, error: FetchError) {
+		return {
+			content: t(this.getErrorKey(error), { value: escapeInlineCode(input) }),
+			flags: MessageFlags.Ephemeral
+		} satisfies MessageResponseOptions;
 	}
 
 	private getErrorKey(error: FetchError) {
@@ -46,13 +63,6 @@ export class UserCommand extends Command {
 		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
 	}
 
-	private makeContent(t: TFunction, result: OwlbotResult) {
-		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
-		this.makeHeader(t, result).inspect((header) => lines.push(header));
-		lines.push(blockQuote(result.definitions[0].definition));
-		return lines.join('\n');
-	}
-
 	private makeHeader(t: TFunction, result: OwlbotResult) {
 		const [definition] = result.definitions;
 
@@ -66,12 +76,15 @@ export class UserCommand extends Command {
 
 	private makeRequest(input: string) {
 		return Json<OwlbotResult>(
-			safeTimedFetch(`https://owlbot.info/api/v4/dictionary/${encodeURIComponent(input.toLowerCase())}`, Time.Second * 2, {
+			safeTimedFetch(`https://owlbot.info/api/v4/dictionary/${encodeURIComponent(input)}`, Time.Second * 2, {
 				headers: { Accept: 'application/json', Authorization: `Token ${envParseString('OWLBOT_TOKEN')}` }
 			})
 		);
 	}
 }
+
+const PathBlockList = new URL('./generated/data/dictionary-profanity.json', PathSrc);
+const BlockList = new Set(JSON.parse(await readFile(PathBlockList, 'utf8')) as string[]);
 
 interface Options {
 	input: string;
