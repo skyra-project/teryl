@@ -3,7 +3,7 @@
 	"description": "Obtiene un valor aleatorio de un conjunto de opciones",
 	"optionsValuesName": "valores",
 	"optionsValuesDescription": "Las opciones desde las que elegir un valor aleatorio, separadas por espacios",
-	"tooFewOptions": "There needs to be at least two values.",
-	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
-	"result": "👯 *Porcupine in pointy shoes, which one will my pointer choose?*... I choose: `{{value}}`"
+	"tooFewOptions": "Tiene que haber al menos dos valores.",
+	"duplicatedOptions": "Hay al menos un valor duplicado en su conjunto, por favor elimínelos.",
+	"result": "👯 *Pito, pito, gorgorito ¿Dónde vas tú tan bonito?*... Elijo: `{{value}}`"
 }
