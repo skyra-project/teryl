@@ -19,4 +19,4 @@ export const FollowageOptionsUser = 'commands/twitch:followageOptionsUser';
 export const FollowageOptionsChannel = 'commands/twitch:followageOptionsChannel';
 export const FollowageDoesNotExist = T('commands/twitch:followageDoesNotExist');
 export const FollowageDoesNotFollow = FT<{ user: string; channel: string }>('commands/twitch:followageDoesNotFollow');
-export const FollowageEmbedDescription = FT<{ user: string; time: string }>('commands/twitch:followageEmbedDescription');
+export const FollowageEmbedDescription = FT<{ user: string; time: string; relative: string }>('commands/twitch:followageEmbedDescription');
