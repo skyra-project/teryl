@@ -18,6 +18,7 @@ import {
 	applyLocalizedBuilder,
 	createSelectMenuChoiceName,
 	getSupportedLanguageT,
+	getSupportedUserLanguageT,
 	resolveUserKey,
 	type TFunction,
 	type TypedT
@@ -60,7 +61,9 @@ export class UserCommand extends Command {
 		const [current] = data.current_condition;
 		const weatherDescription = UserCommand.getWeatherDescription(current, base);
 
-		const useImperial = UserCommand.shouldUseImperial(t, args.system ?? 'auto');
+		// Take for example when the user's locale is 'en-GB' and the guild's language is 'en-US'. The default displayed
+		// at them will be "Auto (Metric)" (en-GB), but without this, the default would be "Auto (Imperial)" (en-US).
+		const useImperial = UserCommand.shouldUseImperial(getSupportedUserLanguageT(interaction), args.system ?? 'auto');
 
 		const resolved = useImperial
 			? resolveCurrentConditionsImperial(current, t)
