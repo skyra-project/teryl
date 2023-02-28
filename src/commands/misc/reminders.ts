@@ -1,6 +1,6 @@
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { DateParser } from '#lib/utilities/date';
+import { DateParser } from '#lib/utilities/DateParser';
 import {
 	ActionRowBuilder,
 	ButtonBuilder,

@@ -38,25 +38,22 @@ export class DateParser {
 			second: this.second ?? 0
 		});
 
-		let difference = date.diff(now);
+		const difference = date.diff(now);
 		if (difference.toMillis() >= 0) return difference;
 
+		// If the difference goes positive after adding only 1 day, and none was defined, schedule for next day:
 		if (isNullish(this.day)) {
 			const { days } = difference.shiftTo('days');
-			if (days > -1) {
-				difference = difference.plus({ days: 1 });
-				if (difference.toMillis() >= 0) return difference;
-			}
+			if (days > -1) return difference.plus({ days: 1 });
 		}
 
+		// If the difference goes positive after adding only 1 month, and none was defined, schedule for next month:
 		if (isNullish(this.month)) {
 			const { months } = difference.shiftTo('months');
-			if (months > -1) {
-				difference = difference.plus({ months: 1 });
-				if (difference.toMillis() >= 0) return difference;
-			}
+			if (months > -1) return difference.plus({ months: 1 });
 		}
 
+		// If the difference goes positive after adding only 1 year, and none was defined, schedule for next year:
 		if (isNullish(this.year)) {
 			const { years } = difference.shiftTo('years');
 			if (years > -1) return difference.plus({ years: 1 });
@@ -68,7 +65,10 @@ export class DateParser {
 	private normalizeDate(results: RegExpExecArray | null) {
 		if (results === null) return;
 
-		this.year = isNullishOrEmpty(results.groups!.year) ? null : Number(results.groups!.year);
+		// Set the year, add 2000 if the length is different from 4 (e.g. 23 → 2023):
+		this.year = isNullishOrEmpty(results.groups!.year) ? null : Number(results.groups!.year) + (results.groups!.year.length < 4 ? 2000 : 0);
+
+		// Set the month and day, if it detects the units are swapped (for some reason), invert:
 		const month = Number(results.groups!.month);
 		const day = Number(results.groups!.day);
 		this.month = month > 12 ? day : month;
