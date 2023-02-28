@@ -1,12 +1,12 @@
 {
-	"name": "tag",
-	"description": "Read the server's tags",
-	"optionsNameName": "name",
-	"optionsNameDescription": "The name of the tag to search for",
-	"optionsHideName": "hide",
-	"optionsHideDescription": "Whether or not to show the message publicly (default: False)",
-	"optionsTargetName": "target",
-	"optionsTargetDescription": "The user to mention, if any",
-	"unknown": "There is no such tag under the specified name. Please try again with a different name.",
-	"target": "**Tag suggestion for {{user}}**:"
+	"name": "etiqueta",
+	"description": "Lee las etiquetas del servidor",
+	"optionsNameName": "nombre",
+	"optionsNameDescription": "El nombre de la etiqueta a buscar",
+	"optionsHideName": "ocultar",
+	"optionsHideDescription": "Si mostrar o no el mensaje públicamente (por defecto: Falso)",
+	"optionsTargetName": "usuario",
+	"optionsTargetDescription": "El usuario a mencionar",
+	"unknown": "No existe etiqueta con el nombre especificado. Por favor, inténtelo de nuevo con un nombre diferente.",
+	"target": "**Sugerencia de etiqueta para {{user}}**:"
 }
