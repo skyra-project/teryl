@@ -1,4 +1,4 @@
 {
-	"public": "On {{time}}, {{users, list}} asked me to remind you of this:",
-	"private": "On {{time}}, you asked me to remind you of this:"
+	"public": "En {{time}}, {{users, list}} me pidieron que les recordara esto:",
+	"private": "En {{time}}, usted me pidió que le recordara esto:"
 }
