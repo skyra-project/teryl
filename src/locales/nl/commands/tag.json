@@ -1,12 +1,12 @@
 {
 	"name": "tag",
-	"description": "Read the server's tags",
-	"optionsNameName": "name",
-	"optionsNameDescription": "The name of the tag to search for",
-	"optionsHideName": "hide",
-	"optionsHideDescription": "Whether or not to show the message publicly (default: False)",
-	"optionsTargetName": "target",
-	"optionsTargetDescription": "The user to mention, if any",
-	"unknown": "There is no such tag under the specified name. Please try again with a different name.",
-	"target": "**Tag suggestion for {{user}}**:"
+	"description": "Lees de server's tags",
+	"optionsNameName": "naam",
+	"optionsNameDescription": "De naam van de tag om naar te zoeken",
+	"optionsHideName": "verbergen",
+	"optionsHideDescription": "Of het bericht openbaar moet worden weergegeven (standaard: False)",
+	"optionsTargetName": "doel",
+	"optionsTargetDescription": "De gebruiker om te vermelden, indien van toepassing",
+	"unknown": "Er is geen tag met de opgegeven naam. Probeer het opnieuw met een andere naam.",
+	"target": "**Tag suggestie voor {{user}}**:"
 }

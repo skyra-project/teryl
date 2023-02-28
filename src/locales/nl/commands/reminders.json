@@ -25,7 +25,7 @@
 	"listDescription": "Geeft al je herinneringen weer",
 	"listEmpty": "Er zijn geen herinneringen voor jou, je kunt een nieuwe aanmaken met behulp van </reminders create:{{commandId}}>.",
 	"invalidId": "Het door jou opgegeven ID ({{id}}) is niet geldig.",
-	"invalidDuration": "I could not validate a duration from {{value}}, please try using words such as `2h`.",
-	"durationTooShort": "The duration cannot be shorter than 1 minute.",
-	"durationTooLong": "The duration cannot be longer than 1 year."
+	"invalidDuration": "Ik kon op basis van {{value}} geen duur achterhalen, probeer alsjeblieft woorden als `2h` te gebruiken.",
+	"durationTooShort": "De duur kan niet korter zijn dan 1 minuut.",
+	"durationTooLong": "De duur mag niet langer zijn dan 1 jaar."
 }
