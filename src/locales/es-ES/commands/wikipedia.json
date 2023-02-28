@@ -1,8 +1,8 @@
 {
 	"name": "wikipedia",
-	"description": "Gets information about a Wikipedia article",
-	"optionsInputName": "input",
-	"optionsInputDescription": "Search for an article",
-	"noResults": "Wikipedia returned no results, please try again with other search terms.",
-	"interWiki": "I found a Wikipedia article on {{link}}."
+	"description": "Provee información sobre un artículo de Wikipedia",
+	"optionsInputName": "entrada",
+	"optionsInputDescription": "Buscar un artículo",
+	"noResults": "Wikipedia no ha devuelto resultados, por favor inténtalo de nuevo con otros términos de búsqueda.",
+	"interWiki": "He encontrado un artículo de Wikipedia en {{link}}."
 }
