@@ -1,0 +1,18 @@
+{
+	"name": "zona-horaria",
+	"description": "Administra tu zona horaria personal o ve la hora actual",
+	"optionsNameName": "nombre",
+	"optionsNameDescription": "El nombre de la zona horaria a usar",
+	"useName": "usar",
+	"useDescription": "Establece tu zona horaria personal para usar cuando usas fechas",
+	"useSuccess": "Se ha establecido correctamente tu zona horaria personal a `{{value}}`.",
+	"useFailure": "No pude establecer tu zona horaria personal a `{{value}}`, por favor inténtalo de nuevo más tarde.",
+	"resetName": "restablecer",
+	"resetDescription": "Restablece su zona horaria personal",
+	"resetSuccess": "Se ha eliminado correctamente tu zona horaria personal.",
+	"resetFailure": "Parece que usted no tenía una zona horaria configurada, o mi base de datos me falló.",
+	"viewName": "ver",
+	"viewDescription": "Ver la hora actual en la zona horaria especificada",
+	"viewContent": "Ahora mismo es `{{time}}` en `{{tz}}`.",
+	"invalidTimeZone": "No pude encontrar una zona horaria con el nombre de `{{value}}`, por favor intenta con otro nombre."
+}
