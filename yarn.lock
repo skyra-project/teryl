@@ -681,9 +681,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@skyra/shared-http-pieces@npm:^0.4.3":
-  version: 0.4.3
-  resolution: "@skyra/shared-http-pieces@npm:0.4.3"
+"@skyra/shared-http-pieces@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "@skyra/shared-http-pieces@npm:0.4.4"
   dependencies:
     "@discordjs/builders": ^1.4.0
     "@discordjs/collection": ^1.3.0
@@ -691,7 +691,7 @@ __metadata:
     "@skyra/http-framework-i18n": ^0.6.0
     discord-api-types: ^0.37.35
     tslib: ^2.5.0
-  checksum: 064703501dfb4b8bfc7b77b303b72207c684a5d0fe50ae2e2dbe9b5b62db543dc2cd103a6963deecdba47691e4aac17d180d288dfdf418ceb1a874ef5cf316aa
+  checksum: f41eec5c885d4d2f60ec2c56b3c01036af0e99de2b38ed772650f8145e663b83682a0f39b34a4d179aa1c210a8ecdde823ac59312f8f0790d86a9aac36b43235
   languageName: node
   linkType: hard
 
@@ -723,7 +723,7 @@ __metadata:
     "@skyra/http-framework-i18n": ^0.6.0
     "@skyra/logger": ^1.0.1
     "@skyra/safe-fetch": ^1.1.0
-    "@skyra/shared-http-pieces": ^0.4.3
+    "@skyra/shared-http-pieces": ^0.4.4
     "@skyra/start-banner": ^1.0.2
     "@skyra/twitch-helpers": ^1.0.1
     "@types/gradient-string": ^1.1.2
