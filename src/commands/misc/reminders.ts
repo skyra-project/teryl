@@ -1,5 +1,6 @@
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { DateParser } from '#lib/utilities/DateParser';
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -51,7 +52,7 @@ export class UserCommand extends Command {
 			.addBooleanOption(createPublicOption())
 	)
 	public async create(interaction: Command.ChatInputInteraction, options: CreateOptions) {
-		const dateResult = this.parseDate(interaction, options.duration);
+		const dateResult = await this.parseDateTime(interaction, options.duration);
 		if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
 		const date = dateResult.unwrap();
@@ -112,7 +113,7 @@ export class UserCommand extends Command {
 
 		let date = reminder.time;
 		if (!isNullishOrEmpty(options.duration)) {
-			const dateResult = this.parseDate(interaction, options.duration);
+			const dateResult = await this.parseDateTime(interaction, options.duration);
 			if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
 			date = dateResult.unwrap();
@@ -183,15 +184,30 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	private parseDate(interaction: Command.ChatInputInteraction, input: string) {
+	private parseDuration(interaction: Command.ChatInputInteraction, input: string) {
+		const now = Date.now();
 		const { offset } = new Duration(input);
 		if (!Number.isInteger(offset)) {
 			return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
 		}
 
+		return this.checkRanges(interaction, now, offset);
+	}
+
+	private async parseDateTime(interaction: Command.ChatInputInteraction, input: string) {
+		const now = Date.now();
+		const parser = new DateParser(input, getSupportedUserLanguageName(interaction));
+		if (!parser.valid) return this.parseDuration(interaction, input);
+
+		const settings = await this.container.prisma.user.findFirst({ where: { id: BigInt(interaction.user.id) }, select: { tz: true } });
+		const duration = parser.normalize(settings?.tz?.replaceAll(' ', '_')).as('milliseconds');
+		return this.checkRanges(interaction, now, duration);
+	}
+
+	private checkRanges(interaction: Command.ChatInputInteraction, now: number, offset: number) {
 		if (offset < Time.Minute) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooShort));
 		if (offset > Time.Year) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooLong));
-		return ok(new Date(Date.now() + offset));
+		return ok(new Date(now + offset));
 	}
 
 	private formatReminder(reminder: Reminder) {

@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id BigInt  @id
+  /// The IANA timezone the user has configured.
+  tz String?
+}
+
 model Reminder {
   id            String                 @id
   /// The ID of the user who set the reminder.

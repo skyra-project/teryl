@@ -11,6 +11,7 @@ export * as Price from '#lib/i18n/LanguageKeys/Commands/Price';
 export * as Reddit from '#lib/i18n/LanguageKeys/Commands/Reddit';
 export * as Reminders from '#lib/i18n/LanguageKeys/Commands/Reminders';
 export * as Tag from '#lib/i18n/LanguageKeys/Commands/Tag';
+export * as TimeZone from '#lib/i18n/LanguageKeys/Commands/Timezone';
 export * as Twitch from '#lib/i18n/LanguageKeys/Commands/Twitch';
 export * as Unicode from '#lib/i18n/LanguageKeys/Commands/Unicode';
 export * as Weather from '#lib/i18n/LanguageKeys/Commands/Weather';
