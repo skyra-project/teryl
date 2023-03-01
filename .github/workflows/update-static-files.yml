@@ -1,7 +1,6 @@
 name: Update Static Files
 
 on:
-  push:
   schedule:
     - cron: '0 0 * * 6'
 
@@ -20,7 +19,7 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
       - name: Run the Unicode Extraction script
-        run: node ./scripts/extract-unicode-data.mjs 
+        run: node ./scripts/extract-unicode-data.mjs
       - name: Commit any changes and create a pull request
         env:
           GITHUB_USER: github-actions[bot]
