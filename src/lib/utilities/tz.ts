@@ -91,11 +91,6 @@ function getSearchScore(id: string, key: string, value: TimeZone) {
 	return score;
 }
 
-interface RawTimeZone {
-	codes: string[];
-	name: string;
-}
-
 export interface TimeZone {
 	countries: TimeZoneCountry[];
 	name: string;
@@ -104,5 +99,10 @@ export interface TimeZone {
 
 export interface TimeZoneCountry {
 	code: string;
+	name: string;
+}
+
+interface RawTimeZone {
+	codes: string[];
 	name: string;
 }
