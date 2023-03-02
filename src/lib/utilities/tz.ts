@@ -8,45 +8,6 @@ const tz = new Map<string, TimeZone>();
 export let MinimumLength = 100;
 export const MaximumLength = 100;
 
-{
-	const tzCountries = new Map<string, TimeZoneCountry>();
-
-	const PathTimeZoneCountry = new URL('./generated/data/tz-country-codes.json', PathSrc);
-	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as TimeZoneCountry[]) {
-		tzCountries.set(entry.code, {
-			code: entry.code.toLowerCase(),
-			name: entry.name.toLowerCase()
-		});
-	}
-
-	const PathTimeZone = new URL('./generated/data/tz.json', PathSrc);
-	for (const entry of JSON.parse(await readFile(PathTimeZone, 'utf8')) as RawTimeZone[]) {
-		const countries = entry.codes.map((code) => tzCountries.get(code)!);
-		tz.set(entry.name.toLowerCase(), {
-			name: entry.name,
-			countries,
-			full: cut(`${entry.name} (${countries.map((country) => toTitleCase(country.name)).join(', ')})`, MaximumLength)
-		});
-
-		if (entry.name.length < MinimumLength) MinimumLength = entry.name.length;
-	}
-}
-
-export function getTimeZone(id: string) {
-	return tz.get(id.toLowerCase()) ?? null;
-}
-
-function getSearchScore(id: string, key: string, value: TimeZone) {
-	if (key === id) return 1;
-
-	let score = key.includes(id) ? id.length / key.length : 0;
-	for (const country of value.countries) {
-		if (country.name === id || country.code === id) return 1;
-		if (country.name.includes(id)) score = Math.max(score, id.length / country.name.length);
-	}
-
-	return score;
-}
 const defaults = [
 	'asia/kolkata', // India
 	'america/los angeles', // United States, West Coast
@@ -75,6 +36,34 @@ const defaults = [
 	'africa/cairo' // Egypt
 ].map((value) => tz.get(value)!);
 
+{
+	const tzCountries = new Map<string, TimeZoneCountry>();
+
+	const PathTimeZoneCountry = new URL('./generated/data/tz-country-codes.json', PathSrc);
+	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as TimeZoneCountry[]) {
+		tzCountries.set(entry.code, {
+			code: entry.code.toLowerCase(),
+			name: entry.name.toLowerCase()
+		});
+	}
+
+	const PathTimeZone = new URL('./generated/data/tz.json', PathSrc);
+	for (const entry of JSON.parse(await readFile(PathTimeZone, 'utf8')) as RawTimeZone[]) {
+		const countries = entry.codes.map((code) => tzCountries.get(code)!);
+		tz.set(entry.name.toLowerCase(), {
+			name: entry.name,
+			countries,
+			full: cut(`${entry.name} (${countries.map((country) => toTitleCase(country.name)).join(', ')})`, MaximumLength)
+		});
+
+		if (entry.name.length < MinimumLength) MinimumLength = entry.name.length;
+	}
+}
+
+export function getTimeZone(id: string) {
+	return tz.get(id.toLowerCase()) ?? null;
+}
+
 export function searchTimeZone(id: string): readonly TimeZone[] {
 	if (id.length === 0) return defaults;
 	if (id.length > MaximumLength) return [];
@@ -88,6 +77,18 @@ export function searchTimeZone(id: string): readonly TimeZone[] {
 	}
 
 	return entries.sort((a, b) => b[0] - a[0]).map((entry) => entry[1]);
+}
+
+function getSearchScore(id: string, key: string, value: TimeZone) {
+	if (key === id) return 1;
+
+	let score = key.includes(id) ? id.length / key.length : 0;
+	for (const country of value.countries) {
+		if (country.name === id || country.code === id) return 1;
+		if (country.name.includes(id)) score = Math.max(score, id.length / country.name.length);
+	}
+
+	return score;
 }
 
 interface RawTimeZone {
