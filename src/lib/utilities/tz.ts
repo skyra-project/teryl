@@ -8,6 +8,34 @@ const tz = new Map<string, TimeZone>();
 export let MinimumLength = 100;
 export const MaximumLength = 100;
 
+const defaults = [
+	'asia/kolkata', // India
+	'america/los angeles', // United States, West Coast
+	'america/new york', // United States, East Coast
+	'america/phoenix', // United States, Mountain Central
+	'europe/london', // United Kingdom, Ireland
+	'pacific/auckland', // New Zealand, Antarctica
+	'europe/paris', // France, Monaco, Belgium, The Netherlands, Luxembourg
+	'america/mexico city', // Mexico
+	'australia/melbourne', // Australia
+	'australia/sydney', // Australia
+	'australia/perth', // Australia
+	'australia/brisbane', // Australia
+	'america/toronto', // Canada, Bahamas
+	'america/sao paulo', // Brazil
+	'america/argentina/buenos aires', // Argentina
+	'asia/tokyo', // Japan
+	'europe/madrid', // Spain
+	'asia/singapore', // Singapore
+	'asia/bangkok', // Thailand, Christmas Island, Cambodia, Laos, Vietnam
+	'europe/istanbul', // Turkey
+	'asia/seoul', // South Korea
+	'europe/berlin', // Berlin, Denmark, Norway, Sweden, Svalbard & Jan Mayen
+	'europe/prague', // Czech Republic, Slovakia
+	'asia/shanghai', // China
+	'africa/cairo' // Egypt
+].map((value) => tz.get(value)!);
+
 {
 	const tzCountries = new Map<string, TimeZoneCountry>();
 
@@ -36,19 +64,8 @@ export function getTimeZone(id: string) {
 	return tz.get(id.toLowerCase()) ?? null;
 }
 
-function getSearchScore(id: string, key: string, value: TimeZone) {
-	if (key === id) return 1;
-
-	let score = key.includes(id) ? id.length / key.length : 0;
-	for (const country of value.countries) {
-		if (country.name === id || country.code === id) return 1;
-		if (country.name.includes(id)) score = Math.max(score, id.length / country.name.length);
-	}
-
-	return score;
-}
-
-export function searchTimeZone(id: string) {
+export function searchTimeZone(id: string): readonly TimeZone[] {
+	if (id.length === 0) return defaults;
 	if (id.length > MaximumLength) return [];
 
 	id = id.toLowerCase();
@@ -62,9 +79,16 @@ export function searchTimeZone(id: string) {
 	return entries.sort((a, b) => b[0] - a[0]).map((entry) => entry[1]);
 }
 
-interface RawTimeZone {
-	codes: string[];
-	name: string;
+function getSearchScore(id: string, key: string, value: TimeZone) {
+	if (key === id) return 1;
+
+	let score = key.includes(id) ? id.length / key.length : 0;
+	for (const country of value.countries) {
+		if (country.name === id || country.code === id) return 1;
+		if (country.name.includes(id)) score = Math.max(score, id.length / country.name.length);
+	}
+
+	return score;
 }
 
 export interface TimeZone {
@@ -75,5 +99,10 @@ export interface TimeZone {
 
 export interface TimeZoneCountry {
 	code: string;
+	name: string;
+}
+
+interface RawTimeZone {
+	codes: string[];
 	name: string;
 }
