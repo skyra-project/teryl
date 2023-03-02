@@ -47,8 +47,36 @@ function getSearchScore(id: string, key: string, value: TimeZone) {
 
 	return score;
 }
+const defaults = [
+	'africa/cairo',
+	'africa/khartoum',
+	'america/argentina/buenos aires',
+	'america/bogota',
+	'america/lima',
+	'america/mexico city',
+	'america/new york',
+	'america/sao paulo',
+	'america/toronto',
+	'asia/bangkok',
+	'asia/dhaka',
+	'asia/karachi',
+	'asia/kolkata',
+	'asia/manila',
+	'asia/seoul',
+	'asia/shanghai',
+	'asia/singapore',
+	'asia/tokyo',
+	'asia/yangon',
+	'australia/sydney',
+	'europe/istanbul',
+	'europe/london',
+	'europe/madrid',
+	'europe/moscow',
+	'europe/paris'
+].map((value) => tz.get(value)!);
 
 export function searchTimeZone(id: string) {
+	if (id.length === 0) return defaults;
 	if (id.length > MaximumLength) return [];
 
 	id = id.toLowerCase();
