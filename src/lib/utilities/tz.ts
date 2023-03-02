@@ -75,7 +75,7 @@ const defaults = [
 	'europe/paris'
 ].map((value) => tz.get(value)!);
 
-export function searchTimeZone(id: string) {
+export function searchTimeZone(id: string): readonly TimeZone[] {
 	if (id.length === 0) return defaults;
 	if (id.length > MaximumLength) return [];
 
