@@ -54,7 +54,7 @@ const defaults = [
 	'america/phoenix', // United States, Mountain Central
 	'europe/london', // United Kingdom, Ireland
 	'pacific/auckland', // New Zealand, Antarctica
-	'europe/paris', // France, Monaco
+	'europe/paris', // France, Monaco, Belgium, The Netherlands, Luxembourg
 	'america/mexico city', // Mexico
 	'australia/melbourne', // Australia
 	'australia/sydney', // Australia
