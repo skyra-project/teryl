@@ -1,4 +1,5 @@
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
+import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { DateParser } from '#lib/utilities/DateParser';
 import {
@@ -14,7 +15,7 @@ import {
 import type { Reminder } from '@prisma/client';
 import { Duration, Time } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
-import { cutText, isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
@@ -31,15 +32,21 @@ import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONB
 )
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
+		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({
-			where: { userId: BigInt(interaction.user.id), OR: options.id ? [{ id: options.id }, { content: { contains: options.id } }] : undefined },
-			orderBy: { createdAt: 'asc' },
-			select: { id: true, content: true },
+			where: { userId, OR: options.id ? [{ id: options.id }, { content: { contains: options.id } }] : undefined },
+			orderBy: { time: 'asc' },
+			select: { id: true, content: true, time: true },
 			take: 25
 		});
+		if (reminders.length === 0) return interaction.replyEmpty();
+
+		const user = await this.container.prisma.user.findFirst({ where: { id: userId }, select: { tz: true } });
+		const timeZone = user?.tz?.replaceAll(' ', '_') ?? 'Etc/UTC';
+		const dtf = new Intl.DateTimeFormat(getSupportedUserLanguageName(interaction), { dateStyle: 'short', timeStyle: 'short', timeZone });
 		return interaction.reply({
 			choices: reminders.map((reminder) => ({
-				name: cutText(reminder.content, 100),
+				name: cut(`${dtf.format(reminder.time)} — ${reminder.content}`, 100),
 				value: reminder.id
 			}))
 		});
@@ -172,7 +179,7 @@ export class UserCommand extends Command {
 		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({
 			where: { OR: [{ userId }, { subscriptions: { some: { userId } } }] },
-			orderBy: { createdAt: 'asc' },
+			orderBy: { time: 'asc' },
 			take: 10
 		});
 		if (isNullishOrEmpty(reminders)) {
@@ -211,7 +218,7 @@ export class UserCommand extends Command {
 	}
 
 	private formatReminder(reminder: Reminder) {
-		return `• ${inlineCode(reminder.id)}: ${time(reminder.time, TimestampStyles.ShortDateTime)} - ${inlineCode(
+		return `• ${inlineCode(reminder.id)}: ${time(reminder.time, TimestampStyles.ShortDate)} - ${inlineCode(
 			escapeInlineCode(this.formatReminderContent(reminder.content))
 		)}`;
 	}
