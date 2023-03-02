@@ -48,31 +48,31 @@ function getSearchScore(id: string, key: string, value: TimeZone) {
 	return score;
 }
 const defaults = [
-	'africa/cairo',
-	'africa/khartoum',
-	'america/argentina/buenos aires',
-	'america/bogota',
-	'america/lima',
-	'america/mexico city',
-	'america/new york',
-	'america/sao paulo',
-	'america/toronto',
-	'asia/bangkok',
-	'asia/dhaka',
-	'asia/karachi',
-	'asia/kolkata',
-	'asia/manila',
-	'asia/seoul',
-	'asia/shanghai',
-	'asia/singapore',
-	'asia/tokyo',
-	'asia/yangon',
-	'australia/sydney',
-	'europe/istanbul',
-	'europe/london',
-	'europe/madrid',
-	'europe/moscow',
-	'europe/paris'
+	'africa/cairo', // Egypt
+	'america/argentina/buenos aires', // Argentina
+	'america/los angeles', // US
+	'america/mexico city', // Mexico
+	'america/new york', // US
+	'america/phoenix', // US, Canada
+	'america/sao paulo', // Brazil
+	'america/toronto', // Canada, Bahamas
+	'asia/bangkok', // Thailand, Christmas Island, Cambodia, Laos, Vietnam
+	'asia/kolkata', // India
+	'asia/seoul', // South Korea
+	'asia/shanghai', // China
+	'asia/singapore', // Singapore, Malaysia
+	'asia/tokyo', // Japan
+	'australia/brisbane', // Australia
+	'australia/melbourne', // Australia
+	'australia/perth', // Australia
+	'australia/sydney', // Australia
+	'europe/berlin', // Berlin, Denmark, Norway, Sweden, Svalbard & Jan Mayen
+	'europe/istanbul', // Turkey
+	'europe/london', // Britain, Guernsey, Isle of Man, Jersey
+	'europe/madrid', // Spain
+	'europe/paris', // France, Monaco
+	'europe/prague', // Czech Republic, Slovakia
+	'pacific/auckland' // New Zealand, Antarctica
 ].map((value) => tz.get(value)!);
 
 export function searchTimeZone(id: string): readonly TimeZone[] {
