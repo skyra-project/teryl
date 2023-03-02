@@ -48,31 +48,31 @@ function getSearchScore(id: string, key: string, value: TimeZone) {
 	return score;
 }
 const defaults = [
-	'africa/cairo', // Egypt
-	'america/argentina/buenos aires', // Argentina
-	'america/los angeles', // US
-	'america/mexico city', // Mexico
-	'america/new york', // US
-	'america/phoenix', // US, Canada
-	'america/sao paulo', // Brazil
-	'america/toronto', // Canada, Bahamas
-	'asia/bangkok', // Thailand, Christmas Island, Cambodia, Laos, Vietnam
 	'asia/kolkata', // India
-	'asia/seoul', // South Korea
-	'asia/shanghai', // China
-	'asia/singapore', // Singapore
-	'asia/tokyo', // Japan
-	'australia/brisbane', // Australia
-	'australia/melbourne', // Australia
-	'australia/perth', // Australia
-	'australia/sydney', // Australia
-	'europe/berlin', // Berlin, Denmark, Norway, Sweden, Svalbard & Jan Mayen
-	'europe/istanbul', // Turkey
-	'europe/london', // Great Britain, Guernsey, Isle of Man, Jersey
-	'europe/madrid', // Spain
+	'america/los angeles', // United States, West Coast
+	'america/new york', // United States, East Coast
+	'america/phoenix', // United States, Mountain Central
+	'europe/london', // United Kingdom, Ireland
+	'pacific/auckland', // New Zealand, Antarctica
 	'europe/paris', // France, Monaco
+	'america/mexico city', // Mexico
+	'australia/melbourne', // Australia
+	'australia/sydney', // Australia
+	'australia/perth', // Australia
+	'australia/brisbane', // Australia
+	'america/toronto', // Canada, Bahamas
+	'america/sao paulo', // Brazil
+	'america/argentina/buenos aires', // Argentina
+	'asia/tokyo', // Japan
+	'europe/madrid', // Spain
+	'asia/singapore', // Singapore
+	'asia/bangkok', // Thailand, Christmas Island, Cambodia, Laos, Vietnam
+	'europe/istanbul', // Turkey
+	'asia/seoul', // South Korea
+	'europe/berlin', // Berlin, Denmark, Norway, Sweden, Svalbard & Jan Mayen
 	'europe/prague', // Czech Republic, Slovakia
-	'pacific/auckland' // New Zealand, Antarctica
+	'asia/shanghai', // China
+	'africa/cairo' // Egypt
 ].map((value) => tz.get(value)!);
 
 export function searchTimeZone(id: string): readonly TimeZone[] {
