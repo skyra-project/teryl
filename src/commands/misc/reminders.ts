@@ -1,3 +1,4 @@
+import { BrandingColors } from '#lib/common/constants';
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
@@ -6,6 +7,7 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	codeBlock,
+	EmbedBuilder,
 	inlineCode,
 	SlashCommandBooleanOption,
 	SlashCommandStringOption,
@@ -111,12 +113,7 @@ export class UserCommand extends Command {
 			where: { id: options.id, userId: BigInt(interaction.user.id) },
 			include: { metadata: true }
 		});
-		if (isNullish(reminder)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
-				value: inlineCode(escapeInlineCode(options.id))
-			});
-			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		}
+		if (isNullish(reminder)) return this.invalidId(interaction, options.id);
 
 		let date = reminder.time;
 		if (!isNullishOrEmpty(options.duration)) {
@@ -146,17 +143,12 @@ export class UserCommand extends Command {
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(createIdOption().setRequired(true))
 	)
-	public async delete(interaction: Command.ChatInputInteraction, options: DeleteOptions) {
+	public async delete(interaction: Command.ChatInputInteraction, options: IdOptions) {
 		const reminder = await this.container.prisma.reminder.findFirst({
 			where: { id: options.id, userId: BigInt(interaction.user.id) },
 			include: { metadata: true }
 		});
-		if (isNullish(reminder)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, {
-				value: inlineCode(escapeInlineCode(options.id))
-			});
-			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		}
+		if (isNullish(reminder)) return this.invalidId(interaction, options.id);
 
 		await this.container.reminders.remove(reminder.id);
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DeleteContent, {
@@ -174,6 +166,23 @@ export class UserCommand extends Command {
 		return response;
 	}
 
+	@RegisterSubCommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Show).addStringOption(createIdOption().setRequired(true))
+	)
+	public async show(interaction: Command.ChatInputInteraction, options: IdOptions) {
+		const reminder = await this.container.prisma.reminder.findFirst({
+			where: { id: options.id, userId: BigInt(interaction.user.id) }
+		});
+		if (isNullish(reminder)) return this.invalidId(interaction, options.id);
+
+		const embed = new EmbedBuilder()
+			.setColor(BrandingColors.Primary)
+			.setDescription(reminder.content)
+			.setFooter({ text: reminder.id })
+			.setTimestamp(reminder.time);
+		return interaction.reply({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
+	}
+
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
 	public async list(interaction: Command.ChatInputInteraction) {
 		const userId = BigInt(interaction.user.id);
@@ -188,6 +197,11 @@ export class UserCommand extends Command {
 		}
 
 		const content = reminders.map((reminder) => this.formatReminder(reminder)).join('\n');
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+	}
+
+	private invalidId(interaction: Command.ChatInputInteraction, id: string) {
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, { value: inlineCode(escapeInlineCode(id)) });
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
@@ -257,12 +271,11 @@ interface CreateOptions {
 	public: boolean;
 }
 
-interface UpdateOptions {
-	id: string;
+interface UpdateOptions extends IdOptions {
 	content?: string;
 	duration?: string;
 }
 
-interface DeleteOptions {
+interface IdOptions {
 	id: string;
 }
