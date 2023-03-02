@@ -36,17 +36,30 @@ export function getTimeZone(id: string) {
 	return tz.get(id.toLowerCase()) ?? null;
 }
 
+function getSearchScore(id: string, key: string, value: TimeZone) {
+	if (key === id) return 1;
+
+	let score = key.includes(id) ? id.length / key.length : 0;
+	for (const country of value.countries) {
+		if (country.name === id || country.code === id) return 1;
+		if (country.name.includes(id)) score = Math.max(score, id.length / country.name.length);
+	}
+
+	return score;
+}
+
 export function searchTimeZone(id: string) {
 	if (id.length > MaximumLength) return [];
 
 	id = id.toLowerCase();
-	const entries = [] as TimeZone[];
+	const entries = [] as [score: number, value: TimeZone][];
 	for (const [key, value] of tz.entries()) {
-		if (!(key.includes(id) || value.countries.some((country) => country.code === id || country.name.includes(id)))) continue;
-		if (entries.push(value) === 25) break;
+		const score = getSearchScore(id, key, value);
+		if (score === 0) continue;
+		if (entries.push([score, value]) === 25) break;
 	}
 
-	return entries;
+	return entries.sort((a, b) => b[0] - a[0]).map((entry) => entry[1]);
 }
 
 interface RawTimeZone {
