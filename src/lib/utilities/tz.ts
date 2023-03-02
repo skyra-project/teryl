@@ -60,7 +60,7 @@ const defaults = [
 	'asia/kolkata', // India
 	'asia/seoul', // South Korea
 	'asia/shanghai', // China
-	'asia/singapore', // Singapore, Malaysia
+	'asia/singapore', // Singapore
 	'asia/tokyo', // Japan
 	'australia/brisbane', // Australia
 	'australia/melbourne', // Australia
@@ -68,7 +68,7 @@ const defaults = [
 	'australia/sydney', // Australia
 	'europe/berlin', // Berlin, Denmark, Norway, Sweden, Svalbard & Jan Mayen
 	'europe/istanbul', // Turkey
-	'europe/london', // Britain, Guernsey, Isle of Man, Jersey
+	'europe/london', // Great Britain, Guernsey, Isle of Man, Jersey
 	'europe/madrid', // Spain
 	'europe/paris', // France, Monaco
 	'europe/prague', // Czech Republic, Slovakia
