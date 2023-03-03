@@ -21,6 +21,8 @@
 	"deleteName": "हटाएं",
 	"deleteDescription": "अनुस्मारक हटाता है",
 	"deleteContent": "निम्नलिखित सामग्री के साथ {{time}} को वितरित करने के लिए सेट किए गए अनुस्मारक {{id}} को सफलतापूर्वक हटा दिया गया:{{content}}",
+	"showName": "show",
+	"showDescription": "Shows one of your reminders",
 	"listName": "सूची",
 	"listDescription": "आपके सभी अनुस्मारक सूचीबद्ध करता है",
 	"listEmpty": "आपके उपयोगकर्ता के लिए कोई अनुस्मारक नहीं है, लेकिन आप </अनुस्मारक बनाएँ:{{commandId}}> का उपयोग करके नए अनुस्मारक बना सकते हैं।",
