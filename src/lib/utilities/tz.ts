@@ -8,6 +8,30 @@ const tz = new Map<string, TimeZone>();
 export let MinimumLength = 100;
 export const MaximumLength = 100;
 
+{
+	const tzCountries = new Map<string, TimeZoneCountry>();
+
+	const PathTimeZoneCountry = new URL('./generated/data/tz-country-codes.json', PathSrc);
+	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as TimeZoneCountry[]) {
+		tzCountries.set(entry.code, {
+			code: entry.code.toLowerCase(),
+			name: entry.name.toLowerCase()
+		});
+	}
+
+	const PathTimeZone = new URL('./generated/data/tz.json', PathSrc);
+	for (const entry of JSON.parse(await readFile(PathTimeZone, 'utf8')) as RawTimeZone[]) {
+		const countries = entry.codes.map((code) => tzCountries.get(code)!);
+		tz.set(entry.name.toLowerCase(), {
+			name: entry.name,
+			countries,
+			full: cut(`${entry.name} (${countries.map((country) => toTitleCase(country.name)).join(', ')})`, MaximumLength)
+		});
+
+		if (entry.name.length < MinimumLength) MinimumLength = entry.name.length;
+	}
+}
+
 const defaults = [
 	'asia/kolkata', // India
 	'america/los angeles', // United States, West Coast
@@ -35,30 +59,6 @@ const defaults = [
 	'asia/shanghai', // China
 	'africa/cairo' // Egypt
 ].map((value) => tz.get(value)!);
-
-{
-	const tzCountries = new Map<string, TimeZoneCountry>();
-
-	const PathTimeZoneCountry = new URL('./generated/data/tz-country-codes.json', PathSrc);
-	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as TimeZoneCountry[]) {
-		tzCountries.set(entry.code, {
-			code: entry.code.toLowerCase(),
-			name: entry.name.toLowerCase()
-		});
-	}
-
-	const PathTimeZone = new URL('./generated/data/tz.json', PathSrc);
-	for (const entry of JSON.parse(await readFile(PathTimeZone, 'utf8')) as RawTimeZone[]) {
-		const countries = entry.codes.map((code) => tzCountries.get(code)!);
-		tz.set(entry.name.toLowerCase(), {
-			name: entry.name,
-			countries,
-			full: cut(`${entry.name} (${countries.map((country) => toTitleCase(country.name)).join(', ')})`, MaximumLength)
-		});
-
-		if (entry.name.length < MinimumLength) MinimumLength = entry.name.length;
-	}
-}
 
 export function getTimeZone(id: string) {
 	return tz.get(id.toLowerCase()) ?? null;
