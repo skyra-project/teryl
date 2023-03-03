@@ -21,6 +21,8 @@
 	"deleteName": "delete",
 	"deleteDescription": "Deletes a reminder",
 	"deleteContent": "Successfully deleted the reminder {{id}} which was set to deliver on {{time}} with the following contents:{{content}}",
+	"showName": "show",
+	"showDescription": "Shows one of your reminders",
 	"listName": "list",
 	"listDescription": "Lists all of your reminders",
 	"listEmpty": "There are no reminders on your user, but you can create new ones using </reminders create:{{commandId}}>.",
