@@ -21,6 +21,8 @@ export const UpdateMissingOptions = T('commands/reminders:updateMissingOptions')
 export const Delete = 'commands/reminders:delete';
 export const DeleteContent = FT<{ id: string; time: string; content: string }>('commands/reminders:deleteContent');
 
+export const Show = 'commands/reminders:show';
+
 export const List = 'commands/reminders:list';
 export const ListEmpty = FT<{ commandId: string }>('commands/reminders:listEmpty');
 
