@@ -17,7 +17,8 @@ await init({
 	returnObjects: true,
 	interpolation: {
 		defaultVariables: {
-			OwlbotIcon: Emojis.OwlbotIcon
+			OwlbotIcon: Emojis.OwlbotIcon,
+			MaximumReminderSubscriptions: 24
 		}
 	}
 });

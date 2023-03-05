@@ -12,7 +12,7 @@ export const OptionsPublic = 'commands/reminders:optionsPublic';
 export const Create = 'commands/reminders:create';
 export const CreateContent = FT<{ id: string; time: string }>('commands/reminders:createContent');
 export const CreateContentPublic = FT<{ id: string; time: string }>('commands/reminders:createContentPublic');
-export const Subscribe = T('commands/reminders:subscribe');
+export const Subscribe = FT<{ amount: number }>('commands/reminders:subscribe');
 
 export const Update = 'commands/reminders:update';
 export const UpdateContent = FT<{ id: string; time: string }>('commands/reminders:updateContent');
