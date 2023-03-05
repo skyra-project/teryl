@@ -92,7 +92,7 @@ export class UserCommand extends Command {
 			new ButtonBuilder() //
 				.setCustomId(`reminders.${id}`)
 				.setStyle(ButtonStyle.Primary)
-				.setLabel(t(LanguageKeys.Commands.Reminders.Subscribe))
+				.setLabel(t(LanguageKeys.Commands.Reminders.Subscribe, { amount: 0 }))
 		);
 		return response.update({ components: [components.toJSON()] });
 	}
