@@ -13,7 +13,7 @@
 	"createDescription": "Crea un nuevo recordatorio",
 	"createContent": "Creado un nuevo recordatorio con ID {{id}}, le enviaré un mensaje el {{time}}.",
 	"createContentPublic": "Creado un nuevo recordatorio público con ID {{id}}, enviaré un mensaje el {{time}}. Haga clic en el botón para (des)suscribirse al recordatorio.",
-	"subscribe": "Suscribirme",
+	"subscribe": "Suscribirse ({{amount, number}}/{{MaximumReminderSubscriptions, number}})",
 	"updateName": "actualizar",
 	"updateDescription": "Actualiza un recordatorio existente",
 	"updateContent": "Actualizado el recordatorio con ID {{id}}, le enviaré un mensaje el {{time}}.",
