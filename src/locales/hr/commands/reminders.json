@@ -13,7 +13,7 @@
 	"createDescription": "Creates a new reminder",
 	"createContent": "Created a new reminder with ID {{id}}, I will send you a message on {{time}}.",
 	"createContentPublic": "Created a new public reminder with ID {{id}}, I will send you a message on {{time}}. Click on the button to (un)subscribe to the reminder.",
-	"subscribe": "Subscribe",
+	"subscribe": "Subscribe ({{amount, number}}/{{MaximumReminderSubscriptions, number}})",
 	"updateName": "update",
 	"updateDescription": "Updates an existing reminder",
 	"updateContent": "Updated the reminder with ID {{id}}, I will send you a message on {{time}}.",
