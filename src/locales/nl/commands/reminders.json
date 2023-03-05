@@ -13,7 +13,7 @@
 	"createDescription": "Maakt een nieuwe herinnering aan",
 	"createContent": "Nieuwe herinnering aangemaakt met ID {{id}}, ik zal je een bericht sturen op {{time}}.",
 	"createContentPublic": "Nieuwe openbare herinnering met ID {{id}} aangemaakt. Ik zal je een bericht sturen op {{time}}. Klik op de knop om te abonneren op of uit te schrijven van de herinnering.",
-	"subscribe": "Abonneren",
+	"subscribe": "Subscribe ({{amount, number}}/{{MaximumReminderSubscriptions, number}})",
 	"updateName": "bijwerken",
 	"updateDescription": "Werkt een bestaande herinnering bij",
 	"updateContent": "De herinnering met ID {{id}} is geüpdatet, ik zal je een bericht sturen op {{time}}.",
