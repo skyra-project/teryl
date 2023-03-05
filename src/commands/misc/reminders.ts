@@ -2,6 +2,7 @@ import { BrandingColors } from '#lib/common/constants';
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import type { ReminderScheduler } from '#lib/schedules/ReminderScheduler';
 import { DateParser } from '#lib/utilities/DateParser';
 import {
 	ActionRowBuilder,
@@ -65,13 +66,14 @@ export class UserCommand extends Command {
 		if (dateResult.isErr()) return interaction.reply({ content: dateResult.unwrapErr(), flags: MessageFlags.Ephemeral });
 
 		const date = dateResult.unwrap();
-		const id = await this.container.reminders.add({
+		const data = {
 			userId: BigInt(interaction.user.id),
 			content: options.content.replaceAll('\\n', '\n'),
 			time: date,
 			createdAt: new Date(),
 			language: options.public ? getSupportedLanguageName(interaction) : getSupportedUserLanguageName(interaction)
-		});
+		} satisfies ReminderScheduler.Data;
+		const id = await this.container.reminders.add(data);
 
 		const parameters = { id: inlineCode(id), time: time(date, TimestampStyles.LongDateTime) };
 		if (!options.public) {
@@ -81,7 +83,12 @@ export class UserCommand extends Command {
 
 		const t = getSupportedLanguageT(interaction);
 		const content = t(LanguageKeys.Commands.Reminders.CreateContentPublic, parameters);
-		const response = await interaction.reply({ content });
+		const embed = new EmbedBuilder()
+			.setColor(BrandingColors.Primary)
+			.setDescription(data.content)
+			.setFooter({ text: id })
+			.setTimestamp(data.time);
+		const response = await interaction.reply({ content, embeds: [embed.toJSON()] });
 		const message = (await response.get()).unwrap();
 		await this.container.prisma.reminderMetadata.create({
 			data: { reminderId: id, channelId: BigInt(message.channelId), messageId: BigInt(message.id) },
