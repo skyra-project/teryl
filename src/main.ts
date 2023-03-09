@@ -23,7 +23,7 @@ await init({
 	}
 });
 
-const client = new Client().on('error', (error) => container.logger.error(error));
+const client = new Client();
 await client.load();
 
 void registerCommands();
