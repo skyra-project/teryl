@@ -21,10 +21,11 @@
 	"temperatureFahrenheit": "{{value, number(style: unit; unit: fahrenheit)}} ({{feelsLike, number(style: unit; unit: fahrenheit)}})",
 	"miles": "{{value, number(style: unit; unit: mile)}}",
 	"milesPerHour": "{{value, number(style: unit; unit: mile)}}/u",
-	"millimeters": "{{value, number(style: unit; unit: milliliter)}}",
+	"millimeters": "{{value, number(style: unit; unit: millimeter)}}",
 	"pascal": "{{value}} Pa",
 	"temperatureKelvin": "{{value}} K",
 	"temperatureCelsius": "{{value, number(style: unit; unit: celsius)}} ({{feelsLike, number(style: unit; unit: celsius)}})",
 	"kilometers": "{{value, number(style: unit; unit: kilometer)}}",
-	"kilometersPerHour": "{{value, number(style: unit; unit: kilometer)}}/u"
+	"kilometersPerHour": "{{value, number(style: unit; unit: kilometer)}}/u",
+	"metersPerSecond": "{{value, number(style: unit; unit: meter)}}/s"
 }
