@@ -2,9 +2,9 @@ import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import type { LocaleString } from 'discord-api-types/v10';
 import { DateTime } from 'luxon';
 
-const YYYY_MM_DD = /(?<year>\d{4})([/\-.])(?<month>\d{1,2})\2(?<day>\d{1,2})/d;
-const DD_MM_YYYY = /(?<day>\d{1,2})([/\-.])(?<month>\d{1,2})(?:\2(?<year>\d{2,4}))?/d;
-const MM_DD_YYYY = /(?<month>\d{1,2})([/\-.])(?<day>\d{1,2})(?:\2(?<year>\d{2,4}))?/d;
+const YYYY_MM_DD = /(?<year>\d{4})([/\-])(?<month>\d{1,2})\2(?<day>\d{1,2})/d;
+const DD_MM_YYYY = /(?<day>\d{1,2})([/\-])(?<month>\d{1,2})(?:\2(?<year>\d{2,4}))?/d;
+const MM_DD_YYYY = /(?<month>\d{1,2})([/\-])(?<day>\d{1,2})(?:\2(?<year>\d{2,4}))?/d;
 const TimeOnly = /^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?(?:\s*(am|pm))?$/i;
 
 export class DateParser {
