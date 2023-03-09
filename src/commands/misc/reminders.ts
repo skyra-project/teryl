@@ -131,7 +131,9 @@ export class UserCommand extends Command {
 		}
 
 		const parameters = { id: inlineCode(reminder.id), time: time(date, TimestampStyles.LongDateTime) };
-		const rescheduled = await this.container.reminders.reschedule(reminder.id, date.getTime(), { content: options.content });
+		const rescheduled = await this.container.reminders.reschedule(reminder.id, date.getTime(), {
+			content: options.content?.replaceAll('\\n', '\n')
+		});
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, parameters);
 		const response = await interaction.reply({ content, flags: MessageFlags.Ephemeral });
 
