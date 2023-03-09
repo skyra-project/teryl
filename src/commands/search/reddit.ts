@@ -141,10 +141,12 @@ export class UserCommand extends Command {
 				continue;
 			}
 			if (child.data.over_18) hasNsfw = true;
+
+			const url = child.data.secure_media?.reddit_video?.fallback_url.replace('?source=fallback', '') ?? child.data.url;
 			posts.push({
 				title: he.decode(child.data.title),
 				author: child.data.author,
-				url: child.data.spoiler ? spoiler(child.data.url) : child.data.url,
+				url: child.data.spoiler ? spoiler(url) : url,
 				nsfw: child.data.over_18
 			});
 		}
@@ -257,39 +259,41 @@ interface RedditServerError {
 
 interface RedditResponse {
 	kind: string;
-	data: Data;
+	data: RedditResponseData;
 }
 
-interface Data {
+interface RedditResponseData {
 	after: string;
 	before: null;
 	children: Child[];
 	dist: number;
+	geo_filter: null;
 	modhash: string;
 }
 
 interface Child {
 	kind: Kind;
-	data: PostDataElement;
+	data: ChildData;
 }
 
-interface PostDataElement {
-	all_awardings: any[];
+interface ChildData {
+	all_awardings: AllAwarding[];
 	allow_live_comments: boolean;
 	approved_at_utc: null;
 	approved_by: null;
 	archived: boolean;
-	author: string;
-	author_flair_background_color: string | null;
-	author_flair_css_class: string | null;
+	author_flair_background_color: null;
+	author_flair_css_class: null;
 	author_flair_richtext: FlairRichtext[];
-	author_flair_template_id: string | null;
-	author_flair_text: string | null;
+	author_flair_template_id: null | string;
 	author_flair_text_color: FlairTextColor | null;
+	author_flair_text: null | string;
 	author_flair_type: FlairType;
 	author_fullname: string;
+	author_is_blocked: boolean;
 	author_patreon_flair: boolean;
 	author_premium: boolean;
+	author: string;
 	awarders: unknown[];
 	banned_at_utc: null;
 	banned_by: null;
@@ -302,15 +306,16 @@ interface PostDataElement {
 	created: number;
 	created_utc: number;
 	discussion_type: null;
-	distinguished: null | string;
+	distinguished: null;
 	domain: string;
 	downs: number;
 	edited: boolean;
 	gilded: number;
-	gildings: object;
+	gildings: Gildings;
 	hidden: boolean;
 	hide_score: boolean;
 	id: string;
+	is_created_from_ads_ui: boolean;
 	is_crosspostable: boolean;
 	is_meta: boolean;
 	is_original_content: boolean;
@@ -322,13 +327,12 @@ interface PostDataElement {
 	link_flair_background_color: string;
 	link_flair_css_class: null;
 	link_flair_richtext: FlairRichtext[];
-	link_flair_template_id: string;
 	link_flair_text: null;
 	link_flair_text_color: FlairTextColor;
 	link_flair_type: FlairType;
 	locked: boolean;
-	media: null;
-	media_embed: object;
+	media: Media | null;
+	media_embed: MediaEmbed;
 	media_only: boolean;
 	mod_note: null;
 	mod_reason_by: null;
@@ -340,7 +344,7 @@ interface PostDataElement {
 	num_crossposts: number;
 	num_reports: null;
 	over_18: boolean;
-	parent_whitelist_status: null | string;
+	parent_whitelist_status: WhitelistStatus | null;
 	permalink: string;
 	pinned: boolean;
 	post_hint: PostHint;
@@ -349,12 +353,12 @@ interface PostDataElement {
 	quarantine: boolean;
 	removal_reason: null;
 	removed_by: null;
-	removed_by_category: string;
+	removed_by_category: string | null;
 	report_reasons: null;
 	saved: boolean;
 	score: number;
-	secure_media: null;
-	secure_media_embed: object;
+	secure_media: Media | null;
+	secure_media_embed: MediaEmbed;
 	selftext: string;
 	selftext_html: null;
 	send_replies: boolean;
@@ -380,8 +384,48 @@ interface PostDataElement {
 	user_reports: unknown[];
 	view_count: null;
 	visited: boolean;
-	whitelist_status: null | string;
-	wls: number | null;
+	whitelist_status: WhitelistStatus | null;
+	wls: number;
+}
+
+interface AllAwarding {
+	award_sub_type: string;
+	award_type: string;
+	awardings_required_to_grant_benefits: null;
+	coin_price: number;
+	coin_reward: number;
+	count: number;
+	days_of_drip_extension: null;
+	days_of_premium: number | null;
+	description: string;
+	end_date: null;
+	giver_coin_reward: null;
+	icon_format: null | string;
+	icon_height: number;
+	icon_url: string;
+	icon_width: number;
+	id: string;
+	is_enabled: boolean;
+	is_new: boolean;
+	name: string;
+	penny_donate: null;
+	penny_price: number | null;
+	resized_icons: ResizedIcon[];
+	resized_static_icons: ResizedIcon[];
+	start_date: null;
+	static_icon_height: number;
+	static_icon_url: string;
+	static_icon_width: number;
+	sticky_duration_seconds: null;
+	subreddit_coin_reward: number;
+	subreddit_id: null;
+	tiers_by_required_awardings: null;
+}
+
+interface ResizedIcon {
+	url: string;
+	width: number;
+	height: number;
 }
 
 interface FlairRichtext {
@@ -398,27 +442,81 @@ enum FlairTextColor {
 	Dark = 'dark'
 }
 
+interface Gildings {
+	gid_2?: number;
+}
+
+interface Media {
+	oembed?: Oembed;
+	reddit_video?: RedditVideo;
+	type?: string;
+}
+
+interface Oembed {
+	author_name: string;
+	description: string;
+	height: number;
+	html: string;
+	provider_name: string;
+	provider_url: string;
+	thumbnail_height: number;
+	thumbnail_url: string;
+	thumbnail_width: number;
+	title: string;
+	type: string;
+	version: string;
+	width: number;
+}
+
+interface RedditVideo {
+	bitrate_kbps: number;
+	dash_url: string;
+	duration: number;
+	fallback_url: string;
+	height: number;
+	hls_url: string;
+	is_gif: boolean;
+	scrubber_media_url: string;
+	transcoding_status: TranscodingStatus;
+	width: number;
+}
+
+enum TranscodingStatus {
+	Completed = 'completed'
+}
+
+interface MediaEmbed {
+	content?: string;
+	height?: number;
+	media_domain_url?: string;
+	scrolling?: boolean;
+	width?: number;
+}
+
+enum WhitelistStatus {
+	AllAds = 'all_ads'
+}
+
 enum PostHint {
-	Link = 'link'
+	HostedVideo = 'hosted:video',
+	Image = 'image',
+	RichVideo = 'rich:video'
 }
 
 interface Preview {
-	images: Image[];
 	enabled: boolean;
+	images: Image[];
+	reddit_video_preview?: RedditVideo;
 }
 
 interface Image {
-	source: Source;
-	resolutions: Source[];
-	variants: object;
 	id: string;
+	resolutions: ResizedIcon[];
+	source: ResizedIcon;
+	variants: Variants;
 }
 
-interface Source {
-	url: string;
-	width: number;
-	height: number;
-}
+interface Variants {}
 
 enum SubredditType {
 	Public = 'public',
