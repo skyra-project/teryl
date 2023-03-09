@@ -1,8 +1,7 @@
-import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { ReminderScheduler } from '#lib/schedules/ReminderScheduler';
 import { ScheduleHandler } from '#lib/structures/ScheduleHandler';
-import { EmbedBuilder, time, userMention } from '@discordjs/builders';
+import { blockQuote, time, userMention } from '@discordjs/builders';
 import { Collection } from '@discordjs/collection';
 import { Time } from '@sapphire/duration';
 import { Result } from '@sapphire/result';
@@ -32,11 +31,13 @@ export class UserScheduleHandler extends ScheduleHandler<ReminderScheduler.Data>
 
 		const users = [data.userId.toString(), ...data.subscriptions.map((subscription) => subscription.userId.toString())].slice(0, 24);
 		const content = t(LanguageKeys.ScheduleHandlers.Reminders.Public, {
-			content: data.content,
 			time: time(data.createdAt),
 			users: users.map((user) => userMention(user))
 		});
-		const body = { content, embeds: [this.getEmbed(data)], allowed_mentions: { users, roles: [] } } satisfies RESTPostAPIChannelMessageJSONBody;
+		const body = {
+			content: `${content}\n${blockQuote(data.content)}`,
+			allowed_mentions: { users, roles: [] }
+		} satisfies RESTPostAPIChannelMessageJSONBody;
 		return Promise.all([
 			this.container.rest.post(route, { body }),
 			this.container.rest.delete(Routes.channelMessage(channelId, metadata.messageId.toString()))
@@ -48,15 +49,10 @@ export class UserScheduleHandler extends ScheduleHandler<ReminderScheduler.Data>
 		const t = getT(data.language as Locale);
 
 		const content = t(LanguageKeys.ScheduleHandlers.Reminders.Private, { content: data.content, time: time(data.createdAt) });
-		const body = { content, embeds: [this.getEmbed(data)] } satisfies RESTPostAPIChannelMessageJSONBody;
+		const body = {
+			content: `${content}\n${blockQuote(data.content)}`
+		} satisfies RESTPostAPIChannelMessageJSONBody;
 		return this.container.rest.post(route, { body });
-	}
-
-	private getEmbed(data: ReminderScheduler.Full) {
-		return new EmbedBuilder() //
-			.setColor(BrandingColors.Primary)
-			.setDescription(data.content)
-			.toJSON();
 	}
 
 	private async getDM(userId: bigint) {
