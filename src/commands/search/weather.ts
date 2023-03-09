@@ -9,7 +9,7 @@ import {
 	getIcons,
 	getWeatherName,
 	resolveCurrentConditionsImperial,
-	resolveCurrentConditionsSI,
+	resolveCurrentConditionsMetric,
 	type ResolvedConditions
 } from '#lib/utilities/weather';
 import type { RawFile } from '@discordjs/rest';
@@ -67,7 +67,7 @@ export class UserCommand extends Command {
 
 		const resolved = useImperial
 			? resolveCurrentConditionsImperial(current, t)
-			: resolveCurrentConditionsSI(current, t, { kelvin: args.system === 'si' });
+			: resolveCurrentConditionsMetric(current, t, { si: args.system === 'si' });
 
 		const response = await interaction.defer();
 		const file = await UserCommand.draw(weatherDescription, place, current, resolved);

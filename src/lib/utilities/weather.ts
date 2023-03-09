@@ -179,22 +179,29 @@ export function resolveCurrentConditionsImperial(conditions: CurrentCondition, t
 	};
 }
 
-export function resolveCurrentConditionsSI(conditions: CurrentCondition, t: TFunction, options: ConditionsOptions = {}): ResolvedConditions {
-	const kelvin = options.kelvin ?? false;
+export function resolveCurrentConditionsMetric(conditions: CurrentCondition, t: TFunction, options: ConditionsOptions = {}): ResolvedConditions {
+	const si = options.si ?? false;
 	const temperature = Number(conditions.temp_C);
+	const windSpeed = Number(conditions.windspeedKmph);
 	return {
 		precipitation: t(LanguageKeys.Commands.Weather.Millimeters, { value: Number(conditions.precipMM) }),
 		pressure: t(LanguageKeys.Commands.Weather.Pascal, { value: Number(conditions.pressure) }),
-		temperature: kelvin
+		temperature: si
 			? t(LanguageKeys.Commands.Weather.TemperatureKelvin, { value: celsiusToKelvin(temperature) })
 			: t(LanguageKeys.Commands.Weather.TemperatureCelsius, { value: temperature, feelsLike: Number(conditions.FeelsLikeC) }),
 		visibility: t(LanguageKeys.Commands.Weather.Kilometers, { value: Number(conditions.visibility) }),
-		windSpeed: t(LanguageKeys.Commands.Weather.KilometersPerHour, { value: Number(conditions.windspeedKmph) })
+		windSpeed: si
+			? t(LanguageKeys.Commands.Weather.MetersPerSecond, { value: kilometersPerHourToMetersPerSecond(windSpeed) })
+			: t(LanguageKeys.Commands.Weather.KilometersPerHour, { value: windSpeed })
 	};
 }
 
 export interface ConditionsOptions {
-	kelvin?: boolean;
+	si?: boolean;
+}
+
+function kilometersPerHourToMetersPerSecond(kmh: number): number {
+	return kmh / 3.6;
 }
 
 function celsiusToKelvin(celsius: number): number {
