@@ -11,7 +11,12 @@ import { MessageFlags } from 'discord-api-types/v10';
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
 		const entries = searchTimeZone(options.name);
-		return interaction.reply({ choices: entries.map((entry) => ({ name: entry.full, value: entry.name })) });
+		return interaction.reply({
+			choices: entries.map((entry) => ({
+				name: `${entry.score === 1 ? '⭐' : '📄'} ${entry.value.full}`,
+				value: entry.value.name
+			}))
+		});
 	}
 
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.Use).addStringOption(createNameOption()))
