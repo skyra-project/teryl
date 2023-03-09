@@ -29,3 +29,4 @@ export const TemperatureKelvin = FT<Value>('commands/weather:temperatureKelvin')
 export const TemperatureCelsius = FT<{ value: number; feelsLike: number }>('commands/weather:temperatureCelsius');
 export const Kilometers = FT<Value>('commands/weather:kilometers');
 export const KilometersPerHour = FT<Value>('commands/weather:kilometersPerHour');
+export const MetersPerSecond = FT<Value>('commands/weather:metersPerSecond');
