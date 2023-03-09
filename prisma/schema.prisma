@@ -69,6 +69,8 @@ model Tag {
   embedColor Int        @map("embed_color")
   /// The contents of the embed.
   content    String
+  /// The amount of uses the tag has received.
+  uses       Int        @default(0)
   aliases    TagAlias[]
 
   @@unique([name, guildId])

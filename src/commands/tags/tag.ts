@@ -16,8 +16,8 @@ import { MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
 )
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
-		const tags = await searchTag(BigInt(interaction.guildId!), options.name);
-		return interaction.reply({ choices: makeTagChoices(tags) });
+		const results = await searchTag(BigInt(interaction.guildId!), options.name);
+		return interaction.reply({ choices: makeTagChoices(results) });
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
@@ -27,12 +27,16 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		return interaction.reply({
+		const response = await interaction.reply({
 			content: this.getContent(interaction, options, tag),
 			embeds: this.getEmbeds(tag),
 			flags: this.getFlags(options),
 			allowed_mentions: this.getAllowedMentions(options)
 		});
+
+		// Increase the use count:
+		await this.container.prisma.tag.update({ where: { id: tag.id }, data: { uses: { increment: 1 } }, include: null });
+		return response;
 	}
 
 	private getContent(interaction: Command.ChatInputInteraction, options: Options, tag: Tag) {

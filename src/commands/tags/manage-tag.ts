@@ -36,8 +36,8 @@ const MaximumContentLength = 4096;
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
 		const name = sanitizeTagName(options.name);
-		const tags = options.name.length > 0 && name === null ? [] : await searchTag(this.getGuildId(interaction), name);
-		return interaction.reply({ choices: makeTagChoices(tags) });
+		const results = options.name.length > 0 && name === null ? [] : await searchTag(this.getGuildId(interaction), name);
+		return interaction.reply({ choices: makeTagChoices(results) });
 	}
 
 	@RegisterSubCommand((builder) =>
