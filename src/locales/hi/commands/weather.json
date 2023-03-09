@@ -21,10 +21,11 @@
 	"temperatureFahrenheit": "{{value, number(style: unit; unit: fahrenheit)}}({{feelsLike, number(style: unit; unit: fahrenheit)}})",
 	"miles": "{{value, number(style: unit; unit: mile)}}",
 	"milesPerHour": "{{value, number(style: unit; unit: mile)}}/घंटा",
-	"millimeters": "{{value, number(style: unit; unit: milliliter)}}",
+	"millimeters": "{{value, number(style: unit; unit: millimeter)}}",
 	"pascal": "{{value}} पास्कल",
 	"temperatureKelvin": "{{value}} के",
 	"temperatureCelsius": "{{value, number(style: unit; unit: celsius)}}\n({{feelsLike, number(style: unit; unit: celsius)}})",
 	"kilometers": "{{value, number(style: unit; unit: kilometer)}}",
-	"kilometersPerHour": "{{value, number(style: unit; unit: kilometer)}}/घंटा"
+	"kilometersPerHour": "{{value, number(style: unit; unit: kilometer)}}/घंटा",
+	"metersPerSecond": "{{value, number(style: unit; unit: meter)}}/s"
 }
