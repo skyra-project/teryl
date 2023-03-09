@@ -1,6 +1,5 @@
 import { PathSrc } from '#lib/common/constants';
 import { cut } from '#lib/common/strings';
-import { toTitleCase } from '@sapphire/utilities';
 import { readFile } from 'node:fs/promises';
 
 const tz = new Map<string, TimeZone>();
@@ -10,22 +9,23 @@ export const MaximumLength = 100;
 
 {
 	const tzCountries = new Map<string, TimeZoneCountry>();
+	const tzCountryNames = new Map<string, string>();
 
 	const PathTimeZoneCountry = new URL('./generated/data/tz-country-codes.json', PathSrc);
-	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as TimeZoneCountry[]) {
-		tzCountries.set(entry.code, {
-			code: entry.code.toLowerCase(),
-			name: entry.name.toLowerCase()
-		});
+	for (const entry of JSON.parse(await readFile(PathTimeZoneCountry, 'utf8')) as RawTimeZoneCountry[]) {
+		tzCountries.set(entry.code, { code: entry.code.toLowerCase(), name: entry.name.toLowerCase() });
+		tzCountryNames.set(entry.code, entry.name);
 	}
 
 	const PathTimeZone = new URL('./generated/data/tz.json', PathSrc);
 	for (const entry of JSON.parse(await readFile(PathTimeZone, 'utf8')) as RawTimeZone[]) {
 		const countries = entry.codes.map((code) => tzCountries.get(code)!);
+		const countryNames = entry.codes.map((code) => tzCountryNames.get(code)!);
 		tz.set(entry.name.toLowerCase(), {
 			name: entry.name,
 			countries,
-			full: cut(`${entry.name} (${countries.map((country) => toTitleCase(country.name)).join(', ')})`, MaximumLength)
+			// It's cut to the maximum length minus 2 because auto-complete will prepend an emoji and a space:
+			full: cut(`${entry.name} (${countryNames.join(', ')})`, MaximumLength - 2)
 		});
 
 		if (entry.name.length < MinimumLength) MinimumLength = entry.name.length;
@@ -58,25 +58,24 @@ const defaults = [
 	'europe/prague', // Czech Republic, Slovakia
 	'asia/shanghai', // China
 	'africa/cairo' // Egypt
-].map((value) => tz.get(value)!);
+].map((value) => ({ score: 1, value: tz.get(value)! } satisfies TimeZoneSearchResult));
 
 export function getTimeZone(id: string) {
 	return tz.get(id.toLowerCase()) ?? null;
 }
 
-export function searchTimeZone(id: string): readonly TimeZone[] {
+export function searchTimeZone(id: string): readonly TimeZoneSearchResult[] {
 	if (id.length === 0) return defaults;
 	if (id.length > MaximumLength) return [];
 
 	id = id.toLowerCase();
-	const entries = [] as [score: number, value: TimeZone][];
+	const entries = [] as TimeZoneSearchResult[];
 	for (const [key, value] of tz.entries()) {
 		const score = getSearchScore(id, key, value);
-		if (score === 0) continue;
-		if (entries.push([score, value]) === 25) break;
+		if (score !== 0) entries.push({ score, value });
 	}
 
-	return entries.sort((a, b) => b[0] - a[0]).map((entry) => entry[1]);
+	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
 }
 
 function getSearchScore(id: string, key: string, value: TimeZone) {
@@ -98,6 +97,16 @@ export interface TimeZone {
 }
 
 export interface TimeZoneCountry {
+	code: string;
+	name: string;
+}
+
+export interface TimeZoneSearchResult {
+	score: number;
+	value: TimeZone;
+}
+
+interface RawTimeZoneCountry {
 	code: string;
 	name: string;
 }
