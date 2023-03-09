@@ -27,5 +27,5 @@
 	"temperatureCelsius": "{{value, number(style: unit; unit: celsius)}}\n({{feelsLike, number(style: unit; unit: celsius)}})",
 	"kilometers": "{{value, number(style: unit; unit: kilometer)}}",
 	"kilometersPerHour": "{{value, number(style: unit; unit: kilometer)}}/घंटा",
-	"metersPerSecond": "{{value, number(style: unit; unit: meter)}}/s"
+	"metersPerSecond": "{{value, number(style: unit; unit: meter)}}/सेकंड"
 }
