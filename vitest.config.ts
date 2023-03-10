@@ -12,7 +12,8 @@ export default defineConfig({
 		globals: true,
 		coverage: {
 			reporter: ['text', 'lcov', 'clover'],
-			include: [resolve('src/lib')]
+			include: ['src/lib/**'],
+			exclude: ['src/lib/i18n', 'src/lib/setup', 'src/lib/types']
 		}
 	},
 	esbuild: {

@@ -70,6 +70,20 @@ describe('DateParser', () => {
 			])('GIVEN %s with en-GB THEN it resolves to the correct date', (_description, date) => {
 				validate(new DateParser(date, enGB));
 			});
+
+			test.each([
+				['15/03/2023', enUS],
+				['03/15/2023', enGB]
+			])('GIVEN %s with %s locale THEN it swaps days and months', (input, locale) => {
+				const value = new DateParser(input, locale);
+				expect(value.year).toBe(2023);
+				expect(value.month).toBe(3);
+				expect(value.day).toBe(15);
+				expect(value.hour).toBeNull();
+				expect(value.minute).toBeNull();
+				expect(value.second).toBeNull();
+				expect(value.valid).toBe(true);
+			});
 		});
 
 		describe('time', () => {
@@ -218,6 +232,16 @@ describe('DateParser', () => {
 			test('GIVEN previous day THEN returns next year minus one day', () => {
 				const value = parse('09-03 14:30:15');
 				expectEqualDuration(value, { years: 1, days: -1 });
+			});
+
+			test('GIVEN next day with no hour THEN returns next day at 00:00', () => {
+				const value = parse('11-03');
+				expectEqualDuration(value, { hours: 9, minutes: 29, seconds: 45 });
+			});
+
+			test('GIVEN previous day with no hour THEN returns next year minus one day at 00:00', () => {
+				const value = parse('09-03');
+				expectEqualDuration(value, { years: 1, days: -1, hours: -14, minutes: -30, seconds: -15 });
 			});
 		});
 

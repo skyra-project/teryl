@@ -44,12 +44,6 @@ export class DateParser {
 			if (days > -1) return difference.plus({ days: 1 });
 		}
 
-		// If the difference goes positive after adding only 1 month, and none was defined, schedule for next month:
-		if (isNullish(this.month)) {
-			const { months } = difference.shiftTo('months');
-			if (months > -1) return difference.plus({ months: 1 });
-		}
-
 		// If the difference goes positive after adding only 1 year, and none was defined, schedule for next year:
 		if (isNullish(this.year)) {
 			const { years } = difference.shiftTo('years');
