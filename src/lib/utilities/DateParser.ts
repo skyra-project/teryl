@@ -18,12 +18,15 @@ export class DateParser {
 
 	public constructor(input: string, locale: LocaleString) {
 		const date = YYYY_MM_DD.exec(input) ?? (locale === 'en-US' ? MM_DD_YYYY : DD_MM_YYYY).exec(input);
-		this.normalizeDate(date);
+		this.valid = this.normalizeDate(date);
 
 		const remainder = date ? (date.index === 0 ? input.slice(date[0].length) : input.slice(0, date.index)).trim() : input;
-		const time = TimeOnly.exec(remainder);
-		this.normalizeTime(time);
-		this.valid = !isNullish(date) || !isNullish(time);
+		if (remainder.length) {
+			const time = TimeOnly.exec(remainder);
+			this.valid = this.normalizeTime(time);
+		}
+
+		this.valid ??= false;
 	}
 
 	public normalize(tz?: string) {
@@ -62,7 +65,7 @@ export class DateParser {
 	}
 
 	private normalizeDate(results: RegExpExecArray | null) {
-		if (results === null) return;
+		if (results === null) return false;
 
 		// Set the year, add 2000 if the length is different from 4 (e.g. 23 → 2023):
 		this.year = isNullishOrEmpty(results.groups!.year) ? null : Number(results.groups!.year) + (results.groups!.year.length < 4 ? 2000 : 0);
@@ -72,10 +75,11 @@ export class DateParser {
 		const day = Number(results.groups!.day);
 		this.month = month > 12 ? day : month;
 		this.day = month > 12 ? month : day;
+		return true;
 	}
 
 	private normalizeTime(results: RegExpExecArray | null) {
-		if (results === null) return;
+		if (results === null) return false;
 
 		const modifier = results[4] as 'am' | 'pm' | undefined;
 		this.hour = Number(results[1]);
@@ -88,5 +92,6 @@ export class DateParser {
 
 		this.minute = isNullishOrEmpty(results[2]) ? 0 : Number(results[2]);
 		this.second = isNullishOrEmpty(results[3]) ? 0 : Number(results[3]);
+		return true;
 	}
 }

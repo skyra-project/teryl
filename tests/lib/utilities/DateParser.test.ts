@@ -20,6 +20,11 @@ describe('DateParser', () => {
 				const value = new DateParser('1.5w', locale);
 				expect(value.valid).toBe(false);
 			});
+
+			test.each(['en-US', 'en-GB'] satisfies LocaleString[])('GIVEN false positive on %s THEN returns invalid', (locale) => {
+				const value = new DateParser('1.5 weeks', locale);
+				expect(value.valid).toBe(false);
+			});
 		});
 
 		describe('date', () => {
