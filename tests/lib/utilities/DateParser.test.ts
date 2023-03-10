@@ -171,11 +171,11 @@ describe('DateParser', () => {
 	});
 
 	describe('normalize', () => {
-		beforeEach(() => {
+		beforeAll(() => {
 			vi.useFakeTimers({ now: new Date('2023-03-10T14:30:15.000Z') });
 		});
 
-		afterEach(() => {
+		afterAll(() => {
 			vi.useRealTimers();
 		});
 
