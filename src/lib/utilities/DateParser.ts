@@ -21,12 +21,7 @@ export class DateParser {
 		this.valid = this.normalizeDate(date);
 
 		const remainder = date ? (date.index === 0 ? input.slice(date[0].length) : input.slice(0, date.index)).trim() : input;
-		if (remainder.length) {
-			const time = TimeOnly.exec(remainder);
-			this.valid = this.normalizeTime(time);
-		}
-
-		this.valid ??= false;
+		if (remainder.length) this.valid = this.normalizeTime(TimeOnly.exec(remainder));
 	}
 
 	public normalize(tz?: string) {
