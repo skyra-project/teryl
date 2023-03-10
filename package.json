@@ -20,8 +20,8 @@
 		"clean": "rimraf dist/",
 		"start": "node --enable-source-maps dist/main.js",
 		"test": "vitest run",
-		"lint": "eslint --fix --ext ts src scripts",
-		"format": "prettier --write --loglevel=warn \"{src,scripts}/**/*.{js,ts,json}\"",
+		"lint": "eslint --fix --ext ts src tests",
+		"format": "prettier --write --loglevel=warn \"{src,tests,scripts}/**/*.{js,ts,json}\"",
 		"update": "yarn upgrade-interactive",
 		"postinstall": "husky install .github/husky"
 	},
