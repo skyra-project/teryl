@@ -9,6 +9,7 @@ node_modules/
 .yarn/build-state.yml
 
 # Output directories
+coverage/
 dist/
 dist-tsc/
 

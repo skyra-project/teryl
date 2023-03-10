@@ -1,0 +1,14 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"noEmit": true,
+		"types": ["vitest/globals"],
+		"paths": {
+			"#lib/*": ["../src/lib/*"],
+			"#generated/": ["../src/generated/*"]
+		}
+	},
+	"include": [".", "../src"],
+	"references": [{ "path": "../src" }]
+}
