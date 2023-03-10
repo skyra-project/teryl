@@ -232,14 +232,19 @@ describe('DateParser', () => {
 		});
 
 		describe('years', () => {
-			test('GIVEN next year THEN returns next year', () => {
-				const value = parse('10-03-2024 14:30:15');
-				expectEqualDuration(value, { years: 1, days: 1 });
+			test('GIVEN previous year THEN returns previous year', () => {
+				const value = parse('10-03-2022 14:30:15');
+				expectEqualDuration(value, { years: -1 });
 			});
 
 			test('GIVEN current year THEN returns no difference', () => {
 				const value = parse('10-03-2023 14:30:15');
 				expectEqualDuration(value, {});
+			});
+
+			test('GIVEN next year THEN returns next year', () => {
+				const value = parse('10-03-2024 14:30:15');
+				expectEqualDuration(value, { years: 1, days: 1 });
 			});
 		});
 	});
