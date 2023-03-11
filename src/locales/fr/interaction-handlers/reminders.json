@@ -1,6 +1,6 @@
 {
-	"invalidId": "It seems the reminder expired but I failed to delete it, thanks for reminding me.",
-	"owner": "You cannot subscribe or unsubscribe to a reminder you are owner of.",
-	"subscribed": "You have successfully subscribed to this reminder. Click again to unsubscribe.",
-	"unsubscribed": "You have successfully unsubscribed to this reminder. Click again to subscribe."
+	"invalidId": "Il semble que le rappel ait expiré, mais je n'ai pas réussi à le supprimer, merci de me le rappeler.",
+	"owner": "Vous ne pouvez pas vous abonner ou vous désabonner d'un rappel dont vous êtes propriétaire.",
+	"subscribed": "Vous vous êtes abonné avec succès à ce rappel. Cliquez de nouveau pour vous désabonner.",
+	"unsubscribed": "Vous vous êtes désabonné avec succès de ce rappel. Cliquez à nouveau pour vous abonner."
 }
