@@ -1,5 +1,5 @@
 {
-	"name": "color",
+	"name": "couleur",
 	"description": "Get information about a color",
 	"inputName": "input",
 	"inputDescription": "The color to search for, accepts decimal, hexadecimal, rgb(), and color name",
