@@ -1,9 +1,9 @@
 {
-	"name": "choice",
-	"description": "Get a random value from a set of choices",
-	"optionsValuesName": "values",
-	"optionsValuesDescription": "The choices to pick a random value from, separated by spaces",
-	"tooFewOptions": "There needs to be at least two values.",
-	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
-	"result": "👯 *Porcupine in pointy shoes, which one will my pointer choose?*... I choose: `{{value}}`"
+	"name": "choix",
+	"description": "Obtenir une valeur aléatoire à partir d'un ensemble de choix",
+	"optionsValuesName": "valeurs",
+	"optionsValuesDescription": "Les choix pour choisir une valeur aléatoire, séparées par des espaces",
+	"tooFewOptions": "Il doit y avoir au moins deux valeurs.",
+	"duplicatedOptions": "Il y a au moins une valeur dupliquée dans votre ensemble, veuillez la supprimer.",
+	"result": "👯 *Porcupine en chaussures pointues, lequel va choisir mon pointeur ?*... Je choisis : `{{value}}`"
 }
