@@ -31,7 +31,7 @@ export class UserCommand extends Command {
 		const embed = new EmbedBuilder()
 			.setColor(TwitchBrandingColor)
 			.setAuthor({ name: channel.display_name, iconURL: TwitchLogoUrl, url: `https://twitch.tv/${channel.login}` })
-			.setDescription(channel.description)
+			.setDescription(channel.description || null)
 			.setThumbnail(channel.profile_image_url)
 			.addFields(
 				{ name: titles.followers, value: followers, inline: true },
