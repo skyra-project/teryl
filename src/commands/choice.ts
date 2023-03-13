@@ -10,7 +10,7 @@ import { MessageFlags } from 'discord-api-types/v10';
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
-		const possibles = args.values.split(/ +/);
+		const possibles = args.values.split(/ *,+ */);
 		if (possibles.length === 1) {
 			const content = resolveUserKey(interaction, LanguageKeys.Commands.Choice.TooFewOptions);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
