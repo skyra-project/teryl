@@ -53,7 +53,7 @@
 	"categoryBidirectionalLeftToRight": "Left to Right",
 	"categoryBidirectionalLeftToRightEmbedding": "Left to Right Embedding",
 	"categoryBidirectionalLeftToRightIsolate": "Left to Right Isolate",
-	"categoryBidirectionalLeftToRightOverride": "Left to Right Override",
+	"categoryBidirectionalLeftToRightOverride": "Left to Right Isolate",
 	"categoryBidirectionalNonSpacingMark": "Non-spacing Mark",
 	"categoryBidirectionalOtherNeutral": "Other Neutral",
 	"categoryBidirectionalPopDirectionalFormat": "Pop Directional Format",
