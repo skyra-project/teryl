@@ -14,7 +14,7 @@
 	"notAnImage": "The file you uploaded is not an image, so it cannot be uploaded.",
 	"failedToDownload": "I was unable to download the file. If you have sent an emoji, please make sure it's a valid one.",
 	"uploaded": "I have successfully uploaded {{emoji}}.",
-	"uploadedBy": "Upload of file authorized by {{user.username}} ({{user.id}})",
+	"uploadedBy": "Upload of file authorised by {{user.username}} ({{user.id}})",
 	"failedToUpload": "I failed to upload the emoji, sorry for the inconvenience!",
 	"failedToUploadDiscordDown": "It seems Discord is not feeling well. Please try again later.",
 	"failedToUploadMissingPermissions": "I failed to upload the emoji as I lack of the permission to upload emojis. Please grant it and retry.",
