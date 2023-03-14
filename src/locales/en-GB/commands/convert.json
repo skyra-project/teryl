@@ -34,7 +34,7 @@
 	"timeDescription": "Converts one unit of time to another",
 	"timeCentury": "Century",
 	"timeDay": "Day",
-	"timeDecade": "Century",
+	"timeDecade": "Decade",
 	"timeHour": "Hour",
 	"timeLunarYear": "Lunar Year",
 	"timeMillennium": "Millennium",
@@ -90,6 +90,6 @@
 	"unitNewton": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}N",
 	"unitRankine": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°R",
 	"unitReaumur": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
-	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
+	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Rø",
 	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K"
 }
