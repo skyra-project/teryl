@@ -2,7 +2,7 @@
 	"name": "choix",
 	"description": "Obtenir une valeur aléatoire à partir d'un ensemble de choix",
 	"optionsValuesName": "valeurs",
-	"optionsValuesDescription": "Les choix pour choisir une valeur aléatoire, séparées par des espaces",
+	"optionsValuesDescription": "The choices to pick a random value from, separated by commas",
 	"tooFewOptions": "Il doit y avoir au moins deux valeurs.",
 	"duplicatedOptions": "Il y a au moins une valeur dupliquée dans votre ensemble, veuillez la supprimer.",
 	"result": "👯 *Porcupine en chaussures pointues, lequel va choisir mon pointeur ?*... Je choisis : `{{value}}`"
