@@ -6,7 +6,7 @@
 	"optionsFromName": "van",
 	"optionsFromDescription": "De valuta om van te wisselen",
 	"optionsToName": "naar",
-	"optionsToDescription": "The currencies to convert to, separated by spaces or commas",
+	"optionsToDescription": "De valuta's om naar te converteren, gescheiden door komma's",
 	"abortError": "De server reageerde niet op tijd, probeer het later opnieuw.",
 	"unknownServerError": "Ik kreeg een onverwachte fout van de server. Probeer het later opnieuw.",
 	"error": "De server stuurde een fout terug met de opgegeven opties, zorg ervoor dat je de juiste namen hebt geschreven.",
