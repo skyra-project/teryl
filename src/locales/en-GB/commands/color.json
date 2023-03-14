@@ -1,18 +1,18 @@
 {
-	"name": "color",
-	"description": "Get information about a color",
+	"name": "colour",
+	"description": "Get information about a colour",
 	"inputName": "input",
-	"inputDescription": "The color to search for, accepts decimal, hexadecimal, rgb(), and color name",
+	"inputDescription": "The colour to search for, accepts decimal, hexadecimal, rgb(), and colour name",
 	"invalidHex": "I couldn't parse {{value}} to an hexadecimal color; the length is incorrect.",
 	"invalidHex3": "I couldn't parse {{value}} to a compact hexadecimal color; it contains non-hexadecimal characters.",
 	"invalidHex6": "I couldn't parse {{value}} to a full hexadecimal color; it contains non-hexadecimal characters.",
 	"invalidDecimalInteger": "I couldn't parse {{value}} to an integer; it seems it has decimals.",
 	"invalidDecimalNegative": "I couldn't parse {{value}} to a positive number; it seems it's negative.",
 	"invalidDecimalOverflow": "I couldn't parse {{value}} to a valid integer in the RGB range; the maximum is `0xFFFFFF` or `16777215`.",
-	"invalidRGB": "I couldn't parse {{value}} to a RGB color; it seems to contain invalid characters. Please check the format, it contains 3 numbers within the range of 0 to 255, inclusive. For example: `rgb(107, 121, 201)` or `rgb(212, 184, 163)`.",
+	"invalidRGB": "I couldn't parse {{value}} to a RGB colour; it seems to contain invalid characters. Please check the format, it contains 3 numbers within the range of 0 to 255, inclusive. For example: `rgb(107, 121, 201)` or `rgb(212, 184, 163)`.",
 	"invalidRgbRed": "I couldn't parse the **red** component in {{value}}, it's either not a number, negative, or higher than 255.",
 	"invalidRgbGreen": "I couldn't parse the **green** component in {{value}}, it's either not a number, negative, or higher than 255.",
 	"invalidRgbBlue": "I couldn't parse the **blue** component in {{value}}, it's either not a number, negative, or higher than 255.",
-	"invalidColor": "I couldn't parse {{value}} to any supported color format or name. Please try again with a different color.",
+	"invalidColor": "I couldn't parse {{value}} to any supported colour format or name. Please try again with a different colour.",
 	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
 }
