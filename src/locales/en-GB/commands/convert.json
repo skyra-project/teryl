@@ -34,7 +34,7 @@
 	"timeDescription": "Converts one unit of time to another",
 	"timeCentury": "Century",
 	"timeDay": "Day",
-	"timeDecade": "Decade",
+	"timeDecade": "Century",
 	"timeHour": "Hour",
 	"timeLunarYear": "Lunar Year",
 	"timeMillennium": "Millennium",
@@ -70,8 +70,8 @@
 	"unitGram": "{{value, number(style: unit; unit: gram; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitKilogram": "{{value, number(style: unit; unit: kilogram; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitOunce": "{{value, number(style: unit; unit: ounce; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitTon": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} tons",
-	"unitTonne": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} metric tons",
+	"unitTon": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} tonne",
+	"unitTonne": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} metric tonne",
 	"unitCentury": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} centuries",
 	"unitDay": "{{value, number(style: unit; unit: day; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitDecade": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} decades",
@@ -90,6 +90,6 @@
 	"unitNewton": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}N",
 	"unitRankine": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°R",
 	"unitReaumur": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
-	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Rø",
+	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
 	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K"
 }
