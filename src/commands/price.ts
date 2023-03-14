@@ -22,7 +22,7 @@ import { LocaleString, MessageFlags } from 'discord-api-types/v10';
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		const from = args.from.toUpperCase();
-		const result = await this.fetch(from, args.to.split(/ +/g));
+		const result = await this.fetch(from, args.to.split(/[, ]+/g));
 		return result.match({
 			err: (error) => this.handleFetchError(interaction, error),
 			ok: (result) => this.handleFetchOk(interaction, result, args.amount ?? 1, from)
