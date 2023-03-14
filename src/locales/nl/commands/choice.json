@@ -2,7 +2,7 @@
 	"name": "keuze",
 	"description": "Krijg een willekeurige keuze van een set van keuzes",
 	"optionsValuesName": "waarden",
-	"optionsValuesDescription": "De keuzes om een willekeurige waarde van te kiezen, gescheiden door spaties",
+	"optionsValuesDescription": "The choices to pick a random value from, separated by commas",
 	"tooFewOptions": "Er moeten tenminste twee waarden zijn.",
 	"duplicatedOptions": "Er is ten minste één dubbele waarde in de set. Verwijder deze alsjeblieft.",
 	"result": "👯 *Iene miene mutte. Tien pond grutten. Tien pond kaas. Iene miene mutte is de baas.*... Ik kies: `{{value}}`"
