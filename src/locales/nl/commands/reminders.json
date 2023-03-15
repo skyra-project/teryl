@@ -23,7 +23,7 @@
 	"deleteContent": "Success van het verwijderen van de herinnering {{id}} die was ingesteld om te leveren op {{time}} met de inhoud: {{content}}",
 	"showName": "toon",
 	"showDescription": "Toont een van je herinneringen",
-	"linkTo": "Link to Message",
+	"linkTo": "Link naar bericht",
 	"listName": "lijst",
 	"listDescription": "Geeft al je herinneringen weer",
 	"listEmpty": "Er zijn geen herinneringen voor jou, je kunt een nieuwe aanmaken met behulp van </reminders create:{{commandId}}>.",
