@@ -3,22 +3,23 @@ import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { ReminderScheduler } from '#lib/schedules/ReminderScheduler';
+import { makeButtonRow } from '#lib/utilities/components';
 import { DateParser } from '#lib/utilities/DateParser';
 import {
-	ActionRowBuilder,
 	ButtonBuilder,
 	codeBlock,
 	EmbedBuilder,
 	inlineCode,
+	messageLink,
 	SlashCommandBooleanOption,
 	SlashCommandStringOption,
 	time,
 	TimestampStyles
 } from '@discordjs/builders';
-import type { Reminder } from '@prisma/client';
+import type { Reminder, ReminderMetadata } from '@prisma/client';
 import { Duration, Time } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
-import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { isNullish, isNullishOrEmpty, Nullish } from '@sapphire/utilities';
 import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
@@ -37,7 +38,12 @@ export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
 		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({
-			where: { userId, OR: options.id ? [{ id: options.id }, { content: { contains: options.id } }] : undefined },
+			where: {
+				AND: [
+					options.subCommand === 'show' ? { OR: [{ userId }, { subscriptions: { some: { userId } } }] } : { userId },
+					{ OR: options.id ? [{ id: options.id }, { content: { contains: options.id } }] : undefined }
+				]
+			},
 			orderBy: { time: 'asc' },
 			select: { id: true, content: true, time: true },
 			take: 25
@@ -95,7 +101,7 @@ export class UserCommand extends Command {
 			select: null
 		});
 
-		const components = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		const components = makeButtonRow(
 			new ButtonBuilder() //
 				.setCustomId(`reminders.${id}`)
 				.setStyle(ButtonStyle.Primary)
@@ -179,8 +185,10 @@ export class UserCommand extends Command {
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Show).addStringOption(createIdOption().setRequired(true))
 	)
 	public async show(interaction: Command.ChatInputInteraction, options: IdOptions) {
+		const userId = BigInt(interaction.user.id);
 		const reminder = await this.container.prisma.reminder.findFirst({
-			where: { id: options.id, userId: BigInt(interaction.user.id) }
+			where: { id: options.id, OR: [{ userId }, { subscriptions: { some: { userId } } }] },
+			include: { metadata: true }
 		});
 		if (isNullish(reminder)) return this.invalidId(interaction, options.id);
 
@@ -189,7 +197,8 @@ export class UserCommand extends Command {
 			.setDescription(reminder.content)
 			.setFooter({ text: reminder.id })
 			.setTimestamp(reminder.time);
-		return interaction.reply({ embeds: [embed.toJSON()], flags: MessageFlags.Ephemeral });
+		const components = this.getShowComponents(interaction, reminder.metadata);
+		return interaction.reply({ embeds: [embed.toJSON()], components, flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
@@ -210,7 +219,7 @@ export class UserCommand extends Command {
 	}
 
 	private invalidId(interaction: Command.ChatInputInteraction, id: string) {
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, { value: inlineCode(escapeInlineCode(id)) });
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, { id: inlineCode(escapeInlineCode(id)) });
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
@@ -253,6 +262,15 @@ export class UserCommand extends Command {
 
 		const space = content.lastIndexOf(' ', 63);
 		return `${content.slice(0, space === -1 ? 63 : space)}…`;
+	}
+
+	private getShowComponents(interaction: Command.ChatInputInteraction, metadata: ReminderMetadata | Nullish) {
+		if (isNullish(metadata)) return [];
+
+		const url = messageLink(metadata.channelId.toString(), metadata.messageId.toString());
+		const label = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.LinkTo);
+		const row = makeButtonRow(new ButtonBuilder().setStyle(ButtonStyle.Link).setURL(url).setLabel(label));
+		return [row.toJSON()];
 	}
 }
 
