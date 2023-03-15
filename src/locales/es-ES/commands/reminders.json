@@ -23,6 +23,7 @@
 	"deleteContent": "Se ha eliminado correctamente el recordatorio {{id}} el cual se había establecido para enviarse en {{time}} con el siguiente contenido:{{content}}",
 	"showName": "mostrar",
 	"showDescription": "Muestra uno de tus recordatorios",
+	"linkTo": "Link to Message",
 	"listName": "lista",
 	"listDescription": "Enumera todos tus recordatorios",
 	"listEmpty": "No hay recordatorios para usted, pero puede crear nuevos recordatorios usando </reminders create:{{commandId}}>.",
