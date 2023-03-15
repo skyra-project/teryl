@@ -9,7 +9,7 @@
 	"invalidDecimalInteger": "Je n'ai pas pu analyser {{value}} en entier, il semble qu'il ait des décimales.",
 	"invalidDecimalNegative": "Je n'ai pas pu analyser {{value}} à un nombre positif, il semble qu'il soit négatif.",
 	"invalidDecimalOverflow": "Je n'ai pas pu analyser {{value}} en un entier valide dans la plage RGB; le maximum est `0xFFFFFF` ou `16777215`.",
-	"invalidRGB": "Je n'ai pas pu analyser {{value}} en une couleur RBB; il semble qu'il contient des caractères non valides. Veuillez vérifier le format, il contient 3 nombres entre 0 et 255, inclus. Par exemple: `rgb(107, 121, 201)` ou `rgb(212, 184, 163)`.",
+	"invalidRGB": "Je n'ai pas pu analyser {{value}} en une couleur RGB; il semble qu'il contient des caractères non valides. Veuillez vérifier le format, il contient 3 nombres entre 0 et 255, inclus. Par exemple: `rgb(107, 121, 201)` ou `rgb(212, 184, 163)`.",
 	"invalidRgbRed": "Je n'ai pas pu analyser le composant **rouge** dans {{value}}, ce n'est pas un nombre, négatif ou supérieur à 255.",
 	"invalidRgbGreen": "Je n'ai pas pu analyser le composant **vert** dans {{value}}, ce n'est pas un nombre, négatif ou supérieur à 255.",
 	"invalidRgbBlue": "Je n'ai pas pu analyser le composant **bleu** dans {{value}}, ce n'est pas un nombre, négatif ou supérieur à 255.",
