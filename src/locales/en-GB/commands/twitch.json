@@ -15,7 +15,7 @@
 	"userEmbedFieldViews": "{{value, number}}",
 	"userAffiliate": "Affiliate",
 	"userPartner": "Partner",
-	"userNotAffiliated": "This channel is not part of the Twitch affiliate program",
+	"userNotAffiliated": "This channel is not part of the Twitch affiliate programme",
 	"followageName": "followage",
 	"followageDescription": "Gets information about a user's followage",
 	"followageOptionsUserName": "user",
