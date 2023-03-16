@@ -17,7 +17,7 @@ import {
 	TimestampStyles
 } from '@discordjs/builders';
 import type { Reminder, ReminderMetadata } from '@prisma/client';
-import { Duration, Time } from '@sapphire/duration';
+import { Duration as SapphireDuration } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, Nullish } from '@sapphire/utilities';
 import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
@@ -30,6 +30,7 @@ import {
 	resolveUserKey
 } from '@skyra/http-framework-i18n';
 import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
+import { DateTime, Duration } from 'luxon';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.RootName, LanguageKeys.Commands.Reminders.RootDescription)
@@ -225,12 +226,25 @@ export class UserCommand extends Command {
 
 	private parseDuration(interaction: Command.ChatInputInteraction, input: string) {
 		const now = Date.now();
-		const { offset } = new Duration(input);
-		if (!Number.isInteger(offset)) {
+		const duration = new SapphireDuration(input);
+		if (!Number.isInteger(duration.offset)) {
 			return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
 		}
 
-		return this.checkRanges(interaction, now, offset);
+		return this.checkRanges(
+			interaction,
+			now,
+			Duration.fromObject({
+				years: duration.years,
+				months: duration.months,
+				weeks: duration.weeks,
+				days: duration.days,
+				hours: duration.hours,
+				minutes: duration.minutes,
+				seconds: duration.seconds,
+				milliseconds: duration.milliseconds
+			})
+		);
 	}
 
 	private async parseDateTime(interaction: Command.ChatInputInteraction, input: string) {
@@ -239,14 +253,13 @@ export class UserCommand extends Command {
 		if (!parser.valid) return this.parseDuration(interaction, input);
 
 		const settings = await this.container.prisma.user.findFirst({ where: { id: BigInt(interaction.user.id) }, select: { tz: true } });
-		const duration = parser.normalize(settings?.tz?.replaceAll(' ', '_')).as('milliseconds');
-		return this.checkRanges(interaction, now, duration);
+		return this.checkRanges(interaction, now, parser.normalize(settings?.tz?.replaceAll(' ', '_')));
 	}
 
-	private checkRanges(interaction: Command.ChatInputInteraction, now: number, offset: number) {
-		if (offset < Time.Minute) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooShort));
-		if (offset > Time.Year) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooLong));
-		return ok(new Date(now + offset));
+	private checkRanges(interaction: Command.ChatInputInteraction, now: number, offset: Duration) {
+		if (offset.as('minutes') < 1) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooShort));
+		if (offset.as('years') > 1) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooLong));
+		return ok(DateTime.fromMillis(now).plus(offset).toJSDate());
 	}
 
 	private formatReminder(reminder: Reminder) {
