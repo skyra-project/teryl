@@ -16,7 +16,7 @@
 	"optionsTypeChannel": "Канал",
 	"optionsTypePlaylist": "Плейлист",
 	"optionsTypeVideo": "Видео",
-	"noResults": "I received no results that I can process, please try with other words.",
+	"noResults": "Я не получил никаких результатов, которые я мог бы обработать, пожалуйста, попробуйте использовать другие слова.",
 	"abortError": "YouTube не ответил вовремя, пожалуйста, повторите попытку позже.",
 	"unknownError": "Сервер выдал неизвестную ошибку, пожалуйста, повторите попытку позже."
 }
