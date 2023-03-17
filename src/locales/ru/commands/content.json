@@ -1,4 +1,4 @@
 {
-	"messageJsonName": "Get Message JSON",
-	"userJsonName": "Get User JSON"
+	"messageJsonName": "Получить JSON сообщения",
+	"userJsonName": "Получить JSON пользователя"
 }
