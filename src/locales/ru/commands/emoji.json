@@ -1,10 +1,10 @@
 {
-	"name": "emoji",
-	"description": "Get information about a built-in or custom emoji",
-	"optionsEmojiName": "emoji",
-	"optionsEmojiDescription": "The emoji to get information about",
+	"name": "эмодзи",
+	"description": "Получить информацию о встроенном или пользовательском эмодзи",
+	"optionsEmojiName": "эмодзи",
+	"optionsEmojiDescription": "Эмодзи, о котором нужно получить информацию",
 	"twemojiContent": "**Emoji**: `{{emoji}}`\n**Type**: Built-in\n**ID**: `{{id}}`",
 	"invalidTwemoji": "That doesn't seem to be either a custom Discord emoji, or a supported built-in Twemoji. Please try another emoji.",
-	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: Custom\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "The custom emoji you specified does not appear to exist in Discord's database, please try another emoji."
+	"discordEmojiContent": "**Эмодзи**: `{{emoji.name}}`\n**Тип**: Пользовательский\n**ID**: `{{emoji.id}}`",
+	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи."
 }
