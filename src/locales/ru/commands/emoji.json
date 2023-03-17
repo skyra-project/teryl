@@ -3,8 +3,8 @@
 	"description": "Получить информацию о встроенном или пользовательском эмодзи",
 	"optionsEmojiName": "эмодзи",
 	"optionsEmojiDescription": "Эмодзи, о котором нужно получить информацию",
-	"twemojiContent": "**Emoji**: `{{emoji}}`\n**Type**: Built-in\n**ID**: `{{id}}`",
-	"invalidTwemoji": "That doesn't seem to be either a custom Discord emoji, or a supported built-in Twemoji. Please try another emoji.",
+	"twemojiContent": "**Эмодзи**: `{{emoji}}`\n**Тип**: Встроенный\n**ID**: `{{id}}`",
+	"invalidTwemoji": "Похоже, что это не является ни пользовательским эмодзи Discord, ни поддерживаемым встроенным Twemoji. Пожалуйста, попробуйте другой эмодзи.",
 	"discordEmojiContent": "**Эмодзи**: `{{emoji.name}}`\n**Тип**: Пользовательский\n**ID**: `{{emoji.id}}`",
 	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи."
 }
