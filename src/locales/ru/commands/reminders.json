@@ -12,7 +12,7 @@
 	"createName": "создать",
 	"createDescription": "Создаёт новое напоминание",
 	"createContent": "Создано новое напоминание с ID {{id}}, я отправлю вам сообщение {{time}}.",
-	"createContentPublic": "Created a new public reminder with ID {{id}}, I will send you a message on {{time}}. Click on the button to (un)subscribe to the reminder.",
+	"createContentPublic": "Создано новое публичное напоминание с ID {{id}}, я отправлю вам сообщение {{time}}. Нажмите на кнопку, чтобы подписаться на это напоминание или отписаться от него.",
 	"subscribe": "Subscribe ({{amount, number}}/{{MaximumReminderSubscriptions, number}})",
 	"updateName": "обновить",
 	"updateDescription": "Обновляет существующее напоминание",
