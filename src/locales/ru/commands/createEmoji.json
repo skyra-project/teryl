@@ -1,9 +1,9 @@
 {
-	"name": "create-emoji",
-	"description": "Uploads an emoji to the server",
-	"optionsEmojiName": "emoji",
+	"name": "создать-эмодзи",
+	"description": "Загружает эмодзи на сервер",
+	"optionsEmojiName": "эмодзи",
 	"optionsEmojiDescription": "The emoji to re-upload",
-	"optionsFileName": "file",
+	"optionsFileName": "файл",
 	"optionsFileDescription": "The file to upload",
 	"optionsNameName": "name",
 	"optionsNameDescription": "The name to use for the emoji",
