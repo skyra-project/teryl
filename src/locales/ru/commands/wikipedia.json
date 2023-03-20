@@ -4,5 +4,5 @@
 	"optionsInputName": "ввод",
 	"optionsInputDescription": "Искать статью",
 	"noResults": "Википедия не выдала никаких результатов, пожалуйста, попробуйте ввести другой запрос.",
-	"interWiki": "I found a Wikipedia article on {{link}}."
+	"interWiki": "Я нашёл статью в Википедии: {{link}}."
 }
