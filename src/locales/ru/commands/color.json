@@ -9,10 +9,10 @@
 	"invalidDecimalInteger": "Мне не удалось распознать в {{value}} целое число; кажется, введённое значение содержит десятичные части.",
 	"invalidDecimalNegative": "Мне не удалось распознать в {{value}} положительное число; кажется, оно отрицательное.",
 	"invalidDecimalOverflow": "Мне не удалось распознать в {{value}} допустимое в диапазоне RGB целое число; максимальное значение — `0xFFFFFF` или `16777215`.",
-	"invalidRGB": "I couldn't parse {{value}} to a RGB color; it seems to contain invalid characters. Please check the format, it contains 3 numbers within the range of 0 to 255, inclusive. For example: `rgb(107, 121, 201)` or `rgb(212, 184, 163)`.",
+	"invalidRGB": "Мне не удалось распознать в {{value}} цвет RGB; кажется, введённое значение содержит недопустимые символы. Пожалуйста, проверьте формат, он должен содержать 3 числа в диапазоне от 0 до 255 включительно. Примеры: `rgb(107, 121, 201)`, `rgb(212, 184, 163)`.",
 	"invalidRgbRed": "Мне не удалось распознать в {{value}} **красный** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
 	"invalidRgbGreen": "Мне не удалось распознать в {{value}} **зелёный** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
 	"invalidRgbBlue": "Мне не удалось распознать в {{value}} **синий** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
-	"invalidColor": "I couldn't parse {{value}} to any supported color format or name. Please try again with a different color.",
+	"invalidColor": "Мне не удалось распознать в {{value}} ни какой-либо поддерживаемый формат, ни название цвета. Пожалуйста, попробуйте ввести другой цвет.",
 	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
 }
