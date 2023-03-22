@@ -6,13 +6,13 @@
 	"invalidHex": "Мне не удалось распознать в {{value}} шестнадцатеричный код цвета; длина неверна.",
 	"invalidHex3": "Мне не удалось распознать в {{value}} сокращённый шестнадцатеричный код цвета; введённое значение содержит нешестнадцатеричные символы.",
 	"invalidHex6": "Мне не удалось распознать в {{value}} полный шестнадцатеричный код цвета; введённое значение содержит нешестнадцатеричные символы.",
-	"invalidDecimalInteger": "I couldn't parse {{value}} to an integer; it seems it has decimals.",
+	"invalidDecimalInteger": "Мне не удалось распознать в {{value}} целое число; кажется, введённое значение содержит десятичные части.",
 	"invalidDecimalNegative": "Мне не удалось распознать в {{value}} положительное число; кажется, оно отрицательное.",
 	"invalidDecimalOverflow": "Мне не удалось распознать в {{value}} допустимое в диапазоне RGB целое число; максимальное значение — `0xFFFFFF` или `16777215`.",
 	"invalidRGB": "I couldn't parse {{value}} to a RGB color; it seems to contain invalid characters. Please check the format, it contains 3 numbers within the range of 0 to 255, inclusive. For example: `rgb(107, 121, 201)` or `rgb(212, 184, 163)`.",
-	"invalidRgbRed": "I couldn't parse the **red** component in {{value}}, it's either not a number, negative, or higher than 255.",
-	"invalidRgbGreen": "I couldn't parse the **green** component in {{value}}, it's either not a number, negative, or higher than 255.",
-	"invalidRgbBlue": "I couldn't parse the **blue** component in {{value}}, it's either not a number, negative, or higher than 255.",
+	"invalidRgbRed": "Мне не удалось распознать в {{value}} **красный** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
+	"invalidRgbGreen": "Мне не удалось распознать в {{value}} **зелёный** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
+	"invalidRgbBlue": "Мне не удалось распознать в {{value}} **синий** компонент, введённое значение либо отрицательное, либо больше 255, либо не является числом.",
 	"invalidColor": "I couldn't parse {{value}} to any supported color format or name. Please try again with a different color.",
 	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
 }
