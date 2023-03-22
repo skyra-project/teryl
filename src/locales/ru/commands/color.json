@@ -1,9 +1,9 @@
 {
-	"name": "color",
-	"description": "Get information about a color",
-	"inputName": "input",
+	"name": "цвет",
+	"description": "Получить информацию о цвете",
+	"inputName": "ввод",
 	"inputDescription": "The color to search for, accepts decimal, hexadecimal, rgb(), and color name",
-	"invalidHex": "I couldn't parse {{value}} to an hexadecimal color; the length is incorrect.",
+	"invalidHex": "Мне не удалось распознать в {{value}} шестнадцатеричный код цвета; длина неверна.",
 	"invalidHex3": "I couldn't parse {{value}} to a compact hexadecimal color; it contains non-hexadecimal characters.",
 	"invalidHex6": "I couldn't parse {{value}} to a full hexadecimal color; it contains non-hexadecimal characters.",
 	"invalidDecimalInteger": "I couldn't parse {{value}} to an integer; it seems it has decimals.",
