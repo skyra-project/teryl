@@ -42,7 +42,7 @@ export class UserCommand extends Command {
 
 	@RegisterSubCommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Add)
-			.addStringOption(makeNameOption())
+			.addStringOption(makeNameOption().setMaxLength(32))
 			.addStringOption(makeContentOption())
 			.addBooleanOption(makeEmbedOption())
 			.addStringOption(makeEmbedColorOption())
@@ -300,7 +300,7 @@ interface AliasOptions extends Options {
 }
 
 function makeNameOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsName).setMaxLength(32).setRequired(true);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.ManageTag.OptionsName).setRequired(true);
 }
 
 function makeNewNameOption() {
