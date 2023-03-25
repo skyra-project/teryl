@@ -69,6 +69,10 @@ export class UserCommand extends Command {
 				});
 				first ??= item.id;
 			});
+
+			// If we have 25 options, break the loop. There may be cases where
+			// YouTube gives us more than 25 results, even when we ask for only 25.
+			if (options.length === 25) break;
 		}
 
 		if (options.length === 0) {
