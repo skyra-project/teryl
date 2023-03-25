@@ -4,5 +4,8 @@
 	"optionsInputName": "ввод",
 	"optionsInputDescription": "Искать статью",
 	"noResults": "Википедия не выдала никаких результатов, пожалуйста, попробуйте ввести другой запрос.",
+	"abortError": "Wikipedia took too long to respond, please try again later.",
+	"unknownResponse": "I received a response I do not expect, this is a bug. Please report it to my developers.",
+	"unknownError": "I received an unknown error, but it may be resolved by trying again later.",
 	"interWiki": "Я нашёл статью в Википедии: {{link}}."
 }
