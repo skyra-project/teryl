@@ -1,11 +1,11 @@
 {
-	"name": "wikipedia",
+	"name": "википедия",
 	"description": "Получает информацию о статье в Википедии",
 	"optionsInputName": "ввод",
 	"optionsInputDescription": "Искать статью",
 	"noResults": "Википедия не выдала никаких результатов, пожалуйста, попробуйте ввести другой запрос.",
-	"abortError": "Wikipedia took too long to respond, please try again later.",
-	"unknownResponse": "I received a response I do not expect, this is a bug. Please report it to my developers.",
-	"unknownError": "I received an unknown error, but it may be resolved by trying again later.",
+	"abortError": "Википедия не ответила вовремя, пожалуйста, повторите попытку позже.",
+	"unknownResponse": "Я получил ответ, который не ожидал, это баг. Пожалуйста, сообщите об этом моим разработчикам.",
+	"unknownError": "Я получил неизвестную ошибку. Пожалуйста, повторите попытку позже, возможно, ошибка больше не возникнет.",
 	"interWiki": "Я нашёл статью в Википедии: {{link}}."
 }
