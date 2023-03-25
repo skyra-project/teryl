@@ -4,8 +4,8 @@
 	"optionsInputName": "इनपुट",
 	"optionsInputDescription": "एक लेख खोजें",
 	"noResults": "विकिपीडिया ने कोई परिणाम नहीं लौटाया, कृपया अन्य खोज शब्दों के साथ पुनः प्रयास करें।",
-	"abortError": "Wikipedia took too long to respond, please try again later.",
-	"unknownResponse": "I received a response I do not expect, this is a bug. Please report it to my developers.",
-	"unknownError": "I received an unknown error, but it may be resolved by trying again later.",
+	"abortError": "विकिपीडिया ने उत्तर देने में बहुत अधिक समय लिया, कृपया बाद में पुनः प्रयास करें।",
+	"unknownResponse": "मुझे एक प्रतिक्रिया मिली जिसकी मुझे उम्मीद नहीं है, यह एक बग है। कृपया इसे मेरे डेवलपर्स को रिपोर्ट करें।",
+	"unknownError": "मुझे एक अज्ञात त्रुटि प्राप्त हुई, लेकिन बाद में पुन: प्रयास करके इसे हल किया जा सकता है।",
 	"interWiki": "मुझे {{link}} पर एक विकिपीडिया लेख मिला।"
 }
