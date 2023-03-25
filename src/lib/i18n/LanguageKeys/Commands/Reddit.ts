@@ -15,6 +15,7 @@ export const AllNsfw = T('commands/reddit:allNsfw');
 export const AllNsfl = T('commands/reddit:allNsfl');
 export const AbortError = T('commands/reddit:abortError');
 export const UnavailableErrorPrivate = T('commands/reddit:unavailableErrorPrivate');
+export const UnavailableErrorGoldOnly = T('commands/reddit:unavailableErrorGoldOnly');
 export const UnavailableErrorQuarantined = FT<{ reason: string }>('commands/reddit:unavailableErrorQuarantined');
 export const UnavailableErrorGated = FT<{ reason: string }>('commands/reddit:unavailableErrorGated');
 export const UnavailableErrorNotFound = T('commands/reddit:unavailableErrorNotFound');

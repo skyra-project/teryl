@@ -77,6 +77,7 @@ export class UserCommand extends Command {
 		switch (parsed.error) {
 			case 403: {
 				if (parsed.reason === 'private') return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorPrivate);
+				if (parsed.reason === 'gold_only') return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorGoldOnly);
 				if (parsed.reason === 'quarantined') {
 					const reason = this.forbid(reddit, ForbiddenType.Quarantined, parsed.quarantine_message);
 					return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorQuarantined, { reason });
@@ -209,6 +210,7 @@ type RedditError =
 	| RedditNotFound
 	| RedditBanned
 	| RedditForbidden
+	| RedditGoldOnly
 	| RedditQuarantined
 	| RedditGated
 	| RedditUnavailableForLegalReasons
@@ -216,6 +218,12 @@ type RedditError =
 
 interface RedditForbidden {
 	reason: 'private';
+	message: 'Forbidden';
+	error: 403;
+}
+
+interface RedditGoldOnly {
+	reason: 'gold_only';
 	message: 'Forbidden';
 	error: 403;
 }
