@@ -4,5 +4,8 @@
 	"optionsInputName": "invoer",
 	"optionsInputDescription": "Zoek naar een artikel",
 	"noResults": "Wikipedia gaf geen resultaat, probeer het opnieuw met andere zoektermen.",
+	"abortError": "Wikipedia heeft niet op tijd gereageerd, probeer het later opnieuw.",
+	"unknownResponse": "Ik heb een antwoord gekregen dat ik niet had verwacht, dit is een bug. Meld dit alsjeblieft aan mijn ontwikkelaars.",
+	"unknownError": "Ik heb een onbekende fout gekregen, mogelijk is dit opgelost door het later opnieuw te proberen.",
 	"interWiki": "Ik heb een Wikipedia-artikel gevonden met de link {{link}}."
 }

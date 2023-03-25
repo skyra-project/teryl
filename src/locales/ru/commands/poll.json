@@ -1,12 +1,12 @@
 {
-	"name": "poll",
-	"description": "Creates a reaction-based poll with a title and up to 5 options",
-	"optionsTitleName": "title",
-	"optionsTitleDescription": "The title to use in the poll",
-	"optionsFirstName": "first",
-	"optionsSecondName": "second",
-	"optionsThirdName": "third",
-	"optionsFourthName": "fourth",
-	"optionsFifthName": "fifth",
-	"optionsValueDescription": "An option for the poll"
+	"name": "опрос",
+	"description": "Создаёт основанный на реакциях опрос, имеющий заголовок и содержащий до 5 вариантов ответа",
+	"optionsTitleName": "заголовок",
+	"optionsTitleDescription": "Заголовок для опроса",
+	"optionsFirstName": "первый",
+	"optionsSecondName": "второй",
+	"optionsThirdName": "третий",
+	"optionsFourthName": "четвёртый",
+	"optionsFifthName": "пятый",
+	"optionsValueDescription": "Вариант для опроса"
 }

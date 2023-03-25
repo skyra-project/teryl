@@ -12,6 +12,7 @@
 	"allNsfl": "All the posts from the specified subreddit are marked as NSFL, and as such, I cannot show any of them to you.",
 	"abortError": "Reddit didn't respond on time, please try again later.",
 	"unavailableErrorPrivate": "I couldn't get any information from the specified subreddit because it's marked as private.",
+	"unavailableErrorGoldOnly": "I couldn't get any information from the specified subreddit because it's marked as Reddit Premium only.",
 	"unavailableErrorQuarantined": "I couldn't get any information from the specified subreddit because it's quarantined. Reason:\n>>> {{reason}}",
 	"unavailableErrorGated": "I couldn't get any information from the specified subreddit because it's gated. Reason:\n>>> {{reason}}",
 	"unavailableErrorNotFound": "I couldn't get any information from the specified subreddit because it doesn't exist.",
