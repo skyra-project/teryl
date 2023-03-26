@@ -1,4 +1,4 @@
 {
-	"messageJsonName": "Récupérer le JSON du message",
-	"userJsonName": "Get User JSON"
+	"messageJsonName": "Obtenir le JSON message",
+	"userJsonName": "Obtenir le JSON utilisateur"
 }
