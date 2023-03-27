@@ -2,13 +2,13 @@
 	"name": "price",
 	"description": "Get the price of a currency compared to others",
 	"optionsAmountName": "amount",
-	"optionsAmountDescription": "The amount of money to convert",
+	"optionsAmountDescription": "Количество денег для конвертации",
 	"optionsFromName": "из",
 	"optionsFromDescription": "Исходная валюта",
 	"optionsToName": "в",
 	"optionsToDescription": "Целевые валюты, разделённые пробелами или запятыми",
 	"abortError": "Сервер не ответил вовремя. Пожалуйста, повторите попытку позже.",
-	"unknownServerError": "I received an unexpected error from the server. Please try again later.",
+	"unknownServerError": "Я получил неожиданную ошибку с сервера. Пожалуйста, повторите попытку позже.",
 	"error": "The server returned an error with the given options, please make sure you wrote the correct names.",
 	"result": "**{{from}}** is worth {{amounts, list}}."
 }
