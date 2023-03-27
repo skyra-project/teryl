@@ -1,6 +1,6 @@
 {
 	"name": "price",
-	"description": "Get the price of a currency compared to others",
+	"description": "Получить курс одной валюты по отношению к другим валютам",
 	"optionsAmountName": "amount",
 	"optionsAmountDescription": "Количество денег для конвертации",
 	"optionsFromName": "из",
