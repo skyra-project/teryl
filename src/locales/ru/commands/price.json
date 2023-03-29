@@ -1,7 +1,7 @@
 {
-	"name": "price",
+	"name": "курс",
 	"description": "Получить курс одной валюты по отношению к другим валютам",
-	"optionsAmountName": "amount",
+	"optionsAmountName": "количество",
 	"optionsAmountDescription": "Количество денег для конвертации",
 	"optionsFromName": "из",
 	"optionsFromDescription": "Исходная валюта",
