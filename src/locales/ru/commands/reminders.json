@@ -30,5 +30,5 @@
 	"invalidId": "Вы ввели некорректный ID ({{id}}).",
 	"invalidDuration": "Мне не удалось подтвердить длительность {{value}}, пожалуйста, попробуйте использовать такие значения, как `2h`.",
 	"durationTooShort": "Интервал не может быть короче одной минуты.",
-	"durationTooLong": "The duration cannot be longer than 1 year."
+	"durationTooLong": "Интервал не может быть длиннее одного года."
 }
