@@ -1,6 +1,6 @@
 {
 	"name": "выбор",
-	"description": "Получить случайное значение из набора",
+	"description": "Получить случайное значение из набора вариантов",
 	"optionsValuesName": "значения",
 	"optionsValuesDescription": "Варианты для выбора случайного значения, разделённые запятыми",
 	"tooFewOptions": "There needs to be at least two values.",
