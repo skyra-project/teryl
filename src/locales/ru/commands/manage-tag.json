@@ -31,7 +31,7 @@
 	"removeAllSuccess": "Successfully removed {{value}} tag(s).",
 	"removeAllNoEntries": "There were no entries to remove.",
 	"editSuccess": "Successfully edited {{value}}.",
-	"aliasSame": "The alias cannot be the same as the name ({{value}}).",
+	"aliasSame": "Псевдоним не может быть таким же, как имя ({{value}}).",
 	"aliasUsed": "Тег с именем {{value}} уже существует.",
 	"aliasIncompatible": "Тег с псевдонимом {{value}} уже существует.",
 	"aliasRemoveSuccess": "Successfully removed the alias of {{value}}.",
