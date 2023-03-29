@@ -10,7 +10,7 @@
 	"nsfwFailedToFetchChannel": "I could not determine whether or not this channel is age-restricted. Please try again later.",
 	"allNsfw": "All the posts from the specified subreddit are marked as NSFW, which can only be displayed on age-restricted channels.",
 	"allNsfl": "All the posts from the specified subreddit are marked as NSFL, and as such, I cannot show any of them to you.",
-	"abortError": "Reddit didn't respond on time, please try again later.",
+	"abortError": "Reddit не ответил вовремя. Пожалуйста, повторите попытку позже.",
 	"unavailableErrorPrivate": "I couldn't get any information from the specified subreddit because it's marked as private.",
 	"unavailableErrorGoldOnly": "I couldn't get any information from the specified subreddit because it's marked as Reddit Premium only.",
 	"unavailableErrorQuarantined": "I couldn't get any information from the specified subreddit because it's quarantined. Reason:\n>>> {{reason}}",
