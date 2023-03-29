@@ -18,12 +18,12 @@
 	"failedToUpload": "Мне не удалось загрузить эмодзи, простите за доставленные неудобства!",
 	"failedToUploadDiscordDown": "Кажется, Discord не очень хорошо себя чувствует. Пожалуйста, повторите попытку позже.",
 	"failedToUploadMissingPermissions": "Мне не удалось загрузить эмодзи, так как у меня нет права на их загрузку. Пожалуйста, предоставьте мне это право и повторите попытку.",
-	"failedToUploadInvalidBody": "It seems I did not upload the emoji correctly, please try again later.",
+	"failedToUploadInvalidBody": "Похоже, мне не удалось правильно загрузить эмодзи. Пожалуйста, повторите попытку позже.",
 	"failedToUploadMaximumEmojis": "Мне не удалось загрузить эмодзи, так как на этом сервере уже достигнут лимит эмодзи. Пожалуйста, удалите один и повторите попытку.",
 	"failedToUploadMaximumAnimatedEmojis": "Мне не удалось загрузить эмодзи, так как на этом сервере уже достигнут лимит анимированных эмодзи. Пожалуйста, удалите один и повторите попытку.",
 	"contentLengthMissing": "Похоже, что сервер, с которого я запросил файл, настроен неправильно, он забыл сообщить мне размер файла.",
-	"contentLengthInvalid": "The server I queried the file from sent me an invalid file size.",
+	"contentLengthInvalid": "Сервер, с которого я запросил файл, отправил мне некорректный размер файла.",
 	"contentLengthTooBig": "Отправленный вами файл слишком большой (>256 килобайт) и не может быть загружен. Пожалуйста, попробуйте отправить изображение меньшего размера.",
 	"contentTypeMissing": "Похоже, что сервер, с которого я запросил файл, настроен неправильно, он забыл сообщить мне тип файла.",
-	"contentTypeUnsupported": "The file you uploaded does not seem to be a supported image format."
+	"contentTypeUnsupported": "Похоже, формат отправленного вами файла не является поддерживаемым форматом изображения."
 }
