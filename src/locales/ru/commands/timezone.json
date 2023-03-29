@@ -1,7 +1,7 @@
 {
-	"name": "timezone",
+	"name": "часовой-пояс",
 	"description": "Manage your personal timezone or view the current time",
-	"optionsNameName": "name",
+	"optionsNameName": "название",
 	"optionsNameDescription": "The name of the timezone to use",
 	"useName": "use",
 	"useDescription": "Sets your personal timezone to use when using dates",
