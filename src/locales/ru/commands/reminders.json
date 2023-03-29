@@ -5,8 +5,8 @@
 	"optionsIdDescription": "ID напоминания",
 	"optionsContentName": "содержимое",
 	"optionsContentDescription": "Содержимое напоминания",
-	"optionsDurationName": "duration",
-	"optionsDurationDescription": "The time after of which the reminder should be sent",
+	"optionsDurationName": "интервал",
+	"optionsDurationDescription": "Время, по истечении которого напоминание должно быть отправлено",
 	"optionsPublicName": "public",
 	"optionsPublicDescription": "Whether or not the reminder can be subscribed by multiple users (Default: False)",
 	"createName": "создать",
@@ -27,8 +27,8 @@
 	"listName": "список",
 	"listDescription": "Показывает все ваши напоминания",
 	"listEmpty": "У вас нет напоминаний. Вы можете создать новые напоминания, используя </reminders create:{{commandId}}>.",
-	"invalidId": "The ID you passed ({{id}}) is not valid.",
+	"invalidId": "Вы ввели некорректный ID ({{id}}).",
 	"invalidDuration": "Мне не удалось подтвердить длительность {{value}}, пожалуйста, попробуйте использовать такие значения, как `2h`.",
-	"durationTooShort": "The duration cannot be shorter than 1 minute.",
+	"durationTooShort": "Интервал не может быть короче одной минуты.",
 	"durationTooLong": "The duration cannot be longer than 1 year."
 }
