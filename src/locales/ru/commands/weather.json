@@ -16,7 +16,7 @@
 	"blockedLocation": "Сервер заблокировал мой запрос на получение данных об этом месте. Пожалуйста, попробуйте другое.",
 	"rateLimited": "Кажется, я превысил количество запросов, которое я могу сделать к серверу. Пожалуйста, повторите попытку позже.",
 	"remoteServerError": "Сервер получил ошибку при обработке моего запроса. Пожалуйста, повторите попытку позже.",
-	"serviceUnavailable": "The server has hit its capacity limit, which means they can no longer serve any more requests for the rest of the current day. Please try again later.",
+	"serviceUnavailable": "Сервер достиг лимита пропускной способности. Это означает, что он не может обслуживать больше запросов на остаток текущего дня. Пожалуйста, повторите попытку позже.",
 	"inches": "{{value, number(style: unit; unit: inch)}}",
 	"temperatureFahrenheit": "{{value, number(style: unit; unit: fahrenheit)}} ({{feelsLike, number(style: unit; unit: fahrenheit)}})",
 	"miles": "{{value, number(style: unit; unit: mile)}}",
