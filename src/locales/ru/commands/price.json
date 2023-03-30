@@ -9,6 +9,6 @@
 	"optionsToDescription": "Целевые валюты, разделённые пробелами или запятыми",
 	"abortError": "Сервер не ответил вовремя. Пожалуйста, повторите попытку позже.",
 	"unknownServerError": "Я получил неожиданную ошибку с сервера. Пожалуйста, повторите попытку позже.",
-	"error": "The server returned an error with the given options, please make sure you wrote the correct names.",
+	"error": "Сервер вернул ошибку с указанными параметрами, пожалуйста, убедитесь, что вы написали правильные имена.",
 	"result": "**{{from}}** стоит {{amounts, list}}."
 }
