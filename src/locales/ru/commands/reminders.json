@@ -17,7 +17,7 @@
 	"updateName": "обновить",
 	"updateDescription": "Обновляет существующее напоминание",
 	"updateContent": "Обновлено напоминание с ID {{id}}, я отправлю вам сообщение {{time}}.",
-	"updateMissingOptions": "You must specify either the time or the content.",
+	"updateMissingOptions": "Вы должны указать время или содержимое.",
 	"deleteName": "удалить",
 	"deleteDescription": "Удаляет напоминание",
 	"deleteContent": "Успешно удалено напоминание {{id}} с содержимым {{content}}, настроенное на отправку {{time}}",
