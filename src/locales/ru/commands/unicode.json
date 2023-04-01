@@ -5,7 +5,7 @@
 	"optionsCharacterDescription": "Символ, с которого получить информацию",
 	"tooManyCharacters": "Слишком много символов, отображаются только первые 10.",
 	"unknownCharacter": "I could not retrieve the unicode information for this character.",
-	"informationBasic": "**Имя**: `{{name}}` ({{category}})\n**Двунаправленный**: {{bidirectionalCategory}}\n**Класс**: {{class}}",
+	"informationBasic": "**Название**: `{{name}}` ({{category}})\n**Двунаправленный**: {{bidirectionalCategory}}\n**Класс**: {{class}}",
 	"informationValue": "**Значение **: `{{value, number}}`",
 	"informationMirrored": "**Зеркально**",
 	"informationMappingBase": "**Base**: {{value}}",
@@ -67,9 +67,9 @@
 	"classNotReordered": "Not Reordered",
 	"classOverlay": "Overlay",
 	"classUnnamed": "Безымянный",
-	"classNukta": "Nukta",
+	"classNukta": "Нукта",
 	"classKanaVoicing": "Kana Voicing",
-	"classVirama": "Virama",
+	"classVirama": "Вирама",
 	"classAttachedBelow": "Attached Below",
 	"classAttachedAbove": "Attached Above",
 	"classAttachedAboveRight": "Attached Above Right",
@@ -83,5 +83,5 @@
 	"classAboveRight": "Above Right",
 	"classDoubleBelow": "Double Below",
 	"classDoubleAbove": "Double Above",
-	"classIotaSubscript": "Iota Subscript"
+	"classIotaSubscript": "Подстрочная йота"
 }
