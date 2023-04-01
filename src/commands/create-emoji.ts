@@ -1,12 +1,19 @@
 import { bitHas } from '#lib/common/bits';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { getDiscordEmojiData, getDiscordEmojiUrl, getTwemojiId, getTwemojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
-import { getUnicodeEmojiName } from '#lib/utilities/unicode';
+import {
+	EmojiSource,
+	getDiscordEmojiData,
+	getDiscordEmojiUrl,
+	getEmojiId,
+	getEmojiUrl,
+	getSanitizedEmojiName,
+	type DiscordEmoji
+} from '#lib/utilities/emoji';
 import { DiscordAPIError, HTTPError } from '@discordjs/rest';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
-import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
-import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
+import { Command, RegisterCommand } from '@skyra/http-framework';
+import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch } from '@skyra/safe-fetch';
 import {
 	MessageFlags,
@@ -18,23 +25,36 @@ import {
 	type RESTPostAPIGuildEmojiResult
 } from 'discord-api-types/v10';
 
+const Root = LanguageKeys.Commands.CreateEmoji;
+const EmojiRoot = LanguageKeys.Commands.Emoji;
+
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.RootName, LanguageKeys.Commands.CreateEmoji.RootDescription)
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsEmoji))
-		.addAttachmentOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsFile))
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.CreateEmoji.OptionsName))
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsEmoji))
+		.addAttachmentOption((builder) => applyLocalizedBuilder(builder, Root.OptionsFile))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsName))
+		.addStringOption((builder) =>
+			applyLocalizedBuilder(builder, EmojiRoot.OptionsVariant).setChoices(
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantApple, { value: EmojiSource.Apple }),
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantFacebook, { value: EmojiSource.Facebook }),
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantGoogle, { value: EmojiSource.Google }),
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantMicrosoft, { value: EmojiSource.Microsoft }),
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantTwitter, { value: EmojiSource.Twitter }),
+				createSelectMenuChoiceName(EmojiRoot.OptionsVariantWhatsApp, { value: EmojiSource.WhatsApp })
+			)
+		)
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers)
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageEmojisAndStickers)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.MissingPermissions);
+			const content = resolveUserKey(interaction, Root.MissingPermissions);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		if (args.name && !UserCommand.NameValidatorRegExp.test(args.name)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.InvalidName);
+			const content = resolveUserKey(interaction, Root.InvalidName);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -42,7 +62,7 @@ export class UserCommand extends Command {
 		if (isNullish(args.emoji)) {
 			// !Emoji && !File:
 			if (isNullish(args.file)) {
-				const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.None);
+				const content = resolveUserKey(interaction, Root.None);
 				return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 			}
 
@@ -51,20 +71,27 @@ export class UserCommand extends Command {
 		}
 
 		// Emoji && !File:
-		if (isNullish(args.file)) return this.uploadEmoji(interaction, args.emoji, args.name);
+		if (isNullish(args.file)) return this.uploadEmoji(interaction, args.emoji, args.name, args.variant);
 
 		// Emoji && File
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
+		const content = resolveUserKey(interaction, Root.Duplicated);
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string) {
+	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string, variant?: EmojiSource) {
 		const data = getDiscordEmojiData(emoji);
-		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji, name) : this.uploadDiscordEmoji(interaction, data, name);
+		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji, name, variant) : this.uploadDiscordEmoji(interaction, data, name);
 	}
 
-	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string) {
-		return this.sharedUpload(interaction, name ?? getUnicodeEmojiName(emoji) ?? getTwemojiId(emoji), getTwemojiUrl(emoji));
+	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string, variant?: EmojiSource) {
+		const id = getEmojiId(emoji);
+		const url = getEmojiUrl(id, variant ?? EmojiSource.Twitter);
+		if (isNullishOrEmpty(url)) {
+			const content = resolveUserKey(interaction, EmojiRoot.InvalidEmoji);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		return this.sharedUpload(interaction, name ?? getSanitizedEmojiName(id)!, url);
 	}
 
 	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji, name?: string) {
@@ -73,7 +100,7 @@ export class UserCommand extends Command {
 
 	private uploadFile(interaction: Command.ChatInputInteraction, file: APIAttachment, name?: string) {
 		if (isNullishOrZero(file.width) || isNullishOrZero(file.height)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Duplicated);
+			const content = resolveUserKey(interaction, Root.Duplicated);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -85,7 +112,7 @@ export class UserCommand extends Command {
 
 		const downloadResult = await safeTimedFetch(url, 5000);
 		if (downloadResult.isErr()) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToDownload);
+			const content = resolveUserKey(interaction, Root.FailedToDownload);
 			return deferred.update({ content });
 		}
 
@@ -106,7 +133,7 @@ export class UserCommand extends Command {
 			name,
 			image: `data:${contentType};base64,${Buffer.from(buffer).toString('base64')}`
 		};
-		const reason = resolveKey(interaction, LanguageKeys.Commands.CreateEmoji.UploadedBy, { user: interaction.member!.user });
+		const reason = resolveKey(interaction, Root.UploadedBy, { user: interaction.member!.user });
 		const uploadResult = await Result.fromAsync(
 			() => this.container.rest.post(Routes.guildEmojis(interaction.guild_id!), { body, reason }) as Promise<RESTPostAPIGuildEmojiResult>
 		);
@@ -114,7 +141,7 @@ export class UserCommand extends Command {
 		return uploadResult
 			.map((data) => `<${data.animated ? 'a' : ''}:${data.name}:${data.id}>`)
 			.match({
-				ok: (emoji) => resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.Uploaded, { emoji }),
+				ok: (emoji) => resolveUserKey(interaction, Root.Uploaded, { emoji }),
 				err: (error) => this.getUploadError(interaction, error)
 			});
 	}
@@ -122,24 +149,24 @@ export class UserCommand extends Command {
 	private getUploadError(interaction: Command.ChatInputInteraction, error: unknown) {
 		if (error instanceof HTTPError) {
 			this.container.logger.error(error);
-			return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadDiscordDown);
+			return resolveUserKey(interaction, Root.FailedToUploadDiscordDown);
 		}
 
 		if (error instanceof DiscordAPIError) {
 			switch (error.code as number) {
 				case RESTJSONErrorCodes.MissingPermissions:
-					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMissingPermissions);
+					return resolveUserKey(interaction, Root.FailedToUploadMissingPermissions);
 				case RESTJSONErrorCodes.InvalidFormBodyOrContentType:
-					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadInvalidBody);
+					return resolveUserKey(interaction, Root.FailedToUploadInvalidBody);
 				case RESTJSONErrorCodes.MaximumNumberOfEmojisReached:
-					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMaximumEmojis);
+					return resolveUserKey(interaction, Root.FailedToUploadMaximumEmojis);
 				case RESTJSONErrorCodes.MaximumNumberOfAnimatedEmojisReached:
-					return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUploadMaximumAnimatedEmojis);
+					return resolveUserKey(interaction, Root.FailedToUploadMaximumAnimatedEmojis);
 			}
 		}
 
 		this.container.logger.error(error);
-		return resolveUserKey(interaction, LanguageKeys.Commands.CreateEmoji.FailedToUpload);
+		return resolveUserKey(interaction, Root.FailedToUpload);
 	}
 
 	private sanitizeName(name: string) {
@@ -150,7 +177,7 @@ export class UserCommand extends Command {
 			.slice(0, 32);
 	}
 
-	private getOptimalUrl(file: Options['file']) {
+	private getOptimalUrl(file: NonNullable<Options['file']>) {
 		const width = file.width!;
 		const height = file.height!;
 
@@ -173,22 +200,22 @@ export class UserCommand extends Command {
 
 	private parseContentLength(size: string | Nullish) {
 		// Edge case (should never happen): error on missing Content-Length:
-		if (isNullishOrEmpty(size)) return err(LanguageKeys.Commands.CreateEmoji.ContentLengthMissing);
+		if (isNullishOrEmpty(size)) return err(Root.ContentLengthMissing);
 
 		const parsed = Number(size);
 
 		// Edge case (should never happen): error on invalid (NaN, non-integer, negative) Content-Length:
-		if (!Number.isSafeInteger(parsed) || parsed < 0) return err(LanguageKeys.Commands.CreateEmoji.ContentLengthInvalid);
+		if (!Number.isSafeInteger(parsed) || parsed < 0) return err(Root.ContentLengthInvalid);
 
 		// `parsed` is in bytes, maximum upload size is 256 kilobytes. Error if Content-Length exceeds the limit:
-		if (parsed > 256000) return err(LanguageKeys.Commands.CreateEmoji.ContentLengthTooBig);
+		if (parsed > 256000) return err(Root.ContentLengthTooBig);
 
 		return ok();
 	}
 
 	private parseContentType(type: string | Nullish) {
 		// Edge case (should never happen): error on missing Content-Type:
-		if (isNullishOrEmpty(type)) return err(LanguageKeys.Commands.CreateEmoji.ContentTypeMissing);
+		if (isNullishOrEmpty(type)) return err(Root.ContentTypeMissing);
 
 		switch (type) {
 			case 'image/png':
@@ -199,14 +226,15 @@ export class UserCommand extends Command {
 				return ok(type);
 		}
 
-		return err(LanguageKeys.Commands.CreateEmoji.ContentTypeUnsupported);
+		return err(Root.ContentTypeUnsupported);
 	}
 
 	private static readonly NameValidatorRegExp = /^[0-9a-zA-Z_]{2,32}$/;
 }
 
-type Options = MakeArguments<{
-	emoji: 'string';
-	file: 'attachment';
-	name: 'string';
-}>;
+interface Options {
+	emoji: string;
+	file?: APIAttachment;
+	name?: string;
+	variant?: EmojiSource;
+}
