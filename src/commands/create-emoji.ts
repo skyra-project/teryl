@@ -91,7 +91,9 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		return this.sharedUpload(interaction, name ?? getSanitizedEmojiName(id)!, url);
+		name ??= getSanitizedEmojiName(id)!;
+		if (name.length > 32) name = name.slice(0, 32);
+		return this.sharedUpload(interaction, name, url);
 	}
 
 	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji, name?: string) {
