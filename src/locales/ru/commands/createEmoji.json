@@ -2,7 +2,7 @@
 	"name": "создать-эмодзи",
 	"description": "Загружает эмодзи на сервер",
 	"optionsEmojiName": "эмодзи",
-	"optionsEmojiDescription": "Эмодзи для предварительной загрузки",
+	"optionsEmojiDescription": "Эмодзи для последующей загрузки",
 	"optionsFileName": "файл",
 	"optionsFileDescription": "Файл для загрузки",
 	"optionsNameName": "название",
