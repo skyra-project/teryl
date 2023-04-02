@@ -27,7 +27,7 @@
 	"modal": "Редактор тегов",
 	"modalContent": "Содержимое",
 	"addSuccess": "Успешно добавлен тег {{value}}.",
-	"removeSuccess": "Успешно удалено {{value}}.",
+	"removeSuccess": "Успешно удалён тег {{value}}.",
 	"removeAllSuccess": "Успешно удалено {{value}} тег(ов).",
 	"removeAllNoEntries": "Не найдено записей для удаления.",
 	"editSuccess": "Успешно изменён тег {{value}}.",
