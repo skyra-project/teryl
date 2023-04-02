@@ -28,7 +28,7 @@
 	"modalContent": "Содержимое",
 	"addSuccess": "Успешно добавлен тег {{value}}.",
 	"removeSuccess": "Успешно удалён тег {{value}}.",
-	"removeAllSuccess": "Успешно удалено {{value}} тег(ов).",
+	"removeAllSuccess": "Успешно удалено тегов: {{value}}.",
 	"removeAllNoEntries": "Не найдено записей для удаления.",
 	"editSuccess": "Успешно изменён тег {{value}}.",
 	"aliasSame": "Псевдоним не может быть таким же, как имя ({{value}}).",
