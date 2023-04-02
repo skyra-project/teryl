@@ -57,7 +57,7 @@ async function writeTzCountry() {
 
 	output.sort((a, b) => a.name.localeCompare(b.name));
 	const outputFile = new URL('../src/generated/data/tz-country-codes.json', import.meta.url);
-	await writeFile(outputFile, JSON.stringify(output), 'utf8');
+	await writeFile(outputFile, JSON.stringify(output, undefined, '\t'), 'utf8');
 
 	// Clean up the temporary file:
 	await rm(path);
@@ -97,7 +97,7 @@ async function writeTzData() {
 
 	output.sort((a, b) => a.name.localeCompare(b.name));
 	const outputFile = new URL('../src/generated/data/tz.json', import.meta.url);
-	await writeFile(outputFile, JSON.stringify(output), 'utf8');
+	await writeFile(outputFile, JSON.stringify(output, undefined, '\t'), 'utf8');
 
 	// Clean up the temporary file:
 	await rm(path);

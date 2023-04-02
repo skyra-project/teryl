@@ -95,4 +95,4 @@ for (const line of text.split('\n')) {
 }
 
 const outputFile = new URL('../src/generated/data/unicode.json', import.meta.url);
-await writeFile(outputFile, JSON.stringify(output), 'utf8');
+await writeFile(outputFile, JSON.stringify(output, undefined, '\t'), 'utf8');
