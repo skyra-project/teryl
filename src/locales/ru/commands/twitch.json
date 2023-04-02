@@ -17,12 +17,12 @@
 	"userPartner": "Партнёр",
 	"userNotAffiliated": "Этот канал не участвует в программе компаньонов Twitch",
 	"followageName": "время-отслеживания",
-	"followageDescription": "Получает информацию о времени отслеживания пользователя",
+	"followageDescription": "Получить информацию о времени отслеживания канала пользователем",
 	"followageOptionsUserName": "пользователь",
-	"followageOptionsUserDescription": "Пользователь, подписанный на канал",
+	"followageOptionsUserDescription": "Пользователь, отслеживающий канал",
 	"followageOptionsChannelName": "канал",
-	"followageOptionsChannelDescription": "Канал, с которого получить время отслеживания",
+	"followageOptionsChannelDescription": "Канал для получения времени отслеживания",
 	"followageDoesNotExist": "Либо пользователя, либо канала не существует. Пожалуйста, убедитесь, что имя пользователя и название канала написаны правильно.",
 	"followageDoesNotFollow": "`{{user}}` не отслеживает `{{channel}}` на Twitch.",
-	"followageEmbedDescription": "`{{user}}` начал отслеживать этот канал {{time}} ({{relative}})"
+	"followageEmbedDescription": "`{{user}}` отслеживает этот канал с {{time}} ({{relative}})"
 }
