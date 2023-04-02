@@ -18,7 +18,7 @@
 	"optionsContentName": "содержимое",
 	"optionsContentDescription": "Новое содержимое для тега",
 	"optionsEmbedName": "встроить",
-	"optionsEmbedDescription": "Встраивать или нет содержимое",
+	"optionsEmbedDescription": "Встраивать содержимое или нет",
 	"optionsEmbedColorName": "встроить-цвет",
 	"optionsEmbedColorDescription": "Цвет для тега",
 	"optionsNewNameName": "новое-имя",
