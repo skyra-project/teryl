@@ -22,7 +22,7 @@
 	"followageOptionsUserDescription": "Пользователь, подписанный на канал",
 	"followageOptionsChannelName": "канал",
 	"followageOptionsChannelDescription": "Канал, с которого получить время отслеживания",
-	"followageDoesNotExist": "Пользователя или канала не существует. Пожалуйста, проверьте, что оба имени написаны правильно.",
+	"followageDoesNotExist": "Либо пользователя, либо канала не существует. Пожалуйста, убедитесь, что имя пользователя и название канала написаны правильно.",
 	"followageDoesNotFollow": "`{{user}}` не отслеживает `{{channel}}` на Twitch.",
 	"followageEmbedDescription": "`{{user}}` начал отслеживать этот канал {{time}} ({{relative}})"
 }
