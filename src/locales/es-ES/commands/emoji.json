@@ -16,7 +16,7 @@
 	"unsupportedEmoji": "El emoji existe, sin embargo, la fuente de la variante no lo soporta. Por favor, pruebe otra variante o emoji.",
 	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: Personalizado\n**ID**: `{{emoji.id}}`",
 	"invalidDiscordEmoji": "El emoji personalizado que especificaste no parece existir en la base de datos de Discord, por favor prueba otro emoji.",
-	"extractEmojisName": "Extract Emojis",
-	"noContent": "I could not retrieve the message's emojis because it has no content.",
-	"noEmojis": "I could not find any emojis in the message."
+	"extractEmojisName": "Extraer Emojis",
+	"noContent": "No pude extraer los emojis del mensaje porque éste no tiene un contenido.",
+	"noEmojis": "No he podido encontrar emojis en el mensaje."
 }
