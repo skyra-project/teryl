@@ -1,8 +1,6 @@
 {
 	"name": "twitch",
-	"description": "Получить информацию с Twitch",
-	"userName": "пользователь",
-	"userDescription": "Получить информацию о канале Twitch",
+	"description": "Get information about a Twitch channel",
 	"userOptionsNameName": "название",
 	"userOptionsNameDescription": "Название канала Twitch",
 	"userDoesNotExist": "Указанный канал не существует.",
@@ -15,14 +13,5 @@
 	"userEmbedFieldViews": "{{value, number}}",
 	"userAffiliate": "Компаньон",
 	"userPartner": "Партнёр",
-	"userNotAffiliated": "Этот канал не участвует в программе компаньонов Twitch",
-	"followageName": "время-отслеживания",
-	"followageDescription": "Получить информацию о времени отслеживания канала пользователем",
-	"followageOptionsUserName": "пользователь",
-	"followageOptionsUserDescription": "Пользователь, отслеживающий канал",
-	"followageOptionsChannelName": "канал",
-	"followageOptionsChannelDescription": "Канал для получения времени отслеживания",
-	"followageDoesNotExist": "Либо пользователя, либо канала не существует. Пожалуйста, убедитесь, что имя пользователя и название канала написаны правильно.",
-	"followageDoesNotFollow": "`{{user}}` не отслеживает `{{channel}}` на Twitch.",
-	"followageEmbedDescription": "`{{user}}` отслеживает этот канал с {{time}} ({{relative}})"
+	"userNotAffiliated": "Этот канал не участвует в программе компаньонов Twitch"
 }
