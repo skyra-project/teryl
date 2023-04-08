@@ -15,5 +15,8 @@
 	"invalidEmoji": "That doesn't seem to be either a custom Discord emoji, or a supported built-in emoji. Please try another emoji.",
 	"unsupportedEmoji": "The emoji exists, however, the variant's source does not support it. Please try another variant or emoji.",
 	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: Custom\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "The custom emoji you specified does not appear to exist in Discord's database, please try another emoji."
+	"invalidDiscordEmoji": "The custom emoji you specified does not appear to exist in Discord's database, please try another emoji.",
+	"extractEmojisName": "Extract Emojis",
+	"noContent": "I could not retrieve the message's emojis because it has no content.",
+	"noEmojis": "I could not find any emojis in the message."
 }
