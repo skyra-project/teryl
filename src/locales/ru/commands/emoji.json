@@ -15,5 +15,8 @@
 	"invalidEmoji": "Похоже, что это не является ни пользовательским эмодзи Discord, ни поддерживаемым встроенным эмодзи. Пожалуйста, попробуйте другой эмодзи.",
 	"unsupportedEmoji": "Эмодзи существует, но источник варианта не поддерживает его. Пожалуйста, попробуйте другой вариант или эмодзи.",
 	"discordEmojiContent": "**Эмодзи**: `{{emoji.name}}`\n**Тип**: Пользовательский\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи."
+	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи.",
+	"extractEmojisName": "Extract Emojis",
+	"noContent": "I could not retrieve the message's emojis because it has no content.",
+	"noEmojis": "I could not find any emojis in the message."
 }
