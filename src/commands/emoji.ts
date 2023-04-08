@@ -1,10 +1,13 @@
+import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmojiSource, getDiscordEmojiData, getDiscordEmojiUrl, getEmojiId, getEmojiName, getEmojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
+import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from '@discordjs/builders';
+import { Collection } from '@discordjs/collection';
 import type { RawFile } from '@discordjs/rest';
 import { Time } from '@sapphire/duration';
-import { isNullish } from '@sapphire/utilities';
-import { Command, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
+import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
+import { Command, RegisterCommand, RegisterMessageCommand, TransformedArguments } from '@skyra/http-framework';
+import { applyLocalizedBuilder, applyNameLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
@@ -30,6 +33,53 @@ export class UserCommand extends Command {
 		return isNullish(data)
 			? this.getBuiltInResponse(interaction, args.emoji, args.variant ?? EmojiSource.Twitter)
 			: this.getDiscordResponse(interaction, data);
+	}
+
+	@RegisterMessageCommand((builder) => applyNameLocalizedBuilder(builder, Root.ExtractEmojisName))
+	public onMessageContext(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
+		if (isNullishOrEmpty(options.message.content)) {
+			const content = resolveUserKey(interaction, Root.NoContent);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		const emojis = new Collection<string, DiscordEmoji>();
+		for (const match of options.message.content.matchAll(UserCommand.CustomEmojiRegExp)) {
+			emojis.set(match.groups!.id, { id: match.groups!.id, name: match.groups!.name, animated: match.groups!.animated === 'a' });
+			if (emojis.size === 25) break;
+		}
+
+		if (emojis.size === 0) {
+			const content = resolveUserKey(interaction, Root.NoEmojis);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		const first = emojis.first()!;
+		const embed = new EmbedBuilder()
+			.setDescription(resolveUserKey(interaction, Root.DiscordEmojiContent, { emoji: first }))
+			.setThumbnail(getDiscordEmojiUrl(first))
+			.setTimestamp();
+
+		let row = undefined as undefined | ActionRowBuilder<SelectMenuBuilder>;
+		if (emojis.size > 1) {
+			row = new ActionRowBuilder();
+			const select = new SelectMenuBuilder().setCustomId('emoji');
+
+			let isDefault = true;
+			for (const emoji of emojis.values()) {
+				select.addOptions({
+					label: cut(emoji.name, 25),
+					value: `${emoji.id}.${emoji.name}.${emoji.animated ? '1' : '0'}`,
+					default: isDefault,
+					emoji
+				});
+
+				isDefault = false;
+			}
+
+			row.addComponents(select);
+		}
+
+		return interaction.reply({ embeds: [embed.toJSON()], components: row ? [row.toJSON()] : undefined, flags: MessageFlags.Ephemeral });
 	}
 
 	private async getBuiltInResponse(interaction: Command.ChatInputInteraction, emoji: string, variant: EmojiSource) {
@@ -71,6 +121,8 @@ export class UserCommand extends Command {
 			})
 			.intoPromise();
 	}
+
+	private static CustomEmojiRegExp = /(?:<(?<animated>a)?:(?<name>\w{2,32}):)?(?<id>\d{17,21})>?/g;
 }
 
 interface Options {

@@ -18,3 +18,7 @@ export const InvalidEmoji = T('commands/emoji:invalidEmoji');
 export const UnsupportedEmoji = T('commands/emoji:unsupportedEmoji');
 export const DiscordEmojiContent = FT<{ emoji: DiscordEmoji }>('commands/emoji:discordEmojiContent');
 export const InvalidDiscordEmoji = T('commands/emoji:invalidDiscordEmoji');
+
+export const ExtractEmojisName = T('commands/emoji:extractEmojisName');
+export const NoContent = T('commands/emoji:noContent');
+export const NoEmojis = T('commands/emoji:noEmojis');
