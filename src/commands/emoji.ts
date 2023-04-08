@@ -122,7 +122,7 @@ export class UserCommand extends Command {
 			.intoPromise();
 	}
 
-	private static CustomEmojiRegExp = /(?:<(?<animated>a)?:(?<name>\w{2,32}):)?(?<id>\d{17,21})>?/g;
+	private static CustomEmojiRegExp = /<(?<animated>a)?:(?<name>\w{2,32}):(?<id>\d{17,21})>/g;
 }
 
 interface Options {
