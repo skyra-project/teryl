@@ -15,5 +15,8 @@
 	"invalidEmoji": "Dat lijkt geen aangepaste Discord emoji of een ondersteunde ingebouwde emoji te zijn. Probeer een andere emoji.",
 	"unsupportedEmoji": "De emoji bestaat echter, de bron van de variant ondersteunt deze niet. Probeer een andere variant of een andere emoji.",
 	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: aangepast\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "De aangepaste emoji die je hebt opgegeven lijkt niet te bestaan in Discord's database, probeer een andere emoji."
+	"invalidDiscordEmoji": "De aangepaste emoji die je hebt opgegeven lijkt niet te bestaan in Discord's database, probeer een andere emoji.",
+	"extractEmojisName": "Extract Emojis",
+	"noContent": "I could not retrieve the message's emojis because it has no content.",
+	"noEmojis": "I could not find any emojis in the message."
 }
