@@ -1,6 +1,6 @@
 {
 	"name": "twitch",
-	"description": "Get information about a Twitch channel",
+	"description": "Получить информацию о канале Twitch",
 	"userOptionsNameName": "название",
 	"userOptionsNameDescription": "Название канала Twitch",
 	"userDoesNotExist": "Указанный канал не существует.",
