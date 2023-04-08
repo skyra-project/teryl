@@ -1,6 +1,6 @@
 {
 	"name": "ट्वीच",
-	"description": "Get information about a Twitch channel",
+	"description": "ट्विच चैनल के बारे में जानकारी प्राप्त करें",
 	"userOptionsNameName": "नाम",
 	"userOptionsNameDescription": "ट्विच चैनल का नाम",
 	"userDoesNotExist": "निर्दिष्ट चैनल मौजूद नहीं है।",
