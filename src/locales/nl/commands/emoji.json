@@ -3,8 +3,20 @@
 	"description": "Krijg informatie over een ingebouwde of aangepaste emoji",
 	"optionsEmojiName": "emoji",
 	"optionsEmojiDescription": "De emoji om informatie over te krijgen",
-	"twemojiContent": "**Emoji**: `{{emoji}}`\n**Type**: ingebouwd\n**ID**: `{{id}}`",
-	"invalidTwemoji": "Dat lijkt geen aangepaste Discord emoji of een ingebouwde Twemoji te zijn. Probeer een andere emoji.",
+	"optionsVariantName": "variant",
+	"optionsVariantDescription": "De emoji-variant, indien ingebouwd",
+	"optionsVariantApple": "Apple",
+	"optionsVariantFacebook": "Facebook",
+	"optionsVariantGoogle": "Google",
+	"optionsVariantMicrosoft": "Microsoft",
+	"optionsVariantTwitter": "Twitter",
+	"optionsVariantWhatsApp": "WhatsApp",
+	"emojiContent": "**Emoji**: `{{emoji}}` (`{{name}}`)\n**Type**: Ingebouwd\n**ID**: `{{id}}`",
+	"invalidEmoji": "Dat lijkt geen aangepaste Discord emoji of een ondersteunde ingebouwde emoji te zijn. Probeer een andere emoji.",
+	"unsupportedEmoji": "De emoji bestaat echter, de bron van de variant ondersteunt deze niet. Probeer een andere variant of een andere emoji.",
 	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: aangepast\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "De aangepaste emoji die je hebt opgegeven lijkt niet te bestaan in Discord's database, probeer een andere emoji."
+	"invalidDiscordEmoji": "De aangepaste emoji die je hebt opgegeven lijkt niet te bestaan in Discord's database, probeer een andere emoji.",
+	"extractEmojisName": "Emojis Afleiden",
+	"noContent": "Ik kon de emojis van het bericht niet ophalen omdat het geen inhoud heeft.",
+	"noEmojis": "Ik kon geen emojis vinden in het bericht."
 }

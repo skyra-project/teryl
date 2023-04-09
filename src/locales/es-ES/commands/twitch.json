@@ -1,8 +1,6 @@
 {
 	"name": "twitch",
-	"description": "Provee información de Twitch",
-	"userName": "usuario",
-	"userDescription": "Obtén información sobre un canal de Twitch",
+	"description": "Obtén información sobre un canal de Twitch",
 	"userOptionsNameName": "nombre",
 	"userOptionsNameDescription": "El nombre del canal de Twitch",
 	"userDoesNotExist": "El canal especificado no existe.",
@@ -15,14 +13,5 @@
 	"userEmbedFieldViews": "{{value, number}}",
 	"userAffiliate": "Afiliado",
 	"userPartner": "Asociado",
-	"userNotAffiliated": "Este canal no es parte del programa de afiliación de Twitch",
-	"followageName": "seguimiento",
-	"followageDescription": "Provee información sobre el seguimiento de un usuario",
-	"followageOptionsUserName": "usuario",
-	"followageOptionsUserDescription": "El usuario que sigue el canal",
-	"followageOptionsChannelName": "canal",
-	"followageOptionsChannelDescription": "El canal del cual obtener el seguimiento",
-	"followageDoesNotExist": "O bien el usuario o el canal no existen. Por favor, compruebe que ha escrito los dos nombres correctamente.",
-	"followageDoesNotFollow": "`{{user}}` no sigue a `{{channel}}` en Twitch.",
-	"followageEmbedDescription": "`{{user}}` comenzó a seguir este canal en {{time}} ({{relative}})"
+	"userNotAffiliated": "Este canal no es parte del programa de afiliación de Twitch"
 }

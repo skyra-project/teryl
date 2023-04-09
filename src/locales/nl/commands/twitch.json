@@ -1,8 +1,6 @@
 {
 	"name": "twitch",
-	"description": "Haal informatie op van Twitch",
-	"userName": "gebruiker",
-	"userDescription": "Krijg informatie over een Twitch kanaal",
+	"description": "Krijg informatie over een Twitch kanaal",
 	"userOptionsNameName": "naam",
 	"userOptionsNameDescription": "De naam van het Twitch kanaal",
 	"userDoesNotExist": "Het opgegeven kanaal bestaat niet.",
@@ -15,14 +13,5 @@
 	"userEmbedFieldViews": "{{value, number}}",
 	"userAffiliate": "Aangesloten",
 	"userPartner": "Partner",
-	"userNotAffiliated": "Dit kanaal maakt geen deel uit van het Twitch affiliate programma",
-	"followageName": "followage",
-	"followageDescription": "Haalt informatie op over hoe lang een gebruiker een kanaal volgt",
-	"followageOptionsUserName": "gebruiker",
-	"followageOptionsUserDescription": "De gebruiker die het kanaal volgt",
-	"followageOptionsChannelName": "kanaal",
-	"followageOptionsChannelDescription": "Het kanaal om het volgen van te op te halen",
-	"followageDoesNotExist": "De gebruiker of het kanaal bestaat niet. Controleer of je beide namen correct hebt geschreven.",
-	"followageDoesNotFollow": "`{{user}}` volgt `{{channel}}` niet op Twitch.",
-	"followageEmbedDescription": "`{{user}}` volgt dit kanaal sinds {{time}} ({{relative}})"
+	"userNotAffiliated": "Dit kanaal maakt geen deel uit van het Twitch affiliate programma"
 }

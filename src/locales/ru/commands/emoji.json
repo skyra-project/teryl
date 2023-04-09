@@ -3,8 +3,20 @@
 	"description": "Получить информацию о встроенном или пользовательском эмодзи",
 	"optionsEmojiName": "эмодзи",
 	"optionsEmojiDescription": "Эмодзи, о котором нужно получить информацию",
-	"twemojiContent": "**Эмодзи**: `{{emoji}}`\n**Тип**: Встроенный\n**ID**: `{{id}}`",
-	"invalidTwemoji": "Похоже, что это не является ни пользовательским эмодзи Discord, ни поддерживаемым встроенным Twemoji. Пожалуйста, попробуйте другой эмодзи.",
+	"optionsVariantName": "вариант",
+	"optionsVariantDescription": "Вариант эмодзи, если он встроенный",
+	"optionsVariantApple": "Apple",
+	"optionsVariantFacebook": "Facebook",
+	"optionsVariantGoogle": "Google",
+	"optionsVariantMicrosoft": "Microsoft",
+	"optionsVariantTwitter": "Twitter",
+	"optionsVariantWhatsApp": "WhatsApp",
+	"emojiContent": "**Эмодзи**: `{{emoji}}` (`{{name}}`)\n**Тип**: Встроенный\n**ID**: `{{id}}`",
+	"invalidEmoji": "Похоже, что это не является ни пользовательским эмодзи Discord, ни поддерживаемым встроенным эмодзи. Пожалуйста, попробуйте другой эмодзи.",
+	"unsupportedEmoji": "Эмодзи существует, но источник варианта не поддерживает его. Пожалуйста, попробуйте другой вариант или эмодзи.",
 	"discordEmojiContent": "**Эмодзи**: `{{emoji.name}}`\n**Тип**: Пользовательский\n**ID**: `{{emoji.id}}`",
-	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи."
+	"invalidDiscordEmoji": "Похоже, что пользовательский эмодзи, который вы указали, отсутствует в базе данных Discord. Пожалуйста, попробуйте другой эмодзи.",
+	"extractEmojisName": "Извлечь эмодзи",
+	"noContent": "Я не смог извлечь эмодзи из сообщения, потому что оно не имеет содержимого.",
+	"noEmojis": "Я не смог найти эмодзи в сообщении."
 }

@@ -1,8 +1,6 @@
 {
 	"name": "ट्वीच",
-	"description": "ट्वीच से जानकारी प्राप्त करें",
-	"userName": "उपयोगकर्ता",
-	"userDescription": "ट्विच चैनल के बारे में जानकारी प्राप्त करें",
+	"description": "ट्विच चैनल के बारे में जानकारी प्राप्त करें",
 	"userOptionsNameName": "नाम",
 	"userOptionsNameDescription": "ट्विच चैनल का नाम",
 	"userDoesNotExist": "निर्दिष्ट चैनल मौजूद नहीं है।",
@@ -15,14 +13,5 @@
 	"userEmbedFieldViews": "{{value, number}}",
 	"userAffiliate": "संबद्ध",
 	"userPartner": "सहभागी",
-	"userNotAffiliated": "यह चैनल ट्विच सहबद्ध कार्यक्रम का हिस्सा नहीं है",
-	"followageName": "अनुसरण",
-	"followageDescription": "उपयोगकर्ता के अनुसरण के बारे में जानकारी प्राप्त करता है",
-	"followageOptionsUserName": "उपयोगकर्ता",
-	"followageOptionsUserDescription": "वह उपयोगकर्ता जो चैनल को फॉलो करता है",
-	"followageOptionsChannelName": "चैनल",
-	"followageOptionsChannelDescription": "चैनल से अनुसरण प्राप्त करने के लिए",
-	"followageDoesNotExist": "या तो उपयोगकर्ता या चैनल मौजूद नहीं है। कृपया जांचें कि आपने दोनों नाम सही लिखे हैं।",
-	"followageDoesNotFollow": "`{{user}}` ट्विच पर `{{channel}}` का अनुसरण नहीं करता है।",
-	"followageEmbedDescription": "`{{user}}` ने इस चैनल को {{time}} ({{relative}}) फ़ॉलो करना शुरू किया"
+	"userNotAffiliated": "यह चैनल ट्विच सहबद्ध कार्यक्रम का हिस्सा नहीं है"
 }

@@ -1,11 +1,11 @@
 {
 	"name": "wikipedia",
-	"description": "Gets information about a Wikipedia article",
-	"optionsInputName": "input",
-	"optionsInputDescription": "Search for an article",
-	"noResults": "Wikipedia returned no results, please try again with other search terms.",
-	"abortError": "Wikipedia took too long to respond, please try again later.",
-	"unknownResponse": "I received a response I do not expect, this is a bug. Please report it to my developers.",
-	"unknownError": "I received an unknown error, but it may be resolved by trying again later.",
-	"interWiki": "I found a Wikipedia article on {{link}}."
+	"description": "Obtient des informations à propos d'un article de Wikipédia",
+	"optionsInputName": "entrée",
+	"optionsInputDescription": "Rechercher un article",
+	"noResults": "Wikipédia n'a retourné aucun résultat, veuillez réessayer avec d'autres termes de recherche.",
+	"abortError": "Wikipédia a mis trop de temps pour répondre, veuillez réessayer plus tard.",
+	"unknownResponse": "J'ai reçu une réponse que je ne m'attends pas, c'est un bug. S'il vous plaît, signalez-la à mes développeurs.",
+	"unknownError": "J'ai reçu une erreur inconnue, mais elle peut être résolue en essayant à nouveau ultérieurement.",
+	"interWiki": "J'ai trouvé un article Wikipédia sur {{link}}."
 }
