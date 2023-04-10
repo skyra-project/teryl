@@ -7,7 +7,6 @@
 	"banned": "De opgegeven subreddit wordt niet veilig geacht, probeer een andere.",
 	"post": "**{{title}}** ingediend door {{author}}\n{{url}}",
 	"noPosts": "Er zijn geen berichten beschikbaar in de opgegeven subreddit. Controleer of je de naam correct hebt ingevoerd.",
-	"nsfwFailedToFetchChannel": "Ik kon niet bepalen of dit kanaal leeftijdgebonden is. Probeer het later opnieuw.",
 	"allNsfw": "Alle berichten van de opgegeven subreddit zijn gemarkeerd als NSFW, die alleen kan worden weergegeven op leeftijd-beperkte kanalen.",
 	"allNsfl": "Alle posts van de gespecificeerde subreddit zijn gemarkeerd als NSFL, daarom kan ik geen van hen tonen.",
 	"abortError": "Reddit heeft niet op tijd gereageerd, probeer het later opnieuw.",
