@@ -1,4 +1,5 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { isNsfwChannel } from '#lib/utilities/discord-utilities';
 import { spoiler } from '@discordjs/builders';
 import { Collection } from '@discordjs/collection';
 import { Time } from '@sapphire/duration';
@@ -33,36 +34,27 @@ export class UserCommand extends Command {
 		}
 
 		const response = await this.fetch(name);
-		const body = await response.match({
+		const body = response.match({
 			ok: (result) => this.handleOk(interaction, result),
 			err: (error) => this.handleError(interaction, name, error)
 		});
 		return interaction.reply(body);
 	}
 
-	private async handleOk(interaction: Command.ChatInputInteraction, result: CacheHit): Promise<MessageResponseOptions> {
-		const response = await this.handleOkGetContent(interaction, result);
+	private handleOk(interaction: Command.ChatInputInteraction, result: CacheHit): MessageResponseOptions {
+		const response = this.handleOkGetContent(interaction, result);
 		return response.match({
 			ok: (post) => ({ content: resolveKey(interaction, LanguageKeys.Commands.Reddit.Post, post), allowed_mentions: { roles: [], users: [] } }),
 			err: (key) => ({ content: resolveUserKey(interaction, key), flags: MessageFlags.Ephemeral })
 		});
 	}
 
-	private async handleOkGetContent(interaction: Command.ChatInputInteraction, result: CacheHit): Promise<Result<CacheEntry, TypedT>> {
+	private handleOkGetContent(interaction: Command.ChatInputInteraction, result: CacheHit): Result<CacheEntry, TypedT> {
 		if (result.posts.length === 0) {
 			return err(result.hasNsfl ? LanguageKeys.Commands.Reddit.AllNsfl : LanguageKeys.Commands.Reddit.NoPosts);
 		}
 
-		let { posts } = result;
-		if (result.hasNsfw) {
-			const response = await interaction.fetchChannel();
-			if (response.isErr()) return err(LanguageKeys.Commands.Reddit.NsfwFailedToFetchChannel);
-
-			if (response.isOkAnd((channel) => Reflect.get(channel, 'nsfw') !== true)) {
-				posts = posts.filter((post) => !post.nsfw);
-			}
-		}
-
+		const posts = result.hasNsfw && !isNsfwChannel(interaction.channel) ? result.posts.filter((post) => !post.nsfw) : result.posts;
 		return posts.length === 0 ? err(LanguageKeys.Commands.Reddit.AllNsfw) : ok(posts[Math.floor(Math.random() * posts.length)]);
 	}
 

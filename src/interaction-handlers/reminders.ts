@@ -18,7 +18,7 @@ export class UserHandler extends InteractionHandler {
 		if (isNullish(reminder)) {
 			const content = resolveUserKey(interaction, LanguageKeys.InteractionHandlers.Reminders.InvalidId);
 			await interaction.reply({ content, flags: MessageFlags.Ephemeral });
-			return this.container.rest.delete(Routes.channelMessage(interaction.channelId, interaction.message.id));
+			return this.container.rest.delete(Routes.channelMessage(interaction.channel.id, interaction.message.id));
 		}
 
 		const { key, amount } = await this.getContentKey(interaction, reminder);
