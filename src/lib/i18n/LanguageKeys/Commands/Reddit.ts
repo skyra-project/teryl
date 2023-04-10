@@ -10,7 +10,6 @@ export const InvalidName = T('commands/reddit:invalidName');
 export const Banned = T('commands/reddit:banned');
 export const Post = FT<{ title: string; author: string; url: string }>('commands/reddit:post');
 export const NoPosts = T('commands/reddit:noPosts');
-export const NsfwFailedToFetchChannel = T('commands/reddit:nsfwFailedToFetchChannel');
 export const AllNsfw = T('commands/reddit:allNsfw');
 export const AllNsfl = T('commands/reddit:allNsfl');
 export const AbortError = T('commands/reddit:abortError');
