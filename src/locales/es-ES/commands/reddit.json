@@ -7,7 +7,6 @@
 	"banned": "El subreddit especificado no se considera seguro, por favor pruebe con otro.",
 	"post": "**{{title}}** publicado por {{author}}\n{{url}}",
 	"noPosts": "No hay mensajes disponibles en el subreddit especificado. Por favor, asegúrese de que ha escrito el nombre correctamente.",
-	"nsfwFailedToFetchChannel": "No pude determinar si este canal está o no restringido por la edad. Por favor, inténtalo más tarde.",
 	"allNsfw": "Todos los mensajes del subreddit especificado están marcados como NSFW, los cuales solo se pueden mostrar en canales restringidos por edad.",
 	"allNsfl": "Todos los mensajes del subreddit especificado están marcados como NSFL, por lo que no puedo mostrarlos.",
 	"abortError": "Reddit no respondió a tiempo, por favor inténtelo de nuevo más tarde.",
