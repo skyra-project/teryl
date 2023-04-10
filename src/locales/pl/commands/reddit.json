@@ -7,7 +7,6 @@
 	"banned": "The specified subreddit is not deemed to be safe, please try another one.",
 	"post": "**{{title}}** submitted by {{author}}\n{{url}}",
 	"noPosts": "There are no posts available in the specified subreddit. Please make sure you have typed the name correctly.",
-	"nsfwFailedToFetchChannel": "I could not determine whether or not this channel is age-restricted. Please try again later.",
 	"allNsfw": "All the posts from the specified subreddit are marked as NSFW, which can only be displayed on age-restricted channels.",
 	"allNsfl": "All the posts from the specified subreddit are marked as NSFL, and as such, I cannot show any of them to you.",
 	"abortError": "Reddit didn't respond on time, please try again later.",
