@@ -1,15 +1,15 @@
 import { PathAssets } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { CurrentCondition, Weather, WeatherCode, WeatherName } from '#lib/types/weather-types';
-import { err, Result } from '@sapphire/result';
+import { WeatherCode, type CurrentCondition, type Weather, type WeatherName } from '#lib/types/weather-types';
+import { Result, err } from '@sapphire/result';
 import { container } from '@skyra/http-framework';
 import type { TypedT } from '@skyra/http-framework-i18n';
-import { FetchError, isAbortError, safeTimedFetch, Text } from '@skyra/safe-fetch';
+import { Text, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
 import { Image, loadImage } from 'canvas-constructor/napi-rs';
 import { cyan, gray, red } from 'colorette';
 import type { TFunction } from 'i18next';
 import { join } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
+import { URL, fileURLToPath } from 'node:url';
 
 export function getColors(name: WeatherName): WeatherTheme {
 	switch (name) {

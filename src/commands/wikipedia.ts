@@ -2,11 +2,11 @@ import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder, hyperlink, inlineCode } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
-import { err, ok, Result } from '@sapphire/result';
+import { Result, err, ok } from '@sapphire/result';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
-import { applyLocalizedBuilder, resolveKey, resolveUserKey, TypedT } from '@skyra/http-framework-i18n';
-import { isAbortError, Json, safeTimedFetch } from '@skyra/safe-fetch';
+import { applyLocalizedBuilder, resolveKey, resolveUserKey, type TypedT } from '@skyra/http-framework-i18n';
+import { Json, isAbortError, safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Wikipedia;

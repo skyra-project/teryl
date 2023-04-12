@@ -1,5 +1,5 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { DiscordEmoji, getDiscordEmojiUrl } from '#lib/utilities/emoji';
+import { getDiscordEmojiUrl, type DiscordEmoji } from '#lib/utilities/emoji';
 import { EmbedBuilder } from '@discordjs/builders';
 import { InteractionHandler, type Interactions } from '@skyra/http-framework';
 import { resolveUserKey } from '@skyra/http-framework-i18n';

@@ -1,9 +1,9 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { getLinkFromSelectMenu } from '#lib/utilities/youtube';
-import { InteractionHandler, Interactions } from '@skyra/http-framework';
+import { InteractionHandler, type Interactions } from '@skyra/http-framework';
 import { resolveUserKey } from '@skyra/http-framework-i18n';
 import type { Snowflake } from 'discord-api-types/globals';
-import { APIActionRowComponent, APIStringSelectComponent, MessageFlags } from 'discord-api-types/v10';
+import { MessageFlags, type APIActionRowComponent, type APIStringSelectComponent } from 'discord-api-types/v10';
 
 export class UserHandler extends InteractionHandler {
 	public async run(interaction: Interaction, [id]: [Snowflake]) {

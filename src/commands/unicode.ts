@@ -1,10 +1,10 @@
 import { EmbedColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BidirectionalCategory, Category, Class, getUnicode } from '#lib/utilities/unicode';
-import { bold, EmbedBuilder, inlineCode, italic } from '@discordjs/builders';
+import { EmbedBuilder, bold, inlineCode, italic } from '@discordjs/builders';
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedUserLanguageT, TFunction, TypedT } from '@skyra/http-framework-i18n';
+import { applyLocalizedBuilder, getSupportedUserLanguageT, type TFunction, type TypedT } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>

@@ -6,7 +6,7 @@ import { Collection } from '@discordjs/collection';
 import type { RawFile } from '@discordjs/rest';
 import { Time } from '@sapphire/duration';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterMessageCommand, TransformedArguments } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterMessageCommand, type TransformedArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, applyNameLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';

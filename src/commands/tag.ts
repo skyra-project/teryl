@@ -3,7 +3,7 @@ import { getTag, makeTagChoices, searchTag } from '#lib/utilities/tags';
 import { EmbedBuilder, userMention } from '@discordjs/builders';
 import type { Tag } from '@prisma/client';
 import { isNullish } from '@sapphire/utilities';
-import { Command, RegisterCommand, TransformedArguments, type AutocompleteInteractionArguments } from '@skyra/http-framework';
+import { Command, RegisterCommand, type AutocompleteInteractionArguments, type TransformedArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
 

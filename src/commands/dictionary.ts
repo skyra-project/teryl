@@ -5,9 +5,9 @@ import { blockQuote } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
 import { none, some } from '@sapphire/result';
 import { envParseString } from '@skyra/env-utilities';
-import { Command, MessageResponseOptions, RegisterCommand } from '@skyra/http-framework';
+import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
-import { isAbortError, Json, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
+import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 import { readFile } from 'node:fs/promises';
 
