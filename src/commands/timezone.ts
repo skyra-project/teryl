@@ -3,7 +3,7 @@ import { getTimeZone, MaximumLength, MinimumLength, searchTimeZone } from '#lib/
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { Result } from '@sapphire/result';
 import { isNullish } from '@sapphire/utilities';
-import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageName, resolveUserKey } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 

@@ -3,10 +3,10 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder } from '@discordjs/builders';
 import { Collection } from '@discordjs/collection';
 import { envParseString } from '@skyra/env-utilities';
-import { Command, MakeArguments, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey, TFunction } from '@skyra/http-framework-i18n';
-import { isAbortError, Json, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { LocaleString, MessageFlags } from 'discord-api-types/v10';
+import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
+import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
+import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
+import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.RootName, LanguageKeys.Commands.Price.RootDescription)

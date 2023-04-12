@@ -5,7 +5,7 @@ import { AsyncQueue } from '@sapphire/async-queue';
 import { isNullish } from '@sapphire/utilities';
 import { InteractionHandler, type Interactions } from '@skyra/http-framework';
 import { resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
-import { APIActionRowComponent, APIButtonComponentWithCustomId, MessageFlags, Routes } from 'discord-api-types/v10';
+import { MessageFlags, Routes, type APIActionRowComponent, type APIButtonComponentWithCustomId } from 'discord-api-types/v10';
 
 export class UserHandler extends InteractionHandler {
 	private readonly queues = new Collection<bigint, AsyncQueue>();

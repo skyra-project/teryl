@@ -19,8 +19,8 @@ import {
 import type { Reminder, ReminderMetadata } from '@prisma/client';
 import { Duration as SapphireDuration } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
-import { isNullish, isNullishOrEmpty, Nullish } from '@sapphire/utilities';
-import { AutocompleteInteractionArguments, Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
+import { isNullish, isNullishOrEmpty, type Nullish } from '@sapphire/utilities';
+import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
 	getSupportedLanguageName,

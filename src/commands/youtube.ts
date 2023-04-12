@@ -5,10 +5,10 @@ import { getLinkFromResultId, getSelectMenuValue } from '#lib/utilities/youtube'
 import { ActionRowBuilder, StringSelectMenuBuilder } from '@discordjs/builders';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { envParseString } from '@skyra/env-utilities';
-import { Command, MessageResponseOptions, RegisterCommand } from '@skyra/http-framework';
+import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveUserKey } from '@skyra/http-framework-i18n';
-import { FetchError, isAbortError, Json, safeTimedFetch } from '@skyra/safe-fetch';
-import { APISelectMenuOption, MessageFlags } from 'discord-api-types/v10';
+import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
+import { MessageFlags, type APISelectMenuOption } from 'discord-api-types/v10';
 import he from 'he';
 
 @RegisterCommand((builder) =>

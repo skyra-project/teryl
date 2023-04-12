@@ -2,7 +2,7 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { bold, SlashCommandStringOption } from '@discordjs/builders';
 import { Result } from '@sapphire/result';
 import { Command, Message, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, TypedT } from '@skyra/http-framework-i18n';
+import { applyLocalizedBuilder, type TypedT } from '@skyra/http-framework-i18n';
 import { Routes } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>

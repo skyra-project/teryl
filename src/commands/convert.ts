@@ -10,7 +10,7 @@ import {
 	type TypedFT
 } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
-import JSBD, { Decimal } from 'jsbd';
+import JSBD, { type Decimal } from 'jsbd';
 
 namespace Length {
 	export interface Options {

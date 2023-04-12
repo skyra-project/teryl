@@ -1,5 +1,5 @@
 import type { TheColorApiResult } from '#lib/types/thecolorapi';
-import { FT, T, Value } from '@skyra/http-framework-i18n';
+import { FT, T, type Value } from '@skyra/http-framework-i18n';
 
 // Root
 export const RootName = T('commands/color:name');
