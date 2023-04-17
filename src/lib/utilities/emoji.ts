@@ -53,20 +53,22 @@ export function getDiscordEmojiUrl(emoji: DiscordEmoji): string {
 
 export enum EmojiSource {
 	Apple = 'apple',
+	Facebook = 'facebook',
 	Google = 'google',
 	Microsoft = 'microsoft',
-	WhatsApp = 'whatsapp',
+	Samsung = 'samsung',
 	Twitter = 'twitter',
-	Facebook = 'facebook'
+	WhatsApp = 'whatsapp'
 }
 
 const EmojipediaCodes = {
 	[EmojiSource.Apple]: '354',
+	[EmojiSource.Facebook]: '355',
 	[EmojiSource.Google]: '350',
 	[EmojiSource.Microsoft]: '319',
-	[EmojiSource.WhatsApp]: '326',
+	[EmojiSource.Samsung]: '349',
 	[EmojiSource.Twitter]: '322',
-	[EmojiSource.Facebook]: '355'
+	[EmojiSource.WhatsApp]: '326'
 } as const satisfies Record<EmojiSource, string>;
 
 export interface DiscordEmoji {
