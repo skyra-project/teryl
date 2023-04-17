@@ -9,6 +9,7 @@
 	"optionsVariantFacebook": "Facebook",
 	"optionsVariantGoogle": "Google",
 	"optionsVariantMicrosoft": "Microsoft",
+	"optionsVariantSamsung": "Samsung",
 	"optionsVariantTwitter": "Twitter",
 	"optionsVariantWhatsApp": "WhatsApp",
 	"emojiContent": "**Emoji**: `{{emoji}}` (`{{name}}`)\n**Tipo**: Predeterminado\n**ID**: `{{id}}`",

@@ -9,6 +9,7 @@
 	"optionsVariantFacebook": "फेसबुक",
 	"optionsVariantGoogle": "गूगल",
 	"optionsVariantMicrosoft": "माइक्रोसॉफ्ट",
+	"optionsVariantSamsung": "सैमसंग",
 	"optionsVariantTwitter": "ट्विटर",
 	"optionsVariantWhatsApp": "वॉट्सएप",
 	"emojiContent": "**इमोजी**: `{{emoji}}` (`{{name}}`)\n**प्रकार**: बिल्ट-इन\n**क्रमांक**: `{{id}}`",
