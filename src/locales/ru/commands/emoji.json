@@ -9,6 +9,7 @@
 	"optionsVariantFacebook": "Facebook",
 	"optionsVariantGoogle": "Google",
 	"optionsVariantMicrosoft": "Microsoft",
+	"optionsVariantSamsung": "Samsung",
 	"optionsVariantTwitter": "Twitter",
 	"optionsVariantWhatsApp": "WhatsApp",
 	"emojiContent": "**Эмодзи**: `{{emoji}}` (`{{name}}`)\n**Тип**: Встроенный\n**ID**: `{{id}}`",
