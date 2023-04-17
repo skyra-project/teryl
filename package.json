@@ -44,7 +44,7 @@
 		"@skyra/twitch-helpers": "^1.0.2",
 		"@vladfrangu/async_event_emitter": "^2.2.1",
 		"canvas-constructor": "^7.0.0",
-		"discord-api-types": "^0.37.38",
+		"discord-api-types": "^0.37.39",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.3.2",
