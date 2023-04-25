@@ -90,8 +90,6 @@ export class UserCommand extends Command {
 				break;
 			}
 			case 451: {
-				// TODO: Find out the other keys
-				this.container.logger.error('[REDDIT] 451', parsed);
 				return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableForLegalReasons);
 			}
 			case 500: {
@@ -248,7 +246,7 @@ interface RedditBanned {
 }
 
 interface RedditUnavailableForLegalReasons {
-	// TODO: Find out other keys
+	message: 'Unavailable';
 	error: 451;
 }
 
