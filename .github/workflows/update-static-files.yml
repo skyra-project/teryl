@@ -70,4 +70,4 @@ jobs:
           steps.emoji.outputs.has_commits == 'true' ||
           steps.unicode.outputs.has_commits == 'true' ||
           steps.timezones.outputs.has_commits == 'true'
-        run: git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD);
+        run: git push
