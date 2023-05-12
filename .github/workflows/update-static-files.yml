@@ -35,39 +35,39 @@ jobs:
       - name: Run the Emoji Extraction script
         run: node ./scripts/extract-emoji-data.mjs
       - name: Commit emoji data changes
-        id: commit_emoji
+        id: emoji
         run: |
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update emoji data";
-            echo ::set-output name=has_committed_emojis::true
+            echo ::set-output name=has_commits::true
           fi
 
       - name: Run the Unicode Extraction script
         run: node ./scripts/extract-unicode-data.mjs
       - name: Commit unicode data changes
-        id: commit_unicode
+        id: unicode
         run: |
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update unicode data";
-            echo ::set-output name=has_committed_unicode::true
+            echo ::set-output name=has_commits::true
           fi
 
       - name: Run the Timezone Extraction script
         run: node ./scripts/extract-timezone-data.mjs
       - name: Commit timezone data changes
-        id: commit_timezones
+        id: timezones
         run: |
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update timezones data";
-            echo ::set-output name=has_committed_timezones::true
+            echo ::set-output name=has_commits::true
           fi
 
       - name: Push any commits
         if: |
-          steps.commit_emoji.outputs.has_committed_emojis == 'true' ||
-          steps.commit_unicode.outputs.has_committed_unicode == 'true' ||
-          steps.commit_timezones.outputs.has_committed_timezones == 'true'
+          steps.emoji.outputs.has_commits == 'true' ||
+          steps.unicode.outputs.has_commits == 'true' ||
+          steps.timezones.outputs.has_commits == 'true'
         run: git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD);
