@@ -40,7 +40,7 @@ jobs:
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update emoji data";
-            echo ::set-output name=has_commits::true
+            echo "{has_commits}={true}" >> $GITHUB_OUTPUT
           fi
 
       - name: Run the Unicode Extraction script
@@ -51,7 +51,7 @@ jobs:
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update unicode data";
-            echo ::set-output name=has_commits::true
+            echo "{has_commits}={true}" >> $GITHUB_OUTPUT
           fi
 
       - name: Run the Timezone Extraction script
@@ -62,7 +62,7 @@ jobs:
           git add .;
           if ! git diff-index --quiet HEAD --; then
             git commit -sam "refactor: update timezones data";
-            echo ::set-output name=has_commits::true
+            echo "{has_commits}={true}" >> $GITHUB_OUTPUT
           fi
 
       - name: Push any commits
