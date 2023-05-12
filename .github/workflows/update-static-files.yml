@@ -66,5 +66,8 @@ jobs:
           fi
 
       - name: Push any commits
-        if: steps.commit_emoji.outputs.has_committed_emojis == 'true' || steps.commit_unicode.outputs.has_committed_unicode == 'true' || steps.commit_timezones.outputs.has_committed_timezones == 'true'
+        if: |
+          steps.commit_emoji.outputs.has_committed_emojis == 'true' ||
+          steps.commit_unicode.outputs.has_committed_unicode == 'true' ||
+          steps.commit_timezones.outputs.has_committed_timezones == 'true'
         run: git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD);
