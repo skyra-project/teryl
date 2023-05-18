@@ -10,11 +10,11 @@ import {
 	type DiscordEmoji
 } from '#lib/utilities/emoji';
 import { DiscordAPIError, HTTPError } from '@discordjs/rest';
-import { err, ok, Result } from '@sapphire/result';
+import { Result, err, ok } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
-import { safeTimedFetch } from '@skyra/safe-fetch';
+import { safeTimedFetch, type FetchResult } from '@skyra/safe-fetch';
 import {
 	MessageFlags,
 	PermissionFlagsBits,
@@ -22,7 +22,8 @@ import {
 	Routes,
 	type APIAttachment,
 	type RESTPostAPIGuildEmojiJSONBody,
-	type RESTPostAPIGuildEmojiResult
+	type RESTPostAPIGuildEmojiResult,
+	type Snowflake
 } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.CreateEmoji;
@@ -45,11 +46,12 @@ const EmojiRoot = LanguageKeys.Commands.Emoji;
 			)
 		)
 		.setDMPermission(false)
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuildExpressions)
 )
 export class UserCommand extends Command {
+	private readonly SnowflakeRegExp = /^\d{17,20}$/;
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
-		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageEmojisAndStickers)) {
+		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageGuildExpressions)) {
 			const content = resolveUserKey(interaction, Root.MissingPermissions);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
@@ -80,6 +82,9 @@ export class UserCommand extends Command {
 	}
 
 	private uploadEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string, variant?: EmojiSource) {
+		// Upload by snowflake:
+		if (this.SnowflakeRegExp.test(emoji)) return this.uploadDiscordEmojiId(interaction, emoji, name);
+
 		const data = getDiscordEmojiData(emoji);
 		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji, name, variant) : this.uploadDiscordEmoji(interaction, data, name);
 	}
@@ -94,26 +99,40 @@ export class UserCommand extends Command {
 
 		name ??= getSanitizedEmojiName(id)!;
 		if (name.length > 32) name = name.slice(0, 32);
-		return this.sharedUpload(interaction, name, url);
+		return this.sharedUpload(interaction, name, [url]);
+	}
+
+	private uploadDiscordEmojiId(interaction: Command.ChatInputInteraction, id: Snowflake, name?: string) {
+		// Try to download an animated emoji, if it fails (code 415), try to download a non-animated one:
+		return this.sharedUpload(interaction, name ?? id, [
+			getDiscordEmojiUrl({ id, name: '', animated: true }),
+			getDiscordEmojiUrl({ id, name: '', animated: false })
+		]);
 	}
 
 	private uploadDiscordEmoji(interaction: Command.ChatInputInteraction, emoji: DiscordEmoji, name?: string) {
-		return this.sharedUpload(interaction, name ?? emoji.name.replace(/~\d+/, ''), getDiscordEmojiUrl(emoji));
+		return this.sharedUpload(interaction, name ?? emoji.name.replace(/~\d+/, ''), [getDiscordEmojiUrl(emoji)]);
 	}
 
 	private uploadFile(interaction: Command.ChatInputInteraction, file: APIAttachment, name?: string) {
 		if (isNullishOrZero(file.width) || isNullishOrZero(file.height)) {
-			const content = resolveUserKey(interaction, Root.Duplicated);
+			const content = resolveUserKey(interaction, Root.NotAnImage);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		return this.sharedUpload(interaction, this.sanitizeName(name ?? file.filename), this.getOptimalUrl(file));
+		return this.sharedUpload(interaction, this.sanitizeName(name ?? file.filename), [this.getOptimalUrl(file)]);
 	}
 
-	private async sharedUpload(interaction: Command.ChatInputInteraction, name: string, url: string) {
+	private async sharedUpload(interaction: Command.ChatInputInteraction, name: string, urls: readonly string[]) {
 		const deferred = await interaction.defer({ flags: MessageFlags.Ephemeral });
 
-		const downloadResult = await safeTimedFetch(url, 5000);
+		// Iterate over the possible URLs until it finds a valid emoji:
+		let downloadResult!: FetchResult<Response>;
+		for (const url of urls) {
+			downloadResult = await safeTimedFetch(url, 5000);
+			if (downloadResult.isOk()) break;
+		}
+
 		if (downloadResult.isErr()) {
 			const content = resolveUserKey(interaction, Root.FailedToDownload);
 			return deferred.update({ content });
