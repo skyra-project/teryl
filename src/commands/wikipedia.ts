@@ -37,7 +37,10 @@ export class UserCommand extends Command {
 			.setColor(BrandingColors.Primary)
 			.setTitle(data.title);
 		if (data.type === QueryCacheType.Page) {
-			embed.setURL(UserCommand.titleToUrl(data.title)).setDescription(data.extract);
+			embed.setURL(UserCommand.titleToUrl(data.title));
+			// `extract` often has content, but for some pages such as
+			// `Wikipedia:Sandbox`, it returns an empty string instead.
+			if (!isNullishOrEmpty(data.extract)) embed.setDescription(data.extract);
 		} else {
 			const url = UserCommand.titleToUrl(data.title, data.iw);
 			const link = hyperlink(inlineCode(`${data.iw}.wikipedia.org`), url);
