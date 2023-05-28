@@ -18,6 +18,6 @@
 	"discordEmojiContent": "**Emoji**: `{{emoji.name}}`\n**Type**: Custom\n**ID**: `{{emoji.id}}`",
 	"invalidDiscordEmoji": "The custom emoji you specified does not appear to exist in Discord's database, please try another emoji.",
 	"extractEmojisName": "Extract Emojis",
-	"noContent": "I could not retrieve the message's emojis because it has no content.",
+	"noContent": "I could not retrieve the message's emojis because it has no content and no reactions.",
 	"noEmojis": "I could not find any emojis in the message."
 }
