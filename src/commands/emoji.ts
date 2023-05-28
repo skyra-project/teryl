@@ -38,7 +38,7 @@ export class UserCommand extends Command {
 
 	@RegisterMessageCommand((builder) => applyNameLocalizedBuilder(builder, Root.ExtractEmojisName))
 	public onMessageContext(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
-		if (isNullishOrEmpty(options.message.content)) {
+		if (isNullishOrEmpty(options.message.content) && isNullishOrEmpty(options.message.reactions)) {
 			const content = resolveUserKey(interaction, Root.NoContent);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
@@ -47,6 +47,14 @@ export class UserCommand extends Command {
 		for (const match of options.message.content.matchAll(UserCommand.CustomEmojiRegExp)) {
 			emojis.set(match.groups!.id, { id: match.groups!.id, name: match.groups!.name, animated: match.groups!.animated === 'a' });
 			if (emojis.size === 25) break;
+		}
+
+		if (emojis.size < 25 && !isNullishOrEmpty(options.message.reactions)) {
+			for (const { emoji } of options.message.reactions) {
+				if (isNullish(emoji.id)) continue;
+				emojis.set(emoji.id, { id: emoji.id, name: emoji.name!, animated: emoji.animated ?? false });
+				if (emojis.size === 25) break;
+			}
 		}
 
 		if (emojis.size === 0) {
