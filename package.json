@@ -33,7 +33,7 @@
 		"@sapphire/async-queue": "^1.5.0",
 		"@sapphire/duration": "^1.1.0",
 		"@sapphire/result": "^2.6.4",
-		"@sapphire/utilities": "^3.11.2",
+		"@sapphire/utilities": "^3.12.0",
 		"@skyra/env-utilities": "^1.2.0",
 		"@skyra/http-framework": "^1.0.2",
 		"@skyra/http-framework-i18n": "^1.0.1",
@@ -62,11 +62,11 @@
 		"@types/gradient-string": "^1.1.2",
 		"@types/he": "^1.2.0",
 		"@types/luxon": "^3.3.0",
-		"@types/node": "^18.16.16",
+		"@types/node": "^18.16.17",
 		"@types/tar": "^6.1.5",
-		"@typescript-eslint/eslint-plugin": "^5.59.8",
-		"@typescript-eslint/parser": "^5.59.8",
-		"@vitest/coverage-c8": "^0.31.4",
+		"@typescript-eslint/eslint-plugin": "^5.59.9",
+		"@typescript-eslint/parser": "^5.59.9",
+		"@vitest/coverage-c8": "^0.32.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.42.0",
 		"eslint-config-prettier": "^8.8.0",
@@ -79,7 +79,7 @@
 		"rimraf": "^5.0.1",
 		"tar": "^6.1.15",
 		"typescript": "^5.1.3",
-		"vitest": "^0.31.4"
+		"vitest": "^0.32.0"
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
