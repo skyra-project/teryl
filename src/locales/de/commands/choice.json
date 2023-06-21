@@ -1,7 +1,7 @@
 {
 	"name": "wählen",
 	"description": "Erhalte einen zufälligen Wert aus einer Reihe von Optionen",
-	"optionsValuesName": "Werte",
+	"optionsValuesName": "werte",
 	"optionsValuesDescription": "The choices to pick a random value from, separated by commas",
 	"tooFewOptions": "There needs to be at least two values.",
 	"duplicatedOptions": "There is at least one duplicate value in your set, please remove them.",
