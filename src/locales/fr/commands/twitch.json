@@ -1,17 +1,17 @@
 {
-	"name": "twitch",
-	"description": "Get information about a Twitch channel",
-	"userOptionsNameName": "name",
-	"userOptionsNameDescription": "The name of the Twitch channel",
-	"userDoesNotExist": "The specified channel does not exist.",
+	"name": "",
+	"description": "",
+	"userOptionsNameName": "",
+	"userOptionsNameDescription": "",
+	"userDoesNotExist": "",
 	"userEmbedTitles": {
-		"followers": "Followers",
-		"views": "Views",
-		"partner": "Partner"
+		"followers": "",
+		"views": "",
+		"partner": ""
 	},
 	"userEmbedFieldFollowers": "{{value, number}}",
 	"userEmbedFieldViews": "{{value, number}}",
-	"userAffiliate": "Affiliate",
-	"userPartner": "Partner",
-	"userNotAffiliated": "This channel is not part of the Twitch affiliate program"
+	"userAffiliate": "",
+	"userPartner": "",
+	"userNotAffiliated": ""
 }
