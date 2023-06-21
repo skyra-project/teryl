@@ -1,18 +1,1 @@
-{
-	"name": "timezone",
-	"description": "Manage your personal timezone or view the current time",
-	"optionsNameName": "name",
-	"optionsNameDescription": "The name of the timezone to use",
-	"useName": "use",
-	"useDescription": "Sets your personal timezone to use when using dates",
-	"useSuccess": "Successfully set your personal timezone to `{{value}}`.",
-	"useFailure": "I couldn't set your personal timezone to `{{value}}`, please try again later.",
-	"resetName": "reset",
-	"resetDescription": "Resets your personal timezone",
-	"resetSuccess": "Successfully removed your personal timezone.",
-	"resetFailure": "It seems you did not have a timezone configured, or my database failed me.",
-	"viewName": "view",
-	"viewDescription": "View the current time in the specified timezone",
-	"viewContent": "Right now it's `{{time}}` in `{{tz}}`.",
-	"invalidTimeZone": "I could not find a timezone with the name of `{{value}}`, please try with another name."
-}
+{}
