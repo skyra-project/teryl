@@ -1,11 +1,1 @@
-{
-	"name": "wikipedia",
-	"description": "Gets information about a Wikipedia article",
-	"optionsInputName": "input",
-	"optionsInputDescription": "Search for an article",
-	"noResults": "Wikipedia returned no results, please try again with other search terms.",
-	"abortError": "Wikipedia took too long to respond, please try again later.",
-	"unknownResponse": "I received a response I do not expect, this is a bug. Please report it to my developers.",
-	"unknownError": "I received an unknown error, but it may be resolved by trying again later.",
-	"interWiki": "I found a Wikipedia article on {{link}}."
-}
+{}

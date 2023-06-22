@@ -19,11 +19,5 @@
 	"failedToUploadDiscordDown": "Il semble que Discord ne se sent pas bien. Veuillez réessayer ultérieurement.",
 	"failedToUploadMissingPermissions": "Je n'ai pas réussi à envoyé l'émoji car je n'ai pas la permission d'envoyer des émojis. S'il vous plaît accordez le et réessayez.",
 	"failedToUploadInvalidBody": "Il semble que je n'ai pas envoyé l'émoji correctement, veuillez réessayer ultérieurement.",
-	"failedToUploadMaximumEmojis": "Je n'ai pas pu envoyer l'émoji car ce serveur a déjà atteint la limite d'émojis. Veuillez en supprimer un et réessayer.",
-	"failedToUploadMaximumAnimatedEmojis": "I failed to upload the emoji because this server already reached the animated emoji limit. Please remove one and try again.",
-	"contentLengthMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me how big the file is.",
-	"contentLengthInvalid": "The server I queried the file from sent me an invalid file size.",
-	"contentLengthTooBig": "The file you uploaded is too big (>256 kilobytes) and cannot be uploaded, please try again with a smaller image.",
-	"contentTypeMissing": "The server I queried the file from seems to be misconfigured and forgot to tell me the type of the file.",
-	"contentTypeUnsupported": "The file you uploaded does not seem to be a supported image format."
+	"failedToUploadMaximumEmojis": "Je n'ai pas pu envoyer l'émoji car ce serveur a déjà atteint la limite d'émojis. Veuillez en supprimer un et réessayer."
 }
