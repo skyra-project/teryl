@@ -58,7 +58,7 @@ const defaults = [
 	'europe/prague', // Czech Republic, Slovakia
 	'asia/shanghai', // China
 	'africa/cairo' // Egypt
-].map((value) => ({ score: 1, value: tz.get(value)! } satisfies TimeZoneSearchResult));
+].map((value) => ({ score: 1, value: tz.get(value)! }) satisfies TimeZoneSearchResult);
 
 export function getTimeZone(id: string) {
 	return tz.get(id.toLowerCase()) ?? null;
