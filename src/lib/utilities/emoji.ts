@@ -67,8 +67,8 @@ const EmojipediaCodes = {
 	[EmojiSource.Google]: '350',
 	[EmojiSource.Microsoft]: '319',
 	[EmojiSource.Samsung]: '349',
-	[EmojiSource.Twitter]: '322',
-	[EmojiSource.WhatsApp]: '326'
+	[EmojiSource.Twitter]: '351',
+	[EmojiSource.WhatsApp]: '352'
 } as const satisfies Record<EmojiSource, string>;
 
 export interface DiscordEmoji {
