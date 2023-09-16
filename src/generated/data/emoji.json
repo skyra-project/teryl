@@ -200,6 +200,14 @@
 		"name": "shaking face"
 	},
 	{
+		"id": "1f642-200d-2194-fe0f",
+		"name": "head shaking horizontally"
+	},
+	{
+		"id": "1f642-200d-2195-fe0f",
+		"name": "head shaking vertically"
+	},
+	{
 		"id": "1f60c",
 		"name": "relieved face"
 	},
@@ -6172,6 +6180,78 @@
 		"name": "woman walking: dark skin tone"
 	},
 	{
+		"id": "1f6b6-200d-27a1-fe0f",
+		"name": "person walking facing right"
+	},
+	{
+		"id": "1f6b6-1f3fb-200d-27a1-fe0f",
+		"name": "person walking facing right: light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fc-200d-27a1-fe0f",
+		"name": "person walking facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fd-200d-27a1-fe0f",
+		"name": "person walking facing right: medium skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fe-200d-27a1-fe0f",
+		"name": "person walking facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f6b6-1f3ff-200d-27a1-fe0f",
+		"name": "person walking facing right: dark skin tone"
+	},
+	{
+		"id": "1f6b6-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right"
+	},
+	{
+		"id": "1f6b6-1f3fb-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right: light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fc-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fd-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right: medium skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fe-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f6b6-1f3ff-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman walking facing right: dark skin tone"
+	},
+	{
+		"id": "1f6b6-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right"
+	},
+	{
+		"id": "1f6b6-1f3fb-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right: light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fc-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fd-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right: medium skin tone"
+	},
+	{
+		"id": "1f6b6-1f3fe-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f6b6-1f3ff-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man walking facing right: dark skin tone"
+	},
+	{
 		"id": "1f9cd",
 		"name": "person standing"
 	},
@@ -6316,6 +6396,78 @@
 		"name": "woman kneeling: dark skin tone"
 	},
 	{
+		"id": "1f9ce-200d-27a1-fe0f",
+		"name": "person kneeling facing right"
+	},
+	{
+		"id": "1f9ce-1f3fb-200d-27a1-fe0f",
+		"name": "person kneeling facing right: light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fc-200d-27a1-fe0f",
+		"name": "person kneeling facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fd-200d-27a1-fe0f",
+		"name": "person kneeling facing right: medium skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fe-200d-27a1-fe0f",
+		"name": "person kneeling facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9ce-1f3ff-200d-27a1-fe0f",
+		"name": "person kneeling facing right: dark skin tone"
+	},
+	{
+		"id": "1f9ce-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right"
+	},
+	{
+		"id": "1f9ce-1f3fb-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right: light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fc-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fd-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right: medium skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fe-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9ce-1f3ff-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman kneeling facing right: dark skin tone"
+	},
+	{
+		"id": "1f9ce-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right"
+	},
+	{
+		"id": "1f9ce-1f3fb-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right: light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fc-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fd-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right: medium skin tone"
+	},
+	{
+		"id": "1f9ce-1f3fe-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9ce-1f3ff-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man kneeling facing right: dark skin tone"
+	},
+	{
 		"id": "1f9d1-200d-1f9af",
 		"name": "person with white cane"
 	},
@@ -6338,6 +6490,30 @@
 	{
 		"id": "1f9d1-1f3ff-200d-1f9af",
 		"name": "person with white cane: dark skin tone"
+	},
+	{
+		"id": "1f9d1-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right"
+	},
+	{
+		"id": "1f9d1-1f3fb-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right: light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fc-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fd-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right: medium skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fe-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9d1-1f3ff-200d-1f9af-200d-27a1-fe0f",
+		"name": "person with white cane facing right: dark skin tone"
 	},
 	{
 		"id": "1f468-200d-1f9af",
@@ -6364,6 +6540,30 @@
 		"name": "man with white cane: dark skin tone"
 	},
 	{
+		"id": "1f468-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right"
+	},
+	{
+		"id": "1f468-1f3fb-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right: light skin tone"
+	},
+	{
+		"id": "1f468-1f3fc-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f468-1f3fd-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right: medium skin tone"
+	},
+	{
+		"id": "1f468-1f3fe-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f468-1f3ff-200d-1f9af-200d-27a1-fe0f",
+		"name": "man with white cane facing right: dark skin tone"
+	},
+	{
 		"id": "1f469-200d-1f9af",
 		"name": "woman with white cane"
 	},
@@ -6386,6 +6586,30 @@
 	{
 		"id": "1f469-1f3ff-200d-1f9af",
 		"name": "woman with white cane: dark skin tone"
+	},
+	{
+		"id": "1f469-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right"
+	},
+	{
+		"id": "1f469-1f3fb-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right: light skin tone"
+	},
+	{
+		"id": "1f469-1f3fc-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f469-1f3fd-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right: medium skin tone"
+	},
+	{
+		"id": "1f469-1f3fe-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f469-1f3ff-200d-1f9af-200d-27a1-fe0f",
+		"name": "woman with white cane facing right: dark skin tone"
 	},
 	{
 		"id": "1f9d1-200d-1f9bc",
@@ -6412,6 +6636,30 @@
 		"name": "person in motorized wheelchair: dark skin tone"
 	},
 	{
+		"id": "1f9d1-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right"
+	},
+	{
+		"id": "1f9d1-1f3fb-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fc-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fd-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fe-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9d1-1f3ff-200d-1f9bc-200d-27a1-fe0f",
+		"name": "person in motorized wheelchair facing right: dark skin tone"
+	},
+	{
 		"id": "1f468-200d-1f9bc",
 		"name": "man in motorized wheelchair"
 	},
@@ -6434,6 +6682,30 @@
 	{
 		"id": "1f468-1f3ff-200d-1f9bc",
 		"name": "man in motorized wheelchair: dark skin tone"
+	},
+	{
+		"id": "1f468-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right"
+	},
+	{
+		"id": "1f468-1f3fb-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f468-1f3fc-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f468-1f3fd-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f468-1f3fe-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f468-1f3ff-200d-1f9bc-200d-27a1-fe0f",
+		"name": "man in motorized wheelchair facing right: dark skin tone"
 	},
 	{
 		"id": "1f469-200d-1f9bc",
@@ -6460,6 +6732,30 @@
 		"name": "woman in motorized wheelchair: dark skin tone"
 	},
 	{
+		"id": "1f469-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right"
+	},
+	{
+		"id": "1f469-1f3fb-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f469-1f3fc-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f469-1f3fd-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f469-1f3fe-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f469-1f3ff-200d-1f9bc-200d-27a1-fe0f",
+		"name": "woman in motorized wheelchair facing right: dark skin tone"
+	},
+	{
 		"id": "1f9d1-200d-1f9bd",
 		"name": "person in manual wheelchair"
 	},
@@ -6482,6 +6778,30 @@
 	{
 		"id": "1f9d1-1f3ff-200d-1f9bd",
 		"name": "person in manual wheelchair: dark skin tone"
+	},
+	{
+		"id": "1f9d1-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right"
+	},
+	{
+		"id": "1f9d1-1f3fb-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fc-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fd-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f9d1-1f3fe-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f9d1-1f3ff-200d-1f9bd-200d-27a1-fe0f",
+		"name": "person in manual wheelchair facing right: dark skin tone"
 	},
 	{
 		"id": "1f468-200d-1f9bd",
@@ -6508,6 +6828,30 @@
 		"name": "man in manual wheelchair: dark skin tone"
 	},
 	{
+		"id": "1f468-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right"
+	},
+	{
+		"id": "1f468-1f3fb-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f468-1f3fc-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f468-1f3fd-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f468-1f3fe-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f468-1f3ff-200d-1f9bd-200d-27a1-fe0f",
+		"name": "man in manual wheelchair facing right: dark skin tone"
+	},
+	{
 		"id": "1f469-200d-1f9bd",
 		"name": "woman in manual wheelchair"
 	},
@@ -6530,6 +6874,30 @@
 	{
 		"id": "1f469-1f3ff-200d-1f9bd",
 		"name": "woman in manual wheelchair: dark skin tone"
+	},
+	{
+		"id": "1f469-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right"
+	},
+	{
+		"id": "1f469-1f3fb-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right: light skin tone"
+	},
+	{
+		"id": "1f469-1f3fc-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f469-1f3fd-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right: medium skin tone"
+	},
+	{
+		"id": "1f469-1f3fe-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f469-1f3ff-200d-1f9bd-200d-27a1-fe0f",
+		"name": "woman in manual wheelchair facing right: dark skin tone"
 	},
 	{
 		"id": "1f3c3",
@@ -6602,6 +6970,78 @@
 	{
 		"id": "1f3c3-1f3ff-200d-2640-fe0f",
 		"name": "woman running: dark skin tone"
+	},
+	{
+		"id": "1f3c3-200d-27a1-fe0f",
+		"name": "person running facing right"
+	},
+	{
+		"id": "1f3c3-1f3fb-200d-27a1-fe0f",
+		"name": "person running facing right: light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fc-200d-27a1-fe0f",
+		"name": "person running facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fd-200d-27a1-fe0f",
+		"name": "person running facing right: medium skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fe-200d-27a1-fe0f",
+		"name": "person running facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f3c3-1f3ff-200d-27a1-fe0f",
+		"name": "person running facing right: dark skin tone"
+	},
+	{
+		"id": "1f3c3-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right"
+	},
+	{
+		"id": "1f3c3-1f3fb-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right: light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fc-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fd-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right: medium skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fe-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f3c3-1f3ff-200d-2640-fe0f-200d-27a1-fe0f",
+		"name": "woman running facing right: dark skin tone"
+	},
+	{
+		"id": "1f3c3-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right"
+	},
+	{
+		"id": "1f3c3-1f3fb-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right: light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fc-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right: medium-light skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fd-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right: medium skin tone"
+	},
+	{
+		"id": "1f3c3-1f3fe-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right: medium-dark skin tone"
+	},
+	{
+		"id": "1f3c3-1f3ff-200d-2642-fe0f-200d-27a1-fe0f",
+		"name": "man running facing right: dark skin tone"
 	},
 	{
 		"id": "1f483",
@@ -9132,10 +9572,6 @@
 		"name": "couple with heart: woman, woman, dark skin tone"
 	},
 	{
-		"id": "1f46a",
-		"name": "family"
-	},
-	{
 		"id": "1f468-200d-1f469-200d-1f466",
 		"name": "family: man, woman, boy"
 	},
@@ -9250,6 +9686,26 @@
 	{
 		"id": "1fac2",
 		"name": "people hugging"
+	},
+	{
+		"id": "1f46a",
+		"name": "family"
+	},
+	{
+		"id": "1f9d1-200d-1f9d1-200d-1f9d2",
+		"name": "family: adult, adult, child"
+	},
+	{
+		"id": "1f9d1-200d-1f9d1-200d-1f9d2-200d-1f9d2",
+		"name": "family: adult, adult, child, child"
+	},
+	{
+		"id": "1f9d1-200d-1f9d2",
+		"name": "family: adult, child"
+	},
+	{
+		"id": "1f9d1-200d-1f9d2-200d-1f9d2",
+		"name": "family: adult, child, child"
 	},
 	{
 		"id": "1f463",
@@ -9604,6 +10060,10 @@
 		"name": "goose"
 	},
 	{
+		"id": "1f426-200d-1f525",
+		"name": "phoenix"
+	},
+	{
 		"id": "1f438",
 		"name": "frog"
 	},
@@ -9884,6 +10344,10 @@
 		"name": "lemon"
 	},
 	{
+		"id": "1f34b-200d-1f7e9",
+		"name": "lime"
+	},
+	{
 		"id": "1f34c",
 		"name": "banana"
 	},
@@ -10006,6 +10470,10 @@
 	{
 		"id": "1fadb",
 		"name": "pea pod"
+	},
+	{
+		"id": "1f344-200d-1f7eb",
+		"name": "brown mushroom"
 	},
 	{
 		"id": "1f35e",
@@ -12440,6 +12908,10 @@
 		"name": "link"
 	},
 	{
+		"id": "26d3-fe0f-200d-1f4a5",
+		"name": "broken chain"
+	},
+	{
 		"id": "26d3-fe0f",
 		"name": "chains"
 	},
@@ -14501,7 +14973,7 @@
 	},
 	{
 		"id": "1f1f9-1f1f7",
-		"name": "flag: Turkey"
+		"name": "flag: Türkiye"
 	},
 	{
 		"id": "1f1f9-1f1f9",
