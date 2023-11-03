@@ -1,4 +1,17 @@
 {
+	"name": "content",
+	"description": "Get content in JSON format of a user or message",
+	"userName": "user",
+	"userDescription": "Get user info in JSON format",
+	"optionsUserName": "user",
+	"optionsUserDescription": "The user you would like to get",
+	"userMissingOptions": "You must specify the user ID",
+	"messageName": "message",
+	"messageDescription": "Get message content in JSON format",
+	"optionsMessageIdName": "id",
+	"optionsMessageIdDescription": "The ID of the Message you would like to get",
+	"messageMissingOptions": "You must specify the message ID",
+	"messageInvalidOptions": "That message ID is not valid",
 	"messageJsonName": "Get Message JSON",
 	"userJsonName": "Get User JSON"
 }
