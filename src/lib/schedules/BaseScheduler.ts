@@ -1,6 +1,6 @@
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import { container } from '@skyra/http-framework';
-import type Redis from 'ioredis';
+import type { Redis } from 'ioredis';
 import { nanoid } from 'nanoid';
 
 export abstract class BaseScheduler<T extends BaseScheduler.Value> {
@@ -9,7 +9,7 @@ export abstract class BaseScheduler<T extends BaseScheduler.Value> {
 	public readonly queue: string;
 	public readonly interval: number;
 	public _lastMaximum = 0;
-	private _interval: NodeJS.Timer | null = null;
+	private _interval: NodeJS.Timeout | null = null;
 
 	public constructor(options: BaseScheduler.Options) {
 		this.redis = options.redis;

@@ -1,7 +1,7 @@
 import { ReminderScheduler } from '#lib/schedules/ReminderScheduler';
 import { envParseInteger, envParseString } from '@skyra/env-utilities';
 import { container } from '@skyra/http-framework';
-import Redis from 'ioredis';
+import { Redis } from 'ioredis';
 
 export function run() {
 	const redis = new Redis({

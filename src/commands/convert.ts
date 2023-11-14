@@ -12,6 +12,11 @@ import {
 import { MessageFlags } from 'discord-api-types/v10';
 import JSBD, { type Decimal } from 'jsbd';
 
+function BigDecimal(value: number | bigint) {
+	// @ts-expect-error JSBD has funny exports
+	return JSBD.BigDecimal(value) as Decimal;
+}
+
 namespace Length {
 	export interface Options {
 		amount?: number;
@@ -34,17 +39,17 @@ namespace Length {
 	}
 
 	export const Units = {
-		[Unit.AstronomicalUnit]: JSBD.BigDecimal(149597870691),
-		[Unit.Feet]: JSBD.BigDecimal(0.3048),
-		[Unit.Inch]: JSBD.BigDecimal(0.0254),
-		[Unit.Kilometer]: JSBD.BigDecimal(1000n),
-		[Unit.LightSecond]: JSBD.BigDecimal(299792458n),
-		[Unit.LightYear]: JSBD.BigDecimal(9460730472580800n),
-		[Unit.Meter]: JSBD.BigDecimal(1n),
-		[Unit.Centimeter]: JSBD.BigDecimal(0.01),
-		[Unit.Mile]: JSBD.BigDecimal(1609.344),
-		[Unit.NauticalMile]: JSBD.BigDecimal(1852n),
-		[Unit.Parsec]: JSBD.BigDecimal(3.0856776e16)
+		[Unit.AstronomicalUnit]: BigDecimal(149597870691),
+		[Unit.Feet]: BigDecimal(0.3048),
+		[Unit.Inch]: BigDecimal(0.0254),
+		[Unit.Kilometer]: BigDecimal(1000n),
+		[Unit.LightSecond]: BigDecimal(299792458n),
+		[Unit.LightYear]: BigDecimal(9460730472580800n),
+		[Unit.Meter]: BigDecimal(1n),
+		[Unit.Centimeter]: BigDecimal(0.01),
+		[Unit.Mile]: BigDecimal(1609.344),
+		[Unit.NauticalMile]: BigDecimal(1852n),
+		[Unit.Parsec]: BigDecimal(3.0856776e16)
 	};
 
 	export const Keys = {
@@ -98,13 +103,13 @@ namespace Mass {
 	}
 
 	export const Units = {
-		[Unit.ElectronVolt]: JSBD.BigDecimal(1.78266269594484e-36),
-		[Unit.Grain]: JSBD.BigDecimal(0.00006479891),
-		[Unit.Gram]: JSBD.BigDecimal(0.001),
-		[Unit.Kilogram]: JSBD.BigDecimal(1n),
-		[Unit.Ounce]: JSBD.BigDecimal(0.028349523125),
-		[Unit.Ton]: JSBD.BigDecimal(1016.0469088),
-		[Unit.Tonne]: JSBD.BigDecimal(1000n)
+		[Unit.ElectronVolt]: BigDecimal(1.78266269594484e-36),
+		[Unit.Grain]: BigDecimal(0.00006479891),
+		[Unit.Gram]: BigDecimal(0.001),
+		[Unit.Kilogram]: BigDecimal(1n),
+		[Unit.Ounce]: BigDecimal(0.028349523125),
+		[Unit.Ton]: BigDecimal(1016.0469088),
+		[Unit.Tonne]: BigDecimal(1000n)
 	};
 
 	export const Keys = {
@@ -155,18 +160,18 @@ namespace Time {
 	}
 
 	export const Units = {
-		[Unit.Century]: JSBD.BigDecimal(3155760000n),
-		[Unit.Day]: JSBD.BigDecimal(86400n),
-		[Unit.Decade]: JSBD.BigDecimal(315360000n),
-		[Unit.Hour]: JSBD.BigDecimal(3600n),
-		[Unit.LunarYear]: JSBD.BigDecimal(30617568n),
-		[Unit.Millennium]: JSBD.BigDecimal(31536000000n),
-		[Unit.Minute]: JSBD.BigDecimal(60n),
-		[Unit.Month]: JSBD.BigDecimal(2629746n),
-		[Unit.Second]: JSBD.BigDecimal(1n),
-		[Unit.TropicalMonth]: JSBD.BigDecimal(2360584.512),
-		[Unit.TropicalYear]: JSBD.BigDecimal(31556925.445),
-		[Unit.Week]: JSBD.BigDecimal(604800n)
+		[Unit.Century]: BigDecimal(3155760000n),
+		[Unit.Day]: BigDecimal(86400n),
+		[Unit.Decade]: BigDecimal(315360000n),
+		[Unit.Hour]: BigDecimal(3600n),
+		[Unit.LunarYear]: BigDecimal(30617568n),
+		[Unit.Millennium]: BigDecimal(31536000000n),
+		[Unit.Minute]: BigDecimal(60n),
+		[Unit.Month]: BigDecimal(2629746n),
+		[Unit.Second]: BigDecimal(1n),
+		[Unit.TropicalMonth]: BigDecimal(2360584.512),
+		[Unit.TropicalYear]: BigDecimal(31556925.445),
+		[Unit.Week]: BigDecimal(604800n)
 	};
 
 	export const Keys = {
@@ -358,8 +363,10 @@ export class UserCommand extends Command {
 	}
 
 	private shared(data: SharedData) {
+		// @ts-expect-error JSBD has funny exports
 		const ratio = JSBD.divide(data.fromRatio, data.toRatio);
-		const value = Number(JSBD.multiply(ratio, JSBD.BigDecimal(data.amount)));
+		// @ts-expect-error JSBD has funny exports
+		const value = Number(JSBD.multiply(ratio, BigDecimal(data.amount)));
 		return this.sharedSend({
 			interaction: data.interaction,
 			amount: data.amount,
