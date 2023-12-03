@@ -42,7 +42,7 @@
 		"@skyra/shared-http-pieces": "^1.1.0",
 		"@skyra/start-banner": "^2.0.0",
 		"@skyra/twitch-helpers": "^1.0.3",
-		"@vladfrangu/async_event_emitter": "^2.2.2",
+		"@vladfrangu/async_event_emitter": "^2.2.3",
 		"canvas-constructor": "^7.0.1",
 		"discord-api-types": "^0.37.63",
 		"gradient-string": "^2.0.2",
