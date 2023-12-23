@@ -938,6 +938,12 @@
 	},
 	{
 		"codes": [
+			"AQ"
+		],
+		"name": "Antarctica/Vostok"
+	},
+	{
+		"codes": [
 			"KZ"
 		],
 		"name": "Asia/Almaty"
@@ -1360,8 +1366,7 @@
 	},
 	{
 		"codes": [
-			"CN",
-			"AQ"
+			"CN"
 		],
 		"name": "Asia/Urumqi"
 	},
