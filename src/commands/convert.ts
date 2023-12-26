@@ -1,6 +1,6 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
-import { Command, RegisterCommand, RegisterSubCommand } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterSubcommand } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
 	createSelectMenuChoiceName,
@@ -291,7 +291,7 @@ namespace Temperature {
 
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
 export class UserCommand extends Command {
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Length)
 			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
@@ -308,7 +308,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Mass)
 			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Mass.makeOption(LanguageKeys.Commands.Convert.To))
@@ -325,7 +325,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Time)
 			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
@@ -342,7 +342,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Temperature)
 			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.From))
 			.addStringOption(Temperature.makeOption(LanguageKeys.Commands.Convert.To))

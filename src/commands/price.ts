@@ -2,7 +2,7 @@ import { BrandingColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder } from '@discordjs/builders';
 import { Collection } from '@discordjs/collection';
-import { envParseString } from '@skyra/env-utilities';
+import { envIsDefined, envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
@@ -20,6 +20,10 @@ import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
 		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.OptionsAmount).setMinValue(0))
 )
 export class UserCommand extends Command {
+	public constructor(context: Command.LoaderContext) {
+		super(context, { enabled: UserCommand.Authorization !== null });
+	}
+
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		const from = args.from.toUpperCase();
 		const result = await this.fetch(from, args.to.split(/[, ]+/g));
@@ -35,7 +39,7 @@ export class UserCommand extends Command {
 		url.searchParams.append('tsyms', to.join(',').toUpperCase());
 		url.searchParams.append('extraParams', UserCommand.ExtraParams);
 
-		return Json<CryptoCompareResult>(safeTimedFetch(url, 2000, { headers: { authorization: UserCommand.Authorization } }));
+		return Json<CryptoCompareResult>(safeTimedFetch(url, 2000, { headers: { authorization: UserCommand.Authorization! } }));
 	}
 
 	private handleFetchError(interaction: Command.ChatInputInteraction, error: FetchError) {
@@ -83,7 +87,7 @@ export class UserCommand extends Command {
 	}
 
 	private static readonly ExtraParams = `${envParseString('CLIENT_NAME')} ${envParseString('CLIENT_VERSION')} Discord Bot`;
-	private static readonly Authorization = `Apikey ${envParseString('CRYPTOCOMPARE_TOKEN')}`;
+	private static readonly Authorization = envIsDefined('CRYPTOCOMPARE_TOKEN') ? `Apikey ${envParseString('CRYPTOCOMPARE_TOKEN')}` : null;
 	/**
 	 * The locales that format as "currency amount", e.g. "BTC 300", rather than "amount currency", e.g. "300 BTC".
 	 */
