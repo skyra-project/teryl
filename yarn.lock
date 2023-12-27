@@ -1134,7 +1134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@skyra/env-utilities@npm:^1.2.2, @skyra/env-utilities@npm:^1.3.0":
+"@skyra/env-utilities@npm:^1.3.0":
   version: 1.3.0
   resolution: "@skyra/env-utilities@npm:1.3.0"
   dependencies:
@@ -1250,7 +1250,7 @@ __metadata:
     "@skyra/safe-fetch": "npm:^1.1.3"
     "@skyra/shared-http-pieces": "npm:^1.2.0"
     "@skyra/start-banner": "npm:^2.0.1"
-    "@skyra/twitch-helpers": "npm:^1.0.4"
+    "@skyra/twitch-helpers": "npm:^2.0.0"
     "@types/gradient-string": "npm:^1.1.5"
     "@types/he": "npm:^1.2.3"
     "@types/luxon": "npm:^3.3.7"
@@ -1283,14 +1283,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@skyra/twitch-helpers@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@skyra/twitch-helpers@npm:1.0.4"
+"@skyra/twitch-helpers@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@skyra/twitch-helpers@npm:2.0.0"
   dependencies:
     "@sapphire/result": "npm:^2.6.5"
-    "@skyra/env-utilities": "npm:^1.2.2"
+    "@skyra/env-utilities": "npm:^1.3.0"
     "@skyra/safe-fetch": "npm:^1.1.3"
-  checksum: 95832b39cddcf1d4291c35c819f712e93606f336ce047befda8f98580561438cb8c590fcac7276bff00fdb364b46857d85aec28e2854f562b743167baa206cec
+  checksum: adcca30d34ec319b3c1148d98d3959ba078dfdf58353389513888fe170041caf52414021e9c1f47d724ff1228aafe888089ed9fc17d58b89ab7fc13e0ab7bbce
   languageName: node
   linkType: hard
 

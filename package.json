@@ -41,7 +41,7 @@
 		"@skyra/safe-fetch": "^1.1.3",
 		"@skyra/shared-http-pieces": "^1.2.0",
 		"@skyra/start-banner": "^2.0.1",
-		"@skyra/twitch-helpers": "^1.0.4",
+		"@skyra/twitch-helpers": "^2.0.0",
 		"@vladfrangu/async_event_emitter": "^2.2.4",
 		"canvas-constructor": "^7.0.1",
 		"discord-api-types": "^0.37.66",
