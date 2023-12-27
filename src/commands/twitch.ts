@@ -2,7 +2,7 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { EmbedBuilder } from '@discordjs/builders';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT } from '@skyra/http-framework-i18n';
-import { fetchUserFollowage, fetchUsers, TwitchBrandingColor, TwitchLogoUrl } from '@skyra/twitch-helpers';
+import { TwitchBrandingColor, TwitchLogoUrl, areClientCredentialsSet, fetchUserFollowage, fetchUsers } from '@skyra/twitch-helpers';
 import { MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Twitch;
@@ -12,6 +12,10 @@ const Root = LanguageKeys.Commands.Twitch;
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.UserOptionsName).setMinLength(2).setMaxLength(20).setRequired(true))
 )
 export class UserCommand extends Command {
+	public constructor(context: Command.LoaderContext) {
+		super(context, { enabled: areClientCredentialsSet() });
+	}
+
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const t = getSupportedLanguageT(interaction);
 

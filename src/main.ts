@@ -1,9 +1,9 @@
 import { Emojis } from '#lib/common/constants';
 import { setup } from '#lib/setup/all';
-import { registerCommands } from '#lib/utilities/register-commands';
 import { envParseInteger, envParseString } from '@skyra/env-utilities';
 import { Client, container } from '@skyra/http-framework';
 import { init, load } from '@skyra/http-framework-i18n';
+import { registerCommands } from '@skyra/shared-http-pieces';
 import { createBanner } from '@skyra/start-banner';
 import gradient from 'gradient-string';
 

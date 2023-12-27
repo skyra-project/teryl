@@ -20,7 +20,7 @@ import type { Reminder, ReminderMetadata } from '@prisma/client';
 import { Duration as SapphireDuration } from '@sapphire/duration';
 import { err, ok, Result } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, type Nullish } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterSubcommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import {
 	applyLocalizedBuilder,
 	getSupportedLanguageName,
@@ -62,7 +62,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Create)
 			.addStringOption(createContentOption().setRequired(true))
 			.addStringOption(createTimeOption().setRequired(true))
@@ -111,7 +111,7 @@ export class UserCommand extends Command {
 		return response.update({ components: [components.toJSON()] });
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Update)
 			.addStringOption(createIdOption().setRequired(true))
 			.addStringOption(createContentOption())
@@ -156,7 +156,7 @@ export class UserCommand extends Command {
 		return response;
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(createIdOption().setRequired(true))
 	)
 	public async delete(interaction: Command.ChatInputInteraction, options: IdOptions) {
@@ -182,7 +182,7 @@ export class UserCommand extends Command {
 		return response;
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Show).addStringOption(createIdOption().setRequired(true))
 	)
 	public async show(interaction: Command.ChatInputInteraction, options: IdOptions) {
@@ -202,7 +202,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ embeds: [embed.toJSON()], components, flags: MessageFlags.Ephemeral });
 	}
 
-	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
 	public async list(interaction: Command.ChatInputInteraction) {
 		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({

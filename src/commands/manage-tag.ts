@@ -4,10 +4,10 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { parseColor } from '#lib/utilities/color';
 import { DefaultLimits, fetchLimits } from '#lib/utilities/ring';
 import { getTag, makeTagChoices, sanitizeTagName, searchTag } from '#lib/utilities/tags';
-import { ActionRowBuilder, codeBlock, inlineCode, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder } from '@discordjs/builders';
-import { err, ok, Result } from '@sapphire/result';
+import { ActionRowBuilder, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder, codeBlock, inlineCode } from '@discordjs/builders';
+import { Result, err, ok } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterSubcommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
 import { isAbortError } from '@skyra/safe-fetch';
 import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
@@ -40,7 +40,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ choices: makeTagChoices(results) });
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Add)
 			.addStringOption(makeNameOption().setMaxLength(32))
 			.addStringOption(makeContentOption())
@@ -89,7 +89,7 @@ export class UserCommand extends Command {
 		return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.AddSuccess, inlineCode(name));
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Remove).addStringOption(makeNameOption().setAutocomplete(true))
 	)
 	public async remove(interaction: Command.ChatInputInteraction, options: Options) {
@@ -105,7 +105,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.RemoveAll))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.RemoveAll))
 	public async removeAll(interaction: Command.ChatInputInteraction) {
 		const result = await this.container.prisma.tag.deleteMany({ where: { guildId: this.getGuildId(interaction) } });
 
@@ -114,7 +114,7 @@ export class UserCommand extends Command {
 			: this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.RemoveAllSuccess, result.count);
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Edit)
 			.addStringOption(makeNameOption().setAutocomplete(true))
 			.addStringOption(makeNewNameOption())
@@ -173,7 +173,7 @@ export class UserCommand extends Command {
 		return this.replyLocalizedEphemeral(interaction, LanguageKeys.Commands.ManageTag.EditSuccess, inlineCode(nextName));
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Alias)
 			.addStringOption(makeNameOption().setAutocomplete(true))
 			.addStringOption(makeNewNameOption().setRequired(true))
@@ -221,7 +221,7 @@ export class UserCommand extends Command {
 		);
 	}
 
-	@RegisterSubCommand((builder) =>
+	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.ManageTag.Source).addStringOption(makeNameOption().setAutocomplete(true))
 	)
 	public async source(interaction: Command.ChatInputInteraction, options: Options) {

@@ -3,7 +3,7 @@ import { getTimeZone, MaximumLength, MinimumLength, searchTimeZone } from '#lib/
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { Result } from '@sapphire/result';
 import { isNullish } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterSubCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
+import { Command, RegisterCommand, RegisterSubcommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageName, resolveUserKey } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 
@@ -19,7 +19,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.Use).addStringOption(createNameOption()))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.Use).addStringOption(createNameOption()))
 	public async use(interaction: Command.ChatInputInteraction, options: Options) {
 		const entry = getTimeZone(options.name);
 		if (isNullish(entry)) {
@@ -42,7 +42,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.Reset))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.Reset))
 	public async reset(interaction: Command.ChatInputInteraction) {
 		const result = await Result.fromAsync(
 			this.container.prisma.user.update({
@@ -57,7 +57,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	@RegisterSubCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.View).addStringOption(createNameOption()))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.TimeZone.View).addStringOption(createNameOption()))
 	public async view(interaction: Command.ChatInputInteraction, options: Options) {
 		const entry = getTimeZone(options.name);
 		if (isNullish(entry)) {
