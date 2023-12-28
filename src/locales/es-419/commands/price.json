@@ -1,0 +1,14 @@
+{
+	"name": "precio",
+	"description": "Provee el precio de una moneda en comparación con otros",
+	"optionsAmountName": "cantidad",
+	"optionsAmountDescription": "La cantidad de dinero a convertir",
+	"optionsFromName": "desde",
+	"optionsFromDescription": "La divisa de la que convertir",
+	"optionsToName": "a",
+	"optionsToDescription": "Las divisas a convertir, separadas por espacios o comas",
+	"abortError": "El servidor no respondió a tiempo, por favor inténtelo de nuevo más tarde.",
+	"unknownServerError": "He recibido un error inesperado del servidor. Inténtalo de nuevo más tarde.",
+	"error": "El servidor devolvió un error con las opciones dadas, por favor asegúrese de escribir los nombres correctos.",
+	"result": "**{{from}}** vale {{amounts, list}}."
+}
