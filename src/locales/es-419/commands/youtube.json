@@ -1,0 +1,22 @@
+{
+	"name": "youtube",
+	"description": "Provee un enlace a un video, lista de reproducción o perfil de YouTube",
+	"optionsQueryName": "consulta",
+	"optionsQueryDescription": "El recurso a buscar en YouTube",
+	"optionsOrderName": "orden",
+	"optionsOrderDescription": "Define el método que se utilizará para ordenar (por defecto: Relevancia)",
+	"optionsOrderDate": "Fecha",
+	"optionsOrderRating": "Puntuación",
+	"optionsOrderRelevance": "Relevancia",
+	"optionsOrderTitle": "Título",
+	"optionsOrderVideoCount": "Recuento de Vídeos",
+	"optionsOrderViewCount": "Número de Visualizaciones",
+	"optionsTypeName": "tipo",
+	"optionsTypeDescription": "Define el tipo de los recursos a buscar",
+	"optionsTypeChannel": "Canal",
+	"optionsTypePlaylist": "Lista de Reproducción",
+	"optionsTypeVideo": "Vídeo",
+	"noResults": "No he recibido ningún resultado que pueda procesar, por favor intente con otras palabras.",
+	"abortError": "YouTube no respondió a tiempo, por favor inténtelo de nuevo más tarde.",
+	"unknownError": "El servidor devolvió con un error desconocido. Inténtelo de nuevo más tarde."
+}
