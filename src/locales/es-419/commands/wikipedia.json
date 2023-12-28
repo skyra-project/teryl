@@ -1,0 +1,11 @@
+{
+	"name": "wikipedia",
+	"description": "Provee información sobre un artículo de Wikipedia",
+	"optionsInputName": "entrada",
+	"optionsInputDescription": "Buscar un artículo",
+	"noResults": "Wikipedia no ha devuelto resultados, por favor inténtalo de nuevo con otros términos de búsqueda.",
+	"abortError": "Wikipedia tardó demasiado en responder, por favor inténtalo de nuevo más tarde.",
+	"unknownResponse": "He recibido una respuesta que no puedo procesar, esto es un error. Por favor, infórmelo a mis desarrolladores.",
+	"unknownError": "He recibido un error desconocido, pero puede que se resuelva intentándolo de nuevo más tarde.",
+	"interWiki": "He encontrado un artículo de Wikipedia en {{link}}."
+}
