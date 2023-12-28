@@ -1,0 +1,17 @@
+{
+	"name": "twitch",
+	"description": "Obtén información sobre un canal de Twitch",
+	"userOptionsNameName": "nombre",
+	"userOptionsNameDescription": "El nombre del canal de Twitch",
+	"userDoesNotExist": "El canal especificado no existe.",
+	"userEmbedTitles": {
+		"followers": "Seguidores",
+		"views": "Visitas",
+		"partner": "Asociado"
+	},
+	"userEmbedFieldFollowers": "{{value, number}}",
+	"userEmbedFieldViews": "{{value, number}}",
+	"userAffiliate": "Afiliado",
+	"userPartner": "Asociado",
+	"userNotAffiliated": "Este canal no es parte del programa de afiliación de Twitch"
+}
