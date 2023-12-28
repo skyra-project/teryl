@@ -1,0 +1,6 @@
+{
+	"invalidId": "Parece que el recordatorio caducó, pero eliminé el mensaje inicial, gracias por recordármelo.",
+	"owner": "No puedes suscribirte o darte de baja a un recordatorio del que eres propietario.",
+	"subscribed": "Usted se ha suscrito correctamente a este recordatorio. Haga clic de nuevo para darse de baja.",
+	"unsubscribed": "Usted ha cancelado correctamente la suscripción a este recordatorio. Haga clic de nuevo para suscribirse."
+}
