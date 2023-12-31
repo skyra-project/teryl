@@ -41,5 +41,5 @@
 	"tooManyAliases": "Ya has alcanzado el número máximo de alias (10) para {{value}}.",
 	"tooManyTags": "Ya has alcanzado el número máximo de etiquetas ({{limit, number}}) con un total de {{amount, number}}",
 	"exists": "Ya hay una etiqueta con ese nombre, por favor utilice otro nombre.",
-	"unknown": "No existe tal etiqueta con el nombre especificado. Por favor, inténtelo de nuevo con un nombre diferente."
+	"unknown": "No existe etiqueta con el nombre especificado. Por favor, inténtelo de nuevo con un nombre diferente."
 }
