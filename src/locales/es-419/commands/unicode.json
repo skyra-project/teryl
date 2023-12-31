@@ -57,7 +57,7 @@
 	"categoryBidirectionalNonSpacingMark": "Marca sin Espacio",
 	"categoryBidirectionalOtherNeutral": "Otro Neutral",
 	"categoryBidirectionalPopDirectionalFormat": "Terminador de Formato Direccional",
-	"categoryBidirectionalPopDirectionalIsolate": "Terminador de Aislamiento Direccional",
+	"categoryBidirectionalPopDirectionalIsolate": "Terminador de Formato Direccional",
 	"categoryBidirectionalRightToLeft": "Derecha a Izquierda",
 	"categoryBidirectionalRightToLeftEmbedding": "Incrustación de Derecha a Izquierda",
 	"categoryBidirectionalRightToLeftIsolate": "Aislamiento de Derecha a Izquierda",
