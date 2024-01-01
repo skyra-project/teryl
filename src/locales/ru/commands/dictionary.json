@@ -3,5 +3,9 @@
 	"description": "Получить определение слова",
 	"optionsInputName": "ввод",
 	"optionsInputDescription": "Слово, определение которого нужно получить",
+	"contentTitle": "**Словарь:** `{{value}}`",
+	"contentLexicalCategory": "## {{index}}. Лексическая категория: `{{value}}`",
+	"contentExample": "Пример: `{{value}}`",
+	"contentDefinition": "### {{index}}. {{subIndex}}. Определение:\n> {{value}}",
 	"fetchUnknownError": "Мне не удалось выполнить поиск `{{value}}` из-за неизвестной ошибки. Пожалуйста, свяжитесь с моими разработчиками."
 }

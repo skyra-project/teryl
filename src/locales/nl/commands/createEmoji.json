@@ -11,6 +11,7 @@
 	"duplicated": "Je hebt zowel een emoji als een bestand geüpload, stuur er alsjeblieft maar één van de twee.",
 	"none": "Je hebt geen emoji noch bestand geüpload, stuur er alsjeblieft één van de twee.",
 	"invalidName": "De naam moet tussen 2 en 32 tekens lang zijn en alleen bevatten: `0` tot `9`, `a` tot `z` met hoofdletters, of `_`.",
+	"invalidDiscordURL": "De URL die u hebt opgegeven komt niet overeen met het vereiste patroon (`https://cdn.discordapp. om/emojis/{emoji_id}.{format}`). Zorg ervoor dat je een geldige Discord CDN URL gebruikt voor een emoji.",
 	"notAnImage": "Het bestand dat je hebt geüpload is geen afbeelding, daarom kan het niet worden geüpload.",
 	"failedToDownload": "Ik kon het bestand niet downloaden. Als je een emoji hebt verzonden, zorg er dan voor dat het een geldige emoji is.",
 	"uploaded": "Ik heb {{emoji}} succesvol geüpload.",

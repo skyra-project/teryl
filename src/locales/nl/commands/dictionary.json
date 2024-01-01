@@ -4,9 +4,13 @@
 	"optionsInputName": "invoer",
 	"optionsInputDescription": "Het woord om de definitie van te krijgen",
 	"contentTitle": "**Woordenboek:** `{{value}}`",
-	"fetchAbort": "Ik kon niet zoeken naar `{{value}}` omdat de woordenboek API niet binnen 2 seconden heeft gereageerd, probeer het later opnieuw.",
-	"fetchNoResults": "De woordenboek API heeft geen resultaten gegeven voor `{{value}}`.",
-	"fetchRateLimited": "Ik kon niet zoeken naar `{{value}}` omdat ik te veel aanvragen heb gedaan voor de woordenboek API. Probeer het over ongeveer een minuut opnieuw.",
-	"fetchServerError": "Ik kon niet zoeken naar `{{value}}` omdat de server van de woordenboek API niet beschikbaar is. Probeer het later nog eens.",
+	"contentPhonetic": "Fonetisch: `{{value}}`",
+	"contentLexicalCategory": "## {{index}}. Lexische categorie: `{{value}}`",
+	"contentExample": "Voorbeeld: `{{value}}`",
+	"contentDefinition": "### {{index}}. {{subIndex}}. Definitie:\n> {{value}}",
+	"fetchAbort": "Ik kon niet zoeken naar `{{value}}` omdat de woordenboek API niet binnen 2 seconden reageerde, probeer het later opnieuw.",
+	"fetchNoResults": "De woordenboek API heeft geen resultaten voor `{{value}}`.",
+	"fetchRateLimited": "Ik kon niet zoeken naar `{{value}}`, omdat ik de laatste tijd te veel aanvragen heb gedaan bij de woordenboek API. Probeer het opnieuw in ongeveer een minuut.",
+	"fetchServerError": "Ik kon niet zoeken naar `{{value}}` omdat de woordenboek server niet beschikbaar is. Probeer het later nog eens.",
 	"fetchUnknownError": "Ik kon niet zoeken naar `{{value}}` vanwege een onbekende fout. Neem hierover contact op met mijn ontwikkelaars."
 }
