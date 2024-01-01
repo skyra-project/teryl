@@ -1,0 +1,22 @@
+{
+	"name": "reddit",
+	"description": "Provee información de Reddit",
+	"optionsRedditName": "reddit",
+	"optionsRedditDescription": "El subreddit de la cual obtener un post",
+	"invalidName": "Los subreddits debe tener entre 3 y 21 caracteres, y contener solo letras, números o guiones bajos. Además, los prefijos `/r/` y `r/` también son compatibles.",
+	"banned": "El subreddit especificado no se considera seguro, por favor pruebe con otro.",
+	"post": "**{{title}}** publicado por {{author}}\n{{url}}",
+	"noPosts": "No hay mensajes disponibles en el subreddit especificado. Por favor, asegúrese de que ha escrito el nombre correctamente.",
+	"allNsfw": "Todos los mensajes del subreddit especificado están marcados como NSFW, los cuales solo se pueden mostrar en canales restringidos por edad.",
+	"allNsfl": "Todos los mensajes del subreddit especificado están marcados como NSFL, por lo que no puedo mostrarlos.",
+	"abortError": "Reddit no respondió a tiempo, por favor inténtelo de nuevo más tarde.",
+	"unavailableErrorPrivate": "No pude obtener ninguna información del subreddit especificado porque está marcado como privado.",
+	"unavailableErrorGoldOnly": "No pude obtener ninguna información del subreddit especificado porque está marcado como exclusivo para Reddit Premium.",
+	"unavailableErrorQuarantined": "No pude obtener ninguna información del subreddit especificado porque está en cuarentena. Motivo:\n>>> {{reason}}",
+	"unavailableErrorGated": "No pude obtener ninguna información del subreddit especificado porque está cerrado. Motivo:\n>>> {{reason}}",
+	"unavailableErrorNotFound": "No pude obtener ninguna información del subreddit especificado porque no existe.",
+	"unavailableErrorBanned": "No pude obtener ninguna información del subreddit especificado porque está marcado como prohibido.",
+	"unavailableForLegalReasons": "No pude obtener ninguna información del subreddit especificado porque no está disponible por razones legales.",
+	"unavailable": "No pude obtener ninguna información de Reddit porque sus servidores no están disponibles actualmente.",
+	"unknownError": "No pude obtener ninguna información del subreddit especificado debido a un error desconocido."
+}

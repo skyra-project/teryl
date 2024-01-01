@@ -1,0 +1,12 @@
+{
+	"name": "etiqueta",
+	"description": "Lee las etiquetas del servidor",
+	"optionsNameName": "nombre",
+	"optionsNameDescription": "El nombre de la etiqueta a buscar",
+	"optionsHideName": "ocultar",
+	"optionsHideDescription": "Si mostrar o no el mensaje públicamente (por defecto: Falso)",
+	"optionsTargetName": "objetivo",
+	"optionsTargetDescription": "El usuario a mencionar",
+	"unknown": "No existe etiqueta con el nombre especificado. Por favor, inténtelo de nuevo con un nombre diferente.",
+	"target": "**Sugerencia de etiqueta para {{user}}**:"
+}

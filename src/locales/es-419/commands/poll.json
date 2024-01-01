@@ -1,0 +1,12 @@
+{
+	"name": "encuesta",
+	"description": "Crea una encuesta basada en reacciones con un título y hasta 5 opciones",
+	"optionsTitleName": "título",
+	"optionsTitleDescription": "El título a usar en la encuesta",
+	"optionsFirstName": "primero",
+	"optionsSecondName": "segundo",
+	"optionsThirdName": "tercero",
+	"optionsFourthName": "cuarto",
+	"optionsFifthName": "quinto",
+	"optionsValueDescription": "Una opción para la encuesta"
+}

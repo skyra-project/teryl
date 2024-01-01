@@ -1,0 +1,9 @@
+{
+	"name": "elección",
+	"description": "Obtiene un valor aleatorio de un conjunto de opciones",
+	"optionsValuesName": "valores",
+	"optionsValuesDescription": "Las opciones desde las que elegir un valor aleatorio, separadas por comas",
+	"tooFewOptions": "Tiene que haber al menos dos valores.",
+	"duplicatedOptions": "Hay al menos un valor duplicado en su conjunto, por favor elimínelos.",
+	"result": "👯 *Soy, soy lo que dejaron, soy toda la sobra de lo que se robaron*... Escojo: `{{value}}`"
+}
