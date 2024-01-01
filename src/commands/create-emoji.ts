@@ -11,7 +11,7 @@ import {
 } from '#lib/utilities/emoji';
 import { DiscordAPIError, HTTPError } from '@discordjs/rest';
 import { Result, err, ok } from '@sapphire/result';
-import { isNullish, isNullishOrEmpty, isNullishOrZero, type Nullish } from '@sapphire/utilities';
+import { isNullish, isNullishOrEmpty, isNullishOrZero, tryParseURL, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch, type FetchResult } from '@skyra/safe-fetch';
@@ -50,6 +50,8 @@ const EmojiRoot = LanguageKeys.Commands.Emoji;
 )
 export class UserCommand extends Command {
 	private readonly SnowflakeRegExp = /^\d{17,20}$/;
+	private readonly UrlPathNameRegExp = /^\/emojis\/(\d{17,20})\.(?:webp|png|gif|jpe?g)$/;
+
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		if (!bitHas(interaction.applicationPermissions ?? 0n, PermissionFlagsBits.ManageGuildExpressions)) {
 			const content = resolveUserKey(interaction, Root.MissingPermissions);
@@ -85,8 +87,23 @@ export class UserCommand extends Command {
 		// Upload by snowflake:
 		if (this.SnowflakeRegExp.test(emoji)) return this.uploadDiscordEmojiId(interaction, emoji, name);
 
+		// Upload by URL:
+		const url = tryParseURL(emoji);
+		if (url !== null) return this.uploadURL(interaction, url, name);
+
 		const data = getDiscordEmojiData(emoji);
 		return isNullish(data) ? this.uploadBuiltInEmoji(interaction, emoji, name, variant) : this.uploadDiscordEmoji(interaction, data, name);
+	}
+
+	private uploadURL(interaction: Command.ChatInputInteraction, url: URL, name?: string) {
+		let result: RegExpExecArray | null;
+		// If the URL is not from Discord's CDN, or the pathname does not match the emoji pattern, error:
+		if (url.host !== 'cdn.discordapp.com' || (result = this.UrlPathNameRegExp.exec(url.pathname)) === null) {
+			const content = resolveUserKey(interaction, Root.InvalidDiscordURL);
+			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		}
+
+		return this.uploadDiscordEmojiId(interaction, result[1], name);
 	}
 
 	private uploadBuiltInEmoji(interaction: Command.ChatInputInteraction, emoji: string, name?: string, variant?: EmojiSource) {

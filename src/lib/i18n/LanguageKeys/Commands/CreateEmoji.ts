@@ -13,6 +13,7 @@ export const MissingPermissions = T('commands/createEmoji:missingPermissions');
 export const Duplicated = T('commands/createEmoji:duplicated');
 export const None = T('commands/createEmoji:none');
 export const InvalidName = T('commands/createEmoji:invalidName');
+export const InvalidDiscordURL = T('commands/createEmoji:invalidDiscordURL');
 export const NotAnImage = T('commands/createEmoji:notAnImage');
 export const FailedToDownload = T('commands/createEmoji:failedToDownload');
 export const Uploaded = FT<{ emoji: string }>('commands/createEmoji:uploaded');
