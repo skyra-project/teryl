@@ -4,7 +4,6 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { blockQuote } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
 import { none, some } from '@sapphire/result';
-import { envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
@@ -29,10 +28,10 @@ export class UserCommand extends Command {
 		return interaction.reply(body);
 	}
 
-	private handleOk(t: TFunction, input: string, result: OwlbotResult) {
+	private handleOk(t: TFunction, input: string, result: DictionaryAPIResult) {
 		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
 		this.makeHeader(t, result).inspect((header) => lines.push(header));
-		lines.push(blockQuote(result.definitions[0].definition));
+		lines.push(blockQuote(result.meanings[0].definitions[0].definition));
 		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
 	}
 
@@ -45,39 +44,36 @@ export class UserCommand extends Command {
 
 	private getErrorKey(error: FetchError) {
 		if (isAbortError(error)) return LanguageKeys.Commands.Dictionary.FetchAbort;
-		if (error.code === 401) {
-			this.container.logger.fatal('[OWLBOT] 401: Authorization failed');
-			return LanguageKeys.Commands.Dictionary.FetchAuthorizationFailed;
-		}
 		if (error.code === 404) return LanguageKeys.Commands.Dictionary.FetchNoResults;
 		if (error.code === 429) {
-			this.container.logger.error('[OWLBOT] 429: Request surpassed its rate limit');
+			this.container.logger.error('[DICTIONARYAPI] 429: Request surpassed its rate limit');
 			return LanguageKeys.Commands.Dictionary.FetchRateLimited;
 		}
 		if (error.code >= 500) {
-			this.container.logger.warn('[OWLBOT] %d: Received a server error', error.code);
+			this.container.logger.warn('[DICTIONARYAPI] %d: Received a server error', error.code);
 			return LanguageKeys.Commands.Dictionary.FetchServerError;
 		}
 
-		this.container.logger.warn('[OWLBOT] %d: Received an unknown error status code', error.code);
+		this.container.logger.warn('[DICTIONARYAPI] %d: Received an unknown error status code', error.code);
 		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
 	}
 
-	private makeHeader(t: TFunction, result: OwlbotResult) {
-		const [definition] = result.definitions;
+	private makeHeader(t: TFunction, result: DictionaryAPIResult) {
+		const [meaning] = result.meanings;
 
 		const header: string[] = [];
-		if (result.pronunciation) header.push(t(LanguageKeys.Commands.Dictionary.ContentPronunciation, { value: result.pronunciation }));
-		if (definition.type) header.push(t(LanguageKeys.Commands.Dictionary.ContentType, { value: definition.type }));
-		if (definition.emoji) header.push(t(LanguageKeys.Commands.Dictionary.ContentEmoji, { value: definition.emoji }));
+		if (result.phonetic) header.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
+		if (meaning.partOfSpeech) header.push(t(LanguageKeys.Commands.Dictionary.ContentPartOfSpeech, { value: meaning.partOfSpeech }));
+		if (meaning.definitions[0].example)
+			header.push(t(LanguageKeys.Commands.Dictionary.ContentExample, { value: `"${meaning.definitions[0].example}"` }));
 
 		return header.length ? some(header.join(' • ')) : none;
 	}
 
 	private makeRequest(input: string) {
-		return Json<OwlbotResult>(
-			safeTimedFetch(`https://owlbot.info/api/v4/dictionary/${encodeURIComponent(input)}`, Time.Second * 2, {
-				headers: { Accept: 'application/json', Authorization: `Token ${envParseString('OWLBOT_TOKEN')}` }
+		return Json<DictionaryAPIResult>(
+			safeTimedFetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(input)}`, Time.Second * 2, {
+				headers: { Accept: 'application/json' }
 			})
 		);
 	}
@@ -90,16 +86,27 @@ interface Options {
 	input: string;
 }
 
-interface OwlbotResult {
-	definitions: readonly OwlbotDefinition[];
+export interface DictionaryAPIResult {
 	word: string;
-	pronunciation: string | null;
+	phonetic: string;
+	phonetics: DictionaryAPIPhonetic[];
+	origin: string;
+	meanings: DictionaryAPIMeaning[];
 }
 
-interface OwlbotDefinition {
-	type: string | null;
+export interface DictionaryAPIMeaning {
+	partOfSpeech: string;
+	definitions: DictionaryAPIDefinition[];
+}
+
+export interface DictionaryAPIDefinition {
 	definition: string;
-	example: string | null;
-	image_url: string | null;
-	emoji: string | null;
+	example: string;
+	synonyms: any[];
+	antonyms: any[];
+}
+
+export interface DictionaryAPIPhonetic {
+	text: string;
+	audio?: string;
 }
