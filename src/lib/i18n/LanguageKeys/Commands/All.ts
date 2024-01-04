@@ -8,7 +8,6 @@ export * as Emoji from '#lib/i18n/LanguageKeys/Commands/Emoji';
 export * as ManageTag from '#lib/i18n/LanguageKeys/Commands/ManageTag';
 export * as Poll from '#lib/i18n/LanguageKeys/Commands/Poll';
 export * as Price from '#lib/i18n/LanguageKeys/Commands/Price';
-export * as Reddit from '#lib/i18n/LanguageKeys/Commands/Reddit';
 export * as Reminders from '#lib/i18n/LanguageKeys/Commands/Reminders';
 export * as Tag from '#lib/i18n/LanguageKeys/Commands/Tag';
 export * as TimeZone from '#lib/i18n/LanguageKeys/Commands/Timezone';
