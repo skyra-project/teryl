@@ -24,7 +24,6 @@ declare module '@skyra/env-utilities' {
 
 		CRYPTOCOMPARE_TOKEN: string;
 
-		OWLBOT_TOKEN: string;
 		GOOGLE_API_TOKEN: string;
 	}
 }

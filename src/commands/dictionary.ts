@@ -1,9 +1,10 @@
 import { PathSrc } from '#lib/common/constants';
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
+import { DictionaryNoResultsError } from '#lib/utilities/DictionaryNoResultsError';
 import { blockQuote } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
-import { none, some } from '@sapphire/result';
+import { Result, none, some } from '@sapphire/result';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
@@ -21,10 +22,17 @@ export class UserCommand extends Command {
 		const result = await this.makeRequest(input);
 
 		const t = getSupportedLanguageT(interaction);
-		const body = result.match({
-			ok: (value) => this.handleOk(t, input, value),
-			err: (error) => this.handleError(t, input, error)
-		});
+
+		const body = result
+			.mapInto((values) => {
+				const firstValue = values.at(0);
+				if (firstValue) return Result.ok(firstValue);
+				return Result.err(new DictionaryNoResultsError());
+			})
+			.match({
+				ok: (value) => this.handleOk(t, input, value),
+				err: (error) => this.handleError(t, input, error)
+			});
 		return interaction.reply(body);
 	}
 
@@ -35,7 +43,14 @@ export class UserCommand extends Command {
 		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
 	}
 
-	private handleError(t: TFunction, input: string, error: FetchError) {
+	private handleError(t: TFunction, input: string, error: FetchError | DictionaryNoResultsError) {
+		if (error instanceof DictionaryNoResultsError) {
+			return {
+				content: t(LanguageKeys.Commands.Dictionary.FetchNoResults, { value: escapeInlineCode(input) }),
+				flags: MessageFlags.Ephemeral
+			} satisfies MessageResponseOptions;
+		}
+
 		return {
 			content: t(this.getErrorKey(error), { value: escapeInlineCode(input) }),
 			flags: MessageFlags.Ephemeral
@@ -71,7 +86,7 @@ export class UserCommand extends Command {
 	}
 
 	private makeRequest(input: string) {
-		return Json<DictionaryAPIResult>(
+		return Json<DictionaryAPIResult[]>(
 			safeTimedFetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(input)}`, Time.Second * 2, {
 				headers: { Accept: 'application/json' }
 			})

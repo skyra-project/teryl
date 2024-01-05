@@ -3,14 +3,8 @@
 	"description": "Provee la definición de una palabra en inglés",
 	"optionsInputName": "entrada",
 	"optionsInputDescription": "La palabra de la cual obtener su definición",
-	"contentTitle": "{{OwlbotIcon}} **Diccionario Owlbot** - `{{value}}`",
 	"contentPronunciation": "Pronunciación: `{{value}}`",
 	"contentType": "Tipo: `{{value}}`",
 	"contentEmoji": "Emoji: {{value}}",
-	"fetchAbort": "No pude buscar `{{value}}` porque el Owlbot {{OwlbotIcon}} no respondió en 2 segundos, por favor inténtalo de nuevo más tarde.",
-	"fetchAuthorizationFailed": "No pude buscar `{{value}}` porque el Owlbot {{OwlbotIcon}} no parece reconocerme y rechazó mi autorización. Por favor contacta a mis desarrolladores sobre esto.",
-	"fetchNoResults": "{{OwlbotIcon}} Owlbot no devolvió ningún resultado para `{{value}}`.",
-	"fetchRateLimited": "No pude buscar `{{value}}` porque recientemente he hecho demasiadas peticiones al Owlbot {{OwlbotIcon}}. Por favor, inténtalo de nuevo en un minuto.",
-	"fetchServerError": "No pude buscar `{{value}}` porque el servidor del Owlbot de {{OwlbotIcon}} no está disponible. Por favor, inténtalo de nuevo más tarde.",
 	"fetchUnknownError": "No pude buscar `{{value}}` debido a un error desconocido. Por favor, contacte a mis desarrolladores sobre esto."
 }
