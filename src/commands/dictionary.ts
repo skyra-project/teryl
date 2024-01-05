@@ -40,8 +40,18 @@ export class UserCommand extends Command {
 
 		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
 
+		let escapeOutOfLoop = false;
 		for (const meaning of result.meanings) {
-			this.makeContent(t, meaning).inspect((header) => lines.push(header));
+			if (escapeOutOfLoop) break;
+
+			this.makeContent(t, meaning).inspect((content) => {
+				if ([...lines, content].join('\n').length > 2000) {
+					escapeOutOfLoop = true;
+					return;
+				}
+
+				return lines.push(content);
+			});
 		}
 
 		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
