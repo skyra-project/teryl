@@ -2,7 +2,6 @@ import { PathSrc } from '#lib/common/constants';
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { DictionaryNoResultsError } from '#lib/utilities/DictionaryNoResultsError';
-import { blockQuote } from '@discordjs/builders';
 import { Time } from '@sapphire/duration';
 import { Result, none, some } from '@sapphire/result';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
@@ -38,8 +37,13 @@ export class UserCommand extends Command {
 
 	private handleOk(t: TFunction, input: string, result: DictionaryAPIResult) {
 		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
-		this.makeHeader(t, result).inspect((header) => lines.push(header));
-		lines.push(blockQuote(result.meanings[0].definitions[0].definition));
+
+		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
+
+		for (const meaning of result.meanings) {
+			this.makeContent(t, meaning).inspect((header) => lines.push(header));
+		}
+
 		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
 	}
 
@@ -73,16 +77,20 @@ export class UserCommand extends Command {
 		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
 	}
 
-	private makeHeader(t: TFunction, result: DictionaryAPIResult) {
-		const [meaning] = result.meanings;
+	private makeContent(t: TFunction, meaning: DictionaryAPIMeaning) {
+		const meaningParts: string[] = [];
 
-		const header: string[] = [];
-		if (result.phonetic) header.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
-		if (meaning.partOfSpeech) header.push(t(LanguageKeys.Commands.Dictionary.ContentPartOfSpeech, { value: meaning.partOfSpeech }));
-		if (meaning.definitions[0].example)
-			header.push(t(LanguageKeys.Commands.Dictionary.ContentExample, { value: `"${meaning.definitions[0].example}"` }));
+		meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentLexicalCategory, { value: meaning.partOfSpeech }));
 
-		return header.length ? some(header.join(' • ')) : none;
+		for (const definition of meaning.definitions) {
+			meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentDefinition, { value: definition.definition }));
+
+			if (definition.example) {
+				meaningParts.push('', t(LanguageKeys.Commands.Dictionary.ContentExample, { value: definition.example }));
+			}
+		}
+
+		return meaningParts.length ? some(meaningParts.join('\n')) : none;
 	}
 
 	private makeRequest(input: string) {
@@ -101,7 +109,7 @@ interface Options {
 	input: string;
 }
 
-export interface DictionaryAPIResult {
+interface DictionaryAPIResult {
 	word: string;
 	phonetic: string;
 	phonetics: DictionaryAPIPhonetic[];
@@ -111,24 +119,24 @@ export interface DictionaryAPIResult {
 	sourceUrls?: string[];
 }
 
-export interface License {
+interface License {
 	name: string;
 	url: string;
 }
 
-export interface DictionaryAPIMeaning {
+interface DictionaryAPIMeaning {
 	partOfSpeech: string;
 	definitions: DictionaryAPIDefinition[];
 }
 
-export interface DictionaryAPIDefinition {
+interface DictionaryAPIDefinition {
 	definition: string;
 	example?: string;
 	synonyms: string[];
 	antonyms: string[];
 }
 
-export interface DictionaryAPIPhonetic {
+interface DictionaryAPIPhonetic {
 	text: string;
 	audio?: string;
 	sourceUrl?: string;

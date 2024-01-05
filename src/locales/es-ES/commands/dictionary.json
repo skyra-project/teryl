@@ -3,8 +3,5 @@
 	"description": "Provee la definición de una palabra en inglés",
 	"optionsInputName": "entrada",
 	"optionsInputDescription": "La palabra de la cual obtener su definición",
-	"contentPronunciation": "Pronunciación: `{{value}}`",
-	"contentType": "Tipo: `{{value}}`",
-	"contentEmoji": "Emoji: {{value}}",
 	"fetchUnknownError": "No pude buscar `{{value}}` debido a un error desconocido. Por favor, contacte a mis desarrolladores sobre esto."
 }

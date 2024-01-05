@@ -3,8 +3,5 @@
 	"description": "एक शब्द की परिभाषा प्राप्त करें",
 	"optionsInputName": "इनपुट",
 	"optionsInputDescription": "परिभाषा पाने के लिए शब्द",
-	"contentPronunciation": "उच्चारण: `{{value}}`",
-	"contentType": "प्रकार: `{{value}}`",
-	"contentEmoji": "इमोजी: {{value}}",
 	"fetchUnknownError": "अज्ञात त्रुटि के कारण मैं `{{value}}` की खोज नहीं कर सका। कृपया इस बारे में मेरे डेवलपर्स से संपर्क करें।"
 }

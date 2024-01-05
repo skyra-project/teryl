@@ -3,8 +3,5 @@
 	"description": "Получить определение слова",
 	"optionsInputName": "ввод",
 	"optionsInputDescription": "Слово, определение которого нужно получить",
-	"contentPronunciation": "Произношение: `{{value}}`",
-	"contentType": "Тип: `{{value}}`",
-	"contentEmoji": "Эмодзи: {{value}}",
 	"fetchUnknownError": "Мне не удалось выполнить поиск `{{value}}` из-за неизвестной ошибки. Пожалуйста, свяжитесь с моими разработчиками."
 }
