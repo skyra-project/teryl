@@ -11,7 +11,7 @@ export default defineConfig({
 	test: {
 		globals: true,
 		coverage: {
-			reporter: ['text', 'lcov', 'clover'],
+			reporter: ['text', 'lcov', 'cobertura'],
 			include: ['src/lib/**'],
 			exclude: ['src/lib/i18n', 'src/lib/setup', 'src/lib/types']
 		}
