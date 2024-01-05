@@ -90,8 +90,15 @@ export interface DictionaryAPIResult {
 	word: string;
 	phonetic: string;
 	phonetics: DictionaryAPIPhonetic[];
-	origin: string;
+	origin?: string;
 	meanings: DictionaryAPIMeaning[];
+	license?: License;
+	sourceUrls?: string[];
+}
+
+export interface License {
+	name: string;
+	url: string;
 }
 
 export interface DictionaryAPIMeaning {
@@ -101,12 +108,14 @@ export interface DictionaryAPIMeaning {
 
 export interface DictionaryAPIDefinition {
 	definition: string;
-	example: string;
-	synonyms: any[];
-	antonyms: any[];
+	example?: string;
+	synonyms: string[];
+	antonyms: string[];
 }
 
 export interface DictionaryAPIPhonetic {
 	text: string;
 	audio?: string;
+	sourceUrl?: string;
+	license?: License;
 }
