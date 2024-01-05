@@ -9,7 +9,6 @@
 	"contentExample": "Example: `{{value}}`",
 	"contentDefinition": "### Definition:\n> {{value}}",
 	"fetchAbort": "I couldn't search for `{{value}}` because the Dictionary API did not respond within 2 seconds, please try again later.",
-	"fetchAuthorizationFailed": "I couldn't search for `{{value}}` because the Dictionary API does not seem to recognize me and rejected my authorization. Please contact my developers about this.",
 	"fetchNoResults": "The Dictionary API did not return any results for `{{value}}`.",
 	"fetchRateLimited": "I couldn't search for `{{value}}` because I have made too many requests recently to the Dictionary API. Please try again in around a minute.",
 	"fetchServerError": "I couldn't search for `{{value}}` because the Dictionary API server is not available. Please try again later.",
