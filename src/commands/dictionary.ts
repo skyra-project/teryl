@@ -36,7 +36,7 @@ export class UserCommand extends Command {
 	}
 
 	private handleOk(t: TFunction, input: string, result: DictionaryAPIResult) {
-		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
+		let lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
 
 		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
 
@@ -45,12 +45,13 @@ export class UserCommand extends Command {
 			if (escapeOutOfLoop) break;
 
 			this.makeContent(t, meaning).inspect((content) => {
-				if ([...lines, content].join('\n').length > 2000) {
+				const newLines = [...lines, content];
+				if (newLines.join('\n').length > 2000) {
 					escapeOutOfLoop = true;
 					return;
 				}
 
-				return lines.push(content);
+				return (lines = newLines);
 			});
 		}
 
