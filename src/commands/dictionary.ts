@@ -41,10 +41,10 @@ export class UserCommand extends Command {
 		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
 
 		let escapeOutOfLoop = false;
-		for (const meaning of result.meanings) {
+		for (const [index, meaning] of result.meanings.entries()) {
 			if (escapeOutOfLoop) break;
 
-			this.makeContent(t, meaning).inspect((content) => {
+			this.makeContent(t, meaning, index).inspect((content) => {
 				const newLines = [...lines, content];
 				if (newLines.join('\n').length > 2000) {
 					escapeOutOfLoop = true;
@@ -88,13 +88,19 @@ export class UserCommand extends Command {
 		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
 	}
 
-	private makeContent(t: TFunction, meaning: DictionaryAPIMeaning) {
+	private makeContent(t: TFunction, meaning: DictionaryAPIMeaning, index: number) {
 		const meaningParts: string[] = [];
 
-		meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentLexicalCategory, { value: meaning.partOfSpeech }));
+		meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentLexicalCategory, { value: meaning.partOfSpeech, index: index + 1 }));
 
-		for (const definition of meaning.definitions) {
-			meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentDefinition, { value: definition.definition }));
+		for (const [subIndex, definition] of meaning.definitions.entries()) {
+			meaningParts.push(
+				t(LanguageKeys.Commands.Dictionary.ContentDefinition, {
+					value: definition.definition,
+					index: index + 1,
+					subIndex: subIndex + 1
+				})
+			);
 
 			if (definition.example) {
 				meaningParts.push('', t(LanguageKeys.Commands.Dictionary.ContentExample, { value: definition.example }));
