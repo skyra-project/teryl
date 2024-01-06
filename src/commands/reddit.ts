@@ -33,7 +33,6 @@ export class UserCommand extends Command {
 		const response = await fetchRedditPosts(name);
 		const body = response.match({
 			ok: (result) => this.handleOk(interaction, result),
-			// @ts-expect-error this should be resolved when reddit-helpers is published
 			err: (error) => this.handleError(interaction, name, error)
 		});
 		return interaction.reply(body);
