@@ -289,6 +289,50 @@ namespace Temperature {
 	}
 }
 
+namespace Speed {
+	export interface Options {
+		amount?: number;
+		from: Unit;
+		to: Unit;
+	}
+
+	export const enum Unit {
+		NauticalMilesPerHour = 'nautical-miles-per-hour',
+		FeetPerSecond = 'feet-per-second',
+		LightSpeed = 'light-speed',
+		MachNumber = 'mach-number',
+		NaturalUnit = 'natural-unit'
+	}
+
+	export const Units = {
+		[Unit.NauticalMilesPerHour]: BigDecimal(0.5144444444444444),
+		[Unit.FeetPerSecond]: BigDecimal(0.3048),
+		[Unit.LightSpeed]: BigDecimal(299792458n),
+		[Unit.MachNumber]: BigDecimal(340.3),
+		[Unit.NaturalUnit]: BigDecimal(299792458n)
+	};
+
+	export const Keys = {
+		[Unit.NauticalMilesPerHour]: LanguageKeys.Commands.Convert.UnitNauticalMile,
+		[Unit.FeetPerSecond]: LanguageKeys.Commands.Convert.UnitFeetPerSecond,
+		[Unit.LightSpeed]: LanguageKeys.Commands.Convert.UnitLightSpeed,
+		[Unit.MachNumber]: LanguageKeys.Commands.Convert.UnitMachNumber,
+		[Unit.NaturalUnit]: LanguageKeys.Commands.Convert.UnitNaturalUnit
+	};
+
+	export function makeOption(key: LocalePrefixKey) {
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedNauticalMilesPerHour, { value: Unit.NauticalMilesPerHour }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedFeetPerSecond, { value: Unit.FeetPerSecond }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedLightSpeed, { value: Unit.LightSpeed }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMachNumber, { value: Unit.MachNumber }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedNaturalUnit, { value: Unit.NaturalUnit })
+			);
+	}
+}
+
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
 export class UserCommand extends Command {
 	@RegisterSubcommand((builder) =>
@@ -359,6 +403,23 @@ export class UserCommand extends Command {
 			fromUnit: Temperature.Keys[options.from],
 			toUnit: Temperature.Keys[options.to],
 			value
+		});
+	}
+
+	@RegisterSubcommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Speed)
+			.addStringOption(Speed.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Speed.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
+	)
+	public speed(interaction: Command.ChatInputInteraction, options: Speed.Options) {
+		return this.shared({
+			interaction,
+			amount: options.amount ?? 1,
+			fromRatio: Speed.Units[options.from],
+			fromUnit: Speed.Keys[options.from],
+			toRatio: Speed.Units[options.to],
+			toUnit: Speed.Keys[options.to]
 		});
 	}
 

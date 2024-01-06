@@ -175,7 +175,7 @@ export function resolveCurrentConditionsImperial(conditions: CurrentCondition, t
 			feelsLike: Number(conditions.FeelsLikeF)
 		}),
 		visibility: t(LanguageKeys.Commands.Weather.Miles, { value: Number(conditions.visibilityMiles) }),
-		windSpeed: t(LanguageKeys.Commands.Weather.MilesPerHour, { value: Number(conditions.windspeedMiles) })
+		windSpeed: t(LanguageKeys.Common.MilesPerHour, { value: Number(conditions.windspeedMiles) })
 	};
 }
 
@@ -191,8 +191,8 @@ export function resolveCurrentConditionsMetric(conditions: CurrentCondition, t: 
 			: t(LanguageKeys.Commands.Weather.TemperatureCelsius, { value: temperature, feelsLike: Number(conditions.FeelsLikeC) }),
 		visibility: t(LanguageKeys.Commands.Weather.Kilometers, { value: Number(conditions.visibility) }),
 		windSpeed: si
-			? t(LanguageKeys.Commands.Weather.MetersPerSecond, { value: kilometersPerHourToMetersPerSecond(windSpeed) })
-			: t(LanguageKeys.Commands.Weather.KilometersPerHour, { value: windSpeed })
+			? t(LanguageKeys.Common.MetersPerSecond, { value: kilometersPerHourToMetersPerSecond(windSpeed) })
+			: t(LanguageKeys.Common.KilometersPerHour, { value: windSpeed })
 	};
 }
 
