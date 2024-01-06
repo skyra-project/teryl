@@ -297,6 +297,9 @@ namespace Speed {
 	}
 
 	export const enum Unit {
+		MilesPerHour = 'miles-per-hour',
+		KilometersPerHour = 'kilometers-per-hour',
+		MetersPerSecond = 'meters-per-second',
 		NauticalMilesPerHour = 'nautical-miles-per-hour',
 		FeetPerSecond = 'feet-per-second',
 		LightSpeed = 'light-speed',
@@ -305,7 +308,10 @@ namespace Speed {
 	}
 
 	export const Units = {
-		[Unit.NauticalMilesPerHour]: BigDecimal(0.5144444444444444),
+		[Unit.MilesPerHour]: BigDecimal(0.44704),
+		[Unit.KilometersPerHour]: BigDecimal(0.27777777777778),
+		[Unit.MetersPerSecond]: BigDecimal(1n),
+		[Unit.NauticalMilesPerHour]: BigDecimal(0.5144444444444445),
 		[Unit.FeetPerSecond]: BigDecimal(0.3048),
 		[Unit.LightSpeed]: BigDecimal(299792458n),
 		[Unit.MachNumber]: BigDecimal(340.3),
@@ -313,6 +319,9 @@ namespace Speed {
 	};
 
 	export const Keys = {
+		[Unit.MilesPerHour]: LanguageKeys.Commands.Convert.UnitMilesPerHour,
+		[Unit.KilometersPerHour]: LanguageKeys.Commands.Convert.UnitKilometersPerHour,
+		[Unit.MetersPerSecond]: LanguageKeys.Commands.Convert.UnitMetersPerSecond,
 		[Unit.NauticalMilesPerHour]: LanguageKeys.Commands.Convert.UnitNauticalMile,
 		[Unit.FeetPerSecond]: LanguageKeys.Commands.Convert.UnitFeetPerSecond,
 		[Unit.LightSpeed]: LanguageKeys.Commands.Convert.UnitLightSpeed,
@@ -324,6 +333,9 @@ namespace Speed {
 		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
 			.setRequired(true)
 			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMilesPerHour, { value: Unit.MilesPerHour }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedKilometersPerHour, { value: Unit.KilometersPerHour }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMetersPerSecond, { value: Unit.MetersPerSecond }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedNauticalMilesPerHour, { value: Unit.NauticalMilesPerHour }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedFeetPerSecond, { value: Unit.FeetPerSecond }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedLightSpeed, { value: Unit.LightSpeed }),

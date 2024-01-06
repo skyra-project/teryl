@@ -57,6 +57,9 @@ export const TemperatureRomer = T('commands/convert:temperatureRomer');
 export const TemperatureKelvin = T('commands/convert:temperatureKelvin');
 
 export const Speed = 'commands/convert:speed';
+export const SpeedMilesPerHour = T('commands/convert:speedMilesPerHour');
+export const SpeedKilometersPerHour = T('commands/convert:speedKilometersPerHour');
+export const SpeedMetersPerSecond = T('commands/convert:speedMetersPerSecond');
 export const SpeedNauticalMilesPerHour = T('commands/convert:speedNauticalMilesPerHour');
 export const SpeedFeetPerSecond = T('commands/convert:speedFeetPerSecond');
 export const SpeedLightSpeed = T('commands/convert:speedLightSpeed');
@@ -105,6 +108,9 @@ export const UnitReaumur = FT<{ value: number }>('commands/convert:unitReaumur')
 export const UnitRomer = FT<{ value: number }>('commands/convert:unitRomer');
 export const UnitKelvin = FT<{ value: number }>('commands/convert:unitKelvin');
 
+export const UnitMilesPerHour = FT<{ value: number }>('commands/convert:unitMilesPerHour');
+export const UnitKilometersPerHour = FT<{ value: number }>('commands/convert:unitKilometersPerHour');
+export const UnitMetersPerSecond = FT<{ value: number }>('commands/convert:unitMetersPerSecond');
 export const UnitNauticalMilesPerHour = FT<{ value: number }>('commands/convert:unitNauticalMilesPerHour');
 export const UnitFeetPerSecond = FT<{ value: number }>('commands/convert:unitFeetPerSecond');
 export const UnitLightSpeed = FT<{ value: number }>('commands/convert:unitLightSpeed');
