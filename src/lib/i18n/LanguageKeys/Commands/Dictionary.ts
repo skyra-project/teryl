@@ -6,11 +6,11 @@ export const RootDescription = T('commands/dictionary:description');
 
 export const OptionsInput = 'commands/dictionary:optionsInput';
 export const ContentTitle = FT<Value>('commands/dictionary:contentTitle');
-export const ContentPronunciation = FT<Value>('commands/dictionary:contentPronunciation');
-export const ContentType = FT<Value>('commands/dictionary:contentType');
-export const ContentEmoji = FT<Value>('commands/dictionary:contentEmoji');
+export const ContentPhonetic = FT<Value>('commands/dictionary:contentPhonetic');
+export const ContentLexicalCategory = FT<Value>('commands/dictionary:contentLexicalCategory');
+export const ContentExample = FT<Value>('commands/dictionary:contentExample');
+export const ContentDefinition = FT<Value>('commands/dictionary:contentDefinition');
 export const FetchAbort = FT<Value>('commands/dictionary:fetchAbort');
-export const FetchAuthorizationFailed = FT<Value>('commands/dictionary:fetchAuthorizationFailed');
 export const FetchNoResults = FT<Value>('commands/dictionary:fetchNoResults');
 export const FetchRateLimited = FT<Value>('commands/dictionary:fetchRateLimited');
 export const FetchServerError = FT<Value>('commands/dictionary:fetchServerError');
