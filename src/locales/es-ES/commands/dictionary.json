@@ -3,5 +3,14 @@
 	"description": "Provee la definición de una palabra en inglés",
 	"optionsInputName": "entrada",
 	"optionsInputDescription": "La palabra de la cual obtener su definición",
+	"contentTitle": "**Diccionario:** `{{value}}`",
+	"contentPhonetic": "Fonético: `{{value}}`",
+	"contentLexicalCategory": "## {{index}}. Categoría léxica: `{{value}}`",
+	"contentExample": "Ejemplo: `{{value}}`",
+	"contentDefinition": "### {{index}}. {{subIndex}}. Definición:\n> {{value}}",
+	"fetchAbort": "No pude buscar `{{value}}` porque el diccionario no respondió en 2 segundos, por favor inténtalo de nuevo más tarde.",
+	"fetchNoResults": "El diccionario no devolvió ningún resultado para `{{value}}`.",
+	"fetchRateLimited": "No pude buscar `{{value}}` porque recientemente he hecho demasiadas solicitudes al diccionario. Por favor, inténtalo de nuevo en un minuto.",
+	"fetchServerError": "No pude buscar `{{value}}` porque el servidor del diccionario no está disponible en este momento. Inténtalo de nuevo más tarde.",
 	"fetchUnknownError": "No pude buscar `{{value}}` debido a un error desconocido. Por favor, contacte a mis desarrolladores sobre esto."
 }
