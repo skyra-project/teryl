@@ -61,13 +61,13 @@
 
 	"speedName": "speed",
 	"speedDescription": "Converts one unit of speed to another",
-	"fromLengthName": "from length",
+	"fromLengthName": "from-length",
 	"fromLengthDescription": "The unit of length to convert from",
-	"fromTimeName": "from time",
+	"fromTimeName": "from-time",
 	"fromTimeDescription": "The unit of time to convert from",
-	"toLengthName": "to length",
+	"toLengthName": "to-length",
 	"toLengthDescription": "The unit of length to convert to",
-	"toTimeName": "to time",
+	"toTimeName": "to-time",
 	"toTimeDescription": "The unit of time to convert to",
 
 	"unitAstronomicalUnit": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}AU",
