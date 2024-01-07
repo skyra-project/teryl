@@ -1,13 +1,10 @@
 import { Fonts } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import type { CurrentCondition, ValueWrapper, Weather } from '#lib/types/weather-types';
 import { isEmptyObject } from '#lib/utilities/objects';
 import {
 	getColors,
-	getData,
 	getFile,
 	getIcons,
-	getWeatherName,
 	resolveCurrentConditionsImperial,
 	resolveCurrentConditionsMetric,
 	type ResolvedConditions
@@ -23,6 +20,7 @@ import {
 	type TFunction,
 	type TypedT
 } from '@skyra/http-framework-i18n';
+import { getWeatherData, getWeatherName, Identifiers, type CurrentCondition, type ValueWrapper, type Weather } from '@skyra/weather-helpers';
 import { Canvas } from 'canvas-constructor/napi-rs';
 import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
 
@@ -45,7 +43,7 @@ export class UserCommand extends Command {
 		const t = getSupportedLanguageT(interaction);
 		const base = t.lng.length === 2 ? t.lng : t.lng.slice(0, 2);
 
-		const result = await getData(args.place, base);
+		const result = await getWeatherData(args.place, base);
 		return result.match({
 			ok: (data) => this.handleOk(interaction, t, base, args, data),
 			err: (key) => this.handleErr(interaction, key)
@@ -54,7 +52,8 @@ export class UserCommand extends Command {
 
 	private async handleOk(interaction: Command.ChatInputInteraction, t: TFunction, base: string, args: Options, data: Weather) {
 		const [nearestArea] = data.nearest_area;
-		if (isEmptyObject(nearestArea)) return this.handleErr(interaction, LanguageKeys.Commands.Weather.UnknownLocation);
+		if (isEmptyObject(nearestArea))
+			return this.handleErr(interaction, LanguageKeys.Commands.Weather.UnknownLocation as Identifiers.UnknownLocation);
 
 		// Region can be an empty string, e.g. `Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu`:
 		const place = `${nearestArea.region[0].value || nearestArea.areaName[0].value}, ${nearestArea.country[0].value}`;
@@ -74,8 +73,8 @@ export class UserCommand extends Command {
 		return response.update({ files: [file] });
 	}
 
-	private handleErr(interaction: Command.ChatInputInteraction, key: TypedT) {
-		const content = resolveUserKey(interaction, key);
+	private handleErr(interaction: Command.ChatInputInteraction, key: Identifiers) {
+		const content = resolveUserKey(interaction, key as TypedT);
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
