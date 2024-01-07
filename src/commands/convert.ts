@@ -393,10 +393,10 @@ export class UserCommand extends Command {
 
 	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Speed)
-			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
-			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.FromLength))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.FromTime))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.ToLength))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.ToTime))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public speed(interaction: Command.ChatInputInteraction, options: Speed.Options) {
