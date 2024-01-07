@@ -1,12 +1,8 @@
 import { PathAssets } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { WeatherCode, type CurrentCondition, type Weather, type WeatherName } from '#lib/types/weather-types';
-import { Result, err } from '@sapphire/result';
-import { container } from '@skyra/http-framework';
 import type { TypedT } from '@skyra/http-framework-i18n';
-import { Text, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
+import { Identifiers, celsiusToKelvin, kilometersPerHourToMetersPerSecond, type CurrentCondition, type WeatherName } from '@skyra/weather-helpers';
 import { Image, loadImage } from 'canvas-constructor/napi-rs';
-import { cyan, gray, red } from 'colorette';
 import type { TFunction } from 'i18next';
 import { join } from 'node:path';
 import { URL, fileURLToPath } from 'node:url';
@@ -40,62 +36,6 @@ export function getColors(name: WeatherName): WeatherTheme {
 	}
 }
 
-const getWeatherNameMap = new Map<WeatherCode, WeatherName>([
-	[WeatherCode.ClearOrSunny, 'Sunny'],
-	[WeatherCode.PartlyCloudy, 'PartlyCloudy'],
-	[WeatherCode.Cloudy, 'Cloudy'],
-	[WeatherCode.Overcast, 'VeryCloudy'],
-	[WeatherCode.Mist, 'Fog'],
-	[WeatherCode.PatchyRainNearby, 'LightShowers'],
-	[WeatherCode.PatchySnowNearby, 'LightSleetShowers'],
-	[WeatherCode.PatchySleetNearby, 'LightSleet'],
-	[WeatherCode.PatchyFreezingDrizzleNearby, 'LightSleet'],
-	[WeatherCode.ThunderyOutbreaksInNearby, 'ThunderyShowers'],
-	[WeatherCode.BlowingSnow, 'LightSnow'],
-	[WeatherCode.Blizzard, 'HeavySnow'],
-	[WeatherCode.Fog, 'Fog'],
-	[WeatherCode.FreezingFog, 'Fog'],
-	[WeatherCode.PatchyLightDrizzle, 'LightShowers'],
-	[WeatherCode.LightDrizzle, 'LightRain'],
-	[WeatherCode.FreezingDrizzle, 'LightSleet'],
-	[WeatherCode.HeavyFreezingDrizzle, 'LightSleet'],
-	[WeatherCode.PatchyLightRain, 'LightRain'],
-	[WeatherCode.LightRain, 'LightRain'],
-	[WeatherCode.ModerateRainAtTimes, 'HeavyShowers'],
-	[WeatherCode.ModerateRain, 'HeavyRain'],
-	[WeatherCode.HeavyRainAtTimes, 'HeavyShowers'],
-	[WeatherCode.HeavyRain, 'HeavyRain'],
-	[WeatherCode.LightFreezingRain, 'LightSleet'],
-	[WeatherCode.ModerateOrHeavyFreezingRain, 'LightSleet'],
-	[WeatherCode.LightSleet, 'LightSleet'],
-	[WeatherCode.ModerateOrHeavySleet, 'LightSnow'],
-	[WeatherCode.PatchyLightSnow, 'LightSnowShowers'],
-	[WeatherCode.LightSnow, 'LightSnowShowers'],
-	[WeatherCode.PatchyModerateSnow, 'HeavySnow'],
-	[WeatherCode.ModerateSnow, 'HeavySnow'],
-	[WeatherCode.PatchyHeavySnow, 'HeavySnowShowers'],
-	[WeatherCode.HeavySnow, 'HeavySnow'],
-	[WeatherCode.IcePellets, 'LightSleet'],
-	[WeatherCode.LightRainShower, 'LightShowers'],
-	[WeatherCode.ModerateOrHeavyRainShower, 'HeavyShowers'],
-	[WeatherCode.TorrentialRainShower, 'HeavyShowers'],
-	[WeatherCode.LightSleetShowers, 'LightSleetShowers'],
-	[WeatherCode.ModerateOrHeavySleetShowers, 'LightSleetShowers'],
-	[WeatherCode.LightSnowShowers, 'LightSnowShowers'],
-	[WeatherCode.ModerateOrHeavySnowShowers, 'LightSnowShowers'],
-	[WeatherCode.LightShowersOfIcePellets, 'LightSleetShowers'],
-	[WeatherCode.ModerateOrHeavyShowersOfIcePellets, 'LightSleet'],
-	[WeatherCode.PatchyLightRainInAreaWithThunder, 'ThunderyShowers'],
-	[WeatherCode.ModerateOrHeavyRainInAreaWithThunder, 'ThunderyHeavyRain'],
-	[WeatherCode.PatchyLightSnowInAreaWithThunder, 'ThunderySnowShowers'],
-	[WeatherCode.ModerateOrHeavySnowInAreaWithThunder, 'ThunderySnowShowers']
-]);
-export function getWeatherName(code: WeatherCode): WeatherName {
-	const name = getWeatherNameMap.get(code);
-	if (name === undefined) throw new Error(`The code '${code}' is not available.`);
-	return name;
-}
-
 const PathWeather = fileURLToPath(new URL('./images/weather', PathAssets));
 const getFileCache = new Map<WeatherName, Image>();
 export async function getFile(name: WeatherName): Promise<Image> {
@@ -122,48 +62,6 @@ export async function getIcons(theme: Theme): Promise<Icons> {
 	const icons: Icons = { pointer, precipitation, temperature, visibility };
 	getIconsCache.set(theme, icons);
 	return icons;
-}
-
-const getDataBaseURL = 'https://wttr.in/';
-export async function getData(query: string, lang: string): Promise<Result<Weather, TypedT>> {
-	const url = new URL(`${getDataBaseURL}~${encodeURIComponent(query)}`);
-	url.searchParams.append('format', 'j1');
-	url.searchParams.append('lang', lang);
-
-	const result = await Text(safeTimedFetch(url, 2000));
-	return result.match({
-		ok: (value) => getDataOk(value),
-		err: (error) => getDataErr(error)
-	});
-}
-
-function getDataOk(value: string) {
-	// JSON object:
-	if (value.startsWith('{')) {
-		return Result.from(() => JSON.parse(value) as Weather).mapErr(() => LanguageKeys.Commands.Weather.InvalidJsonBody);
-	}
-
-	// Yes, wttr.in returns 200 OK on errors (ref: https://github.com/chubin/wttr.in/issues/591).
-	// "Unknown location; ..." message:
-	if (value.startsWith('Unknown location')) {
-		return err(LanguageKeys.Commands.Weather.UnknownLocation);
-	}
-
-	// Log the error and return unknown error:
-	container.logger.error(`[${cyan('WEATHER')}]: Unknown Error Body Received: ${gray(value)}`);
-	return err(LanguageKeys.Commands.Weather.UnknownError);
-}
-
-function getDataErr(error: FetchError) {
-	if (isAbortError(error)) return err(LanguageKeys.Commands.Weather.AbortError);
-	if (error.code === 403) return err(LanguageKeys.Commands.Weather.BlockedLocation);
-	if (error.code === 429) return err(LanguageKeys.Commands.Weather.RateLimited);
-	if (error.code === 500) return err(LanguageKeys.Commands.Weather.RemoteServerError);
-	if (error.code === 503) return err(LanguageKeys.Commands.Weather.ServiceUnavailable);
-
-	// Log the error and return unknown error:
-	container.logger.error(`[${cyan('WEATHER')}]: Unknown Error Code Received: ${red(error.code.toString())} - ${gray(error.body)}`);
-	return err(LanguageKeys.Commands.Weather.UnknownError);
 }
 
 export function resolveCurrentConditionsImperial(conditions: CurrentCondition, t: TFunction): ResolvedConditions {
@@ -196,16 +94,29 @@ export function resolveCurrentConditionsMetric(conditions: CurrentCondition, t: 
 	};
 }
 
+export function identifiersToKeys(identifier: Identifiers): TypedT {
+	switch (identifier) {
+		case Identifiers.InvalidJsonBody:
+			return LanguageKeys.Commands.Weather.InvalidJsonBody;
+		case Identifiers.UnknownLocation:
+			return LanguageKeys.Commands.Weather.UnknownLocation;
+		case Identifiers.UnknownError:
+			return LanguageKeys.Commands.Weather.UnknownError;
+		case Identifiers.AbortError:
+			return LanguageKeys.Commands.Weather.AbortError;
+		case Identifiers.BlockedLocation:
+			return LanguageKeys.Commands.Weather.BlockedLocation;
+		case Identifiers.RateLimited:
+			return LanguageKeys.Commands.Weather.RateLimited;
+		case Identifiers.RemoteServerError:
+			return LanguageKeys.Commands.Weather.RemoteServerError;
+		case Identifiers.ServiceUnavailable:
+			return LanguageKeys.Commands.Weather.ServiceUnavailable;
+	}
+}
+
 export interface ConditionsOptions {
 	si?: boolean;
-}
-
-function kilometersPerHourToMetersPerSecond(kmh: number): number {
-	return kmh / 3.6;
-}
-
-function celsiusToKelvin(celsius: number): number {
-	return celsius + 273.15;
 }
 
 export type Theme = 'light' | 'dark';

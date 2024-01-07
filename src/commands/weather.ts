@@ -1,13 +1,11 @@
 import { Fonts } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import type { CurrentCondition, ValueWrapper, Weather } from '#lib/types/weather-types';
 import { isEmptyObject } from '#lib/utilities/objects';
 import {
 	getColors,
-	getData,
 	getFile,
 	getIcons,
-	getWeatherName,
+	identifiersToKeys,
 	resolveCurrentConditionsImperial,
 	resolveCurrentConditionsMetric,
 	type ResolvedConditions
@@ -23,6 +21,7 @@ import {
 	type TFunction,
 	type TypedT
 } from '@skyra/http-framework-i18n';
+import { getWeatherData, getWeatherName, type CurrentCondition, type ValueWrapper, type Weather } from '@skyra/weather-helpers';
 import { Canvas } from 'canvas-constructor/napi-rs';
 import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
 
@@ -45,10 +44,10 @@ export class UserCommand extends Command {
 		const t = getSupportedLanguageT(interaction);
 		const base = t.lng.length === 2 ? t.lng : t.lng.slice(0, 2);
 
-		const result = await getData(args.place, base);
+		const result = await getWeatherData(args.place, base);
 		return result.match({
 			ok: (data) => this.handleOk(interaction, t, base, args, data),
-			err: (key) => this.handleErr(interaction, key)
+			err: (key) => this.handleErr(interaction, identifiersToKeys(key))
 		});
 	}
 
