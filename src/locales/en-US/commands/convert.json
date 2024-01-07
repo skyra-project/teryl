@@ -61,14 +61,14 @@
 
 	"speedName": "speed",
 	"speedDescription": "Converts one unit of speed to another",
-	"speedMilesPerHour": "Miles per Hour",
-	"speedKilometersPerHour": "Kilometers per Hour",
-	"speedMetersPerSecond": "Meters per Second",
-	"speedNauticalMilesPerHour": "Nautical Miles per Hour",
-	"speedFeetPerSecond": "Feet per Second",
-	"speedLightSpeed": "Light Speed",
-	"speedMachNumber": "Mach Number",
-	"speedNaturalUnit": "Natural Unit",
+	"fromLengthName": "from length",
+	"fromLengthDescription": "The unit of length to convert from",
+	"fromTimeName": "from time",
+	"fromTimeDescription": "The unit of time to convert from",
+	"toLengthName": "to length",
+	"toLengthDescription": "The unit of length to convert to",
+	"toTimeName": "to time",
+	"toTimeDescription": "The unit of time to convert to",
 
 	"unitAstronomicalUnit": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}AU",
 	"unitFeet": "{{value, number(style: unit; unit: foot; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
@@ -110,14 +110,5 @@
 	"unitRankine": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°R",
 	"unitReaumur": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
 	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Rø",
-	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K",
-
-	"unitMilesPerHour": "{{value, number(style: unit; unit: mile-per-hour; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitKilometersPerHour": "{{value, number(style: unit; unit: kilometer-per-hour; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitMetersPerSecond": "{{value, number(style: unit; unit: meter-per-second; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitNauticalMilesPerHour": "{{value, number(style: unit; unit: nautical-mile-per-hour; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitFeetPerSecond": "{{value, number(style: unit; unit: foot-per-second; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitLightSpeed": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}c",
-	"unitMachNumber": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}M",
-	"unitNaturalUnit": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} natural units"
+	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K"
 }

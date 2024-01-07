@@ -35,6 +35,7 @@ namespace Length {
 		Centimeter = 'centimeter',
 		Mile = 'mile',
 		NauticalMile = 'nautical-mile',
+		MachSecond = 'mach-second',
 		Parsec = 'parsec'
 	}
 
@@ -49,6 +50,7 @@ namespace Length {
 		[Unit.Centimeter]: BigDecimal(0.01),
 		[Unit.Mile]: BigDecimal(1609.344),
 		[Unit.NauticalMile]: BigDecimal(1852n),
+		[Unit.MachSecond]: BigDecimal(340.3),
 		[Unit.Parsec]: BigDecimal(3.0856776e16)
 	};
 
@@ -63,6 +65,7 @@ namespace Length {
 		[Unit.Centimeter]: LanguageKeys.Commands.Convert.UnitCentimeter,
 		[Unit.Mile]: LanguageKeys.Commands.Convert.UnitMile,
 		[Unit.NauticalMile]: LanguageKeys.Commands.Convert.UnitNauticalMile,
+		[Unit.MachSecond]: LanguageKeys.Commands.Convert.UnitMachSecond,
 		[Unit.Parsec]: LanguageKeys.Commands.Convert.UnitParsec
 	};
 
@@ -80,6 +83,7 @@ namespace Length {
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthCentimeter, { value: Unit.Centimeter }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMile, { value: Unit.Mile }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthNauticalMile, { value: Unit.NauticalMile }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMachSecond, { value: Unit.MachSecond }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthParsec, { value: Unit.Parsec })
 			);
 	}
@@ -292,57 +296,26 @@ namespace Temperature {
 namespace Speed {
 	export interface Options {
 		amount?: number;
-		from: Unit;
-		to: Unit;
+		fromLength: Length.Unit;
+		fromTime: Time.Unit;
+		toLength: Length.Unit;
+		toTime: Time.Unit;
 	}
 
-	export const enum Unit {
-		MilesPerHour = 'miles-per-hour',
-		KilometersPerHour = 'kilometers-per-hour',
-		MetersPerSecond = 'meters-per-second',
-		NauticalMilesPerHour = 'nautical-miles-per-hour',
-		FeetPerSecond = 'feet-per-second',
-		LightSpeed = 'light-speed',
-		MachNumber = 'mach-number',
-		NaturalUnit = 'natural-unit'
-	}
-
-	export const Units = {
-		[Unit.MilesPerHour]: BigDecimal(0.44704),
-		[Unit.KilometersPerHour]: BigDecimal(0.27777777777778),
-		[Unit.MetersPerSecond]: BigDecimal(1n),
-		[Unit.NauticalMilesPerHour]: BigDecimal(0.5144444444444445),
-		[Unit.FeetPerSecond]: BigDecimal(0.3048),
-		[Unit.LightSpeed]: BigDecimal(299792458n),
-		[Unit.MachNumber]: BigDecimal(340.3),
-		[Unit.NaturalUnit]: BigDecimal(299792458n)
+	export const PerTimeKeys = {
+		[Time.Unit.Century]: LanguageKeys.Commands.Convert.TimeCentury,
+		[Time.Unit.Day]: LanguageKeys.Commands.Convert.TimeDay,
+		[Time.Unit.Decade]: LanguageKeys.Commands.Convert.TimeDecade,
+		[Time.Unit.Hour]: LanguageKeys.Commands.Convert.TimeHour,
+		[Time.Unit.LunarYear]: LanguageKeys.Commands.Convert.TimeLunarYear,
+		[Time.Unit.Millennium]: LanguageKeys.Commands.Convert.TimeMillennium,
+		[Time.Unit.Minute]: LanguageKeys.Commands.Convert.TimeMinute,
+		[Time.Unit.Month]: LanguageKeys.Commands.Convert.TimeMonth,
+		[Time.Unit.Second]: LanguageKeys.Commands.Convert.TimeSecond,
+		[Time.Unit.TropicalMonth]: LanguageKeys.Commands.Convert.TimeTropicalMonth,
+		[Time.Unit.TropicalYear]: LanguageKeys.Commands.Convert.TimeTropicalYear,
+		[Time.Unit.Week]: LanguageKeys.Commands.Convert.TimeWeek
 	};
-
-	export const Keys = {
-		[Unit.MilesPerHour]: LanguageKeys.Commands.Convert.UnitMilesPerHour,
-		[Unit.KilometersPerHour]: LanguageKeys.Commands.Convert.UnitKilometersPerHour,
-		[Unit.MetersPerSecond]: LanguageKeys.Commands.Convert.UnitMetersPerSecond,
-		[Unit.NauticalMilesPerHour]: LanguageKeys.Commands.Convert.UnitNauticalMile,
-		[Unit.FeetPerSecond]: LanguageKeys.Commands.Convert.UnitFeetPerSecond,
-		[Unit.LightSpeed]: LanguageKeys.Commands.Convert.UnitLightSpeed,
-		[Unit.MachNumber]: LanguageKeys.Commands.Convert.UnitMachNumber,
-		[Unit.NaturalUnit]: LanguageKeys.Commands.Convert.UnitNaturalUnit
-	};
-
-	export function makeOption(key: LocalePrefixKey) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
-			.setRequired(true)
-			.addChoices(
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMilesPerHour, { value: Unit.MilesPerHour }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedKilometersPerHour, { value: Unit.KilometersPerHour }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMetersPerSecond, { value: Unit.MetersPerSecond }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedNauticalMilesPerHour, { value: Unit.NauticalMilesPerHour }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedFeetPerSecond, { value: Unit.FeetPerSecond }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedLightSpeed, { value: Unit.LightSpeed }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedMachNumber, { value: Unit.MachNumber }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.SpeedNaturalUnit, { value: Unit.NaturalUnit })
-			);
-	}
 }
 
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
@@ -420,19 +393,31 @@ export class UserCommand extends Command {
 
 	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Speed)
-			.addStringOption(Speed.makeOption(LanguageKeys.Commands.Convert.From))
-			.addStringOption(Speed.makeOption(LanguageKeys.Commands.Convert.To))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.To))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.To))
 			.addNumberOption(UserCommand.makeAmountOption())
 	)
 	public speed(interaction: Command.ChatInputInteraction, options: Speed.Options) {
-		return this.shared({
-			interaction,
-			amount: options.amount ?? 1,
-			fromRatio: Speed.Units[options.from],
-			fromUnit: Speed.Keys[options.from],
-			toRatio: Speed.Units[options.to],
-			toUnit: Speed.Keys[options.to]
-		});
+		const amount = options.amount ?? 1;
+		// @ts-expect-error JSBD has funny exports
+		const ratio = JSBD.divide(
+			// @ts-expect-error JSBD has funny exports
+			JSBD.divide(Length.Units[options.fromLength], Time.Units[options.fromTime]),
+			// @ts-expect-error JSBD has funny exports
+			JSBD.divide(Length.Units[options.toLength], Time.Units[options.toTime])
+		);
+		// @ts-expect-error JSBD has funny exports
+		const value = Number(JSBD.multiply(ratio, BigDecimal(amount)));
+
+		const t = getSupportedUserLanguageT(interaction);
+		const perTime = t(Speed.PerTimeKeys[options.fromTime]);
+		const from = `${t(Length.Keys[options.fromLength], { value: amount })}/${perTime}`;
+		const to = `${t(Length.Keys[options.toLength], { value })}/${perTime}`;
+
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { from, to });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private shared(data: SharedData) {

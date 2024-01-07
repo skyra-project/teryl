@@ -21,6 +21,7 @@ export const LengthMeter = T('commands/convert:lengthMeter');
 export const LengthCentimeter = T('commands/convert:lengthCentimeter');
 export const LengthMile = T('commands/convert:lengthMile');
 export const LengthNauticalMile = T('commands/convert:lengthNauticalMile');
+export const LengthMachSecond = T('commands/convert:lengthMachSecond');
 export const LengthParsec = T('commands/convert:lengthParsec');
 
 export const Mass = 'commands/convert:mass';
@@ -57,14 +58,10 @@ export const TemperatureRomer = T('commands/convert:temperatureRomer');
 export const TemperatureKelvin = T('commands/convert:temperatureKelvin');
 
 export const Speed = 'commands/convert:speed';
-export const SpeedMilesPerHour = T('commands/convert:speedMilesPerHour');
-export const SpeedKilometersPerHour = T('commands/convert:speedKilometersPerHour');
-export const SpeedMetersPerSecond = T('commands/convert:speedMetersPerSecond');
-export const SpeedNauticalMilesPerHour = T('commands/convert:speedNauticalMilesPerHour');
-export const SpeedFeetPerSecond = T('commands/convert:speedFeetPerSecond');
-export const SpeedLightSpeed = T('commands/convert:speedLightSpeed');
-export const SpeedMachNumber = T('commands/convert:speedMachNumber');
-export const SpeedNaturalUnit = T('commands/convert:speedNaturalUnit');
+export const FromLength = 'commands/convert:fromLength';
+export const FromTime = 'commands/convert:fromTime';
+export const ToLength = 'commands/convert:toLength';
+export const ToTime = 'commands/convert:toTime';
 
 export const UnitAstronomicalUnit = FT<{ value: number }>('commands/convert:unitAstronomicalUnit');
 export const UnitFeet = FT<{ value: number }>('commands/convert:unitFeet');
@@ -76,6 +73,7 @@ export const UnitMeter = FT<{ value: number }>('commands/convert:unitMeter');
 export const UnitCentimeter = FT<{ value: number }>('commands/convert:unitCentimeter');
 export const UnitMile = FT<{ value: number }>('commands/convert:unitMile');
 export const UnitNauticalMile = FT<{ value: number }>('commands/convert:unitNauticalMile');
+export const UnitMachSecond = FT<{ value: number }>('commands/convert:unitMachSecond');
 export const UnitParsec = FT<{ value: number }>('commands/convert:unitParsec');
 
 export const UnitElectronVolt = FT<{ value: number }>('commands/convert:unitElectronVolt');
@@ -107,12 +105,3 @@ export const UnitRankine = FT<{ value: number }>('commands/convert:unitRankine')
 export const UnitReaumur = FT<{ value: number }>('commands/convert:unitReaumur');
 export const UnitRomer = FT<{ value: number }>('commands/convert:unitRomer');
 export const UnitKelvin = FT<{ value: number }>('commands/convert:unitKelvin');
-
-export const UnitMilesPerHour = FT<{ value: number }>('commands/convert:unitMilesPerHour');
-export const UnitKilometersPerHour = FT<{ value: number }>('commands/convert:unitKilometersPerHour');
-export const UnitMetersPerSecond = FT<{ value: number }>('commands/convert:unitMetersPerSecond');
-export const UnitNauticalMilesPerHour = FT<{ value: number }>('commands/convert:unitNauticalMilesPerHour');
-export const UnitFeetPerSecond = FT<{ value: number }>('commands/convert:unitFeetPerSecond');
-export const UnitLightSpeed = FT<{ value: number }>('commands/convert:unitLightSpeed');
-export const UnitMachNumber = FT<{ value: number }>('commands/convert:unitMachNumber');
-export const UnitNaturalUnit = FT<{ value: number }>('commands/convert:unitNaturalUnit');
