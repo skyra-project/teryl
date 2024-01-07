@@ -1,6 +1,7 @@
 import { PathAssets } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { celsiusToKelvin, kilometersPerHourToMetersPerSecond, type CurrentCondition, type WeatherName } from '@skyra/weather-helpers';
+import type { TypedT } from '@skyra/http-framework-i18n';
+import { Identifiers, celsiusToKelvin, kilometersPerHourToMetersPerSecond, type CurrentCondition, type WeatherName } from '@skyra/weather-helpers';
 import { Image, loadImage } from 'canvas-constructor/napi-rs';
 import type { TFunction } from 'i18next';
 import { join } from 'node:path';
@@ -91,6 +92,27 @@ export function resolveCurrentConditionsMetric(conditions: CurrentCondition, t: 
 			? t(LanguageKeys.Commands.Weather.MetersPerSecond, { value: kilometersPerHourToMetersPerSecond(windSpeed) })
 			: t(LanguageKeys.Commands.Weather.KilometersPerHour, { value: windSpeed })
 	};
+}
+
+export function identifiersToKeys(identifier: Identifiers): TypedT {
+	switch (identifier) {
+		case Identifiers.InvalidJsonBody:
+			return LanguageKeys.Commands.Weather.InvalidJsonBody;
+		case Identifiers.UnknownLocation:
+			return LanguageKeys.Commands.Weather.UnknownLocation;
+		case Identifiers.UnknownError:
+			return LanguageKeys.Commands.Weather.UnknownError;
+		case Identifiers.AbortError:
+			return LanguageKeys.Commands.Weather.AbortError;
+		case Identifiers.BlockedLocation:
+			return LanguageKeys.Commands.Weather.BlockedLocation;
+		case Identifiers.RateLimited:
+			return LanguageKeys.Commands.Weather.RateLimited;
+		case Identifiers.RemoteServerError:
+			return LanguageKeys.Commands.Weather.RemoteServerError;
+		case Identifiers.ServiceUnavailable:
+			return LanguageKeys.Commands.Weather.ServiceUnavailable;
+	}
 }
 
 export interface ConditionsOptions {
