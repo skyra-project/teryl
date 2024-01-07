@@ -1,10 +1,9 @@
 import { PathSrc } from '#lib/common/constants';
 import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { blockQuote } from '@discordjs/builders';
+import { DictionaryNoResultsError } from '#lib/utilities/DictionaryNoResultsError';
 import { Time } from '@sapphire/duration';
-import { none, some } from '@sapphire/result';
-import { envParseString } from '@skyra/env-utilities';
+import { Result, none, some } from '@sapphire/result';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
@@ -22,21 +21,51 @@ export class UserCommand extends Command {
 		const result = await this.makeRequest(input);
 
 		const t = getSupportedLanguageT(interaction);
-		const body = result.match({
-			ok: (value) => this.handleOk(t, input, value),
-			err: (error) => this.handleError(t, input, error)
-		});
+
+		const body = result
+			.mapInto((values) => {
+				const firstValue = values.at(0);
+				if (firstValue) return Result.ok(firstValue);
+				return Result.err(new DictionaryNoResultsError());
+			})
+			.match({
+				ok: (value) => this.handleOk(t, input, value),
+				err: (error) => this.handleError(t, input, error)
+			});
 		return interaction.reply(body);
 	}
 
-	private handleOk(t: TFunction, input: string, result: OwlbotResult) {
-		const lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
-		this.makeHeader(t, result).inspect((header) => lines.push(header));
-		lines.push(blockQuote(result.definitions[0].definition));
+	private handleOk(t: TFunction, input: string, result: DictionaryAPIResult) {
+		let lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
+
+		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
+
+		let escapeOutOfLoop = false;
+		for (const [index, meaning] of result.meanings.entries()) {
+			if (escapeOutOfLoop) break;
+
+			this.makeContent(t, meaning, index).inspect((content) => {
+				const newLines = [...lines, content];
+				if (newLines.join('\n').length > 2000) {
+					escapeOutOfLoop = true;
+					return;
+				}
+
+				return (lines = newLines);
+			});
+		}
+
 		return { content: lines.join('\n'), flags: BlockList.has(input) ? MessageFlags.Ephemeral : undefined } satisfies MessageResponseOptions;
 	}
 
-	private handleError(t: TFunction, input: string, error: FetchError) {
+	private handleError(t: TFunction, input: string, error: FetchError | DictionaryNoResultsError) {
+		if (error instanceof DictionaryNoResultsError) {
+			return {
+				content: t(LanguageKeys.Commands.Dictionary.FetchNoResults, { value: escapeInlineCode(input) }),
+				flags: MessageFlags.Ephemeral
+			} satisfies MessageResponseOptions;
+		}
+
 		return {
 			content: t(this.getErrorKey(error), { value: escapeInlineCode(input) }),
 			flags: MessageFlags.Ephemeral
@@ -45,39 +74,46 @@ export class UserCommand extends Command {
 
 	private getErrorKey(error: FetchError) {
 		if (isAbortError(error)) return LanguageKeys.Commands.Dictionary.FetchAbort;
-		if (error.code === 401) {
-			this.container.logger.fatal('[OWLBOT] 401: Authorization failed');
-			return LanguageKeys.Commands.Dictionary.FetchAuthorizationFailed;
-		}
 		if (error.code === 404) return LanguageKeys.Commands.Dictionary.FetchNoResults;
 		if (error.code === 429) {
-			this.container.logger.error('[OWLBOT] 429: Request surpassed its rate limit');
+			this.container.logger.error('[DICTIONARYAPI] 429: Request surpassed its rate limit');
 			return LanguageKeys.Commands.Dictionary.FetchRateLimited;
 		}
 		if (error.code >= 500) {
-			this.container.logger.warn('[OWLBOT] %d: Received a server error', error.code);
+			this.container.logger.warn('[DICTIONARYAPI] %d: Received a server error', error.code);
 			return LanguageKeys.Commands.Dictionary.FetchServerError;
 		}
 
-		this.container.logger.warn('[OWLBOT] %d: Received an unknown error status code', error.code);
+		this.container.logger.warn('[DICTIONARYAPI] %d: Received an unknown error status code', error.code);
 		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
 	}
 
-	private makeHeader(t: TFunction, result: OwlbotResult) {
-		const [definition] = result.definitions;
+	private makeContent(t: TFunction, meaning: DictionaryAPIMeaning, index: number) {
+		const meaningParts: string[] = [];
 
-		const header: string[] = [];
-		if (result.pronunciation) header.push(t(LanguageKeys.Commands.Dictionary.ContentPronunciation, { value: result.pronunciation }));
-		if (definition.type) header.push(t(LanguageKeys.Commands.Dictionary.ContentType, { value: definition.type }));
-		if (definition.emoji) header.push(t(LanguageKeys.Commands.Dictionary.ContentEmoji, { value: definition.emoji }));
+		meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentLexicalCategory, { value: meaning.partOfSpeech, index: index + 1 }));
 
-		return header.length ? some(header.join(' • ')) : none;
+		for (const [subIndex, definition] of meaning.definitions.entries()) {
+			meaningParts.push(
+				t(LanguageKeys.Commands.Dictionary.ContentDefinition, {
+					value: definition.definition,
+					index: index + 1,
+					subIndex: subIndex + 1
+				})
+			);
+
+			if (definition.example) {
+				meaningParts.push('', t(LanguageKeys.Commands.Dictionary.ContentExample, { value: definition.example }));
+			}
+		}
+
+		return meaningParts.length ? some(meaningParts.join('\n')) : none;
 	}
 
 	private makeRequest(input: string) {
-		return Json<OwlbotResult>(
-			safeTimedFetch(`https://owlbot.info/api/v4/dictionary/${encodeURIComponent(input)}`, Time.Second * 2, {
-				headers: { Accept: 'application/json', Authorization: `Token ${envParseString('OWLBOT_TOKEN')}` }
+		return Json<DictionaryAPIResult[]>(
+			safeTimedFetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(input)}`, Time.Second * 2, {
+				headers: { Accept: 'application/json' }
 			})
 		);
 	}
@@ -90,16 +126,36 @@ interface Options {
 	input: string;
 }
 
-interface OwlbotResult {
-	definitions: readonly OwlbotDefinition[];
+interface DictionaryAPIResult {
 	word: string;
-	pronunciation: string | null;
+	phonetic: string;
+	phonetics: DictionaryAPIPhonetic[];
+	origin?: string;
+	meanings: DictionaryAPIMeaning[];
+	license?: License;
+	sourceUrls?: string[];
 }
 
-interface OwlbotDefinition {
-	type: string | null;
+interface License {
+	name: string;
+	url: string;
+}
+
+interface DictionaryAPIMeaning {
+	partOfSpeech: string;
+	definitions: DictionaryAPIDefinition[];
+}
+
+interface DictionaryAPIDefinition {
 	definition: string;
-	example: string | null;
-	image_url: string | null;
-	emoji: string | null;
+	example?: string;
+	synonyms: string[];
+	antonyms: string[];
+}
+
+interface DictionaryAPIPhonetic {
+	text: string;
+	audio?: string;
+	sourceUrl?: string;
+	license?: License;
 }

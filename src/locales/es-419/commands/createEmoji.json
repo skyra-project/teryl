@@ -11,6 +11,7 @@
 	"duplicated": "Has subido un emoji y un archivo, por favor envíe sólo uno.",
 	"none": "No has subido un emoji o un archivo, por favor envíe alguno de ellos.",
 	"invalidName": "El nombre debe tener entre 2 y 32 caracteres, y solo contener: `0` a `9`, `a` a `z` con mayúsculas, o `_`.",
+	"invalidDiscordURL": "La URL que has proporcionado no coincide con el patrón requerido (`https://cdn.discordapp. om/emojis/{emoji_id}.{format}`). Por favor, asegúrese de que estás usando una URL válida del CDN de Discord.",
 	"notAnImage": "El archivo que usted subió no es una imagen, por lo que no se puede usar.",
 	"failedToDownload": "No pude descargar el archivo. Si usted envió un emoji, por favor asegúrese de que es válido.",
 	"uploaded": "He subido {{emoji}} con éxito.",

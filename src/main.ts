@@ -1,4 +1,3 @@
-import { Emojis } from '#lib/common/constants';
 import { setup } from '#lib/setup/all';
 import { envParseInteger, envParseString } from '@skyra/env-utilities';
 import { Client, container } from '@skyra/http-framework';
@@ -17,7 +16,6 @@ await init({
 	returnObjects: true,
 	interpolation: {
 		defaultVariables: {
-			OwlbotIcon: Emojis.OwlbotIcon,
 			MaximumReminderSubscriptions: 24
 		}
 	}
