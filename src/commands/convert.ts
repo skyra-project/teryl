@@ -296,10 +296,10 @@ namespace Temperature {
 namespace Speed {
 	export interface Options {
 		amount?: number;
-		fromLength: Length.Unit;
-		fromTime: Time.Unit;
-		toLength: Length.Unit;
-		toTime: Time.Unit;
+		['from-length']: Length.Unit;
+		['from-time']: Time.Unit;
+		['to-length']: Length.Unit;
+		['to-time']: Time.Unit;
 	}
 
 	export const PerTimeKeys = {
@@ -404,17 +404,18 @@ export class UserCommand extends Command {
 		// @ts-expect-error JSBD has funny exports
 		const ratio = JSBD.divide(
 			// @ts-expect-error JSBD has funny exports
-			JSBD.divide(Length.Units[options.fromLength], Time.Units[options.fromTime]),
+			JSBD.divide(Length.Units[options['from-length']], Time.Units[options['from-time']]),
 			// @ts-expect-error JSBD has funny exports
-			JSBD.divide(Length.Units[options.toLength], Time.Units[options.toTime])
+			JSBD.divide(Length.Units[options['to-length']], Time.Units[options['to-time']])
 		);
 		// @ts-expect-error JSBD has funny exports
 		const value = Number(JSBD.multiply(ratio, BigDecimal(amount)));
 
 		const t = getSupportedUserLanguageT(interaction);
-		const perTime = t(Speed.PerTimeKeys[options.fromTime]);
-		const from = `${t(Length.Keys[options.fromLength], { value: amount })}/${perTime}`;
-		const to = `${t(Length.Keys[options.toLength], { value })}/${perTime}`;
+		const fromPerTime = t(Speed.PerTimeKeys[options['from-time']]);
+		const toPerTime = t(Speed.PerTimeKeys[options['to-time']]);
+		const from = `${t(Length.Keys[options['from-length']], { value: amount })}/${fromPerTime}`;
+		const to = `${t(Length.Keys[options['to-length']], { value })}/${toPerTime}`;
 
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { from, to });
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
