@@ -49,6 +49,19 @@
 	"timeTropicalYear": "Tropical Year",
 	"timeWeek": "Week",
 
+	"timeShortCentury": "c",
+	"timeShortDay": "d",
+	"timeShortDecade": "de",
+	"timeShortHour": "h",
+	"timeShortLunarYear": "yr",
+	"timeShortMillennium": "mill",
+	"timeShortMinute": "min",
+	"timeShortMonth": "mo",
+	"timeShortSecond": "s",
+	"timeShortTropicalMonth": "trmo",
+	"timeShortTropicalYear": "tryr",
+	"timeShortWeek": "w",
+
 	"temperatureName": "temperature",
 	"temperatureDescription": "Converts one unit of temperature to another",
 	"temperatureCelsius": "Celsius",
@@ -81,7 +94,7 @@
 	"unitCentimeter": "{{value, number(style: unit; unit: centimeter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitNauticalMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
-	"unitMachSecond": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} mach seconds",
+	"unitMachSecond": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} Ms",
 	"unitParsec": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} parsecs",
 
 	"unitElectronVolt": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}eV",

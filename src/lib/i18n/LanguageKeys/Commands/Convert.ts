@@ -47,6 +47,19 @@ export const TimeTropicalMonth = T('commands/convert:timeTropicalMonth');
 export const TimeTropicalYear = T('commands/convert:timeTropicalYear');
 export const TimeWeek = T('commands/convert:timeWeek');
 
+export const TimeShortCentury = T('commands/convert:timeShortCentury');
+export const TimeShortDay = T('commands/convert:timeShortDay');
+export const TimeShortDecade = T('commands/convert:timeShortDecade');
+export const TimeShortHour = T('commands/convert:timeShortHour');
+export const TimeShortLunarYear = T('commands/convert:timeShortLunarYear');
+export const TimeShortMillennium = T('commands/convert:timeShortMillennium');
+export const TimeShortMinute = T('commands/convert:timeShortMinute');
+export const TimeShortMonth = T('commands/convert:timeShortMonth');
+export const TimeShortSecond = T('commands/convert:timeShortSecond');
+export const TimeShortTropicalMonth = T('commands/convert:timeShortTropicalMonth');
+export const TimeShortTropicalYear = T('commands/convert:timeShortTropicalYear');
+export const TimeShortWeek = T('commands/convert:timeShortWeek');
+
 export const Temperature = 'commands/convert:temperature';
 export const TemperatureCelsius = T('commands/convert:temperatureCelsius');
 export const TemperatureDelisle = T('commands/convert:temperatureDelisle');

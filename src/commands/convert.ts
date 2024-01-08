@@ -7,7 +7,8 @@ import {
 	getSupportedUserLanguageT,
 	resolveUserKey,
 	type LocalePrefixKey,
-	type TypedFT
+	type TypedFT,
+	type TypedT
 } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 import JSBD, { type Decimal } from 'jsbd';
@@ -50,7 +51,7 @@ namespace Length {
 		[Unit.Centimeter]: BigDecimal(0.01),
 		[Unit.Mile]: BigDecimal(1609.344),
 		[Unit.NauticalMile]: BigDecimal(1852n),
-		[Unit.MachSecond]: BigDecimal(340.3),
+		[Unit.MachSecond]: BigDecimal(343),
 		[Unit.Parsec]: BigDecimal(3.0856776e16)
 	};
 
@@ -303,19 +304,19 @@ namespace Speed {
 	}
 
 	export const PerTimeKeys = {
-		[Time.Unit.Century]: LanguageKeys.Commands.Convert.TimeCentury,
-		[Time.Unit.Day]: LanguageKeys.Commands.Convert.TimeDay,
-		[Time.Unit.Decade]: LanguageKeys.Commands.Convert.TimeDecade,
-		[Time.Unit.Hour]: LanguageKeys.Commands.Convert.TimeHour,
-		[Time.Unit.LunarYear]: LanguageKeys.Commands.Convert.TimeLunarYear,
-		[Time.Unit.Millennium]: LanguageKeys.Commands.Convert.TimeMillennium,
-		[Time.Unit.Minute]: LanguageKeys.Commands.Convert.TimeMinute,
-		[Time.Unit.Month]: LanguageKeys.Commands.Convert.TimeMonth,
-		[Time.Unit.Second]: LanguageKeys.Commands.Convert.TimeSecond,
-		[Time.Unit.TropicalMonth]: LanguageKeys.Commands.Convert.TimeTropicalMonth,
-		[Time.Unit.TropicalYear]: LanguageKeys.Commands.Convert.TimeTropicalYear,
-		[Time.Unit.Week]: LanguageKeys.Commands.Convert.TimeWeek
-	};
+		[Time.Unit.Century]: LanguageKeys.Commands.Convert.TimeShortCentury,
+		[Time.Unit.Day]: LanguageKeys.Commands.Convert.TimeShortDay,
+		[Time.Unit.Decade]: LanguageKeys.Commands.Convert.TimeShortDecade,
+		[Time.Unit.Hour]: LanguageKeys.Commands.Convert.TimeShortHour,
+		[Time.Unit.LunarYear]: LanguageKeys.Commands.Convert.TimeShortLunarYear,
+		[Time.Unit.Millennium]: LanguageKeys.Commands.Convert.TimeShortMillennium,
+		[Time.Unit.Minute]: LanguageKeys.Commands.Convert.TimeShortMinute,
+		[Time.Unit.Month]: LanguageKeys.Commands.Convert.TimeShortMonth,
+		[Time.Unit.Second]: LanguageKeys.Commands.Convert.TimeShortSecond,
+		[Time.Unit.TropicalMonth]: LanguageKeys.Commands.Convert.TimeShortTropicalMonth,
+		[Time.Unit.TropicalYear]: LanguageKeys.Commands.Convert.TimeShortTropicalYear,
+		[Time.Unit.Week]: LanguageKeys.Commands.Convert.TimeShortWeek
+	} as const satisfies Record<Time.Unit, TypedT>;
 }
 
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
