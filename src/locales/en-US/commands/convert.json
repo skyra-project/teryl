@@ -30,6 +30,7 @@
 	"massGram": "Gram",
 	"massKilogram": "Kilogram",
 	"massOunce": "Ounce",
+	"massPound": "Pound",
 	"massTon": "Ton",
 	"massTonne": "Tonne",
 
@@ -76,6 +77,7 @@
 	"unitGram": "{{value, number(style: unit; unit: gram; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitKilogram": "{{value, number(style: unit; unit: kilogram; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitOunce": "{{value, number(style: unit; unit: ounce; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+	"unitPound": "{{value, number(style: unit; unit: pound; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitTon": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} tons",
 	"unitTonne": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} metric tons",
 

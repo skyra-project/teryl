@@ -98,6 +98,7 @@ namespace Mass {
 		Gram = 'gram',
 		Kilogram = 'kilogram',
 		Ounce = 'ounce',
+		Pound = 'pound',
 		Ton = 'ton',
 		Tonne = 'tonne'
 	}
@@ -108,6 +109,7 @@ namespace Mass {
 		[Unit.Gram]: BigDecimal(0.001),
 		[Unit.Kilogram]: BigDecimal(1n),
 		[Unit.Ounce]: BigDecimal(0.028349523125),
+		[Unit.Pound]: BigDecimal(0.45359237),
 		[Unit.Ton]: BigDecimal(1016.0469088),
 		[Unit.Tonne]: BigDecimal(1000n)
 	};
@@ -118,6 +120,7 @@ namespace Mass {
 		[Unit.Gram]: LanguageKeys.Commands.Convert.UnitGram,
 		[Unit.Kilogram]: LanguageKeys.Commands.Convert.UnitKilogram,
 		[Unit.Ounce]: LanguageKeys.Commands.Convert.UnitOunce,
+		[Unit.Pound]: LanguageKeys.Commands.Convert.UnitPound,
 		[Unit.Ton]: LanguageKeys.Commands.Convert.UnitTon,
 		[Unit.Tonne]: LanguageKeys.Commands.Convert.UnitTonne
 	};
@@ -131,6 +134,7 @@ namespace Mass {
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassGram, { value: Unit.Gram }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassKilogram, { value: Unit.Kilogram }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassOunce, { value: Unit.Ounce }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassPound, { value: Unit.Pound }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTon, { value: Unit.Ton }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.MassTonne, { value: Unit.Tonne })
 			);
