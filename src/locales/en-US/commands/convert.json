@@ -21,6 +21,7 @@
 	"lengthCentimeter": "Centimeter",
 	"lengthMile": "Mile",
 	"lengthNauticalMile": "Nautical Mile",
+	"lengthMachSecond": "Mach Second",
 	"lengthParsec": "Parsec",
 
 	"massName": "mass",
@@ -80,6 +81,7 @@
 	"unitCentimeter": "{{value, number(style: unit; unit: centimeter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitNauticalMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+	"unitMachSecond": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} mach seconds",
 	"unitParsec": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} parsecs",
 
 	"unitElectronVolt": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}eV",
