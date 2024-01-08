@@ -120,3 +120,22 @@ export const UnitRankine = FT<{ value: number }>('commands/convert:unitRankine')
 export const UnitReaumur = FT<{ value: number }>('commands/convert:unitReaumur');
 export const UnitRomer = FT<{ value: number }>('commands/convert:unitRomer');
 export const UnitKelvin = FT<{ value: number }>('commands/convert:unitKelvin');
+
+export const UnitCubicCentimeter = FT<{ value: number }>('commands/convert:unitCubicCentimeter');
+export const UnitCubicFoot = FT<{ value: number }>('commands/convert:unitCubicFoot');
+export const UnitCubicInch = FT<{ value: number }>('commands/convert:unitCubicInch');
+export const UnitCubicMeter = FT<{ value: number }>('commands/convert:unitCubicMeter');
+export const UnitCubicYard = FT<{ value: number }>('commands/convert:unitCubicYard');
+export const UnitLiter = FT<{ value: number }>('commands/convert:unitLiter');
+export const UnitUsGallon = FT<{ value: number }>('commands/convert:unitUsGallon');
+export const UnitImperialGallon = FT<{ value: number }>('commands/convert:unitImperialGallon');
+
+export const Volume = 'commands/convert:volume';
+export const VolumeCubicCentimeter = T('commands/convert:volumeCubicCentimeter');
+export const VolumeCubicFoot = T('commands/convert:volumeCubicFoot');
+export const VolumeCubicInch = T('commands/convert:volumeCubicInch');
+export const VolumeCubicMeter = T('commands/convert:volumeCubicMeter');
+export const VolumeCubicYard = T('commands/convert:volumeCubicYard');
+export const VolumeLiter = T('commands/convert:volumeLiter');
+export const VolumeUsGallon = T('commands/convert:volumeUsGallon');
+export const VolumeImperialGallon = T('commands/convert:volumeImperialGallon');

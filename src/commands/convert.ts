@@ -298,6 +298,62 @@ namespace Temperature {
 	}
 }
 
+namespace Volume {
+	export interface Options {
+		amount?: number;
+		from: Unit;
+		to: Unit;
+	}
+
+	export const enum Unit {
+		CubicCentimeter = 'cubic-centimeter',
+		CubicFoot = 'cubic-foot',
+		CubicInch = 'cubic-inch',
+		CubicMeter = 'cubic-meter',
+		CubicYard = 'cubic-yard',
+		Liter = 'liter',
+		UsGallon = 'us-gallon',
+		ImperialGallon = 'imperial-gallon'
+	}
+
+	export const Units = {
+		[Unit.CubicCentimeter]: BigDecimal(0.000001),
+		[Unit.CubicFoot]: BigDecimal(0.028316846592),
+		[Unit.CubicInch]: BigDecimal(0.000016387064),
+		[Unit.CubicMeter]: BigDecimal(1n),
+		[Unit.CubicYard]: BigDecimal(0.764554857984),
+		[Unit.Liter]: BigDecimal(0.001),
+		[Unit.UsGallon]: BigDecimal(0.003785411784),
+		[Unit.ImperialGallon]: BigDecimal(0.00454609)
+	};
+
+	export const Keys = {
+		[Unit.CubicCentimeter]: LanguageKeys.Commands.Convert.UnitCubicCentimeter,
+		[Unit.CubicFoot]: LanguageKeys.Commands.Convert.UnitCubicFoot,
+		[Unit.CubicInch]: LanguageKeys.Commands.Convert.UnitCubicInch,
+		[Unit.CubicMeter]: LanguageKeys.Commands.Convert.UnitCubicMeter,
+		[Unit.CubicYard]: LanguageKeys.Commands.Convert.UnitCubicYard,
+		[Unit.Liter]: LanguageKeys.Commands.Convert.UnitLiter,
+		[Unit.UsGallon]: LanguageKeys.Commands.Convert.UnitUsGallon,
+		[Unit.ImperialGallon]: LanguageKeys.Commands.Convert.UnitImperialGallon
+	};
+
+	export function makeOption(key: LocalePrefixKey) {
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key)
+			.setRequired(true)
+			.addChoices(
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeCubicCentimeter, { value: Unit.CubicCentimeter }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeCubicFoot, { value: Unit.CubicFoot }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeCubicInch, { value: Unit.CubicInch }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeCubicMeter, { value: Unit.CubicMeter }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeCubicYard, { value: Unit.CubicYard }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeLiter, { value: Unit.Liter }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeUsGallon, { value: Unit.UsGallon }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.VolumeImperialGallon, { value: Unit.ImperialGallon })
+			);
+	}
+}
+
 namespace Speed {
 	export interface Options {
 		amount?: number;
@@ -393,6 +449,23 @@ export class UserCommand extends Command {
 			fromUnit: Temperature.Keys[options.from],
 			toUnit: Temperature.Keys[options.to],
 			value
+		});
+	}
+
+	@RegisterSubcommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Volume)
+			.addStringOption(Volume.makeOption(LanguageKeys.Commands.Convert.From))
+			.addStringOption(Volume.makeOption(LanguageKeys.Commands.Convert.To))
+			.addNumberOption(UserCommand.makeAmountOption())
+	)
+	public volume(interaction: Command.ChatInputInteraction, options: Volume.Options) {
+		return this.shared({
+			interaction,
+			amount: options.amount ?? 1,
+			fromRatio: Volume.Units[options.from],
+			fromUnit: Volume.Keys[options.from],
+			toRatio: Volume.Units[options.to],
+			toUnit: Volume.Keys[options.to]
 		});
 	}
 
