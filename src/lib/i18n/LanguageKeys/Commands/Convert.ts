@@ -29,6 +29,7 @@ export const MassGrain = T('commands/convert:massGrain');
 export const MassGram = T('commands/convert:massGram');
 export const MassKilogram = T('commands/convert:massKilogram');
 export const MassOunce = T('commands/convert:massOunce');
+export const MassPound = T('commands/convert:massPound');
 export const MassTon = T('commands/convert:massTon');
 export const MassTonne = T('commands/convert:massTonne');
 
@@ -73,6 +74,7 @@ export const UnitGrain = FT<{ value: number }>('commands/convert:unitGrain');
 export const UnitGram = FT<{ value: number }>('commands/convert:unitGram');
 export const UnitKilogram = FT<{ value: number }>('commands/convert:unitKilogram');
 export const UnitOunce = FT<{ value: number }>('commands/convert:unitOunce');
+export const UnitPound = FT<{ value: number }>('commands/convert:unitPound');
 export const UnitTon = FT<{ value: number }>('commands/convert:unitTon');
 export const UnitTonne = FT<{ value: number }>('commands/convert:unitTonne');
 
