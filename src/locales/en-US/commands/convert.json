@@ -127,5 +127,25 @@
 	"unitRankine": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°R",
 	"unitReaumur": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Ré",
 	"unitRomer": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}°Rø",
-	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K"
+	"unitKelvin": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}K",
+
+	"unitCubicCentimeter": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} cm³",
+	"unitCubicFoot": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} ft³",
+	"unitCubicInch": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} in³",
+	"unitCubicMeter": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} m³",
+	"unitCubicYard": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} yd³",
+	"unitLiter": "{{value, number(style: unit; unit: liter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+	"unitUsGallon": "{{value, number(style: unit; unit: gallon; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+	"unitImperialGallon": "{{value, number(style: unit; unit: gallon; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+
+	"volumeName": "volume",
+	"volumeDescription": "Converts one unit of volume to another",
+	"volumeCubicCentimeter": "Cubic Centimeter",
+	"volumeCubicFoot": "Cubic Foot",
+	"volumeCubicInch": "Cubic Inch",
+	"volumeCubicMeter": "Cubic Meter",
+	"volumeCubicYard": "Cubic Yard",
+	"volumeLiter": "Liter",
+	"volumeUsGallon": "US Gallon",
+	"volumeImperialGallon": "Imperial Gallon"
 }
