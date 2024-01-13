@@ -21,6 +21,7 @@ export const LengthMeter = T('commands/convert:lengthMeter');
 export const LengthCentimeter = T('commands/convert:lengthCentimeter');
 export const LengthMile = T('commands/convert:lengthMile');
 export const LengthNauticalMile = T('commands/convert:lengthNauticalMile');
+export const LengthMachSecond = T('commands/convert:lengthMachSecond');
 export const LengthParsec = T('commands/convert:lengthParsec');
 
 export const Mass = 'commands/convert:mass';
@@ -47,6 +48,19 @@ export const TimeTropicalMonth = T('commands/convert:timeTropicalMonth');
 export const TimeTropicalYear = T('commands/convert:timeTropicalYear');
 export const TimeWeek = T('commands/convert:timeWeek');
 
+export const TimeShortCentury = T('commands/convert:timeShortCentury');
+export const TimeShortDay = T('commands/convert:timeShortDay');
+export const TimeShortDecade = T('commands/convert:timeShortDecade');
+export const TimeShortHour = T('commands/convert:timeShortHour');
+export const TimeShortLunarYear = T('commands/convert:timeShortLunarYear');
+export const TimeShortMillennium = T('commands/convert:timeShortMillennium');
+export const TimeShortMinute = T('commands/convert:timeShortMinute');
+export const TimeShortMonth = T('commands/convert:timeShortMonth');
+export const TimeShortSecond = T('commands/convert:timeShortSecond');
+export const TimeShortTropicalMonth = T('commands/convert:timeShortTropicalMonth');
+export const TimeShortTropicalYear = T('commands/convert:timeShortTropicalYear');
+export const TimeShortWeek = T('commands/convert:timeShortWeek');
+
 export const Temperature = 'commands/convert:temperature';
 export const TemperatureCelsius = T('commands/convert:temperatureCelsius');
 export const TemperatureDelisle = T('commands/convert:temperatureDelisle');
@@ -56,6 +70,12 @@ export const TemperatureRankine = T('commands/convert:temperatureRankine');
 export const TemperatureReaumur = T('commands/convert:temperatureReaumur');
 export const TemperatureRomer = T('commands/convert:temperatureRomer');
 export const TemperatureKelvin = T('commands/convert:temperatureKelvin');
+
+export const Speed = 'commands/convert:speed';
+export const FromLength = 'commands/convert:fromLength';
+export const FromTime = 'commands/convert:fromTime';
+export const ToLength = 'commands/convert:toLength';
+export const ToTime = 'commands/convert:toTime';
 
 export const UnitAstronomicalUnit = FT<{ value: number }>('commands/convert:unitAstronomicalUnit');
 export const UnitFeet = FT<{ value: number }>('commands/convert:unitFeet');
@@ -67,6 +87,7 @@ export const UnitMeter = FT<{ value: number }>('commands/convert:unitMeter');
 export const UnitCentimeter = FT<{ value: number }>('commands/convert:unitCentimeter');
 export const UnitMile = FT<{ value: number }>('commands/convert:unitMile');
 export const UnitNauticalMile = FT<{ value: number }>('commands/convert:unitNauticalMile');
+export const UnitMachSecond = FT<{ value: number }>('commands/convert:unitMachSecond');
 export const UnitParsec = FT<{ value: number }>('commands/convert:unitParsec');
 
 export const UnitElectronVolt = FT<{ value: number }>('commands/convert:unitElectronVolt');

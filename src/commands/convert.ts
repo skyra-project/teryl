@@ -7,7 +7,8 @@ import {
 	getSupportedUserLanguageT,
 	resolveUserKey,
 	type LocalePrefixKey,
-	type TypedFT
+	type TypedFT,
+	type TypedT
 } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 import JSBD, { type Decimal } from 'jsbd';
@@ -35,6 +36,7 @@ namespace Length {
 		Centimeter = 'centimeter',
 		Mile = 'mile',
 		NauticalMile = 'nautical-mile',
+		MachSecond = 'mach-second',
 		Parsec = 'parsec'
 	}
 
@@ -49,6 +51,7 @@ namespace Length {
 		[Unit.Centimeter]: BigDecimal(0.01),
 		[Unit.Mile]: BigDecimal(1609.344),
 		[Unit.NauticalMile]: BigDecimal(1852n),
+		[Unit.MachSecond]: BigDecimal(343),
 		[Unit.Parsec]: BigDecimal(3.0856776e16)
 	};
 
@@ -63,6 +66,7 @@ namespace Length {
 		[Unit.Centimeter]: LanguageKeys.Commands.Convert.UnitCentimeter,
 		[Unit.Mile]: LanguageKeys.Commands.Convert.UnitMile,
 		[Unit.NauticalMile]: LanguageKeys.Commands.Convert.UnitNauticalMile,
+		[Unit.MachSecond]: LanguageKeys.Commands.Convert.UnitMachSecond,
 		[Unit.Parsec]: LanguageKeys.Commands.Convert.UnitParsec
 	};
 
@@ -80,6 +84,7 @@ namespace Length {
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthCentimeter, { value: Unit.Centimeter }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMile, { value: Unit.Mile }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthNauticalMile, { value: Unit.NauticalMile }),
+				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthMachSecond, { value: Unit.MachSecond }),
 				createSelectMenuChoiceName(LanguageKeys.Commands.Convert.LengthParsec, { value: Unit.Parsec })
 			);
 	}
@@ -293,6 +298,31 @@ namespace Temperature {
 	}
 }
 
+namespace Speed {
+	export interface Options {
+		amount?: number;
+		['from-length']: Length.Unit;
+		['from-time']: Time.Unit;
+		['to-length']: Length.Unit;
+		['to-time']: Time.Unit;
+	}
+
+	export const PerTimeKeys = {
+		[Time.Unit.Century]: LanguageKeys.Commands.Convert.TimeShortCentury,
+		[Time.Unit.Day]: LanguageKeys.Commands.Convert.TimeShortDay,
+		[Time.Unit.Decade]: LanguageKeys.Commands.Convert.TimeShortDecade,
+		[Time.Unit.Hour]: LanguageKeys.Commands.Convert.TimeShortHour,
+		[Time.Unit.LunarYear]: LanguageKeys.Commands.Convert.TimeShortLunarYear,
+		[Time.Unit.Millennium]: LanguageKeys.Commands.Convert.TimeShortMillennium,
+		[Time.Unit.Minute]: LanguageKeys.Commands.Convert.TimeShortMinute,
+		[Time.Unit.Month]: LanguageKeys.Commands.Convert.TimeShortMonth,
+		[Time.Unit.Second]: LanguageKeys.Commands.Convert.TimeShortSecond,
+		[Time.Unit.TropicalMonth]: LanguageKeys.Commands.Convert.TimeShortTropicalMonth,
+		[Time.Unit.TropicalYear]: LanguageKeys.Commands.Convert.TimeShortTropicalYear,
+		[Time.Unit.Week]: LanguageKeys.Commands.Convert.TimeShortWeek
+	} as const satisfies Record<Time.Unit, TypedT>;
+}
+
 @RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.RootName, LanguageKeys.Commands.Convert.RootDescription))
 export class UserCommand extends Command {
 	@RegisterSubcommand((builder) =>
@@ -364,6 +394,36 @@ export class UserCommand extends Command {
 			toUnit: Temperature.Keys[options.to],
 			value
 		});
+	}
+
+	@RegisterSubcommand((builder) =>
+		applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Speed)
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.FromLength))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.FromTime))
+			.addStringOption(Length.makeOption(LanguageKeys.Commands.Convert.ToLength))
+			.addStringOption(Time.makeOption(LanguageKeys.Commands.Convert.ToTime))
+			.addNumberOption(UserCommand.makeAmountOption())
+	)
+	public speed(interaction: Command.ChatInputInteraction, options: Speed.Options) {
+		const amount = options.amount ?? 1;
+		// @ts-expect-error JSBD has funny exports
+		const ratio = JSBD.divide(
+			// @ts-expect-error JSBD has funny exports
+			JSBD.divide(Length.Units[options['from-length']], Time.Units[options['from-time']]),
+			// @ts-expect-error JSBD has funny exports
+			JSBD.divide(Length.Units[options['to-length']], Time.Units[options['to-time']])
+		);
+		// @ts-expect-error JSBD has funny exports
+		const value = Number(JSBD.multiply(ratio, BigDecimal(amount)));
+
+		const t = getSupportedUserLanguageT(interaction);
+		const fromPerTime = t(Speed.PerTimeKeys[options['from-time']]);
+		const toPerTime = t(Speed.PerTimeKeys[options['to-time']]);
+		const from = `${t(Length.Keys[options['from-length']], { value: amount })}/${fromPerTime}`;
+		const to = `${t(Length.Keys[options['to-length']], { value })}/${toPerTime}`;
+
+		const content = resolveUserKey(interaction, LanguageKeys.Commands.Convert.Result, { from, to });
+		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private shared(data: SharedData) {

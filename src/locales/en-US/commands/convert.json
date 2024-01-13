@@ -21,6 +21,7 @@
 	"lengthCentimeter": "Centimeter",
 	"lengthMile": "Mile",
 	"lengthNauticalMile": "Nautical Mile",
+	"lengthMachSecond": "Mach Second",
 	"lengthParsec": "Parsec",
 
 	"massName": "mass",
@@ -49,6 +50,19 @@
 	"timeTropicalYear": "Tropical Year",
 	"timeWeek": "Week",
 
+	"timeShortCentury": "c",
+	"timeShortDay": "d",
+	"timeShortDecade": "de",
+	"timeShortHour": "h",
+	"timeShortLunarYear": "yr",
+	"timeShortMillennium": "mill",
+	"timeShortMinute": "min",
+	"timeShortMonth": "mo",
+	"timeShortSecond": "s",
+	"timeShortTropicalMonth": "trmo",
+	"timeShortTropicalYear": "tryr",
+	"timeShortWeek": "w",
+
 	"temperatureName": "temperature",
 	"temperatureDescription": "Converts one unit of temperature to another",
 	"temperatureCelsius": "Celsius",
@@ -60,6 +74,17 @@
 	"temperatureRomer": "Rømer",
 	"temperatureKelvin": "Kelvin",
 
+	"speedName": "speed",
+	"speedDescription": "Converts one unit of speed to another",
+	"fromLengthName": "from-length",
+	"fromLengthDescription": "The unit of length to convert from",
+	"fromTimeName": "from-time",
+	"fromTimeDescription": "The unit of time to convert from",
+	"toLengthName": "to-length",
+	"toLengthDescription": "The unit of length to convert to",
+	"toTimeName": "to-time",
+	"toTimeDescription": "The unit of time to convert to",
+
 	"unitAstronomicalUnit": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}AU",
 	"unitFeet": "{{value, number(style: unit; unit: foot; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitInch": "{{value, number(style: unit; unit: inch; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
@@ -70,6 +95,7 @@
 	"unitCentimeter": "{{value, number(style: unit; unit: centimeter; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
 	"unitNauticalMile": "{{value, number(style: unit; unit: mile; minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}",
+	"unitMachSecond": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} Ms",
 	"unitParsec": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}} parsecs",
 
 	"unitElectronVolt": "{{value, number(minimumSignificantDigits: 3; maximumSignificantDigits: 8)}}eV",
