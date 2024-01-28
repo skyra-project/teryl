@@ -50,6 +50,7 @@
 	"timeShortHour": "ч",
 	"timeShortMinute": "мин",
 	"timeShortMonth": "мес",
+	"timeShortSecond": "с",
 	"timeShortWeek": "нед",
 	"temperatureName": "температура",
 	"temperatureDescription": "Преобразует одну единицу измерения температуры в другую",
@@ -120,5 +121,7 @@
 	"volumeCubicInch": "Кубический дюйм",
 	"volumeCubicMeter": "Кубический метр",
 	"volumeCubicYard": "Кубический ярд",
-	"volumeLiter": "Литр"
+	"volumeLiter": "Литр",
+	"volumeUsGallon": "Американский галлон",
+	"volumeImperialGallon": "Имперский галлон"
 }
