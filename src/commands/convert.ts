@@ -27,31 +27,31 @@ namespace Length {
 
 	export const enum Unit {
 		AstronomicalUnit = 'astronomical-unit',
+		Centimeter = 'centimeter',
 		Feet = 'foot',
 		Inch = 'inch',
 		Kilometer = 'kilometer',
 		LightSecond = 'light-second',
 		LightYear = 'light-year',
+		MachSecond = 'mach-second',
 		Meter = 'meter',
-		Centimeter = 'centimeter',
 		Mile = 'mile',
 		NauticalMile = 'nautical-mile',
-		MachSecond = 'mach-second',
 		Parsec = 'parsec'
 	}
 
 	export const Units = {
 		[Unit.AstronomicalUnit]: BigDecimal(149597870691),
+		[Unit.Centimeter]: BigDecimal(0.01),
 		[Unit.Feet]: BigDecimal(0.3048),
 		[Unit.Inch]: BigDecimal(0.0254),
 		[Unit.Kilometer]: BigDecimal(1000n),
 		[Unit.LightSecond]: BigDecimal(299792458n),
 		[Unit.LightYear]: BigDecimal(9460730472580800n),
+		[Unit.MachSecond]: BigDecimal(343),
 		[Unit.Meter]: BigDecimal(1n),
-		[Unit.Centimeter]: BigDecimal(0.01),
 		[Unit.Mile]: BigDecimal(1609.344),
 		[Unit.NauticalMile]: BigDecimal(1852n),
-		[Unit.MachSecond]: BigDecimal(343),
 		[Unit.Parsec]: BigDecimal(3.0856776e16)
 	};
 
