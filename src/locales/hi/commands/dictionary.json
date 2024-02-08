@@ -3,5 +3,14 @@
 	"description": "एक शब्द की परिभाषा प्राप्त करें",
 	"optionsInputName": "इनपुट",
 	"optionsInputDescription": "परिभाषा पाने के लिए शब्द",
+	"contentTitle": "**शब्दकोश:** `{{value}}`",
+	"contentPhonetic": "ध्वन्यात्मक: `{{value}}`",
+	"contentLexicalCategory": "## {{index}}. शाब्दिक प्रकार: `{{value}}`",
+	"contentExample": "उदाहरण: `{{value}}`",
+	"contentDefinition": "### {{index}}. {{subIndex}}. परिभाषा:\n> {{value}}",
+	"fetchAbort": "मैं `{{value}}` की खोज नहीं कर सका क्योंकि Dictionary API ने 2 सेकंड के भीतर जवाब नहीं दिया, कृपया बाद में पुनः प्रयास करें।",
+	"fetchNoResults": "Dictionary API ने `{{value}}` के लिए कोई परिणाम नहीं दिया।",
+	"fetchRateLimited": "मैं `{{value}}` की खोज नहीं कर सका क्योंकि मैंने हाल ही में Dictionary API को बहुत सारे अनुरोध किए हैं। कृपया लगभग एक मिनट में पुन: प्रयास करें।",
+	"fetchServerError": "मैं `{{value}}` की खोज नहीं कर सका क्योंकि Dictionary API का सर्वर उपलब्ध नहीं है। कृपया बाद में पुन: प्रयास करें।",
 	"fetchUnknownError": "अज्ञात त्रुटि के कारण मैं `{{value}}` की खोज नहीं कर सका। कृपया इस बारे में मेरे डेवलपर्स से संपर्क करें।"
 }
