@@ -6,5 +6,8 @@
 	"fromName": "from",
 	"fromDescription": "The unit to convert from",
 	"toName": "to",
-	"toDescription": "The unit to convert to"
+	"toDescription": "The unit to convert to",
+	"unitNotSupported": "The unit `{{unit}}` is not supported.",
+	"mismatchingTypes": "The unit **{{fromUnit}}** cannot be converted to **{{toUnit}}**.",
+	"result": "**{{fromValue, number}} {{fromUnitSymbol}}** ({{fromUnitName}}) equals to **{{toValue, number}} {{toUnitSymbol}}** ({{toUnitName}})."
 }
