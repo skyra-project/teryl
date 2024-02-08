@@ -302,6 +302,7 @@ function makeUnits(...units: readonly UnitOptions[]): ReadonlyCollection<string,
 					...unit,
 					symbol: `${symbol}²`,
 					value: pow(unit.value, 2),
+					formulas: undefined,
 					prefixDimension: Root.Square,
 					types: [UnitType.Area]
 				})
@@ -313,6 +314,7 @@ function makeUnits(...units: readonly UnitOptions[]): ReadonlyCollection<string,
 					...unit,
 					symbol: `${symbol}³`,
 					value: pow(unit.value, 3),
+					formulas: undefined,
 					prefixDimension: Root.Cubic,
 					types: [UnitType.Volume]
 				})
