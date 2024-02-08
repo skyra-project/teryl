@@ -11,9 +11,9 @@ const Root = LanguageKeys.Commands.Convert;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true))
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true))
-		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount))
+		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true).setMaxLength(100))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true).setMaxLength(100))
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
@@ -34,7 +34,7 @@ export class UserCommand extends Command {
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
-		const fromValue = options.amount ?? 1;
+		const fromValue = options.amount;
 		const si = from.formulas.to(BigDecimal(fromValue));
 		const toValue = Number(to.formulas.from(si));
 
