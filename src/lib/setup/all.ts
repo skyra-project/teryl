@@ -6,6 +6,7 @@ import { setup as envRun } from '@skyra/env-utilities';
 import { initializeSentry, setInvite, setRepository } from '@skyra/shared-http-pieces';
 
 import '#lib/setup/canvas';
+import '#lib/setup/i18next';
 import '#lib/setup/schedules';
 import '@skyra/shared-http-pieces/register';
 

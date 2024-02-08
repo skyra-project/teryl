@@ -1,4 +1,4 @@
-import { T } from '@skyra/http-framework-i18n';
+import { FT, T } from '@skyra/http-framework-i18n';
 
 export const AstronomicalUnit = T('units:astronomicalUnit');
 export const Feet = T('units:feet');
@@ -55,3 +55,33 @@ export const Pint = T('units:pint');
 export const Quart = T('units:quart');
 export const Tablespoon = T('units:tablespoon');
 export const Teaspoon = T('units:teaspoon');
+
+export const PrefixUnit = FT<{ prefix: string; unit: string }>('units:prefixUnit');
+export const Quetta = T('units:quetta');
+export const Ronna = T('units:ronna');
+export const Yotta = T('units:yotta');
+export const Zetta = T('units:zetta');
+export const Exa = T('units:exa');
+export const Peta = T('units:peta');
+export const Tera = T('units:tera');
+export const Giga = T('units:giga');
+export const Mega = T('units:mega');
+export const Kilo = T('units:kilo');
+export const Hecto = T('units:hecto');
+export const Deca = T('units:deca');
+export const Deci = T('units:deci');
+export const Centi = T('units:centi');
+export const Milli = T('units:milli');
+export const Micro = T('units:micro');
+export const Nano = T('units:nano');
+export const Pico = T('units:pico');
+export const Femto = T('units:femto');
+export const Atto = T('units:atto');
+export const Zepto = T('units:zepto');
+export const Yocto = T('units:yocto');
+export const Ronto = T('units:ronto');
+export const Quecto = T('units:quecto');
+
+export const PrefixDimension = FT<{ dimension: string; unit: string }>('units:prefixDimension');
+export const Square = T('units:square');
+export const Cubic = T('units:cubic');

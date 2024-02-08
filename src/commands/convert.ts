@@ -1,10 +1,10 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BigDecimal } from '#lib/utilities/conversion/BigDecimal';
 import { toSuperscript } from '#lib/utilities/conversion/superscript';
-import { Units } from '#lib/utilities/conversion/units';
+import { Units, type Unit } from '#lib/utilities/conversion/units';
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey } from '@skyra/http-framework-i18n';
+import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Convert;
@@ -42,16 +42,23 @@ export class UserCommand extends Command {
 		const content = resolveUserKey(interaction, Root.Result, {
 			fromValue,
 			fromUnitSymbol: from.symbol,
-			fromUnitName: t(from.name),
+			fromUnitName: this.renderUnit(t, from),
 			toValue,
 			toUnitSymbol: to.symbol,
-			toUnitName: t(to.name)
+			toUnitName: this.renderUnit(t, to)
 		});
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
 	private sanitizeUnit(unit: string) {
 		return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? '°' : toSuperscript(number)));
+	}
+
+	private renderUnit(t: TFunction, unit: Unit) {
+		let name = t(unit.name);
+		if (unit.prefixMultiplier) name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
+		if (unit.prefixDimension) name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
+		return name;
 	}
 }
 
