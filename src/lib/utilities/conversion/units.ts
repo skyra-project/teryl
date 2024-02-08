@@ -294,6 +294,7 @@ function makeUnits(...units: readonly UnitOptions[]): ReadonlyCollection<string,
 	}
 
 	// Add square and cubic units:
+	const d1000 = BigDecimal(1000);
 	for (const [symbol, unit] of collection) {
 		if (unit.types.includes(UnitType.Length)) {
 			collection.set(
@@ -313,7 +314,8 @@ function makeUnits(...units: readonly UnitOptions[]): ReadonlyCollection<string,
 				makeUnit({
 					...unit,
 					symbol: `${symbol}³`,
-					value: pow(unit.value, 3),
+					// Multiply by 1000 to shift the SI unit from m³ to L (1 liter = 1 dm³)
+					value: mul(pow(unit.value, 3), d1000),
 					formulas: undefined,
 					prefixDimension: Root.Cubic,
 					types: [UnitType.Volume]
