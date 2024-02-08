@@ -6,5 +6,8 @@
 	"fromName": "van",
 	"fromDescription": "De eenheid om van te converteren",
 	"toName": "naar",
-	"toDescription": "De eenheid om naar te converteren"
+	"toDescription": "De eenheid om naar te converteren",
+	"unitNotSupported": "De eenheid`{{unit}}` wordt niet ondersteund.",
+	"mismatchingTypes": "De eenheid **{{fromUnit}}** kan niet geconverteerd worden naar **{{toUnit}}**.",
+	"result": "**{{fromValue, number}} {{fromUnitSymbol}}** ({{fromUnitName}}) is gelijk aan **{{toValue, number}} {{toUnitSymbol}}** ({{toUnitName}})."
 }
