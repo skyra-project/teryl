@@ -6,5 +6,8 @@
 	"fromName": "из",
 	"fromDescription": "Исходная единица измерения",
 	"toName": "в",
-	"toDescription": "Целевая единица измерения"
+	"toDescription": "Целевая единица измерения",
+	"unitNotSupported": "Единица измерения `{{unit}}` не поддерживается.",
+	"mismatchingTypes": "Единица измерения **{{fromUnit}}** не может быть преобразована в **{{toUnit}}**.",
+	"result": "**{{fromValue, number}} {{fromUnitSymbol}}** ({{fromUnitName}}) равно **{{toValue, number}} {{toUnitSymbol}}** ({{toUnitName}})."
 }
