@@ -10,6 +10,7 @@ import {
 	type DiscordEmoji
 } from '#lib/utilities/emoji';
 import { DiscordAPIError, HTTPError } from '@discordjs/rest';
+import { Transformer } from '@napi-rs/image';
 import { Result, err, ok } from '@sapphire/result';
 import { isNullish, isNullishOrEmpty, isNullishOrZero, tryParseURL, type Nullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
@@ -156,21 +157,25 @@ export class UserCommand extends Command {
 		}
 
 		const response = downloadResult.unwrap();
-		const validationResult = this.parseContentLength(response.headers.get('Content-Length')) //
+		const contentTypeResult = this.parseContentLength(response.headers.get('Content-Length')) //
 			.andThen(() => this.parseContentType(response.headers.get('Content-Type')));
+		if (contentTypeResult.isErr()) {
+			const content = resolveUserKey(interaction, contentTypeResult.unwrapErr());
+			return deferred.update({ content });
+		}
 
-		const content = await validationResult.match({
-			ok: (contentType) => this.performUpload(interaction, response, name, contentType),
+		const imageResult = await this.maybeCompressImage(Buffer.from(await response.arrayBuffer()), contentTypeResult.unwrap());
+		const content = await imageResult.match({
+			ok: (data) => this.performUpload(interaction, data.image, name, data.contentType),
 			err: (error) => resolveUserKey(interaction, error)
 		});
 		return deferred.update({ content });
 	}
 
-	private async performUpload(interaction: Command.ChatInputInteraction, response: Response, name: string, contentType: string) {
-		const buffer = await response.arrayBuffer();
+	private async performUpload(interaction: Command.ChatInputInteraction, buffer: Buffer, name: string, contentType: string) {
 		const body: RESTPostAPIGuildEmojiJSONBody = {
 			name,
-			image: `data:${contentType};base64,${Buffer.from(buffer).toString('base64')}`
+			image: `data:${contentType};base64,${buffer.toString('base64')}`
 		};
 		const reason = resolveKey(interaction, Root.UploadedBy, { user: interaction.member!.user });
 		const uploadResult = await Result.fromAsync(
@@ -246,10 +251,7 @@ export class UserCommand extends Command {
 		// Edge case (should never happen): error on invalid (NaN, non-integer, negative) Content-Length:
 		if (!Number.isSafeInteger(parsed) || parsed < 0) return err(Root.ContentLengthInvalid);
 
-		// `parsed` is in bytes, maximum upload size is 256 kilobytes. Error if Content-Length exceeds the limit:
-		if (parsed > 256000) return err(Root.ContentLengthTooBig);
-
-		return ok();
+		return ok(parsed);
 	}
 
 	private parseContentType(type: string | Nullish) {
@@ -262,13 +264,22 @@ export class UserCommand extends Command {
 			case 'image/jpeg':
 			case 'image/gif':
 			case 'image/webp':
-				return ok(type);
+				return ok(type as ContentType);
 		}
 
 		return err(Root.ContentTypeUnsupported);
 	}
 
+	private async maybeCompressImage(original: Buffer, contentType: ContentType) {
+		if (original.byteLength <= UserCommand.MaximumUploadSize) return ok({ image: original, contentType });
+		if (contentType === 'image/gif') return err(Root.ContentLengthTooBig);
+
+		const image = await new Transformer(original).fastResize({ width: 128, height: 128, fit: 2 }).webp(100);
+		return image.byteLength > UserCommand.MaximumUploadSize ? err(Root.ContentLengthTooBig) : ok({ image, contentType: 'image/webp' });
+	}
+
 	private static readonly NameValidatorRegExp = /^[0-9a-zA-Z_]{2,32}$/;
+	private static readonly MaximumUploadSize = 256 * 1024;
 }
 
 interface Options {
@@ -277,3 +288,5 @@ interface Options {
 	name?: string;
 	variant?: EmojiSource;
 }
+
+type ContentType = 'image/png' | 'image/jpg' | 'image/jpeg' | 'image/gif' | 'image/webp';

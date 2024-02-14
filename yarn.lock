@@ -348,6 +348,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emnapi/core@npm:^0.45.0":
+  version: 0.45.0
+  resolution: "@emnapi/core@npm:0.45.0"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/7736e53b6af05fe6e3bb49a7f59f93e7951a546704154e3758a408f8e1b2af9a0c88bab4508c02a023eb2baeefaab7fa9f666c4acd549be95684307886a5fadf
+  languageName: node
+  linkType: hard
+
+"@emnapi/runtime@npm:^0.45.0":
+  version: 0.45.0
+  resolution: "@emnapi/runtime@npm:0.45.0"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/be9f794e7c52bff178975c7287e48c84bdab63ed7d4f21f9239f8101fcc04f059bff9b1c5d730cf0c7a6d812231a46749208c315bc085bb5170882c1c9163676
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.19.10":
   version: 0.19.10
   resolution: "@esbuild/aix-ppc64@npm:0.19.10"
@@ -758,6 +776,148 @@ __metadata:
     "@napi-rs/canvas-win32-x64-msvc":
       optional: true
   checksum: 10/7f15bee29a30dae617ebcb7f76a8dfe0f44ebce01bc61c7931a3a6095a7f60555e369e5be31f0790feeddcfb1d16e9035780198734512bb539deaa17d3477b39
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-android-arm64@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-android-arm64@npm:1.8.0"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-darwin-arm64@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-darwin-arm64@npm:1.8.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-darwin-x64@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-darwin-x64@npm:1.8.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-freebsd-x64@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-freebsd-x64@npm:1.8.0"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-linux-arm-gnueabihf@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-linux-arm-gnueabihf@npm:1.8.0"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-linux-arm64-gnu@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-linux-arm64-gnu@npm:1.8.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-linux-arm64-musl@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-linux-arm64-musl@npm:1.8.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-linux-x64-gnu@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-linux-x64-gnu@npm:1.8.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-linux-x64-musl@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-linux-x64-musl@npm:1.8.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-wasm32-wasi@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-wasm32-wasi@npm:1.8.0"
+  dependencies:
+    "@napi-rs/wasm-runtime": "npm:^0.1.1"
+  conditions: cpu=wasm32
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-win32-ia32-msvc@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-win32-ia32-msvc@npm:1.8.0"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image-win32-x64-msvc@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image-win32-x64-msvc@npm:1.8.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/image@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@napi-rs/image@npm:1.8.0"
+  dependencies:
+    "@napi-rs/image-android-arm64": "npm:1.8.0"
+    "@napi-rs/image-darwin-arm64": "npm:1.8.0"
+    "@napi-rs/image-darwin-x64": "npm:1.8.0"
+    "@napi-rs/image-freebsd-x64": "npm:1.8.0"
+    "@napi-rs/image-linux-arm-gnueabihf": "npm:1.8.0"
+    "@napi-rs/image-linux-arm64-gnu": "npm:1.8.0"
+    "@napi-rs/image-linux-arm64-musl": "npm:1.8.0"
+    "@napi-rs/image-linux-x64-gnu": "npm:1.8.0"
+    "@napi-rs/image-linux-x64-musl": "npm:1.8.0"
+    "@napi-rs/image-wasm32-wasi": "npm:1.8.0"
+    "@napi-rs/image-win32-ia32-msvc": "npm:1.8.0"
+    "@napi-rs/image-win32-x64-msvc": "npm:1.8.0"
+  dependenciesMeta:
+    "@napi-rs/image-android-arm64":
+      optional: true
+    "@napi-rs/image-darwin-arm64":
+      optional: true
+    "@napi-rs/image-darwin-x64":
+      optional: true
+    "@napi-rs/image-freebsd-x64":
+      optional: true
+    "@napi-rs/image-linux-arm-gnueabihf":
+      optional: true
+    "@napi-rs/image-linux-arm64-gnu":
+      optional: true
+    "@napi-rs/image-linux-arm64-musl":
+      optional: true
+    "@napi-rs/image-linux-x64-gnu":
+      optional: true
+    "@napi-rs/image-linux-x64-musl":
+      optional: true
+    "@napi-rs/image-wasm32-wasi":
+      optional: true
+    "@napi-rs/image-win32-ia32-msvc":
+      optional: true
+    "@napi-rs/image-win32-x64-msvc":
+      optional: true
+  checksum: 10/3caa6eab66255a328fade140ac92d6d61b538bad14a92691f089430bf72941f794f56044d4432a391f4375238529450f3a38e2dbf862a51dd51c265308b3db33
+  languageName: node
+  linkType: hard
+
+"@napi-rs/wasm-runtime@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@napi-rs/wasm-runtime@npm:0.1.1"
+  dependencies:
+    "@emnapi/core": "npm:^0.45.0"
+    "@emnapi/runtime": "npm:^0.45.0"
+    "@tybys/wasm-util": "npm:^0.8.1"
+  checksum: 10/243b07483553ad73265aa8bd591047d28864672a22f3c61848509d1d3fb360b10eb1a012429fdca0eb7d88ef453d2fdfa34ead020e3a2317fbbd4ff35ae41917
   languageName: node
   linkType: hard
 
@@ -1247,6 +1407,7 @@ __metadata:
     "@discordjs/builders": "npm:^1.7.0"
     "@discordjs/collection": "npm:^2.0.0"
     "@napi-rs/canvas": "npm:^0.1.45"
+    "@napi-rs/image": "npm:^1.8.0"
     "@prisma/client": "npm:^5.9.1"
     "@sapphire/async-queue": "npm:^1.5.2"
     "@sapphire/duration": "npm:^1.1.2"
@@ -1316,6 +1477,15 @@ __metadata:
     "@sapphire/utilities": "npm:^3.15.2"
     "@skyra/safe-fetch": "npm:^1.1.3"
   checksum: 10/d93083b1b83c6f16f868e858f40025fffac8dcbef71047baf33f5867d044d6e22e7af2cbfef133530bc700f6b713900794b306910f0ed026476a43845c57787f
+  languageName: node
+  linkType: hard
+
+"@tybys/wasm-util@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@tybys/wasm-util@npm:0.8.1"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/4e1bb353313225e6c6901b49e969f7963e7802ddad0f79148f759c898d4fcb6761225c9dd622343810b6108a95ae3dfc9a716628dc5c1e40acb776d36d885bc4
   languageName: node
   linkType: hard
 
@@ -5608,7 +5778,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.5.2, tslib@npm:^2.6.2":
+"tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.5.2, tslib@npm:^2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10/bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
