@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@discordjs/builders": "^1.7.0",
 		"@discordjs/collection": "^2.0.0",
-		"@napi-rs/canvas": "^0.1.49",
+		"@napi-rs/canvas": "^0.1.50",
 		"@napi-rs/image": "^1.9.1",
 		"@prisma/client": "^5.10.2",
 		"@sapphire/async-queue": "^1.5.2",
@@ -47,7 +47,7 @@
 		"@skyra/weather-helpers": "^1.1.0",
 		"@vladfrangu/async_event_emitter": "^2.2.4",
 		"canvas-constructor": "^7.0.1",
-		"discord-api-types": "^0.37.70",
+		"discord-api-types": "^0.37.71",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.3.2",
@@ -65,7 +65,7 @@
 		"@types/gradient-string": "^1.1.5",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.11.20",
+		"@types/node": "^20.11.24",
 		"@types/tar": "^6.1.11",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
@@ -84,7 +84,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"discord-api-types": "^0.37.70",
+		"discord-api-types": "^0.37.71",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
