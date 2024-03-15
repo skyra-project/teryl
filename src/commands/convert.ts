@@ -11,12 +11,9 @@ const Root = LanguageKeys.Commands.Convert;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
-		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true)
-		)
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true).setMaxLength(100)
-		)
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true).setMaxLength(100)
-		)
+		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true).setMaxLength(100))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true).setMaxLength(100))
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
@@ -61,15 +58,18 @@ export class UserCommand extends Command {
 	}
 
 	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
-	public override autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>) {
+	public override autocompleteRun(
+		interaction: Command.AutocompleteInteraction, 
+		options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>
+	) {
 		const focusedOption = options.from || options.to;
 		return interaction.reply({
-			choices: this.queryUnitStrings(interaction, focusedOption),
+			choices: this.queryUnitStrings(interaction, focusedOption)
 		});
 	}
 
 	private sanitizeUnit(unit: string) {
-		return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? "°" : toSuperscript(number)));
+		return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? '°' : toSuperscript(number)));
 	}
 
 	private renderUnit(t: TFunction, unit: Unit) {
@@ -88,10 +88,7 @@ export class UserCommand extends Command {
 	}
 
 	// I get fuck all intellisense when using the vscode browser so don't mind the silliness
-	private queryUnitStrings(
-		interaction: Command.AutocompleteInteraction,
-		query: string
-	): APIApplicationCommandOptionChoice[] {
+	private queryUnitStrings(interaction: Command.AutocompleteInteraction, query: string): APIApplicationCommandOptionChoice[] {
 		const t = getSupportedUserLanguageT(interaction);
 		// something something search and grab 20 of them as that's the cap for the autocomplete
 		const queriedStrings = Units.reduce<APIApplicationCommandOptionChoice[]>((acc, cur: Unit) => {
