@@ -60,6 +60,22 @@ export class UserCommand extends Command {
 		if (unit.prefixDimension) name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
 		return name;
 	}
+
+	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
+	public override autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>) {
+		const focusedOption = options.from || options.to;
+		return interaction.reply({ choices: queryUnitStrings(interaction, focusedOption) });
+	}
+
+	// I get fuck all intellisense when using the vscode browser so don't mind the silliness
+	private queryUnitStrings(interaction: Command.AutocompleteInteraction, query: string): string[] {
+	// sort the unit strings
+	const unitStrings: Readonly<string[]> = Units.map(u => getSupportedUserLanguageT(interaction)(u.name));
+	// something something search and grab 20 of them as that's the cap for the autocomplete
+	const queriedStrings = unitStrings.reduce<string[]>((acc, cur) => { if (cur.includes(query) && acc.length < 20) return [...acc, cur]; else return acc; }, []);
+	// return that shit back to the autocomplete method to handle it and whatever the fuck, idk
+	return queriedStrings;
+}
 }
 
 interface Options {
