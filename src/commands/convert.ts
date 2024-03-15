@@ -64,7 +64,7 @@ export class UserCommand extends Command {
 	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
 	public override autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>) {
 		const focusedOption = options.from || options.to;
-		return interaction.reply({ choices: queryUnitStrings(interaction, focusedOption) });
+		return interaction.reply({ choices: this.queryUnitStrings(interaction, focusedOption) });
 	}
 
 	// I get fuck all intellisense when using the vscode browser so don't mind the silliness
