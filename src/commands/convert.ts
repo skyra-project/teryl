@@ -12,8 +12,8 @@ const Root = LanguageKeys.Commands.Convert;
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
 		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true))
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true).setMaxLength(100))
-		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true).setMaxLength(100))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setAutocomplete(true).setRequired(true).setMaxLength(100))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setAutocomplete(true).setRequired(true).setMaxLength(100))
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
@@ -57,12 +57,11 @@ export class UserCommand extends Command {
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
-	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
 	public override autocompleteRun(
 		interaction: Command.AutocompleteInteraction,
 		options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>
 	) {
-		const focusedOption = options.from || options.to;
+		const focusedOption = options[options.focused!];
 		return interaction.reply({
 			choices: this.queryUnitStrings(interaction, focusedOption)
 		});
@@ -87,17 +86,19 @@ export class UserCommand extends Command {
 		return name;
 	}
 
-	// I get fuck all intellisense when using the vscode browser so don't mind the silliness
-	private queryUnitStrings(interaction: Command.AutocompleteInteraction, query: string): APIApplicationCommandOptionChoice[] {
+	private queryUnitStrings(interaction: Command.AutocompleteInteraction, query = ''): APIApplicationCommandOptionChoice[] {
 		const t = getSupportedUserLanguageT(interaction);
-		// something something search and grab 20 of them as that's the cap for the autocomplete
-		const queriedStrings = Units.reduce<APIApplicationCommandOptionChoice[]>((acc, cur: Unit) => {
-			const unitString = t(cur.name);
-			if (unitString.includes(query) && acc.length < 20) return [...acc, { name: unitString, value: cur.symbol }];
+		return Units.reduce<APIApplicationCommandOptionChoice[]>((acc, cur: Unit) => {
+			let unitString = t(cur.name);
+			if (cur.prefixMultiplier)
+				unitString = t(LanguageKeys.Units.PrefixUnit, {
+					prefix: t(cur.prefixMultiplier),
+					unit: unitString
+				});
+			if (unitString.toLowerCase().includes(query.toLowerCase()) && acc.length < 20)
+				return [...acc, { name: `${cur.symbol} (${unitString})`, value: cur.symbol }];
 			return acc;
 		}, []);
-		// return that shit back to the autocomplete method to handle it and whatever the fuck, idk
-		return queriedStrings;
 	}
 }
 
