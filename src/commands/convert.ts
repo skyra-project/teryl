@@ -3,7 +3,7 @@ import { BigDecimal } from "#lib/utilities/conversion/BigDecimal";
 import { toSuperscript } from "#lib/utilities/conversion/superscript";
 import { Units, type Unit } from "#lib/utilities/conversion/units";
 import { isNullish } from "@sapphire/utilities";
-import { Command, RegisterCommand } from "@skyra/http-framework";
+import { Command, RegisterCommand, type AutocompleteInteractionArguments } from "@skyra/http-framework";
 import {
   applyLocalizedBuilder,
   getSupportedUserLanguageT,
