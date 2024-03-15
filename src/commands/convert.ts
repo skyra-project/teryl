@@ -1,11 +1,11 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BigDecimal } from '#lib/utilities/conversion/BigDecimal';
 import { toSuperscript } from '#lib/utilities/conversion/superscript';
-import { Units, type Unit } from '#lib/utilities/conversion/units';
+import { Units, searchUnits, type Unit } from '#lib/utilities/conversion/units';
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
-import { MessageFlags, type APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
+import { MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Convert;
 
@@ -63,7 +63,10 @@ export class UserCommand extends Command {
 	) {
 		const focusedOption = options[options.focused!];
 		return interaction.reply({
-			choices: this.queryUnitStrings(interaction, focusedOption)
+			choices: searchUnits(focusedOption, interaction.locale).map((unit) => ({
+				name: `${unit.value.symbol} (${this.renderUnit(getSupportedUserLanguageT(interaction), unit.value)})`,
+				value: unit.value.symbol
+			}))
 		});
 	}
 
@@ -84,21 +87,6 @@ export class UserCommand extends Command {
 				unit: name
 			});
 		return name;
-	}
-
-	private queryUnitStrings(interaction: Command.AutocompleteInteraction, query = ''): APIApplicationCommandOptionChoice[] {
-		const t = getSupportedUserLanguageT(interaction);
-		return Units.reduce<APIApplicationCommandOptionChoice[]>((acc, cur: Unit) => {
-			let unitString = t(cur.name);
-			if (cur.prefixMultiplier)
-				unitString = t(LanguageKeys.Units.PrefixUnit, {
-					prefix: t(cur.prefixMultiplier),
-					unit: unitString
-				});
-			if (unitString.toLowerCase().includes(query.toLowerCase()) && acc.length < 20)
-				return [...acc, { name: `${cur.symbol} (${unitString})`, value: cur.symbol }];
-			return acc;
-		}, []);
 	}
 }
 
