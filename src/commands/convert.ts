@@ -10,33 +10,20 @@ import { MessageFlags, type APIApplicationCommandOptionChoice } from 'discord-ap
 const Root = LanguageKeys.Commands.Convert;
 
 @RegisterCommand((builder) =>
-		applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
-		.addNumberOption((builder) =>
-			applyLocalizedBuilder(
-				builder,
-				LanguageKeys.Commands.Convert.Amount
-			).setRequired(true)
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true)
 		)
-		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, Root.From)
-				.setRequired(true)
-				.setMaxLength(100)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setRequired(true).setMaxLength(100)
 		)
-		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, Root.To)
-				.setRequired(true)
-				.setMaxLength(100)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.To).setRequired(true).setMaxLength(100)
 		)
 )
 export class UserCommand extends Command {
-	public override chatInputRun(
-		interaction: Command.ChatInputInteraction,
-		options: Options
-	) {
+	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const from = Units.get(this.sanitizeUnit(options.from));
 		if (isNullish(from)) {
 			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.from,
+				unit: options.from
 			});
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
@@ -44,7 +31,7 @@ export class UserCommand extends Command {
 		const to = Units.get(this.sanitizeUnit(options.to));
 		if (isNullish(to)) {
 			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.to,
+				unit: options.to
 			});
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
@@ -52,7 +39,7 @@ export class UserCommand extends Command {
 		if (!from.types.some((type) => to.types.includes(type))) {
 			const content = resolveUserKey(interaction, Root.MismatchingTypes, {
 				fromUnit: from.symbol,
-				toUnit: to.symbol,
+				toUnit: to.symbol
 			});
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
@@ -68,15 +55,21 @@ export class UserCommand extends Command {
 			fromUnitName: this.renderUnit(t, from),
 			toValue,
 			toUnitSymbol: to.symbol,
-			toUnitName: this.renderUnit(t, to),
+			toUnitName: this.renderUnit(t, to)
 		});
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
+	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
+	public override autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>) {
+		const focusedOption = options.from || options.to;
+		return interaction.reply({
+			choices: this.queryUnitStrings(interaction, focusedOption),
+		});
+	}
+
 	private sanitizeUnit(unit: string) {
-		return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) =>
-			degree ? "°" : toSuperscript(number)
-		);
+		return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? "°" : toSuperscript(number)));
 	}
 
 	private renderUnit(t: TFunction, unit: Unit) {
@@ -84,25 +77,14 @@ export class UserCommand extends Command {
 		if (unit.prefixMultiplier)
 			name = t(LanguageKeys.Units.PrefixUnit, {
 				prefix: t(unit.prefixMultiplier),
-				unit: name,
+				unit: name
 			});
 		if (unit.prefixDimension)
 			name = t(LanguageKeys.Units.PrefixDimension, {
 				dimension: t(unit.prefixDimension),
-				unit: name,
+				unit: name
 			});
 		return name;
-	}
-
-	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
-	public override autocompleteRun(
-		interaction: Command.AutocompleteInteraction,
-		options: AutocompleteInteractionArguments<Omit<Options, "amount">>
-	) {
-		const focusedOption = options.from || options.to;
-		return interaction.reply({
-			choices: this.queryUnitStrings(interaction, focusedOption),
-		});
 	}
 
 	// I get fuck all intellisense when using the vscode browser so don't mind the silliness
