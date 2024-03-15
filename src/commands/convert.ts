@@ -59,7 +59,7 @@ export class UserCommand extends Command {
 
 	// I'm still coding without any damn intellisense so I'm just 'winging it' with what I'm writing
 	public override autocompleteRun(
-		interaction: Command.AutocompleteInteraction, 
+		interaction: Command.AutocompleteInteraction,
 		options: AutocompleteInteractionArguments<Omit<Options, 'amount'>>
 	) {
 		const focusedOption = options.from || options.to;
