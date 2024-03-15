@@ -19,25 +19,18 @@ export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const from = Units.get(this.sanitizeUnit(options.from));
 		if (isNullish(from)) {
-			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.from
-			});
+			const content = resolveUserKey(interaction, Root.UnitNotSupported, { unit: options.from });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const to = Units.get(this.sanitizeUnit(options.to));
 		if (isNullish(to)) {
-			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.to
-			});
+			const content = resolveUserKey(interaction, Root.UnitNotSupported, { unit: options.to });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		if (!from.types.some((type) => to.types.includes(type))) {
-			const content = resolveUserKey(interaction, Root.MismatchingTypes, {
-				fromUnit: from.symbol,
-				toUnit: to.symbol
-			});
+			const content = resolveUserKey(interaction, Root.MismatchingTypes, { fromUnit: from.symbol, toUnit: to.symbol });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -76,16 +69,8 @@ export class UserCommand extends Command {
 
 	private renderUnit(t: TFunction, unit: Unit) {
 		let name = t(unit.name);
-		if (unit.prefixMultiplier)
-			name = t(LanguageKeys.Units.PrefixUnit, {
-				prefix: t(unit.prefixMultiplier),
-				unit: name
-			});
-		if (unit.prefixDimension)
-			name = t(LanguageKeys.Units.PrefixDimension, {
-				dimension: t(unit.prefixDimension),
-				unit: name
-			});
+		if (unit.prefixMultiplier) name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
+		if (unit.prefixDimension) name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
 		return name;
 	}
 }
