@@ -18,25 +18,18 @@ export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const from = Units.get(sanitizeUnit(options.from));
 		if (isNullish(from)) {
-			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.from
-			});
+			const content = resolveUserKey(interaction, Root.UnitNotSupported, { unit: options.from });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const to = Units.get(sanitizeUnit(options.to));
 		if (isNullish(to)) {
-			const content = resolveUserKey(interaction, Root.UnitNotSupported, {
-				unit: options.to
-			});
+			const content = resolveUserKey(interaction, Root.UnitNotSupported, { unit: options.to });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		if (!from.types.some((type) => to.types.includes(type))) {
-			const content = resolveUserKey(interaction, Root.MismatchingTypes, {
-				fromUnit: from.symbol,
-				toUnit: to.symbol
-			});
+			const content = resolveUserKey(interaction, Root.MismatchingTypes, { fromUnit: from.symbol, toUnit: to.symbol });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
