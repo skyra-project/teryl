@@ -351,10 +351,8 @@ export function sanitizeUnit(unit: string) {
 
 export function renderUnit(t: TFunction, unit: Unit) {
 	let name = t(unit.name);
-	if (unit.prefixMultiplier)
-		name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
-	if (unit.prefixDimension)
-		name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
+	if (unit.prefixMultiplier) name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
+	if (unit.prefixDimension) name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
 	return name;
 }
 
@@ -413,14 +411,14 @@ export function searchUnits(id: string, locale: LocaleString): readonly UnitSear
 	for (const [symbol, names] of getNameMappings(locale).entries()) {
 		const unit = Units.get(symbol)!;
 
-		let highestScoredResult: UnitSearchResult | null = null;
+		let highestScoredResult = 0;
 		for (const name of names) {
 			const score = getSearchScore(id, symbol, name);
-			if (highestScoredResult === null || score > highestScoredResult.score) {
-				highestScoredResult = { score, value: unit };
+			if (score > highestScoredResult) {
+				highestScoredResult = score;
 			}
 		}
-		if (highestScoredResult!.score !== 0) entries.push(highestScoredResult!);
+		if (highestScoredResult !== 0) entries.push({ score: highestScoredResult, value: unit });
 	}
 
 	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
