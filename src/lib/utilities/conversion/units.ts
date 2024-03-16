@@ -1,10 +1,10 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BigDecimal, div, eq, mul, pow, type Decimal } from '#lib/utilities/conversion/BigDecimal';
+import { toSuperscript } from '#lib/utilities/conversion/superscript';
 import { Formulas, TemperatureUnit } from '#lib/utilities/conversion/temperature';
 import { Collection, type ReadonlyCollection } from '@discordjs/collection';
 import { getT, loadedLocales, type TFunction, type TypedT } from '@skyra/http-framework-i18n';
 import type { LocaleString } from 'discord-api-types/v10';
-import { toSuperscript } from './superscript.js';
 
 export interface Formula {
 	readonly from: (si: Decimal) => Decimal;
@@ -411,14 +411,11 @@ export function searchUnits(id: string, locale: LocaleString): readonly UnitSear
 	for (const [symbol, names] of getNameMappings(locale).entries()) {
 		const unit = Units.get(symbol)!;
 
-		let highestScoredResult = 0;
+		let score = 0;
 		for (const name of names) {
-			const score = getSearchScore(id, symbol, name);
-			if (score > highestScoredResult) {
-				highestScoredResult = score;
-			}
+			score = Math.max(score, getSearchScore(id, symbol, name));
 		}
-		if (highestScoredResult !== 0) entries.push({ score: highestScoredResult, value: unit });
+		if (score !== 0) entries.push({ score, value: unit });
 	}
 
 	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
