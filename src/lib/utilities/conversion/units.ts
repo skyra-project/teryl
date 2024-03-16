@@ -427,10 +427,9 @@ export function searchUnits(id: string, locale: LocaleString): readonly UnitSear
 			}
 		}
 		if (highestScoredResult!.score !== 0) entries.push(highestScoredResult!);
-		if (entries.length >= 25) break;
 	}
 
-	return entries.sort((a, b) => b.score - a.score);
+	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
 }
 
 function getSearchScore(id: string, symbol: string, unitName: string) {
