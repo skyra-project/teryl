@@ -2,8 +2,9 @@ import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BigDecimal, div, eq, mul, pow, type Decimal } from '#lib/utilities/conversion/BigDecimal';
 import { Formulas, TemperatureUnit } from '#lib/utilities/conversion/temperature';
 import { Collection, type ReadonlyCollection } from '@discordjs/collection';
-import { getT, loadedLocales, type TypedT } from '@skyra/http-framework-i18n';
+import { getT, loadedLocales, type TFunction, type TypedT } from '@skyra/http-framework-i18n';
 import type { LocaleString } from 'discord-api-types/v10';
+import { toSuperscript } from './superscript.js';
 
 export interface Formula {
 	readonly from: (si: Decimal) => Decimal;
@@ -344,6 +345,25 @@ function makeUnit(unit: UnitOptions): Unit {
 	};
 }
 
+export function sanitizeUnit(unit: string) {
+	return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? '°' : toSuperscript(number)));
+}
+
+export function renderUnit(t: TFunction, unit: Unit) {
+	let name = t(unit.name);
+	if (unit.prefixMultiplier)
+		name = t(LanguageKeys.Units.PrefixUnit, {
+			prefix: t(unit.prefixMultiplier),
+			unit: name
+		});
+	if (unit.prefixDimension)
+		name = t(LanguageKeys.Units.PrefixDimension, {
+			dimension: t(unit.prefixDimension),
+			unit: name
+		});
+	return name;
+}
+
 export const defaults = [
 	'm', // Meter
 	'cm', // Centimeter
@@ -361,12 +381,14 @@ export const defaults = [
 	'in' // Inch
 ].map((u) => Units.get(u)!);
 
-const NameMappings = new Collection<LocaleString, Collection<string, string>>();
+const NameMappings = new Collection<LocaleString, Collection<string, Set<string>>>();
 
-function createNameMappings(locale: LocaleString, collection: Collection<string, string> = new Collection()) {
+function createNameMappings(locale: LocaleString) {
+	const collection = new Collection<string, Set<string>>();
 	const t = getT(locale);
 	for (const unit of Units.values()) {
-		collection.set(`${unit.symbol}-${locale}`, t(unit.name).toLowerCase());
+		const name = renderUnit(t, unit);
+		collection.ensure(unit.symbol, () => new Set()).add(name.toLowerCase());
 	}
 	return collection;
 }
@@ -375,7 +397,11 @@ const enUSNameMappings = createNameMappings('en-US');
 NameMappings.set('en-US', enUSNameMappings);
 for (const locale of loadedLocales) {
 	if (locale === 'en-US') continue;
-	NameMappings.set(locale, createNameMappings(locale, enUSNameMappings.clone()));
+	NameMappings.set(locale, createNameMappings(locale));
+	const collection = NameMappings.get(locale)!;
+	for (const [symbol, names] of enUSNameMappings.entries()) {
+		collection.get(symbol)!.add([...names][0]);
+	}
 }
 
 export function getNameMappings(locale: LocaleString) {
@@ -388,40 +414,23 @@ export function searchUnits(id: string, locale: LocaleString): readonly UnitSear
 	if (id.length === 0) return defaults.map((value) => ({ score: 1, value }));
 	if (id.length > MaximumLength) return [];
 
-	id = id.toLowerCase();
+	id = sanitizeUnit(id).toLowerCase();
 	const entries = [] as UnitSearchResult[];
-	const t = getT(locale);
-	for (const [symbolAndLocale, unitName] of getNameMappings(locale).entries()) {
-		const [symbol] = symbolAndLocale.split('-', 1);
+	for (const [symbol, names] of getNameMappings(locale).entries()) {
 		const unit = Units.get(symbol)!;
-		let name = unitName;
-		if (unit.prefixMultiplier)
-			name = t(LanguageKeys.Units.PrefixUnit, {
-				prefix: t(unit.prefixMultiplier),
-				unit: name
-			});
-		if (unit.prefixDimension)
-			name = t(LanguageKeys.Units.PrefixDimension, {
-				dimension: t(unit.prefixDimension),
-				unit: name
-			});
-		const score = getSearchScore(id.toLowerCase(), symbol.toLowerCase(), name.toLowerCase());
-		if (score !== 0) entries.push({ score, value: unit });
-	}
 
-	const deduplicatedCollection = new Collection<string, UnitSearchResult>();
-	for (const entry of entries) {
-		const existing = deduplicatedCollection.get(entry.value.symbol);
-		if (existing) {
-			if (entry.score > existing.score) {
-				deduplicatedCollection.set(entry.value.symbol, entry);
+		let highestScoredResult: UnitSearchResult | null = null;
+		for (const name of names) {
+			const score = getSearchScore(id, symbol, name);
+			if (highestScoredResult === null || score > highestScoredResult.score) {
+				highestScoredResult = { score, value: unit };
 			}
-		} else {
-			deduplicatedCollection.set(entry.value.symbol, entry);
 		}
+		if (highestScoredResult!.score !== 0) entries.push(highestScoredResult!);
+		if (entries.length >= 25) break;
 	}
 
-	return [...deduplicatedCollection.sort((a, b) => b.score - a.score).values()].slice(0, 25);
+	return entries.sort((a, b) => b.score - a.score);
 }
 
 function getSearchScore(id: string, symbol: string, unitName: string) {
