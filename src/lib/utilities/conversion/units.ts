@@ -352,15 +352,9 @@ export function sanitizeUnit(unit: string) {
 export function renderUnit(t: TFunction, unit: Unit) {
 	let name = t(unit.name);
 	if (unit.prefixMultiplier)
-		name = t(LanguageKeys.Units.PrefixUnit, {
-			prefix: t(unit.prefixMultiplier),
-			unit: name
-		});
+		name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
 	if (unit.prefixDimension)
-		name = t(LanguageKeys.Units.PrefixDimension, {
-			dimension: t(unit.prefixDimension),
-			unit: name
-		});
+		name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
 	return name;
 }
 
