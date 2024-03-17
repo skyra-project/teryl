@@ -44,7 +44,7 @@ export function getSelectMenuValue(result: YouTubeResultId) {
 }
 
 function getChannelId(id: string) {
-	return `https://koutube.com/channel/${id}` as const;
+	return `https://koutu.be/channel/${id}` as const;
 }
 
 function getPlaylistId(id: string) {
