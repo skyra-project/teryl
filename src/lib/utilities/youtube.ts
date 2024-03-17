@@ -48,7 +48,7 @@ function getChannelId(id: string) {
 }
 
 function getPlaylistId(id: string) {
-	return `https://koutube.com/playlist?list=${id}` as const;
+	return `https://koutu.be/playlist?list=${id}` as const;
 }
 
 function getVideoId(id: string) {
