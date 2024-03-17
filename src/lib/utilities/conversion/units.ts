@@ -1,8 +1,10 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { BigDecimal, div, eq, mul, pow, type Decimal } from '#lib/utilities/conversion/BigDecimal';
+import { toSuperscript } from '#lib/utilities/conversion/superscript';
 import { Formulas, TemperatureUnit } from '#lib/utilities/conversion/temperature';
 import { Collection, type ReadonlyCollection } from '@discordjs/collection';
-import type { TypedT } from '@skyra/http-framework-i18n';
+import { getT, loadedLocales, type TFunction, type TypedT } from '@skyra/http-framework-i18n';
+import type { LocaleString } from 'discord-api-types/v10';
 
 export interface Formula {
 	readonly from: (si: Decimal) => Decimal;
@@ -341,4 +343,94 @@ function makeUnit(unit: UnitOptions): Unit {
 				: { from: (si) => div(unit.formulas!.from(si), unit.value), to: (value) => mul(unit.formulas!.to(value), unit.value) }
 			: { from: (si) => div(si, unit.value), to: (value) => mul(value, unit.value) }
 	};
+}
+
+export function sanitizeUnit(unit: string) {
+	return unit.replaceAll(/(º)|\^(\d+)/g, (_, degree, number) => (degree ? '°' : toSuperscript(number)));
+}
+
+export function renderUnit(t: TFunction, unit: Unit) {
+	let name = t(unit.name);
+	if (unit.prefixMultiplier) name = t(LanguageKeys.Units.PrefixUnit, { prefix: t(unit.prefixMultiplier), unit: name });
+	if (unit.prefixDimension) name = t(LanguageKeys.Units.PrefixDimension, { dimension: t(unit.prefixDimension), unit: name });
+	return name;
+}
+
+export const defaults = [
+	'm', // Meter
+	'cm', // Centimeter
+	'km', // Kilometer
+	'mm', // Millimeter
+	'dm', // Decimeter
+	'dam', // Decameter
+	'lb', // Pound
+	'kg', // Kilogram
+	'US gal', // Gallon
+	'L', // Liter
+	'ft', // Foot
+	'mi', // Mile
+	'fl oz', // Fluid Ounce
+	'in' // Inch
+].map((u) => Units.get(u)!);
+
+const NameMappings = new Collection<LocaleString, Collection<string, Set<string>>>();
+
+function createNameMappings(locale: LocaleString) {
+	const collection = new Collection<string, Set<string>>();
+	const t = getT(locale);
+	for (const unit of Units.values()) {
+		const name = renderUnit(t, unit);
+		collection.ensure(unit.symbol, () => new Set()).add(name.toLowerCase());
+	}
+	return collection;
+}
+
+const enUSNameMappings = createNameMappings('en-US');
+NameMappings.set('en-US', enUSNameMappings);
+for (const locale of loadedLocales) {
+	if (locale === 'en-US') continue;
+	NameMappings.set(locale, createNameMappings(locale));
+	const collection = NameMappings.get(locale)!;
+	for (const [symbol, names] of enUSNameMappings.entries()) {
+		collection.get(symbol)!.add([...names][0]);
+	}
+}
+
+export function getNameMappings(locale: LocaleString) {
+	return NameMappings.get(locale) ?? NameMappings.get('en-US')!;
+}
+
+const MaximumLength = 100;
+
+export function searchUnits(id: string, locale: LocaleString): readonly UnitSearchResult[] {
+	if (id.length === 0) return defaults.map((value) => ({ score: 1, value }));
+	if (id.length > MaximumLength) return [];
+
+	id = sanitizeUnit(id).toLowerCase();
+	const entries = [] as UnitSearchResult[];
+	for (const [symbol, names] of getNameMappings(locale).entries()) {
+		const unit = Units.get(symbol)!;
+
+		let score = 0;
+		for (const name of names) {
+			score = Math.max(score, getSearchScore(id, symbol, name));
+		}
+		if (score !== 0) entries.push({ score, value: unit });
+	}
+
+	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
+}
+
+function getSearchScore(id: string, symbol: string, unitName: string) {
+	if ([symbol, unitName].includes(id)) return 1;
+
+	let score = symbol.includes(id) ? id.length / symbol.length : 0;
+	if (unitName.includes(id)) score = Math.max(score, id.length / unitName.length);
+
+	return score;
+}
+
+export interface UnitSearchResult {
+	score: number;
+	value: Unit;
 }
