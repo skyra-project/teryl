@@ -47,7 +47,7 @@
 		"@skyra/weather-helpers": "^1.1.0",
 		"@vladfrangu/async_event_emitter": "^2.2.4",
 		"canvas-constructor": "^7.0.1",
-		"discord-api-types": "^0.37.76",
+		"discord-api-types": "^0.37.77",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.3.2",
@@ -65,7 +65,7 @@
 		"@types/gradient-string": "^1.1.5",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.11.30",
+		"@types/node": "^20.12.2",
 		"@types/tar": "^6.1.11",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
@@ -84,7 +84,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"discord-api-types": "^0.37.76",
+		"discord-api-types": "^0.37.77",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
@@ -113,6 +113,6 @@
 	},
 	"packageManager": "yarn@4.1.1",
 	"volta": {
-		"node": "20.11.1"
+		"node": "20.12.0"
 	}
 }
