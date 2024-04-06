@@ -6,5 +6,8 @@
 	"fromName": "से",
 	"fromDescription": "से परिवर्तन करने के लिए इकाई",
 	"toName": "को",
-	"toDescription": "परिवर्तित करने के लिए इकाई"
+	"toDescription": "परिवर्तित करने के लिए इकाई",
+	"unitNotSupported": "इकाई `{{unit}}` समर्थित नहीं है।",
+	"mismatchingTypes": "इकाई **{{fromUnit}}** को **{{toUnit}}** में परिवर्तित नहीं किया जा सकता।",
+	"result": "**{{fromValue, number}} {{fromUnitSymbol}}** ({{fromUnitName}}) के बराबर है **{{toValue, number}} {{toUnitSymbol}}** ({{toUnitName}})।"
 }
