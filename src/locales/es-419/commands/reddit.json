@@ -10,6 +10,7 @@
 	"optionsPostName": "publicación",
 	"optionsPostDescription": "Enlace a una publicación de reddit",
 	"invalidName": "Los subreddits debe tener entre 3 y 21 caracteres, y contener solo letras, números o guiones bajos. Los prefijos `/r/` y `r/` también son compatibles.",
+	"invalidPostKey": "Las publicaciones deben tener una clave de al menos 6 caracteres, y contener solo letras y números.",
 	"banned": "El subreddit especificado no se considera seguro, por favor pruebe con otro.",
 	"post": "**{{title}}** publicado por {{author}}\n{{url}}",
 	"noPosts": "No hay mensajes disponibles en el subreddit especificado. Por favor, asegúrese de que ha escrito el nombre correctamente.",
