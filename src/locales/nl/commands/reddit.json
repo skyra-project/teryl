@@ -2,8 +2,6 @@
 	"name": "reddit",
 	"description": "Haal informatie van Reddit op",
 	"optionsRedditName": "reddit",
-	"optionsRedditDescription": "De subreddit om een bericht van op te halen",
-	"invalidName": "Subreddits moeten tussen 3 en 21 tekens lang zijn en mogen alleen letters, cijfers of liggende streepjes bevatten. Verder worden de `/r/` en `r/` voorvoegsels ook ondersteund.",
 	"banned": "De opgegeven subreddit wordt niet veilig geacht, probeer een andere.",
 	"post": "**{{title}}** ingediend door {{author}}\n{{url}}",
 	"noPosts": "Er zijn geen berichten beschikbaar in de opgegeven subreddit. Controleer of je de naam correct hebt ingevoerd.",
