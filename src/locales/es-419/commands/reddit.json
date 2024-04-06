@@ -2,8 +2,6 @@
 	"name": "reddit",
 	"description": "Provee información de Reddit",
 	"optionsRedditName": "reddit",
-	"optionsRedditDescription": "El subreddit de la cual obtener un post",
-	"invalidName": "Los subreddits debe tener entre 3 y 21 caracteres, y contener solo letras, números o guiones bajos. Además, los prefijos `/r/` y `r/` también son compatibles.",
 	"banned": "El subreddit especificado no se considera seguro, por favor pruebe con otro.",
 	"post": "**{{title}}** publicado por {{author}}\n{{url}}",
 	"noPosts": "No hay mensajes disponibles en el subreddit especificado. Por favor, asegúrese de que ha escrito el nombre correctamente.",
