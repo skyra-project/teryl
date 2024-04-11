@@ -11,6 +11,7 @@ import {
 	RedditParseException,
 	fetchRedditPost,
 	fetchRedditPosts,
+	getRedditRedirectPostUrl,
 	type CacheEntry,
 	type CacheHit,
 	type RedditError
@@ -53,7 +54,11 @@ export class UserCommand extends Command {
 		)
 	)
 	public async post(interaction: Command.ChatInputInteraction, args: PostOptions) {
-		const nameAndKey = UserCommand.SubredditAndPostRegExp.exec(args.post.toLowerCase());
+		const isShortlink = UserCommand.PostShortlinkRegExp.test(args.post);
+
+		const urlToFetch = isShortlink ? (await getRedditRedirectPostUrl(args.post)) ?? args.post : args.post;
+
+		const nameAndKey = UserCommand.SubredditAndPostRegExp.exec(urlToFetch.toLowerCase());
 
 		const name = nameAndKey?.groups?.subreddit;
 		if (isNullish(name)) {
@@ -181,6 +186,11 @@ export class UserCommand extends Command {
 	 * An alteration of {@link SubRedditNameRegExp} that also captures the post key.
 	 */
 	private static readonly SubredditAndPostRegExp = /(?:\/?r\/)?(?<subreddit>[a-zA-Z0-9]\w{2,20})\/comments\/(?<key>[a-zA-Z0-9]{6,})/;
+
+	/**
+	 * A regex that matches when a post shortlink is provided.
+	 */
+	private static readonly PostShortlinkRegExp = /(?:\/?r\/)?[a-zA-Z0-9]\w{2,20}\/s\/[a-zA-Z0-9]{6,}/;
 }
 
 type SubredditOptions = MakeArguments<{
