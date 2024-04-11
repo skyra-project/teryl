@@ -1350,9 +1350,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@skyra/reddit-helpers@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@skyra/reddit-helpers@npm:1.1.1"
+"@skyra/reddit-helpers@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@skyra/reddit-helpers@npm:1.2.0"
   dependencies:
     "@discordjs/formatters": "npm:^0.3.3"
     "@sapphire/result": "npm:^2.6.6"
@@ -1360,7 +1360,7 @@ __metadata:
     "@skyra/env-utilities": "npm:^1.3.0"
     "@skyra/safe-fetch": "npm:^1.1.3"
     he: "npm:^1.2.0"
-  checksum: 10/59809fdb4740d6f74f24d6a67be7ad235094d6192646145a03f5807299342bfa00a9ce450c2c3702c11274dc23fbc9d7e0558f8930253d28e3218ea1ac241819
+  checksum: 10/0f223fc5ae2c3af9910389149643a5e15198a8380da3299b644f16a304ccaeaa700509f93639d8e3beb9daf3a8523b62292fc5d1bbb4bce0d89881c6b850a3fc
   languageName: node
   linkType: hard
 
@@ -1419,7 +1419,7 @@ __metadata:
     "@skyra/http-framework": "npm:^2.1.0"
     "@skyra/http-framework-i18n": "npm:^1.2.0"
     "@skyra/logger": "npm:^2.0.3"
-    "@skyra/reddit-helpers": "npm:^1.1.1"
+    "@skyra/reddit-helpers": "npm:^1.2.0"
     "@skyra/safe-fetch": "npm:^1.1.3"
     "@skyra/shared-http-pieces": "npm:^1.2.2"
     "@skyra/start-banner": "npm:^2.0.1"

@@ -39,7 +39,7 @@
 		"@skyra/http-framework": "^2.1.0",
 		"@skyra/http-framework-i18n": "^1.2.0",
 		"@skyra/logger": "^2.0.3",
-		"@skyra/reddit-helpers": "^1.1.1",
+		"@skyra/reddit-helpers": "^1.2.0",
 		"@skyra/safe-fetch": "^1.1.3",
 		"@skyra/shared-http-pieces": "^1.2.2",
 		"@skyra/start-banner": "^2.0.1",

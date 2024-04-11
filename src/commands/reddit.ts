@@ -54,9 +54,9 @@ export class UserCommand extends Command {
 		)
 	)
 	public async post(interaction: Command.ChatInputInteraction, args: PostOptions) {
-		const isShortlink = UserCommand.PostShortlinkRegExp.test(args.post);
-
-		const urlToFetch = isShortlink ? (await getRedditRedirectPostUrl(args.post)) ?? args.post : args.post;
+		const urlToFetch = UserCommand.PostShortlinkRegExp.test(args.post) //
+			? (await getRedditRedirectPostUrl(args.post)) ?? args.post
+			: args.post;
 
 		const nameAndKey = UserCommand.SubredditAndPostRegExp.exec(urlToFetch.toLowerCase());
 
