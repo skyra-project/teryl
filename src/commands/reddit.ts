@@ -1,5 +1,6 @@
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { isNsfwChannel } from '#lib/utilities/discord-utilities';
+import { inlineCode, unorderedList } from '@discordjs/builders';
 import { Collection } from '@discordjs/collection';
 import { err, ok, type Result } from '@sapphire/result';
 import { isNullish } from '@sapphire/utilities';
@@ -19,14 +20,15 @@ import {
 import { isAbortError, type FetchError } from '@skyra/safe-fetch';
 import { MessageFlags } from 'discord-api-types/v10';
 
-@RegisterCommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reddit.RootName, LanguageKeys.Commands.Reddit.RootDescription))
+const Root = LanguageKeys.Commands.Reddit;
+
+@RegisterCommand((builder) => applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription))
 export class UserCommand extends Command {
 	private readonly forbidden = new Collection<string, { type: ForbiddenType; reason: string }>();
 
 	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reddit.Subreddit).addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Reddit.OptionsReddit).setMinLength(3).setMaxLength(24).setRequired(true)
-		)
+		applyLocalizedBuilder(builder, Root.Subreddit) //
+			.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsReddit).setMinLength(3).setMaxLength(24).setRequired(true))
 	)
 	public async subreddit(interaction: Command.ChatInputInteraction, args: SubredditOptions) {
 		const name = UserCommand.SubRedditNameRegExp.exec(args.reddit.toLowerCase())?.[1];
@@ -49,28 +51,21 @@ export class UserCommand extends Command {
 	}
 
 	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reddit.Post).addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Reddit.OptionsPost).setMinLength(10).setRequired(true)
-		)
+		applyLocalizedBuilder(builder, Root.Post) //
+			.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsPost).setMinLength(10).setRequired(true))
 	)
 	public async post(interaction: Command.ChatInputInteraction, args: PostOptions) {
-		const urlToFetch = UserCommand.PostShortlinkRegExp.test(args.post) //
+		const url = UserCommand.PostShortLinkRegExp.test(args.post) //
 			? (await getRedditRedirectPostUrl(args.post)) ?? args.post
 			: args.post;
 
-		const nameAndKey = UserCommand.SubredditAndPostRegExp.exec(urlToFetch.toLowerCase());
-
-		const name = nameAndKey?.groups?.subreddit;
-		if (isNullish(name)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reddit.InvalidName);
-			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		}
-		const key = nameAndKey?.groups?.key;
-		if (isNullish(key)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reddit.InvalidPostKey);
+		const match = UserCommand.SubredditAndPostRegExp.exec(url)?.groups;
+		if (isNullish(match)) {
+			const content = resolveUserKey(interaction, Root.InvalidPostLink, { formats: UserCommand.AllowedSubredditPostFormats });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
+		const { subreddit: name, key } = match;
 		const forbidden = this.getGatedMessage(interaction, name);
 		if (!isNullish(forbidden)) {
 			return interaction.reply({ content: forbidden, flags: MessageFlags.Ephemeral });
@@ -88,7 +83,7 @@ export class UserCommand extends Command {
 		const response = this.handleOkGetContent(interaction, result);
 		return response.match({
 			ok: (post) => ({
-				content: resolveKey(interaction, LanguageKeys.Commands.Reddit.PostResult, post),
+				content: resolveKey(interaction, Root.PostResult, post),
 				allowed_mentions: { roles: [], users: [] }
 			}),
 			err: (key) => ({ content: resolveUserKey(interaction, key), flags: MessageFlags.Ephemeral })
@@ -97,11 +92,11 @@ export class UserCommand extends Command {
 
 	private handleOkGetContent(interaction: Command.ChatInputInteraction, result: CacheHit): Result<CacheEntry, TypedT> {
 		if (result.posts.length === 0) {
-			return err(result.hasNsfl ? LanguageKeys.Commands.Reddit.AllNsfl : LanguageKeys.Commands.Reddit.NoPosts);
+			return err(result.hasNsfl ? Root.AllNsfl : Root.NoPosts);
 		}
 
 		const posts = result.hasNsfw && !isNsfwChannel(interaction.channel) ? result.posts.filter((post) => !post.nsfw) : result.posts;
-		return posts.length === 0 ? err(LanguageKeys.Commands.Reddit.AllNsfw) : ok(posts[Math.floor(Math.random() * posts.length)]);
+		return posts.length === 0 ? err(Root.AllNsfw) : ok(posts[Math.floor(Math.random() * posts.length)]);
 	}
 
 	private handleError(interaction: Command.ChatInputInteraction, reddit: string, error: FetchError | RedditParseException): MessageResponseOptions {
@@ -109,46 +104,46 @@ export class UserCommand extends Command {
 	}
 
 	private handleErrorGetContent(interaction: Command.ChatInputInteraction, reddit: string, error: FetchError | RedditParseException) {
-		if (isAbortError(error)) return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.AbortError);
+		if (isAbortError(error)) return resolveUserKey(interaction, Root.AbortError);
 
 		if (error instanceof RedditParseException) {
-			return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.ParsePostException);
+			return resolveUserKey(interaction, Root.ParsePostException);
 		}
 
 		const parsed = error.jsonBody as RedditError;
 		switch (parsed.error) {
 			case 403: {
-				if (parsed.reason === 'private') return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorPrivate);
-				if (parsed.reason === 'gold_only') return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorGoldOnly);
+				if (parsed.reason === 'private') return resolveUserKey(interaction, Root.UnavailableErrorPrivate);
+				if (parsed.reason === 'gold_only') return resolveUserKey(interaction, Root.UnavailableErrorGoldOnly);
 				if (parsed.reason === 'quarantined') {
 					const reason = this.forbid(reddit, ForbiddenType.Quarantined, parsed.quarantine_message);
-					return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorQuarantined, { reason });
+					return resolveUserKey(interaction, Root.UnavailableErrorQuarantined, { reason });
 				}
 				if (parsed.reason === 'gated') {
 					const reason = this.forbid(reddit, ForbiddenType.Quarantined, parsed.interstitial_warning_message);
-					return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorGated, { reason });
+					return resolveUserKey(interaction, Root.UnavailableErrorGated, { reason });
 				}
 				break;
 			}
 			case 404: {
 				if (!Reflect.has(parsed, 'reason')) {
-					return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorNotFound);
+					return resolveUserKey(interaction, Root.UnavailableErrorNotFound);
 				}
 				if (Reflect.get(parsed, 'reason') === 'banned') {
-					return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorBanned);
+					return resolveUserKey(interaction, Root.UnavailableErrorBanned);
 				}
 				break;
 			}
 			case 451: {
-				return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableForLegalReasons);
+				return resolveUserKey(interaction, Root.UnavailableForLegalReasons);
 			}
 			case 500: {
-				return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.Unavailable);
+				return resolveUserKey(interaction, Root.Unavailable);
 			}
 		}
 
 		this.container.logger.error('[Reddit] Unknown Error', parsed);
-		return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnknownError);
+		return resolveUserKey(interaction, Root.UnknownError);
 	}
 
 	private forbid(reddit: string, type: ForbiddenType, reason: string) {
@@ -161,7 +156,7 @@ export class UserCommand extends Command {
 
 	private getGatedMessage(interaction: Command.ChatInputInteraction, name: string) {
 		if (UserCommand.SubRedditBlockList.includes(name)) {
-			return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.Banned);
+			return resolveUserKey(interaction, Root.Banned);
 		}
 
 		const entry = this.forbidden.get(name);
@@ -169,28 +164,54 @@ export class UserCommand extends Command {
 
 		switch (entry.type) {
 			case ForbiddenType.Quarantined:
-				return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorQuarantined, { reason: entry.reason });
+				return resolveUserKey(interaction, Root.UnavailableErrorQuarantined, { reason: entry.reason });
 			case ForbiddenType.Gated:
-				return resolveUserKey(interaction, LanguageKeys.Commands.Reddit.UnavailableErrorGated, { reason: entry.reason });
+				return resolveUserKey(interaction, Root.UnavailableErrorGated, { reason: entry.reason });
 		}
 	}
 
 	private static readonly SubRedditBlockList = ['nsfl', 'morbidreality', 'watchpeopledie', 'fiftyfifty', 'stikk'];
+
 	/**
 	 * @see {@link https://github.com/reddit-archive/reddit/blob/753b17407e9a9dca09558526805922de24133d53/r2/r2/models/subreddit.py#L392-L408}
 	 * @see {@link https://github.com/reddit-archive/reddit/blob/753b17407e9a9dca09558526805922de24133d53/r2/r2/models/subreddit.py#L114}
+	 *
+	 * Allowed formats:
+	 *
+	 * - `{prefix}{subreddit}`
+	 * - `https://www.reddit.com/r/{subreddit}`
+	 *
+	 * Being `{prefix}` either an empty string, `r/`, or `/r/`.
 	 */
-	private static readonly SubRedditNameRegExp = /^(?:\/?r\/)?(?<subreddit>[a-zA-Z0-9]\w{2,20})$/;
+	private static readonly SubRedditNameRegExp = /(?:\/?r\/)?(?<subreddit>[a-zA-Z0-9]\w{2,20})$/;
 
 	/**
-	 * An alteration of {@link SubRedditNameRegExp} that also captures the post key.
+	 * An alteration of {@link SubRedditNameRegExp} that also captures the post key. Allowed formats:
+	 *
+	 * - `{prefix}{subreddit}/comments/{code}`
+	 * - `https://www.reddit.com/r/{subreddit}/comments/{code}/{name}`
+	 *
+	 * Being `{prefix}` either an empty string, `r/`, or `/r/`.
 	 */
 	private static readonly SubredditAndPostRegExp = /(?:\/?r\/)?(?<subreddit>[a-zA-Z0-9]\w{2,20})\/comments\/(?<key>[a-zA-Z0-9]{6,})/;
 
 	/**
-	 * A regex that matches when a post shortlink is provided.
+	 * A regex that matches when a post short link is provided. Allowed formats:
+	 *
+	 * - `{prefix}{subreddit}/s/{code}`
+	 * - `https://www.reddit.com/r/{subreddit}/s/{code}`
+	 *
+	 * Being `{prefix}` either an empty string, `r/`, or `/r/`.
 	 */
-	private static readonly PostShortlinkRegExp = /(?:\/?r\/)?[a-zA-Z0-9]\w{2,20}\/s\/[a-zA-Z0-9]{6,}/;
+	private static readonly PostShortLinkRegExp = /(?:\/?r\/)?[a-zA-Z0-9]\w{2,20}\/s\/[a-zA-Z0-9]{6,}/;
+
+	/**
+	 * A formatted string that contains the allowed subreddit post formats.
+	 */
+	private static readonly AllowedSubredditPostFormats = unorderedList([
+		inlineCode('https://www.reddit.com/r/{subreddit}/comments/{code}'),
+		inlineCode('https://www.reddit.com/r/{subreddit}/s/{code}')
+	]);
 }
 
 type SubredditOptions = MakeArguments<{
