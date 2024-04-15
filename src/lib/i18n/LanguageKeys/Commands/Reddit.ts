@@ -11,7 +11,7 @@ export const Subreddit = 'commands/reddit:subreddit';
 export const Post = 'commands/reddit:post';
 
 export const InvalidName = T('commands/reddit:invalidName');
-export const InvalidPostKey = T('commands/reddit:invalidPostKey');
+export const InvalidPostLink = FT<{ formats: string }>('commands/reddit:invalidPostLink');
 export const Banned = T('commands/reddit:banned');
 export const PostResult = FT<{ title: string; author: string; url: string }>('commands/reddit:post');
 export const NoPosts = T('commands/reddit:noPosts');
