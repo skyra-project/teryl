@@ -1,24 +1,132 @@
 import { EmbedColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { BidirectionalCategory, Category, Class, getUnicode } from '#lib/utilities/unicode';
+import { BidirectionalCategory, Category, Class, SearchCategory, getUnicode, searchUnicode } from '#lib/utilities/unicode';
 import { EmbedBuilder, bold, inlineCode, italic } from '@discordjs/builders';
 import { isNullish } from '@sapphire/utilities';
-import { Command, RegisterCommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, getSupportedUserLanguageT, type TFunction, type TypedT } from '@skyra/http-framework-i18n';
+import { Command, RegisterCommand, RegisterSubcommand } from '@skyra/http-framework';
+import {
+	applyLocalizedBuilder,
+	createSelectMenuChoiceName,
+	getSupportedUserLanguageT,
+	type TFunction,
+	type TypedT
+} from '@skyra/http-framework-i18n';
 import { MessageFlags } from 'discord-api-types/v10';
 
-@RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Unicode.RootName, LanguageKeys.Commands.Unicode.RootDescription).addStringOption((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Unicode.OptionsCharacter).setRequired(true)
-	)
-)
+const Root = LanguageKeys.Commands.Unicode;
+
+@RegisterCommand((builder) => applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription))
 export class UserCommand extends Command {
-	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
+	@RegisterSubcommand((builder) =>
+		applyLocalizedBuilder(builder, Root.Inspect) //
+			.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsCharacter).setRequired(true))
+	)
+	public async inspect(interaction: Command.ChatInputInteraction, options: InspectOptions) {
 		const ids = [...options.character];
 		const t = getSupportedUserLanguageT(interaction);
-		const content = ids.length > 10 ? t(LanguageKeys.Commands.Unicode.TooManyCharacters) : '';
+		const content = ids.length > 10 ? t(Root.TooManyCharacters) : '';
 		const embeds = ids.slice(0, 10).map((id) => this.getInformation(t, id));
 		return interaction.reply({ content, embeds, flags: MessageFlags.Ephemeral });
+	}
+
+	@RegisterSubcommand((builder) =>
+		applyLocalizedBuilder(builder, Root.Search) //
+			.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsCharacter).setRequired(true).setAutocomplete(true))
+			.addStringOption((builder) =>
+				applyLocalizedBuilder(builder, Root.OptionsCategory).setChoices(
+					createSelectMenuChoiceName(Root.CategoryControl, { value: 'Control' }),
+					createSelectMenuChoiceName(Root.CategoryFormat, { value: 'Format' }),
+					createSelectMenuChoiceName(Root.CategoryPrivateUse, { value: 'PrivateUse' }),
+					createSelectMenuChoiceName(Root.CategorySurrogate, { value: 'Surrogate' }),
+					createSelectMenuChoiceName(Root.CategoryLowercaseLetter, { value: 'LowercaseLetter' }),
+					createSelectMenuChoiceName(Root.CategoryModifierLetter, { value: 'ModifierLetter' }),
+					createSelectMenuChoiceName(Root.CategoryOtherLetter, { value: 'OtherLetter' }),
+					createSelectMenuChoiceName(Root.CategoryTitlecaseLetter, { value: 'TitlecaseLetter' }),
+					createSelectMenuChoiceName(Root.CategoryUppercaseLetter, { value: 'UppercaseLetter' }),
+					createSelectMenuChoiceName(Root.CategoryGroupMark, { value: 'Mark' }),
+					createSelectMenuChoiceName(Root.CategoryDecimalNumber, { value: 'DecimalNumber' }),
+					createSelectMenuChoiceName(Root.CategoryLetterNumber, { value: 'LetterNumber' }),
+					createSelectMenuChoiceName(Root.CategoryOtherNumber, { value: 'OtherNumber' }),
+					createSelectMenuChoiceName(Root.CategoryGroupPunctuation, { value: 'Punctuation' }),
+					createSelectMenuChoiceName(Root.CategoryCurrencySymbol, { value: 'CurrencySymbol' }),
+					createSelectMenuChoiceName(Root.CategoryModifierSymbol, { value: 'ModifierSymbol' }),
+					createSelectMenuChoiceName(Root.CategoryMathSymbol, { value: 'MathSymbol' }),
+					createSelectMenuChoiceName(Root.CategoryOtherSymbol, { value: 'OtherSymbol' }),
+					createSelectMenuChoiceName(Root.CategoryGroupSeparator, { value: 'Separator' })
+				)
+			)
+			.addNumberOption((builder) =>
+				applyLocalizedBuilder(builder, Root.OptionsBidirectionalCategory).setChoices(
+					createSelectMenuChoiceName(Root.CategoryBidirectionalArabicLetter, { value: BidirectionalCategory.ArabicLetter }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalArabicNumber, { value: BidirectionalCategory.ArabicNumber }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalParagraphSeparator, { value: BidirectionalCategory.ParagraphSeparator }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalBoundaryNeutral, { value: BidirectionalCategory.BoundaryNeutral }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalCommonSeparator, { value: BidirectionalCategory.CommonSeparator }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanNumber, { value: BidirectionalCategory.EuropeanNumber }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanSeparator, { value: BidirectionalCategory.EuropeanSeparator }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanTerminator, { value: BidirectionalCategory.EuropeanTerminator }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalFirstStrongIsolate, { value: BidirectionalCategory.FirstStrongIsolate }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRight, { value: BidirectionalCategory.LeftToRight }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightEmbedding, { value: BidirectionalCategory.LeftToRightEmbedding }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightIsolate, { value: BidirectionalCategory.LeftToRightIsolate }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightOverride, { value: BidirectionalCategory.LeftToRightOverride }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalNonSpacingMark, { value: BidirectionalCategory.NonSpacingMark }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalOtherNeutral, { value: BidirectionalCategory.OtherNeutral }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalPopDirectionalFormat, { value: BidirectionalCategory.PopDirectionalFormat }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalPopDirectionalIsolate, {
+						value: BidirectionalCategory.PopDirectionalIsolate
+					}),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeft, { value: BidirectionalCategory.RightToLeft }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftEmbedding, { value: BidirectionalCategory.RightToLeftEmbedding }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftIsolate, { value: BidirectionalCategory.RightToLeftIsolate }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftOverride, { value: BidirectionalCategory.RightToLeftOverride }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalSegmentSeparator, { value: BidirectionalCategory.SegmentSeparator }),
+					createSelectMenuChoiceName(Root.CategoryBidirectionalWhiteSpace, { value: BidirectionalCategory.WhiteSpace })
+				)
+			)
+			.addNumberOption((builder) =>
+				applyLocalizedBuilder(builder, Root.OptionsClass).setChoices(
+					createSelectMenuChoiceName(Root.ClassNotReordered, { value: Class.NotReordered }),
+					createSelectMenuChoiceName(Root.ClassOverlay, { value: Class.Overlay }),
+					createSelectMenuChoiceName(Root.ClassUnnamed, { value: Class.Unnamed }),
+					createSelectMenuChoiceName(Root.ClassNukta, { value: Class.Nukta }),
+					createSelectMenuChoiceName(Root.ClassKanaVoicing, { value: Class.KanaVoicing }),
+					createSelectMenuChoiceName(Root.ClassVirama, { value: Class.Virama }),
+					createSelectMenuChoiceName(Root.ClassAttachedBelow, { value: Class.AttachedBelow }),
+					createSelectMenuChoiceName(Root.ClassAttachedAbove, { value: Class.AttachedAbove }),
+					createSelectMenuChoiceName(Root.ClassAttachedAboveRight, { value: Class.AttachedAboveRight }),
+					createSelectMenuChoiceName(Root.ClassBelowLeft, { value: Class.BelowLeft }),
+					createSelectMenuChoiceName(Root.ClassBelow, { value: Class.Below }),
+					createSelectMenuChoiceName(Root.ClassBelowRight, { value: Class.BelowRight }),
+					createSelectMenuChoiceName(Root.ClassLeft, { value: Class.Left }),
+					createSelectMenuChoiceName(Root.ClassRight, { value: Class.Right }),
+					createSelectMenuChoiceName(Root.ClassAboveLeft, { value: Class.AboveLeft }),
+					createSelectMenuChoiceName(Root.ClassAbove, { value: Class.Above }),
+					createSelectMenuChoiceName(Root.ClassAboveRight, { value: Class.AboveRight }),
+					createSelectMenuChoiceName(Root.ClassDoubleBelow, { value: Class.DoubleBelow }),
+					createSelectMenuChoiceName(Root.ClassDoubleAbove, { value: Class.DoubleAbove }),
+					createSelectMenuChoiceName(Root.ClassIotaSubscript, { value: Class.IotaSubscript })
+				)
+			)
+	)
+	public search(interaction: Command.ChatInputInteraction, options: SearchOptions) {
+		return this.inspect(interaction, { character: options.character });
+	}
+
+	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: Command.AutocompleteArguments<SearchOptions>) {
+		const entries = searchUnicode({
+			character: options.character,
+			category: options.category,
+			bidirectionalCategory: options['bidirectional-category'],
+			class: options.class
+		});
+
+		return interaction.reply({
+			choices: entries.map((entry) => ({
+				name: `${entry.score === 1 ? '⭐' : '📄'} ${entry.value.unicodeName || entry.value.name} (${String.fromCodePoint(entry.value.id)})`,
+				value: String.fromCodePoint(entry.value.id)
+			}))
+		});
 	}
 
 	private getInformation(t: TFunction, character: string) {
@@ -29,11 +137,11 @@ export class UserCommand extends Command {
 
 		if (isNullish(unicode)) {
 			embed.setColor(EmbedColors.Error);
-			lines.push(t(LanguageKeys.Commands.Unicode.UnknownCharacter));
+			lines.push(t(Root.UnknownCharacter));
 		} else {
 			embed.setColor(UserCommand.UnicodeCategoryColorMapper[unicode.category]);
 			lines.push(
-				t(LanguageKeys.Commands.Unicode.InformationBasic, {
+				t(Root.InformationBasic, {
 					name: unicode.unicodeName || unicode.name,
 					category: t(UserCommand.UnicodeCategoryKeyMapper[unicode.category]),
 					bidirectionalCategory: t(UserCommand.UnicodeBidirectionalCategoryKeyMapper[unicode.bidirectionalCategory]),
@@ -43,18 +151,18 @@ export class UserCommand extends Command {
 							: t(UserCommand.UnicodeClassKeyMapper[unicode.class as keyof typeof UserCommand.UnicodeClassKeyMapper])
 				})
 			);
-			if (unicode.value) lines.push(t(LanguageKeys.Commands.Unicode.InformationValue, { value: unicode.value }));
-			if (unicode.mirrored) lines.push(t(LanguageKeys.Commands.Unicode.InformationMirrored));
+			if (unicode.value) lines.push(t(Root.InformationValue, { value: unicode.value }));
+			if (unicode.mirrored) lines.push(t(Root.InformationMirrored));
 			if (unicode.mapping.base) {
-				lines.push(t(LanguageKeys.Commands.Unicode.InformationMappingBase, { value: this.parseMapping(unicode.mapping.base) }));
+				lines.push(t(Root.InformationMappingBase, { value: this.parseMapping(unicode.mapping.base) }));
 			}
 			if (unicode.mapping.lowercase) {
-				lines.push(t(LanguageKeys.Commands.Unicode.InformationMappingLowercase, { value: this.parseMapping(unicode.mapping.lowercase) }));
+				lines.push(t(Root.InformationMappingLowercase, { value: this.parseMapping(unicode.mapping.lowercase) }));
 			}
 			if (unicode.mapping.uppercase) {
-				lines.push(t(LanguageKeys.Commands.Unicode.InformationMappingUppercase, { value: this.parseMapping(unicode.mapping.uppercase) }));
+				lines.push(t(Root.InformationMappingUppercase, { value: this.parseMapping(unicode.mapping.uppercase) }));
 			}
-			if (unicode.comment) lines.push(t(LanguageKeys.Commands.Unicode.InformationComment, { value: unicode.comment }));
+			if (unicode.comment) lines.push(t(Root.InformationComment, { value: unicode.comment }));
 		}
 
 		return embed.setDescription(lines.join('\n')).toJSON();
@@ -100,87 +208,94 @@ export class UserCommand extends Command {
 	} satisfies Record<Category, number>;
 
 	private static readonly UnicodeCategoryKeyMapper = {
-		[Category.Control]: LanguageKeys.Commands.Unicode.CategoryControl,
-		[Category.Format]: LanguageKeys.Commands.Unicode.CategoryFormat,
-		[Category.PrivateUse]: LanguageKeys.Commands.Unicode.CategoryPrivateUse,
-		[Category.Surrogate]: LanguageKeys.Commands.Unicode.CategorySurrogate,
-		[Category.LowercaseLetter]: LanguageKeys.Commands.Unicode.CategoryLowercaseLetter,
-		[Category.ModifierLetter]: LanguageKeys.Commands.Unicode.CategoryModifierLetter,
-		[Category.OtherLetter]: LanguageKeys.Commands.Unicode.CategoryOtherLetter,
-		[Category.TitlecaseLetter]: LanguageKeys.Commands.Unicode.CategoryTitlecaseLetter,
-		[Category.UppercaseLetter]: LanguageKeys.Commands.Unicode.CategoryUppercaseLetter,
-		[Category.SpacingMark]: LanguageKeys.Commands.Unicode.CategorySpacingMark,
-		[Category.EnclosingMark]: LanguageKeys.Commands.Unicode.CategoryEnclosingMark,
-		[Category.NonspacingMark]: LanguageKeys.Commands.Unicode.CategoryNonspacingMark,
-		[Category.DecimalNumber]: LanguageKeys.Commands.Unicode.CategoryDecimalNumber,
-		[Category.LetterNumber]: LanguageKeys.Commands.Unicode.CategoryLetterNumber,
-		[Category.OtherNumber]: LanguageKeys.Commands.Unicode.CategoryOtherNumber,
-		[Category.ConnectorPunctuation]: LanguageKeys.Commands.Unicode.CategoryConnectorPunctuation,
-		[Category.DashPunctuation]: LanguageKeys.Commands.Unicode.CategoryDashPunctuation,
-		[Category.ClosePunctuation]: LanguageKeys.Commands.Unicode.CategoryClosePunctuation,
-		[Category.FinalPunctuation]: LanguageKeys.Commands.Unicode.CategoryFinalPunctuation,
-		[Category.InitialPunctuation]: LanguageKeys.Commands.Unicode.CategoryInitialPunctuation,
-		[Category.OtherPunctuation]: LanguageKeys.Commands.Unicode.CategoryOtherPunctuation,
-		[Category.OpenPunctuation]: LanguageKeys.Commands.Unicode.CategoryOpenPunctuation,
-		[Category.CurrencySymbol]: LanguageKeys.Commands.Unicode.CategoryCurrencySymbol,
-		[Category.ModifierSymbol]: LanguageKeys.Commands.Unicode.CategoryModifierSymbol,
-		[Category.MathSymbol]: LanguageKeys.Commands.Unicode.CategoryMathSymbol,
-		[Category.OtherSymbol]: LanguageKeys.Commands.Unicode.CategoryOtherSymbol,
-		[Category.LineSeparator]: LanguageKeys.Commands.Unicode.CategoryLineSeparator,
-		[Category.ParagraphSeparator]: LanguageKeys.Commands.Unicode.CategoryParagraphSeparator,
-		[Category.SpaceSeparator]: LanguageKeys.Commands.Unicode.CategorySpaceSeparator
+		[Category.Control]: Root.CategoryControl,
+		[Category.Format]: Root.CategoryFormat,
+		[Category.PrivateUse]: Root.CategoryPrivateUse,
+		[Category.Surrogate]: Root.CategorySurrogate,
+		[Category.LowercaseLetter]: Root.CategoryLowercaseLetter,
+		[Category.ModifierLetter]: Root.CategoryModifierLetter,
+		[Category.OtherLetter]: Root.CategoryOtherLetter,
+		[Category.TitlecaseLetter]: Root.CategoryTitlecaseLetter,
+		[Category.UppercaseLetter]: Root.CategoryUppercaseLetter,
+		[Category.SpacingMark]: Root.CategorySpacingMark,
+		[Category.EnclosingMark]: Root.CategoryEnclosingMark,
+		[Category.NonspacingMark]: Root.CategoryNonspacingMark,
+		[Category.DecimalNumber]: Root.CategoryDecimalNumber,
+		[Category.LetterNumber]: Root.CategoryLetterNumber,
+		[Category.OtherNumber]: Root.CategoryOtherNumber,
+		[Category.ConnectorPunctuation]: Root.CategoryConnectorPunctuation,
+		[Category.DashPunctuation]: Root.CategoryDashPunctuation,
+		[Category.ClosePunctuation]: Root.CategoryClosePunctuation,
+		[Category.FinalPunctuation]: Root.CategoryFinalPunctuation,
+		[Category.InitialPunctuation]: Root.CategoryInitialPunctuation,
+		[Category.OtherPunctuation]: Root.CategoryOtherPunctuation,
+		[Category.OpenPunctuation]: Root.CategoryOpenPunctuation,
+		[Category.CurrencySymbol]: Root.CategoryCurrencySymbol,
+		[Category.ModifierSymbol]: Root.CategoryModifierSymbol,
+		[Category.MathSymbol]: Root.CategoryMathSymbol,
+		[Category.OtherSymbol]: Root.CategoryOtherSymbol,
+		[Category.LineSeparator]: Root.CategoryLineSeparator,
+		[Category.ParagraphSeparator]: Root.CategoryParagraphSeparator,
+		[Category.SpaceSeparator]: Root.CategorySpaceSeparator
 	} satisfies Record<Category, TypedT>;
 
 	private static readonly UnicodeBidirectionalCategoryKeyMapper = {
-		[BidirectionalCategory.ArabicLetter]: LanguageKeys.Commands.Unicode.CategoryBidirectionalArabicLetter,
-		[BidirectionalCategory.ArabicNumber]: LanguageKeys.Commands.Unicode.CategoryBidirectionalArabicNumber,
-		[BidirectionalCategory.ParagraphSeparator]: LanguageKeys.Commands.Unicode.CategoryBidirectionalParagraphSeparator,
-		[BidirectionalCategory.BoundaryNeutral]: LanguageKeys.Commands.Unicode.CategoryBidirectionalBoundaryNeutral,
-		[BidirectionalCategory.CommonSeparator]: LanguageKeys.Commands.Unicode.CategoryBidirectionalCommonSeparator,
-		[BidirectionalCategory.EuropeanNumber]: LanguageKeys.Commands.Unicode.CategoryBidirectionalEuropeanNumber,
-		[BidirectionalCategory.EuropeanSeparator]: LanguageKeys.Commands.Unicode.CategoryBidirectionalEuropeanSeparator,
-		[BidirectionalCategory.EuropeanTerminator]: LanguageKeys.Commands.Unicode.CategoryBidirectionalEuropeanTerminator,
-		[BidirectionalCategory.FirstStrongIsolate]: LanguageKeys.Commands.Unicode.CategoryBidirectionalFirstStrongIsolate,
-		[BidirectionalCategory.LeftToRight]: LanguageKeys.Commands.Unicode.CategoryBidirectionalLeftToRight,
-		[BidirectionalCategory.LeftToRightEmbedding]: LanguageKeys.Commands.Unicode.CategoryBidirectionalLeftToRightEmbedding,
-		[BidirectionalCategory.LeftToRightIsolate]: LanguageKeys.Commands.Unicode.CategoryBidirectionalLeftToRightIsolate,
-		[BidirectionalCategory.LeftToRightOverride]: LanguageKeys.Commands.Unicode.CategoryBidirectionalLeftToRightOverride,
-		[BidirectionalCategory.NonSpacingMark]: LanguageKeys.Commands.Unicode.CategoryBidirectionalNonSpacingMark,
-		[BidirectionalCategory.OtherNeutral]: LanguageKeys.Commands.Unicode.CategoryBidirectionalOtherNeutral,
-		[BidirectionalCategory.PopDirectionalFormat]: LanguageKeys.Commands.Unicode.CategoryBidirectionalPopDirectionalFormat,
-		[BidirectionalCategory.PopDirectionalIsolate]: LanguageKeys.Commands.Unicode.CategoryBidirectionalPopDirectionalIsolate,
-		[BidirectionalCategory.RightToLeft]: LanguageKeys.Commands.Unicode.CategoryBidirectionalRightToLeft,
-		[BidirectionalCategory.RightToLeftEmbedding]: LanguageKeys.Commands.Unicode.CategoryBidirectionalRightToLeftEmbedding,
-		[BidirectionalCategory.RightToLeftIsolate]: LanguageKeys.Commands.Unicode.CategoryBidirectionalRightToLeftIsolate,
-		[BidirectionalCategory.RightToLeftOverride]: LanguageKeys.Commands.Unicode.CategoryBidirectionalRightToLeftOverride,
-		[BidirectionalCategory.SegmentSeparator]: LanguageKeys.Commands.Unicode.CategoryBidirectionalSegmentSeparator,
-		[BidirectionalCategory.WhiteSpace]: LanguageKeys.Commands.Unicode.CategoryBidirectionalWhiteSpace
+		[BidirectionalCategory.ArabicLetter]: Root.CategoryBidirectionalArabicLetter,
+		[BidirectionalCategory.ArabicNumber]: Root.CategoryBidirectionalArabicNumber,
+		[BidirectionalCategory.ParagraphSeparator]: Root.CategoryBidirectionalParagraphSeparator,
+		[BidirectionalCategory.BoundaryNeutral]: Root.CategoryBidirectionalBoundaryNeutral,
+		[BidirectionalCategory.CommonSeparator]: Root.CategoryBidirectionalCommonSeparator,
+		[BidirectionalCategory.EuropeanNumber]: Root.CategoryBidirectionalEuropeanNumber,
+		[BidirectionalCategory.EuropeanSeparator]: Root.CategoryBidirectionalEuropeanSeparator,
+		[BidirectionalCategory.EuropeanTerminator]: Root.CategoryBidirectionalEuropeanTerminator,
+		[BidirectionalCategory.FirstStrongIsolate]: Root.CategoryBidirectionalFirstStrongIsolate,
+		[BidirectionalCategory.LeftToRight]: Root.CategoryBidirectionalLeftToRight,
+		[BidirectionalCategory.LeftToRightEmbedding]: Root.CategoryBidirectionalLeftToRightEmbedding,
+		[BidirectionalCategory.LeftToRightIsolate]: Root.CategoryBidirectionalLeftToRightIsolate,
+		[BidirectionalCategory.LeftToRightOverride]: Root.CategoryBidirectionalLeftToRightOverride,
+		[BidirectionalCategory.NonSpacingMark]: Root.CategoryBidirectionalNonSpacingMark,
+		[BidirectionalCategory.OtherNeutral]: Root.CategoryBidirectionalOtherNeutral,
+		[BidirectionalCategory.PopDirectionalFormat]: Root.CategoryBidirectionalPopDirectionalFormat,
+		[BidirectionalCategory.PopDirectionalIsolate]: Root.CategoryBidirectionalPopDirectionalIsolate,
+		[BidirectionalCategory.RightToLeft]: Root.CategoryBidirectionalRightToLeft,
+		[BidirectionalCategory.RightToLeftEmbedding]: Root.CategoryBidirectionalRightToLeftEmbedding,
+		[BidirectionalCategory.RightToLeftIsolate]: Root.CategoryBidirectionalRightToLeftIsolate,
+		[BidirectionalCategory.RightToLeftOverride]: Root.CategoryBidirectionalRightToLeftOverride,
+		[BidirectionalCategory.SegmentSeparator]: Root.CategoryBidirectionalSegmentSeparator,
+		[BidirectionalCategory.WhiteSpace]: Root.CategoryBidirectionalWhiteSpace
 	} satisfies Record<BidirectionalCategory, TypedT>;
 
 	private static readonly UnicodeClassKeyMapper = {
-		[Class.NotReordered]: LanguageKeys.Commands.Unicode.ClassNotReordered,
-		[Class.Overlay]: LanguageKeys.Commands.Unicode.ClassOverlay,
-		[Class.Unnamed]: LanguageKeys.Commands.Unicode.ClassUnnamed,
-		[Class.Nukta]: LanguageKeys.Commands.Unicode.ClassNukta,
-		[Class.KanaVoicing]: LanguageKeys.Commands.Unicode.ClassKanaVoicing,
-		[Class.Virama]: LanguageKeys.Commands.Unicode.ClassVirama,
-		[Class.AttachedBelow]: LanguageKeys.Commands.Unicode.ClassAttachedBelow,
-		[Class.AttachedAbove]: LanguageKeys.Commands.Unicode.ClassAttachedAbove,
-		[Class.AttachedAboveRight]: LanguageKeys.Commands.Unicode.ClassAttachedAboveRight,
-		[Class.BelowLeft]: LanguageKeys.Commands.Unicode.ClassBelowLeft,
-		[Class.Below]: LanguageKeys.Commands.Unicode.ClassBelow,
-		[Class.BelowRight]: LanguageKeys.Commands.Unicode.ClassBelowRight,
-		[Class.Left]: LanguageKeys.Commands.Unicode.ClassLeft,
-		[Class.Right]: LanguageKeys.Commands.Unicode.ClassRight,
-		[Class.AboveLeft]: LanguageKeys.Commands.Unicode.ClassAboveLeft,
-		[Class.Above]: LanguageKeys.Commands.Unicode.ClassAbove,
-		[Class.AboveRight]: LanguageKeys.Commands.Unicode.ClassAboveRight,
-		[Class.DoubleBelow]: LanguageKeys.Commands.Unicode.ClassDoubleBelow,
-		[Class.DoubleAbove]: LanguageKeys.Commands.Unicode.ClassDoubleAbove,
-		[Class.IotaSubscript]: LanguageKeys.Commands.Unicode.ClassIotaSubscript
+		[Class.NotReordered]: Root.ClassNotReordered,
+		[Class.Overlay]: Root.ClassOverlay,
+		[Class.Unnamed]: Root.ClassUnnamed,
+		[Class.Nukta]: Root.ClassNukta,
+		[Class.KanaVoicing]: Root.ClassKanaVoicing,
+		[Class.Virama]: Root.ClassVirama,
+		[Class.AttachedBelow]: Root.ClassAttachedBelow,
+		[Class.AttachedAbove]: Root.ClassAttachedAbove,
+		[Class.AttachedAboveRight]: Root.ClassAttachedAboveRight,
+		[Class.BelowLeft]: Root.ClassBelowLeft,
+		[Class.Below]: Root.ClassBelow,
+		[Class.BelowRight]: Root.ClassBelowRight,
+		[Class.Left]: Root.ClassLeft,
+		[Class.Right]: Root.ClassRight,
+		[Class.AboveLeft]: Root.ClassAboveLeft,
+		[Class.Above]: Root.ClassAbove,
+		[Class.AboveRight]: Root.ClassAboveRight,
+		[Class.DoubleBelow]: Root.ClassDoubleBelow,
+		[Class.DoubleAbove]: Root.ClassDoubleAbove,
+		[Class.IotaSubscript]: Root.ClassIotaSubscript
 	};
 }
 
-interface Options {
+interface InspectOptions {
 	character: string;
+}
+
+interface SearchOptions {
+	character: string;
+	category?: keyof typeof SearchCategory;
+	'bidirectional-category'?: BidirectionalCategory;
+	class?: Class;
 }
