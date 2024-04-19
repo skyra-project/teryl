@@ -57,55 +57,14 @@ export class UserCommand extends Command {
 			)
 			.addNumberOption((builder) =>
 				applyLocalizedBuilder(builder, Root.OptionsBidirectionalCategory).setChoices(
-					createSelectMenuChoiceName(Root.CategoryBidirectionalArabicLetter, { value: BidirectionalCategory.ArabicLetter }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalArabicNumber, { value: BidirectionalCategory.ArabicNumber }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalParagraphSeparator, { value: BidirectionalCategory.ParagraphSeparator }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalBoundaryNeutral, { value: BidirectionalCategory.BoundaryNeutral }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalCommonSeparator, { value: BidirectionalCategory.CommonSeparator }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanNumber, { value: BidirectionalCategory.EuropeanNumber }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanSeparator, { value: BidirectionalCategory.EuropeanSeparator }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalEuropeanTerminator, { value: BidirectionalCategory.EuropeanTerminator }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalFirstStrongIsolate, { value: BidirectionalCategory.FirstStrongIsolate }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRight, { value: BidirectionalCategory.LeftToRight }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightEmbedding, { value: BidirectionalCategory.LeftToRightEmbedding }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightIsolate, { value: BidirectionalCategory.LeftToRightIsolate }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalLeftToRightOverride, { value: BidirectionalCategory.LeftToRightOverride }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalNonSpacingMark, { value: BidirectionalCategory.NonSpacingMark }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalOtherNeutral, { value: BidirectionalCategory.OtherNeutral }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalPopDirectionalFormat, { value: BidirectionalCategory.PopDirectionalFormat }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalPopDirectionalIsolate, {
-						value: BidirectionalCategory.PopDirectionalIsolate
-					}),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeft, { value: BidirectionalCategory.RightToLeft }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftEmbedding, { value: BidirectionalCategory.RightToLeftEmbedding }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftIsolate, { value: BidirectionalCategory.RightToLeftIsolate }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalRightToLeftOverride, { value: BidirectionalCategory.RightToLeftOverride }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalSegmentSeparator, { value: BidirectionalCategory.SegmentSeparator }),
-					createSelectMenuChoiceName(Root.CategoryBidirectionalWhiteSpace, { value: BidirectionalCategory.WhiteSpace })
+					...Object.entries(UserCommand.UnicodeBidirectionalCategoryKeyMapper) //
+						.map(([key, value]) => createSelectMenuChoiceName(value, { value: Number(key) }))
 				)
 			)
 			.addNumberOption((builder) =>
 				applyLocalizedBuilder(builder, Root.OptionsClass).setChoices(
-					createSelectMenuChoiceName(Root.ClassNotReordered, { value: Class.NotReordered }),
-					createSelectMenuChoiceName(Root.ClassOverlay, { value: Class.Overlay }),
-					createSelectMenuChoiceName(Root.ClassUnnamed, { value: Class.Unnamed }),
-					createSelectMenuChoiceName(Root.ClassNukta, { value: Class.Nukta }),
-					createSelectMenuChoiceName(Root.ClassKanaVoicing, { value: Class.KanaVoicing }),
-					createSelectMenuChoiceName(Root.ClassVirama, { value: Class.Virama }),
-					createSelectMenuChoiceName(Root.ClassAttachedBelow, { value: Class.AttachedBelow }),
-					createSelectMenuChoiceName(Root.ClassAttachedAbove, { value: Class.AttachedAbove }),
-					createSelectMenuChoiceName(Root.ClassAttachedAboveRight, { value: Class.AttachedAboveRight }),
-					createSelectMenuChoiceName(Root.ClassBelowLeft, { value: Class.BelowLeft }),
-					createSelectMenuChoiceName(Root.ClassBelow, { value: Class.Below }),
-					createSelectMenuChoiceName(Root.ClassBelowRight, { value: Class.BelowRight }),
-					createSelectMenuChoiceName(Root.ClassLeft, { value: Class.Left }),
-					createSelectMenuChoiceName(Root.ClassRight, { value: Class.Right }),
-					createSelectMenuChoiceName(Root.ClassAboveLeft, { value: Class.AboveLeft }),
-					createSelectMenuChoiceName(Root.ClassAbove, { value: Class.Above }),
-					createSelectMenuChoiceName(Root.ClassAboveRight, { value: Class.AboveRight }),
-					createSelectMenuChoiceName(Root.ClassDoubleBelow, { value: Class.DoubleBelow }),
-					createSelectMenuChoiceName(Root.ClassDoubleAbove, { value: Class.DoubleAbove }),
-					createSelectMenuChoiceName(Root.ClassIotaSubscript, { value: Class.IotaSubscript })
+					...Object.entries(UserCommand.UnicodeClassKeyMapper) //
+						.map(([key, value]) => createSelectMenuChoiceName(value, { value: Number(key) }))
 				)
 			)
 	)
