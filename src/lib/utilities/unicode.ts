@@ -55,14 +55,14 @@ export function searchUnicode(options: SearchOptions): UnicodeSearchResult[] {
 
 	if (fns.length === 0) {
 		for (const value of unicode.values()) {
-			const score = getSearchScore(input, value.unicodeName);
+			const score = getSearchScore(input, value);
 			if (score !== 0) entries.push({ score, value });
 		}
 	} else {
 		for (const value of unicode.values()) {
 			if (!fns.every((fn) => fn(value))) continue;
 
-			const score = getSearchScore(input, value.unicodeName);
+			const score = getSearchScore(input, value);
 			if (score !== 0) entries.push({ score, value });
 		}
 	}
@@ -87,10 +87,11 @@ export interface UnicodeSearchResult {
 	value: Unicode;
 }
 
-function getSearchScore(id: string, key: string) {
-	if (key === id) return 1;
-
-	return key.includes(id) ? id.length / key.length : 0;
+function getSearchScore(id: string, entry: Unicode) {
+	return Math.max(
+		entry.name.includes(id) ? id.length / entry.name.length : 0,
+		entry.unicodeName.includes(id) ? id.length / entry.unicodeName.length : 0
+	);
 }
 
 export interface SearchOptions {
