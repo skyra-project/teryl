@@ -17,6 +17,90 @@ export function getUnicodeEmojiName(id: string | number) {
 	return unicode.name.toLowerCase().replaceAll(' ', '_').slice(0, 32);
 }
 
+const DefaultUnicodeMatches = [...'abcdefghijklmnopqrstuvwxy'].map((char) => getUnicode(char)!);
+
+export function searchUnicode(options: SearchOptions): UnicodeSearchResult[] {
+	const input = options.character.trim().toUpperCase();
+
+	const fns: ((unicode: Unicode) => boolean)[] = [];
+	if (!isNullishOrEmpty(options.category)) {
+		const category = SearchCategory[options.category];
+		if (Array.isArray(category)) fns.push((unicode) => category.includes(unicode.category));
+		else fns.push((unicode) => unicode.category === category);
+	}
+
+	if (!isNullishOrEmpty(options.bidirectionalCategory)) {
+		fns.push((unicode) => unicode.bidirectionalCategory === options.bidirectionalCategory);
+	}
+
+	if (!isNullishOrEmpty(options.class)) {
+		fns.push((unicode) => unicode.class === options.class);
+	}
+
+	if (input.length === 0) {
+		// If there are no functions, return an array of letters only
+		const entries = fns.length === 0 ? DefaultUnicodeMatches : searchUnicodeByFilters(fns);
+		return entries.map((value) => ({ score: 1, value }));
+	}
+
+	const entries = [] as UnicodeSearchResult[];
+
+	// If the input is a single unicode character, search for it directly:
+	if (isNullish(input.codePointAt(1))) {
+		const entry = getUnicode(input);
+		if (entry && (fns.length === 0 || fns.every((fn) => fn(entry)))) {
+			entries.push({ score: 1, value: entry });
+		}
+	}
+
+	if (fns.length === 0) {
+		for (const value of unicode.values()) {
+			const score = getSearchScore(input, value);
+			if (score !== 0) entries.push({ score, value });
+		}
+	} else {
+		for (const value of unicode.values()) {
+			if (!fns.every((fn) => fn(value))) continue;
+
+			const score = getSearchScore(input, value);
+			if (score !== 0) entries.push({ score, value });
+		}
+	}
+
+	return entries.sort((a, b) => b.score - a.score).slice(0, 25);
+}
+
+function searchUnicodeByFilters(fns: ((unicode: Unicode) => boolean)[]) {
+	const entries = [] as Unicode[];
+	for (const value of unicode.values()) {
+		if (!fns.every((fn) => fn(value))) continue;
+
+		entries.push(value);
+		if (entries.length === 25) break;
+	}
+
+	return entries;
+}
+
+export interface UnicodeSearchResult {
+	score: number;
+	value: Unicode;
+}
+
+function getSearchScore(id: string, entry: Unicode) {
+	return Math.max(
+		entry.name.includes(id) ? id.length / entry.name.length : 0,
+		entry.unicodeName.includes(id) ? id.length / entry.unicodeName.length : 0
+	);
+}
+
+export interface SearchOptions {
+	character: string;
+	category?: keyof typeof SearchCategory;
+	bidirectionalCategory?: BidirectionalCategory;
+	class?: Class;
+}
+
 export interface Unicode {
 	id: number;
 	name: string;
@@ -214,3 +298,33 @@ export interface Mapping {
 	lowercase: string;
 	titlecase: string;
 }
+
+export const SearchCategory = {
+	Control: Category.Control,
+	Format: Category.Format,
+	PrivateUse: Category.PrivateUse,
+	Surrogate: Category.Surrogate,
+	LowercaseLetter: Category.LowercaseLetter,
+	ModifierLetter: Category.ModifierLetter,
+	OtherLetter: Category.OtherLetter,
+	TitlecaseLetter: Category.TitlecaseLetter,
+	UppercaseLetter: Category.UppercaseLetter,
+	Mark: [Category.SpacingMark, Category.EnclosingMark, Category.NonspacingMark],
+	DecimalNumber: Category.DecimalNumber,
+	LetterNumber: Category.LetterNumber,
+	OtherNumber: Category.OtherNumber,
+	Punctuation: [
+		Category.ConnectorPunctuation,
+		Category.DashPunctuation,
+		Category.ClosePunctuation,
+		Category.FinalPunctuation,
+		Category.InitialPunctuation,
+		Category.OtherPunctuation,
+		Category.OpenPunctuation
+	],
+	CurrencySymbol: Category.CurrencySymbol,
+	ModifierSymbol: Category.ModifierSymbol,
+	MathSymbol: Category.MathSymbol,
+	OtherSymbol: Category.OtherSymbol,
+	Separator: [Category.LineSeparator, Category.ParagraphSeparator, Category.SpaceSeparator]
+} as const;

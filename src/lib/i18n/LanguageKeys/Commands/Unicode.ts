@@ -4,7 +4,13 @@ import { FT, T } from '@skyra/http-framework-i18n';
 export const RootName = T('commands/unicode:name');
 export const RootDescription = T('commands/unicode:description');
 
+export const Inspect = 'commands/unicode:inspect';
+export const Search = 'commands/unicode:search';
+
 export const OptionsCharacter = 'commands/unicode:optionsCharacter';
+export const OptionsCategory = 'commands/unicode:optionsCategory';
+export const OptionsBidirectionalCategory = 'commands/unicode:optionsBidirectionalCategory';
+export const OptionsClass = 'commands/unicode:optionsClass';
 
 export const InformationBasic = FT<{ name: string; category: string; bidirectionalCategory: string; class: string }>(
 	'commands/unicode:informationBasic'
@@ -47,6 +53,10 @@ export const CategoryOtherSymbol = T('commands/unicode:categoryOtherSymbol');
 export const CategoryLineSeparator = T('commands/unicode:categoryLineSeparator');
 export const CategoryParagraphSeparator = T('commands/unicode:categoryParagraphSeparator');
 export const CategorySpaceSeparator = T('commands/unicode:categorySpaceSeparator');
+
+export const CategoryGroupMark = T('commands/unicode:categoryGroupMark');
+export const CategoryGroupPunctuation = T('commands/unicode:categoryGroupPunctuation');
+export const CategoryGroupSeparator = T('commands/unicode:categoryGroupSeparator');
 
 export const CategoryBidirectionalArabicLetter = T('commands/unicode:categoryBidirectionalArabicLetter');
 export const CategoryBidirectionalArabicNumber = T('commands/unicode:categoryBidirectionalArabicNumber');
