@@ -32,9 +32,9 @@ import {
 import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
 import { DateTime, Duration } from 'luxon';
 
-@RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.RootName, LanguageKeys.Commands.Reminders.RootDescription)
-)
+const Root = LanguageKeys.Commands.Reminders;
+
+@RegisterCommand((builder) => applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription))
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
 		const userId = BigInt(interaction.user.id);
@@ -63,7 +63,7 @@ export class UserCommand extends Command {
 	}
 
 	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Create)
+		applyLocalizedBuilder(builder, Root.Create)
 			.addStringOption(createContentOption().setRequired(true))
 			.addStringOption(createTimeOption().setRequired(true))
 			.addBooleanOption(createPublicOption())
@@ -86,12 +86,12 @@ export class UserCommand extends Command {
 
 		const parameters = { id: inlineCode(id), time: time(date, TimestampStyles.LongDateTime) };
 		if (!options.public) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.CreateContent, parameters);
+			const content = resolveUserKey(interaction, Root.CreateContent, parameters);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
 		const t = getSupportedLanguageT(interaction);
-		const content = t(LanguageKeys.Commands.Reminders.CreateContentPublic, parameters);
+		const content = t(Root.CreateContentPublic, parameters);
 		const embed = new EmbedBuilder()
 			.setColor(BrandingColors.Primary)
 			.setDescription(data.content)
@@ -108,13 +108,13 @@ export class UserCommand extends Command {
 			new ButtonBuilder() //
 				.setCustomId(`reminders.${id}`)
 				.setStyle(ButtonStyle.Primary)
-				.setLabel(t(LanguageKeys.Commands.Reminders.Subscribe, { amount: 0 }))
+				.setLabel(t(Root.Subscribe, { amount: 0 }))
 		);
 		return response.update({ components: [components.toJSON()] });
 	}
 
 	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Update)
+		applyLocalizedBuilder(builder, Root.Update)
 			.addStringOption(createIdOption().setRequired(true))
 			.addStringOption(createContentOption())
 			.addStringOption(createTimeOption())
@@ -122,7 +122,7 @@ export class UserCommand extends Command {
 	)
 	public async update(interaction: Command.ChatInputInteraction, options: UpdateOptions) {
 		if (isNullishOrEmpty(options.duration) && isNullishOrEmpty(options.content)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateMissingOptions);
+			const content = resolveUserKey(interaction, Root.UpdateMissingOptions);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -145,12 +145,12 @@ export class UserCommand extends Command {
 			content: options.content?.replaceAll('\\n', '\n'),
 			silent: options.silent
 		});
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, parameters);
+		const content = resolveUserKey(interaction, Root.UpdateContent, parameters);
 		const response = await interaction.reply({ content, flags: MessageFlags.Ephemeral });
 
 		if (rescheduled && reminder.metadata) {
 			const body = {
-				content: resolveKey(interaction, LanguageKeys.Commands.Reminders.CreateContentPublic, parameters)
+				content: resolveKey(interaction, Root.CreateContentPublic, parameters)
 			} satisfies RESTPatchAPIChannelMessageJSONBody;
 
 			const route = Routes.channelMessage(reminder.metadata.channelId.toString(), reminder.metadata.messageId.toString());
@@ -160,9 +160,7 @@ export class UserCommand extends Command {
 		return response;
 	}
 
-	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Delete).addStringOption(createIdOption().setRequired(true))
-	)
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, Root.Delete).addStringOption(createIdOption().setRequired(true)))
 	public async delete(interaction: Command.ChatInputInteraction, options: IdOptions) {
 		const reminder = await this.container.prisma.reminder.findFirst({
 			where: { id: options.id, userId: BigInt(interaction.user.id) },
@@ -171,7 +169,7 @@ export class UserCommand extends Command {
 		if (isNullish(reminder)) return this.invalidId(interaction, options.id);
 
 		await this.container.reminders.remove(reminder.id);
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DeleteContent, {
+		const content = resolveUserKey(interaction, Root.DeleteContent, {
 			id: inlineCode(reminder.id),
 			time: time(reminder.time, TimestampStyles.LongDateTime),
 			content: codeBlock(escapeCodeBlock(reminder.content))
@@ -186,9 +184,7 @@ export class UserCommand extends Command {
 		return response;
 	}
 
-	@RegisterSubcommand((builder) =>
-		applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.Show).addStringOption(createIdOption().setRequired(true))
-	)
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, Root.Show).addStringOption(createIdOption().setRequired(true)))
 	public async show(interaction: Command.ChatInputInteraction, options: IdOptions) {
 		const userId = BigInt(interaction.user.id);
 		const reminder = await this.container.prisma.reminder.findFirst({
@@ -206,7 +202,7 @@ export class UserCommand extends Command {
 		return interaction.reply({ embeds: [embed.toJSON()], components, flags: MessageFlags.Ephemeral });
 	}
 
-	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Reminders.List))
+	@RegisterSubcommand((builder) => applyLocalizedBuilder(builder, Root.List))
 	public async list(interaction: Command.ChatInputInteraction) {
 		const userId = BigInt(interaction.user.id);
 		const reminders = await this.container.prisma.reminder.findMany({
@@ -215,7 +211,7 @@ export class UserCommand extends Command {
 			take: 10
 		});
 		if (isNullishOrEmpty(reminders)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.ListEmpty, { commandId: interaction.data.id });
+			const content = resolveUserKey(interaction, Root.ListEmpty, { commandId: interaction.data.id });
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -224,7 +220,7 @@ export class UserCommand extends Command {
 	}
 
 	private invalidId(interaction: Command.ChatInputInteraction, id: string) {
-		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidId, { id: inlineCode(escapeInlineCode(id)) });
+		const content = resolveUserKey(interaction, Root.InvalidId, { id: inlineCode(escapeInlineCode(id)) });
 		return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 	}
 
@@ -232,7 +228,7 @@ export class UserCommand extends Command {
 		const now = Date.now();
 		const duration = new SapphireDuration(input);
 		if (!Number.isInteger(duration.offset)) {
-			return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
+			return err(resolveUserKey(interaction, Root.InvalidDuration, { value: inlineCode(escapeInlineCode(input)) }));
 		}
 
 		return this.checkRanges(
@@ -261,8 +257,8 @@ export class UserCommand extends Command {
 	}
 
 	private checkRanges(interaction: Command.ChatInputInteraction, now: number, offset: Duration) {
-		if (offset.as('minutes') < 1) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooShort));
-		if (offset.as('years') > 1) return err(resolveUserKey(interaction, LanguageKeys.Commands.Reminders.DurationTooLong));
+		if (offset.as('minutes') < 1) return err(resolveUserKey(interaction, Root.DurationTooShort));
+		if (offset.as('years') > 1) return err(resolveUserKey(interaction, Root.DurationTooLong));
 		return ok(DateTime.fromMillis(now).plus(offset).toJSDate());
 	}
 
@@ -285,30 +281,30 @@ export class UserCommand extends Command {
 		if (isNullish(metadata)) return [];
 
 		const url = messageLink(metadata.channelId.toString(), metadata.messageId.toString());
-		const label = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.LinkTo);
+		const label = resolveUserKey(interaction, Root.LinkTo);
 		const row = makeButtonRow(new ButtonBuilder().setStyle(ButtonStyle.Link).setURL(url).setLabel(label));
 		return [row.toJSON()];
 	}
 }
 
 function createIdOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsId).setAutocomplete(true);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), Root.OptionsId).setAutocomplete(true);
 }
 
 function createContentOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsContent).setMaxLength(256);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), Root.OptionsContent).setMaxLength(256);
 }
 
 function createTimeOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), LanguageKeys.Commands.Reminders.OptionsDuration).setMinLength(2).setMaxLength(256);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), Root.OptionsDuration).setMinLength(2).setMaxLength(256);
 }
 
 function createPublicOption() {
-	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsPublic);
+	return applyLocalizedBuilder(new SlashCommandBooleanOption(), Root.OptionsPublic);
 }
 
 function createSilentOption() {
-	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsSilent);
+	return applyLocalizedBuilder(new SlashCommandBooleanOption(), Root.OptionsSilent);
 }
 
 type AutoCompleteOptions = AutocompleteInteractionArguments<{ id: string }>;
