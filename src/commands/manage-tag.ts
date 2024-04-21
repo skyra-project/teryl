@@ -1,7 +1,7 @@
 import { escapeCodeBlock } from '#lib/common/escape';
+import { clamp256 } from '#lib/common/numbers';
 import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { parseColor } from '#lib/utilities/color';
 import { DefaultLimits, fetchLimits } from '#lib/utilities/ring';
 import { getTag, makeTagChoices, sanitizeTagName, searchTag } from '#lib/utilities/tags';
 import { ActionRowBuilder, SlashCommandBooleanOption, SlashCommandStringOption, TextInputBuilder, codeBlock, inlineCode } from '@discordjs/builders';
@@ -10,6 +10,7 @@ import { isNullish, isNullishOrEmpty } from '@sapphire/utilities';
 import { Command, RegisterCommand, RegisterSubcommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
 import { isAbortError } from '@skyra/safe-fetch';
+import { rgb } from 'culori';
 import { MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
 
 /**
@@ -274,7 +275,12 @@ export class UserCommand extends Command {
 		if (!options.embed) return ok(previous);
 
 		const raw = options['embed-color'];
-		return isNullishOrEmpty(raw) ? ok(previous) : parseColor(raw).mapErr((error) => resolveUserKey(interaction, error, { value: raw! }));
+		if (isNullishOrEmpty(raw)) return ok(previous);
+
+		const parsed = rgb(raw);
+		return isNullish(parsed) //
+			? err(resolveUserKey(interaction, LanguageKeys.Commands.Color.InvalidColor, { value: inlineCode(raw) }))
+			: ok((clamp256(parsed.r) << 16) | (clamp256(parsed.g) << 8) | clamp256(parsed.b));
 	}
 }
 

@@ -1,3 +1,4 @@
+import { clamp256, round2, round6 } from '#lib/common/numbers';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import type { TheColorApiResult } from '#lib/types/thecolorapi';
 import { EmbedBuilder, inlineCode } from '@discordjs/builders';
@@ -6,7 +7,7 @@ import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
 import { Json, safeTimedFetch } from '@skyra/safe-fetch';
-import { formatHex, formatHex8, hsl, oklch, p3, parse, rgb, round, type Color } from 'culori';
+import { formatHex, formatHex8, hsl, oklch, p3, parse, rgb, type Color } from 'culori';
 import { MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Color;
@@ -105,10 +106,6 @@ export class UserCommand extends Command {
 			: `color(display-p3 ${r} ${g} ${b} / ${round2(parsed.alpha)})`;
 	}
 }
-
-const round2 = round(2);
-const round6 = round(6);
-const clamp256 = (value: number) => Math.round(Math.max(0, Math.min(1, value)) * 255);
 
 interface Options {
 	input: string;
