@@ -8,6 +8,7 @@ import { Result } from '@sapphire/result';
 import { getT } from '@skyra/http-framework-i18n';
 import {
 	Locale,
+	MessageFlags,
 	Routes,
 	type RESTPostAPIChannelMessageJSONBody,
 	type RESTPostAPICurrentUserCreateDMChannelJSONBody,
@@ -36,7 +37,8 @@ export class UserScheduleHandler extends ScheduleHandler<ReminderScheduler.Data>
 		});
 		const body = {
 			content: `${content}\n${blockQuote(data.content)}`,
-			allowed_mentions: { users, roles: [] }
+			allowed_mentions: { users, roles: [] },
+			flags: data.silent ? MessageFlags.SuppressNotifications : undefined
 		} satisfies RESTPostAPIChannelMessageJSONBody;
 		return Promise.all([
 			this.container.rest.post(route, { body }),
@@ -50,7 +52,8 @@ export class UserScheduleHandler extends ScheduleHandler<ReminderScheduler.Data>
 
 		const content = t(LanguageKeys.ScheduleHandlers.Reminders.Private, { content: data.content, time: time(data.createdAt) });
 		const body = {
-			content: `${content}\n${blockQuote(data.content)}`
+			content: `${content}\n${blockQuote(data.content)}`,
+			flags: data.silent ? MessageFlags.SuppressNotifications : undefined
 		} satisfies RESTPostAPIChannelMessageJSONBody;
 		return this.container.rest.post(route, { body });
 	}

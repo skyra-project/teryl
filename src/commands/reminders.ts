@@ -1,4 +1,4 @@
-import { BrandingColors } from '#lib/common/constants';
+import { BrandingColors, Emojis } from '#lib/common/constants';
 import { escapeCodeBlock, escapeInlineCode } from '#lib/common/escape';
 import { cut } from '#lib/common/strings';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
@@ -67,6 +67,7 @@ export class UserCommand extends Command {
 			.addStringOption(createContentOption().setRequired(true))
 			.addStringOption(createTimeOption().setRequired(true))
 			.addBooleanOption(createPublicOption())
+			.addBooleanOption(createSilentOption())
 	)
 	public async create(interaction: Command.ChatInputInteraction, options: CreateOptions) {
 		const dateResult = await this.parseDateTime(interaction, options.duration);
@@ -78,6 +79,7 @@ export class UserCommand extends Command {
 			content: options.content.replaceAll('\\n', '\n'),
 			time: date,
 			createdAt: new Date(),
+			silent: options.silent ?? false,
 			language: options.public ? getSupportedLanguageName(interaction) : getSupportedUserLanguageName(interaction)
 		} satisfies ReminderScheduler.Data;
 		const id = await this.container.reminders.add(data);
@@ -116,6 +118,7 @@ export class UserCommand extends Command {
 			.addStringOption(createIdOption().setRequired(true))
 			.addStringOption(createContentOption())
 			.addStringOption(createTimeOption())
+			.addBooleanOption(createSilentOption())
 	)
 	public async update(interaction: Command.ChatInputInteraction, options: UpdateOptions) {
 		if (isNullishOrEmpty(options.duration) && isNullishOrEmpty(options.content)) {
@@ -139,7 +142,8 @@ export class UserCommand extends Command {
 
 		const parameters = { id: inlineCode(reminder.id), time: time(date, TimestampStyles.LongDateTime) };
 		const rescheduled = await this.container.reminders.reschedule(reminder.id, date.getTime(), {
-			content: options.content?.replaceAll('\\n', '\n')
+			content: options.content?.replaceAll('\\n', '\n'),
+			silent: options.silent
 		});
 		const content = resolveUserKey(interaction, LanguageKeys.Commands.Reminders.UpdateContent, parameters);
 		const response = await interaction.reply({ content, flags: MessageFlags.Ephemeral });
@@ -195,7 +199,7 @@ export class UserCommand extends Command {
 
 		const embed = new EmbedBuilder()
 			.setColor(BrandingColors.Primary)
-			.setDescription(reminder.content)
+			.setDescription(reminder.silent ? `${Emojis.Silent} ${reminder.content}` : reminder.content)
 			.setFooter({ text: reminder.id })
 			.setTimestamp(reminder.time);
 		const components = this.getShowComponents(interaction, reminder.metadata);
@@ -303,17 +307,23 @@ function createPublicOption() {
 	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsPublic);
 }
 
+function createSilentOption() {
+	return applyLocalizedBuilder(new SlashCommandBooleanOption(), LanguageKeys.Commands.Reminders.OptionsSilent);
+}
+
 type AutoCompleteOptions = AutocompleteInteractionArguments<{ id: string }>;
 
 interface CreateOptions {
 	content: string;
 	duration: string;
-	public: boolean;
+	public?: boolean;
+	silent?: boolean;
 }
 
 interface UpdateOptions extends IdOptions {
 	content?: string;
 	duration?: string;
+	silent?: boolean;
 }
 
 interface IdOptions {

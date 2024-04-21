@@ -17,7 +17,8 @@ export const enum Emojis {
 	MessagePinIcon = '<:MessagePinIcon:1006096836882337822>',
 	MessageIconSlashCommandsIcon = '<:MessageIconSlashCommandsIcon:1006096757937143818>',
 	ReplyIcon = '<:ReplyIcon:1076886910405976245>',
-	IdIcon = '<:IdIcon:1006096811917836339>'
+	IdIcon = '<:IdIcon:1006096811917836339>',
+	Silent = '<:silent:1205443750747439124>'
 }
 
 export const enum Fonts {
