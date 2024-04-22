@@ -3,5 +3,6 @@
 	"description": "Muestra la información de un color",
 	"inputName": "entrada",
 	"inputDescription": "El color por el que buscar, acepta decimal, hexadecimal, rgb(), y el nombre del color",
-	"invalidColor": "No pude interpretar {{value}} a algún formato de color o nombre compatible. Por favor, inténtalo de nuevo con un color diferente."
+	"invalidColor": "No pude interpretar {{value}} a algún formato de color o nombre compatible. Por favor, inténtalo de nuevo con un color diferente.",
+	"embedDescription": "- **HEX**: {{hex}}\n- **RGB**: {{rgb}}\n- **HSL**: {{hsl}}\n- **OKLCH**: {{oklch}}\n- **P3**: {{p3}}"
 }
