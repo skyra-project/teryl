@@ -1,88 +1,90 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id BigInt  @id
-  /// The IANA timezone the user has configured.
-  tz String?
+    id BigInt  @id
+    /// The IANA timezone the user has configured.
+    tz String?
 }
 
 model Reminder {
-  id            String                 @id
-  /// The ID of the user who set the reminder.
-  userId        BigInt                 @map("user_id")
-  /// The contents to send the user.
-  content       String
-  /// The reminder's creation date.
-  createdAt     DateTime               @default(now()) @map("created_at")
-  /// The language to use, if public, it's the guild's locale, otherwise it's the user's locale.
-  language      String
-  /// The time at which the reminder is due for.
-  time          DateTime
-  /// The subscription metadata. If defined, the reminder is considered public and can be subscribed to.
-  metadata      ReminderMetadata?
-  /// The subscriptions, if any.
-  subscriptions ReminderSubscription[]
+    id            String                 @id
+    /// The ID of the user who set the reminder.
+    userId        BigInt                 @map("user_id")
+    /// The contents to send the user.
+    content       String
+    /// The reminder's creation date.
+    createdAt     DateTime               @default(now()) @map("created_at")
+    /// The language to use, if public, it's the guild's locale, otherwise it's the user's locale.
+    language      String
+    /// The time at which the reminder is due for.
+    time          DateTime
+    /// Whether or not the reminder should be sent silent.
+    silent        Boolean                @default(false)
+    /// The subscription metadata. If defined, the reminder is considered public and can be subscribed to.
+    metadata      ReminderMetadata?
+    /// The subscriptions, if any.
+    subscriptions ReminderSubscription[]
 
-  @@map("reminders")
+    @@map("reminders")
 }
 
 model ReminderMetadata {
-  /// The ID of the reminder.
-  reminderId String   @id @map("reminder_id")
-  reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
-  /// The channel to send the message at.
-  channelId  BigInt   @map("channel_id")
-  /// The subscription message.
-  messageId  BigInt   @map("message_id")
+    /// The ID of the reminder.
+    reminderId String   @id @map("reminder_id")
+    reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+    /// The channel to send the message at.
+    channelId  BigInt   @map("channel_id")
+    /// The subscription message.
+    messageId  BigInt   @map("message_id")
 
-  @@map("reminder_metadata")
+    @@map("reminder_metadata")
 }
 
 model ReminderSubscription {
-  id         BigInt   @id @default(autoincrement())
-  /// The ID of the reminder.
-  reminderId String   @map("reminder_id")
-  reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
-  /// The ID of the user who subscribed to the reminder. Cannot be {@link reminder.userId}.
-  userId     BigInt   @map("user_id")
+    id         BigInt   @id @default(autoincrement())
+    /// The ID of the reminder.
+    reminderId String   @map("reminder_id")
+    reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+    /// The ID of the user who subscribed to the reminder. Cannot be {@link reminder.userId}.
+    userId     BigInt   @map("user_id")
 
-  @@unique([userId, reminderId])
-  @@map("reminder_subscriptions")
+    @@unique([userId, reminderId])
+    @@map("reminder_subscriptions")
 }
 
 model Tag {
-  id         BigInt     @id @default(autoincrement())
-  /// The name of the tag.
-  name       String
-  /// The guild the tag is for.
-  guildId    BigInt     @map("guild_id")
-  /// Whether or not the message should be sent as an embed.
-  embed      Boolean
-  /// The colour of the embed. Requires {@link embed} to be set as `true`.
-  embedColor Int        @map("embed_color")
-  /// The contents of the embed.
-  content    String
-  /// The amount of uses the tag has received.
-  uses       Int        @default(0)
-  aliases    TagAlias[]
+    id         BigInt     @id @default(autoincrement())
+    /// The name of the tag.
+    name       String
+    /// The guild the tag is for.
+    guildId    BigInt     @map("guild_id")
+    /// Whether or not the message should be sent as an embed.
+    embed      Boolean
+    /// The colour of the embed. Requires {@link embed} to be set as `true`.
+    embedColor Int        @map("embed_color")
+    /// The contents of the embed.
+    content    String
+    /// The amount of uses the tag has received.
+    uses       Int        @default(0)
+    aliases    TagAlias[]
 
-  @@unique([name, guildId])
-  @@map("tags")
+    @@unique([name, guildId])
+    @@map("tags")
 }
 
 model TagAlias {
-  id    BigInt @id @default(autoincrement())
-  tagId BigInt @map("tag_id")
-  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
-  name  String
+    id    BigInt @id @default(autoincrement())
+    tagId BigInt @map("tag_id")
+    tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+    name  String
 
-  @@unique([tagId, name])
-  @@map("tag_aliases")
+    @@unique([tagId, name])
+    @@map("tag_aliases")
 }

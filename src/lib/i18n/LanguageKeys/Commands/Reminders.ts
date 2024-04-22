@@ -8,6 +8,7 @@ export const OptionsId = 'commands/reminders:optionsId';
 export const OptionsContent = 'commands/reminders:optionsContent';
 export const OptionsDuration = 'commands/reminders:optionsDuration';
 export const OptionsPublic = 'commands/reminders:optionsPublic';
+export const OptionsSilent = 'commands/reminders:optionsSilent';
 
 export const Create = 'commands/reminders:create';
 export const CreateContent = FT<{ id: string; time: string }>('commands/reminders:createContent');
