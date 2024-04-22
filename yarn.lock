@@ -1425,6 +1425,7 @@ __metadata:
     "@skyra/start-banner": "npm:^2.0.1"
     "@skyra/twitch-helpers": "npm:^2.0.1"
     "@skyra/weather-helpers": "npm:^1.1.0"
+    "@types/culori": "npm:^2.1.0"
     "@types/gradient-string": "npm:^1.1.6"
     "@types/he": "npm:^1.2.3"
     "@types/luxon": "npm:^3.4.2"
@@ -1435,6 +1436,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:^1.5.0"
     "@vladfrangu/async_event_emitter": "npm:^2.2.4"
     canvas-constructor: "npm:^7.0.1"
+    culori: "npm:^4.0.1"
     cz-conventional-changelog: "npm:^3.3.0"
     discord-api-types: "npm:^0.37.79"
     eslint: "npm:^8.57.0"
@@ -1494,6 +1496,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10/0992617c7274e9ddcbdb30cc5b735fa067343c40e16f539615b3ad9213cacbe9a32483bc8e0302d297c6de9cc7fd3794549635761a66bd9dc220d609822d86e7
+  languageName: node
+  linkType: hard
+
+"@types/culori@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@types/culori@npm:2.1.0"
+  checksum: 10/505d0ff9ccb56ffb71bab7eed415a8c2cfc0117f8c99f91f1aa127c5dc43f294ef04e7cab5e7da9df5545974c16239f60555d01b6b37278ad12a5124a85be682
   languageName: node
   linkType: hard
 
@@ -2388,6 +2397,13 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10/e1a13869d2f57d974de0d9ef7acbf69dc6937db20b918525a01dacb5032129bd552d290d886d981e99f1b624cb03657084cc87bd40f115c07ecf376821c729ce
+  languageName: node
+  linkType: hard
+
+"culori@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "culori@npm:4.0.1"
+  checksum: 10/8751ea969bfa7d89fdd7dbc67d6bb37a10c459416574b26853b099f7a0c068d0d29942b3c034f60092f4593faa4e7008e0aca743a418f815fac19939332c4bea
   languageName: node
   linkType: hard
 
