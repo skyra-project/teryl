@@ -3,16 +3,5 @@
 	"description": "Muestra la información de un color",
 	"inputName": "entrada",
 	"inputDescription": "El color por el que buscar, acepta decimal, hexadecimal, rgb(), y el nombre del color",
-	"invalidHex": "No pude interpretar {{value}} a un color hexadecimal; la longitud es incorrecta.",
-	"invalidHex3": "No pude interpretar {{value}} a un color hexadecimal compacto; contiene caracteres no hexadecimales.",
-	"invalidHex6": "No pude interpretar {{value}} a un color hexadecimal completo; contiene caracteres no hexadecimales.",
-	"invalidDecimalInteger": "No pude interpretar {{value}} a un entero; parece que tiene decimales.",
-	"invalidDecimalNegative": "No pude interpretar {{value}} a un número positivo; parece que es negativo.",
-	"invalidDecimalOverflow": "No pude interpretar {{value}} a un entero válido en el rango RGB; el máximo es `0xFFFFFF` o `16777215`.",
-	"invalidRGB": "No pude interpretar {{value}} a un color RGB; parece contener caracteres no válidos. Por favor, compruebe el formato, contiene 3 números dentro del rango de 0 a 255, inclusive. Por ejemplo: `rgb(107, 121, 201)` o `rgb(212, 184, 163)`.",
-	"invalidRgbRed": "No pude interpretar el componente **rojo** en {{value}}, o bien no es un número, es negativo o es superior a 255.",
-	"invalidRgbGreen": "No pude interpretar el componente **verde** en {{value}}, o bien no es un número, es negativo o es superior a 255.",
-	"invalidRgbBlue": "No pude interpretar el componente **azul** en {{value}}, o bien no es un número, es negativo o es superior a 255.",
-	"invalidColor": "No pude interpretar {{value}} a algún formato de color o nombre compatible. Por favor, inténtalo de nuevo con un color diferente.",
-	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
+	"invalidColor": "No pude interpretar {{value}} a algún formato de color o nombre compatible. Por favor, inténtalo de nuevo con un color diferente."
 }
