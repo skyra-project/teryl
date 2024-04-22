@@ -3,16 +3,5 @@
 	"description": "Krijg informatie over een kleur",
 	"inputName": "invoer",
 	"inputDescription": "De kleur waarnaar gezocht moet worden, accepteert decimaal, hexadecimaal, rgb() en kleurnaam",
-	"invalidHex": "Ik kon {{value}} niet parsen naar een hexadecimale kleur; de lengte is onjuist.",
-	"invalidHex3": "Ik kon {{value}} niet parsen naar een compacte hexadecimale kleur; het bevat niet-hexadecimale tekens.",
-	"invalidHex6": "Ik kon {{value}} niet parsen naar een volledige hexadecimale kleur; het bevat niet-hexadecimale tekens.",
-	"invalidDecimalInteger": "Ik kon {{value}} niet parsen naar een geheel getal; het lijkt erop dat het decimalen bevat.",
-	"invalidDecimalNegative": "Ik kon {{value}} niet parsen naar een positief getal; het lijkt er op dat het negatief is.",
-	"invalidDecimalOverflow": "Ik kon {{value}} niet parsen naar een geldig geheel getal in het RGB-bereik; het maximum is `0xFFFFFF` of `16777215`.",
-	"invalidRGB": "Ik kon {{value}} niet parsen naar een RGB kleur; het lijkt ongeldige tekens te bevatten. Controleer het formaat, met name dat het 3 getallen bevat binnen het bereik van 0 tot en met 255. Bijvoorbeeld: `rgb(107, 121, 201)` of `rgb(212, 184, 163)`.",
-	"invalidRgbRed": "Ik kon het **rode** onderdeel in {{value}} niet parsen, het is geen nummer, negatief, of hoger dan 255.",
-	"invalidRgbGreen": "Ik kon het **groene** onderdeel in {{value}} niet parsen, het is geen nummer, negatief, of hoger dan 255.",
-	"invalidRgbBlue": "Ik kon het **blauwe** onderdeel in {{value}} niet parsen, het is geen nummer, negatief, of hoger dan 255.",
-	"invalidColor": "Ik kon {{value}} niet parsen naar een ondersteund kleurformaat of naam. Probeer het opnieuw met een andere kleur.",
-	"embedDescription": "• **HEX**: `{{hex.value}}`\n• **RGB**: `{{rgb.value}}`\n• **HSL**: `{{hsl.value}}`\n• **HSV**: `{{hsv.value}}`\n• **CMYK**: `{{cmyk.value}}`"
+	"invalidColor": "Ik kon {{value}} niet parsen naar een ondersteund kleurformaat of naam. Probeer het opnieuw met een andere kleur."
 }
