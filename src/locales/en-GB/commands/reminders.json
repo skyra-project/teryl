@@ -9,6 +9,8 @@
 	"optionsDurationDescription": "The time after of which the reminder should be sent",
 	"optionsPublicName": "public",
 	"optionsPublicDescription": "Whether or not the reminder can be subscribed by multiple users (Default: False)",
+	"optionsSilentName": "silent",
+	"optionsSilentDescription": "Whether or not the reminder should be sent silently (Default: False)",
 	"createName": "create",
 	"createDescription": "Creates a new reminder",
 	"createContent": "Created a new reminder with ID {{id}}, I will send you a message on {{time}}.",
