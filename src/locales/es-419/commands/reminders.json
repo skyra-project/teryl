@@ -9,6 +9,8 @@
 	"optionsDurationDescription": "El tiempo tras el cual el recordatorio debe ser enviado",
 	"optionsPublicName": "público",
 	"optionsPublicDescription": "Si el recordatorio puede o no ser suscrito por varios usuarios (por defecto: Falso)",
+	"optionsSilentName": "silencioso",
+	"optionsSilentDescription": "Si el recordatorio debe enviarse silenciosamente (por defecto: Falso)",
 	"createName": "crear",
 	"createDescription": "Crea un nuevo recordatorio",
 	"createContent": "Creado un nuevo recordatorio con ID {{id}}, le enviaré un mensaje el {{time}}.",
