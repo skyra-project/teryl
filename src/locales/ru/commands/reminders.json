@@ -9,6 +9,8 @@
 	"optionsDurationDescription": "Время, по истечении которого напоминание должно быть отправлено",
 	"optionsPublicName": "публичное",
 	"optionsPublicDescription": "Разрешить подписываться на напоминание нескольким пользователям (по умолчанию: False)",
+	"optionsSilentName": "беззвучное",
+	"optionsSilentDescription": "Отправить напоминание без звука (по умолчанию: False)",
 	"createName": "создать",
 	"createDescription": "Создаёт новое напоминание",
 	"createContent": "Создано новое напоминание с ID {{id}}, я отправлю вам сообщение {{time}}.",
