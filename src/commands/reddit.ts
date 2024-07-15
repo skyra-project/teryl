@@ -56,7 +56,7 @@ export class UserCommand extends Command {
 	)
 	public async post(interaction: Command.ChatInputInteraction, args: PostOptions) {
 		const url = UserCommand.PostShortLinkRegExp.test(args.post) //
-			? (await getRedditRedirectPostUrl(args.post)) ?? args.post
+			? ((await getRedditRedirectPostUrl(args.post)) ?? args.post)
 			: args.post;
 
 		const match = UserCommand.SubredditAndPostRegExp.exec(url)?.groups;
