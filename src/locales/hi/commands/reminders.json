@@ -9,6 +9,8 @@
 	"optionsDurationDescription": "वह समय जिसके बाद अनुस्मारक भेजा जाना चाहिए",
 	"optionsPublicName": "सार्वजनिक",
 	"optionsPublicDescription": "अनुस्मारक को एकाधिक उपयोगकर्ताओं द्वारा सब्सक्राइब किया जा सकता है या नहीं (डिफ़ॉल्ट: नहीं)",
+	"optionsSilentName": "शांत",
+	"optionsSilentDescription": "अनुस्मारक शांती से भेजना है या नहीं (डिफ़ॉल्ट: नहीं)",
 	"createName": "बनाएँ",
 	"createDescription": "एक नया अनुस्मारक बनाता है",
 	"createContent": "क्रमांक {{id}} के साथ एक नया रिमाइंडर बनाया गया, मैं आपको {{time}} पर एक संदेश भेजूंगा।",
