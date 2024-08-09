@@ -292,7 +292,7 @@ function createIdOption() {
 }
 
 function createContentOption() {
-	return applyLocalizedBuilder(new SlashCommandStringOption(), Root.OptionsContent).setMaxLength(256);
+	return applyLocalizedBuilder(new SlashCommandStringOption(), Root.OptionsContent).setMaxLength(1000);
 }
 
 function createTimeOption() {
