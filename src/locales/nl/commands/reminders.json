@@ -9,6 +9,8 @@
 	"optionsDurationDescription": "De tijd waarna de herinnering verzonden moet worden",
 	"optionsPublicName": "openbaar",
 	"optionsPublicDescription": "Of de herinnering kan worden geabonneerd door meerdere gebruikers (standaard: False)",
+	"optionsSilentName": "stil",
+	"optionsSilentDescription": "Of de herinnering stil moet worden verzonden (standaard: False)",
 	"createName": "aanmaken",
 	"createDescription": "Maakt een nieuwe herinnering aan",
 	"createContent": "Nieuwe herinnering aangemaakt met ID {{id}}, ik zal je een bericht sturen op {{time}}.",
