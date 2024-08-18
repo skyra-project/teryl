@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@discordjs/builders": "^1.8.2",
 		"@discordjs/collection": "^2.1.0",
-		"@napi-rs/canvas": "^0.1.53",
+		"@napi-rs/canvas": "^0.1.54",
 		"@napi-rs/image": "^1.9.2",
 		"@prisma/client": "^5.18.0",
 		"@sapphire/async-queue": "^1.5.3",
@@ -48,7 +48,7 @@
 		"@vladfrangu/async_event_emitter": "^2.4.5",
 		"canvas-constructor": "^7.0.2",
 		"culori": "^4.0.1",
-		"discord-api-types": "^0.37.93",
+		"discord-api-types": "^0.37.94",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.4.1",
@@ -67,7 +67,7 @@
 		"@types/gradient-string": "^1.1.6",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.14.15",
+		"@types/node": "^20.15.0",
 		"@types/tar": "^6.1.13",
 		"@typescript-eslint/eslint-plugin": "^7.13.0",
 		"@typescript-eslint/parser": "^7.13.0",
@@ -76,7 +76,7 @@
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
-		"lint-staged": "^15.2.8",
+		"lint-staged": "^15.2.9",
 		"prettier": "^3.3.3",
 		"prisma": "^5.18.0",
 		"rimraf": "^5.0.10",
@@ -86,7 +86,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"discord-api-types": "^0.37.93",
+		"discord-api-types": "^0.37.94",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
