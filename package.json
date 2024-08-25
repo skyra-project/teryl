@@ -45,17 +45,17 @@
 		"@skyra/start-banner": "^2.0.1",
 		"@skyra/twitch-helpers": "^2.0.1",
 		"@skyra/weather-helpers": "^1.1.0",
-		"@vladfrangu/async_event_emitter": "^2.4.5",
+		"@vladfrangu/async_event_emitter": "^2.4.6",
 		"canvas-constructor": "^7.0.2",
 		"culori": "^4.0.1",
-		"discord-api-types": "^0.37.94",
+		"discord-api-types": "^0.37.97",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.4.1",
 		"jsbd": "^0.0.11",
 		"luxon": "^3.5.0",
 		"nanoid": "^5.0.7",
-		"tslib": "^2.6.3"
+		"tslib": "^2.7.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.4.0",
@@ -67,7 +67,7 @@
 		"@types/gradient-string": "^1.1.6",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.16.0",
+		"@types/node": "^20.16.1",
 		"@types/tar": "^6.1.13",
 		"@typescript-eslint/eslint-plugin": "^7.13.0",
 		"@typescript-eslint/parser": "^7.13.0",
@@ -86,7 +86,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"discord-api-types": "^0.37.94",
+		"discord-api-types": "^0.37.97",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
@@ -113,8 +113,8 @@
 			"@typescript-eslint/no-base-to-string": "off"
 		}
 	},
-	"packageManager": "yarn@4.4.0",
+	"packageManager": "yarn@4.4.1",
 	"volta": {
-		"node": "20.16.0"
+		"node": "20.17.0"
 	}
 }
