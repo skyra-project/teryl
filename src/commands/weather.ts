@@ -23,19 +23,20 @@ import {
 } from '@skyra/http-framework-i18n';
 import { getWeatherData, getWeatherName, type CurrentCondition, type ValueWrapper, type Weather } from '@skyra/weather-helpers';
 import { Canvas } from 'canvas-constructor/napi-rs';
-import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
+
+const Root = LanguageKeys.Commands.Weather;
 
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Weather.RootName, LanguageKeys.Commands.Weather.RootDescription)
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsPlace).setMinLength(3).setMaxLength(85).setRequired(true))
 		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Weather.OptionsPlace).setMinLength(3).setMaxLength(85).setRequired(true)
-		)
-		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Weather.OptionsSystem).setChoices(
-				createSelectMenuChoiceName(LanguageKeys.Commands.Weather.OptionsSystemMetric, { value: 'metric' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Weather.OptionsSystemSI, { value: 'si' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Weather.OptionsSystemImperial, { value: 'imperial' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.Weather.OptionsSystemAuto, { value: 'auto' })
+			applyLocalizedBuilder(builder, Root.OptionsSystem).setChoices(
+				createSelectMenuChoiceName(Root.OptionsSystemMetric, { value: 'metric' }),
+				createSelectMenuChoiceName(Root.OptionsSystemSI, { value: 'si' }),
+				createSelectMenuChoiceName(Root.OptionsSystemImperial, { value: 'imperial' }),
+				createSelectMenuChoiceName(Root.OptionsSystemAuto, { value: 'auto' })
 			)
 		)
 )
@@ -53,7 +54,7 @@ export class UserCommand extends Command {
 
 	private async handleOk(interaction: Command.ChatInputInteraction, t: TFunction, base: string, args: Options, data: Weather) {
 		const [nearestArea] = data.nearest_area;
-		if (isEmptyObject(nearestArea)) return this.handleErr(interaction, LanguageKeys.Commands.Weather.UnknownLocation);
+		if (isEmptyObject(nearestArea)) return this.handleErr(interaction, Root.UnknownLocation);
 
 		// Region can be an empty string, e.g. `Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu`:
 		const place = `${nearestArea.region[0].value || nearestArea.areaName[0].value}, ${nearestArea.country[0].value}`;

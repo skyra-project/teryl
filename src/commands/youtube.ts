@@ -8,27 +8,30 @@ import { envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveUserKey } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { MessageFlags, type APISelectMenuOption } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags, type APISelectMenuOption } from 'discord-api-types/v10';
 import he from 'he';
 
+const Root = LanguageKeys.Commands.YouTube;
+
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.YouTube.RootName, LanguageKeys.Commands.YouTube.RootDescription)
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.YouTube.OptionsQuery).setRequired(true))
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsQuery).setRequired(true))
 		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.YouTube.OptionsOrder).addChoices(
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderDate, { value: 'date' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderRating, { value: 'rating' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderRelevance, { value: 'relevance' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderTitle, { value: 'title' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderVideoCount, { value: 'videoCount' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsOrderViewCount, { value: 'viewCount' })
+			applyLocalizedBuilder(builder, Root.OptionsOrder).addChoices(
+				createSelectMenuChoiceName(Root.OptionsOrderDate, { value: 'date' }),
+				createSelectMenuChoiceName(Root.OptionsOrderRating, { value: 'rating' }),
+				createSelectMenuChoiceName(Root.OptionsOrderRelevance, { value: 'relevance' }),
+				createSelectMenuChoiceName(Root.OptionsOrderTitle, { value: 'title' }),
+				createSelectMenuChoiceName(Root.OptionsOrderVideoCount, { value: 'videoCount' }),
+				createSelectMenuChoiceName(Root.OptionsOrderViewCount, { value: 'viewCount' })
 			)
 		)
 		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.YouTube.OptionsType).addChoices(
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsTypeChannel, { value: 'channel' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsTypePlaylist, { value: 'playlist' }),
-				createSelectMenuChoiceName(LanguageKeys.Commands.YouTube.OptionsTypeVideo, { value: 'video' })
+			applyLocalizedBuilder(builder, Root.OptionsType).addChoices(
+				createSelectMenuChoiceName(Root.OptionsTypeChannel, { value: 'channel' }),
+				createSelectMenuChoiceName(Root.OptionsTypePlaylist, { value: 'playlist' }),
+				createSelectMenuChoiceName(Root.OptionsTypeVideo, { value: 'video' })
 			)
 		)
 )
@@ -76,7 +79,7 @@ export class UserCommand extends Command {
 		}
 
 		if (options.length === 0) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.YouTube.NoResults);
+			const content = resolveUserKey(interaction, Root.NoResults);
 			return { content, flags: MessageFlags.Ephemeral };
 		}
 
@@ -95,10 +98,10 @@ export class UserCommand extends Command {
 	}
 
 	private handleErrorGetContent(interaction: Command.ChatInputInteraction, error: FetchError): string {
-		if (isAbortError(error)) return resolveUserKey(interaction, LanguageKeys.Commands.YouTube.AbortError);
+		if (isAbortError(error)) return resolveUserKey(interaction, Root.AbortError);
 
 		this.container.logger.error('[YouTube] Unknown Error', error);
-		return resolveUserKey(interaction, LanguageKeys.Commands.YouTube.UnknownError);
+		return resolveUserKey(interaction, Root.UnknownError);
 	}
 }
 

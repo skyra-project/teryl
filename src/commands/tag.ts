@@ -5,14 +5,16 @@ import type { Tag } from '@prisma/client';
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments, type TransformedArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
-import { MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
+
+const Root = LanguageKeys.Commands.Tag;
 
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Tag.RootName, LanguageKeys.Commands.Tag.RootDescription)
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Tag.OptionsName).setAutocomplete(true).setRequired(true))
-		.addBooleanOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Tag.OptionsHide))
-		.addUserOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Tag.OptionsTarget))
-		.setDMPermission(false)
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setContexts(InteractionContextType.Guild)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsName).setAutocomplete(true).setRequired(true))
+		.addBooleanOption((builder) => applyLocalizedBuilder(builder, Root.OptionsHide))
+		.addUserOption((builder) => applyLocalizedBuilder(builder, Root.OptionsTarget))
 )
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutocompleteInteractionArguments<Options>) {
@@ -23,7 +25,7 @@ export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
 		const tag = await getTag(BigInt(interaction.guildId!), options.name);
 		if (isNullish(tag)) {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Tag.Unknown);
+			const content = resolveUserKey(interaction, Root.Unknown);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -42,7 +44,7 @@ export class UserCommand extends Command {
 	private getContent(interaction: Command.ChatInputInteraction, options: Options, tag: Tag) {
 		const hide = options.hide ?? false;
 		if (options.target && !hide) {
-			const header = resolveKey(interaction, LanguageKeys.Commands.Tag.Target, { user: userMention(options.target.user.id) });
+			const header = resolveKey(interaction, Root.Target, { user: userMention(options.target.user.id) });
 			return tag.embed ? header : `${header}\n${tag.content}`;
 		}
 
