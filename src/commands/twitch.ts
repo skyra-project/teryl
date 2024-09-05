@@ -3,12 +3,13 @@ import { EmbedBuilder } from '@discordjs/builders';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT } from '@skyra/http-framework-i18n';
 import { TwitchBrandingColor, TwitchLogoUrl, areTwitchClientCredentialsSet, fetchUserFollowage, fetchUsers } from '@skyra/twitch-helpers';
-import { MessageFlags } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Twitch;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.UserOptionsName).setMinLength(2).setMaxLength(20).setRequired(true))
 )
 export class UserCommand extends Command {

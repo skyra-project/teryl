@@ -7,13 +7,15 @@ import { Result, none, some } from '@sapphire/result';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { MessageFlags } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 import { readFile } from 'node:fs/promises';
 
+const Root = LanguageKeys.Commands.Dictionary;
+
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Dictionary.RootName, LanguageKeys.Commands.Dictionary.RootDescription).addStringOption(
-		(builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Dictionary.OptionsInput).setMinLength(2).setMaxLength(45).setRequired(true)
-	)
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsInput).setMinLength(2).setMaxLength(45).setRequired(true))
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
@@ -36,9 +38,9 @@ export class UserCommand extends Command {
 	}
 
 	private handleOk(t: TFunction, input: string, result: DictionaryAPIResult) {
-		let lines = [t(LanguageKeys.Commands.Dictionary.ContentTitle, { value: escapeInlineCode(result.word) })];
+		let lines = [t(Root.ContentTitle, { value: escapeInlineCode(result.word) })];
 
-		if (result.phonetic) lines.push(t(LanguageKeys.Commands.Dictionary.ContentPhonetic, { value: result.phonetic }));
+		if (result.phonetic) lines.push(t(Root.ContentPhonetic, { value: result.phonetic }));
 
 		let escapeOutOfLoop = false;
 		for (const [index, meaning] of result.meanings.entries()) {
@@ -51,7 +53,8 @@ export class UserCommand extends Command {
 					return;
 				}
 
-				return (lines = newLines);
+				lines = newLines;
+				return lines;
 			});
 		}
 
@@ -61,7 +64,7 @@ export class UserCommand extends Command {
 	private handleError(t: TFunction, input: string, error: FetchError | DictionaryNoResultsError) {
 		if (error instanceof DictionaryNoResultsError) {
 			return {
-				content: t(LanguageKeys.Commands.Dictionary.FetchNoResults, { value: escapeInlineCode(input) }),
+				content: t(Root.FetchNoResults, { value: escapeInlineCode(input) }),
 				flags: MessageFlags.Ephemeral
 			} satisfies MessageResponseOptions;
 		}
@@ -73,29 +76,29 @@ export class UserCommand extends Command {
 	}
 
 	private getErrorKey(error: FetchError) {
-		if (isAbortError(error)) return LanguageKeys.Commands.Dictionary.FetchAbort;
-		if (error.code === 404) return LanguageKeys.Commands.Dictionary.FetchNoResults;
+		if (isAbortError(error)) return Root.FetchAbort;
+		if (error.code === 404) return Root.FetchNoResults;
 		if (error.code === 429) {
 			this.container.logger.error('[DICTIONARYAPI] 429: Request surpassed its rate limit');
-			return LanguageKeys.Commands.Dictionary.FetchRateLimited;
+			return Root.FetchRateLimited;
 		}
 		if (error.code >= 500) {
 			this.container.logger.warn('[DICTIONARYAPI] %d: Received a server error', error.code);
-			return LanguageKeys.Commands.Dictionary.FetchServerError;
+			return Root.FetchServerError;
 		}
 
 		this.container.logger.warn('[DICTIONARYAPI] %d: Received an unknown error status code', error.code);
-		return LanguageKeys.Commands.Dictionary.FetchUnknownError;
+		return Root.FetchUnknownError;
 	}
 
 	private makeContent(t: TFunction, meaning: DictionaryAPIMeaning, index: number) {
 		const meaningParts: string[] = [];
 
-		meaningParts.push(t(LanguageKeys.Commands.Dictionary.ContentLexicalCategory, { value: meaning.partOfSpeech, index: index + 1 }));
+		meaningParts.push(t(Root.ContentLexicalCategory, { value: meaning.partOfSpeech, index: index + 1 }));
 
 		for (const [subIndex, definition] of meaning.definitions.entries()) {
 			meaningParts.push(
-				t(LanguageKeys.Commands.Dictionary.ContentDefinition, {
+				t(Root.ContentDefinition, {
 					value: definition.definition,
 					index: index + 1,
 					subIndex: subIndex + 1
@@ -103,7 +106,7 @@ export class UserCommand extends Command {
 			);
 
 			if (definition.example) {
-				meaningParts.push('', t(LanguageKeys.Commands.Dictionary.ContentExample, { value: definition.example }));
+				meaningParts.push('', t(Root.ContentExample, { value: definition.example }));
 			}
 		}
 

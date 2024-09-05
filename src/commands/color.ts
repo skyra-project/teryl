@@ -8,12 +8,13 @@ import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveUserKey } from '@skyra/http-framework-i18n';
 import { Json, safeTimedFetch } from '@skyra/safe-fetch';
 import { formatHex, formatHex8, hsl, oklch, p3, parse, rgb, type Color } from 'culori';
-import { MessageFlags } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Color;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.Input).setRequired(true))
 )
 export class UserCommand extends Command {
@@ -87,7 +88,7 @@ export class UserCommand extends Command {
 	}
 
 	private formatOklch(color: Color) {
-		const parsed = oklch(color)!;
+		const parsed = oklch(color);
 		const l = round6(parsed.l * 100);
 		const c = round6(parsed.c);
 		const h = round6(parsed.h ?? 0);

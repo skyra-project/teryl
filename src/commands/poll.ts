@@ -3,16 +3,19 @@ import { bold, SlashCommandStringOption } from '@discordjs/builders';
 import { Result } from '@sapphire/result';
 import { Command, Message, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, type TypedT } from '@skyra/http-framework-i18n';
-import { Routes } from 'discord-api-types/v10';
+import { InteractionContextType, Routes } from 'discord-api-types/v10';
+
+const Root = LanguageKeys.Commands.Poll;
 
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Poll.RootName, LanguageKeys.Commands.Poll.RootDescription) //
-		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Poll.OptionsTitle).setRequired(true))
-		.addStringOption(UserCommand.makeOption(LanguageKeys.Commands.Poll.OptionsFirstName).setRequired(true))
-		.addStringOption(UserCommand.makeOption(LanguageKeys.Commands.Poll.OptionsSecondName).setRequired(true))
-		.addStringOption(UserCommand.makeOption(LanguageKeys.Commands.Poll.OptionsThirdName))
-		.addStringOption(UserCommand.makeOption(LanguageKeys.Commands.Poll.OptionsFourthName))
-		.addStringOption(UserCommand.makeOption(LanguageKeys.Commands.Poll.OptionsFifthName))
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel)
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsTitle).setRequired(true))
+		.addStringOption(UserCommand.makeOption(Root.OptionsFirstName).setRequired(true))
+		.addStringOption(UserCommand.makeOption(Root.OptionsSecondName).setRequired(true))
+		.addStringOption(UserCommand.makeOption(Root.OptionsThirdName))
+		.addStringOption(UserCommand.makeOption(Root.OptionsFourthName))
+		.addStringOption(UserCommand.makeOption(Root.OptionsFifthName))
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputInteraction, options: Options) {
@@ -42,7 +45,7 @@ export class UserCommand extends Command {
 	}
 
 	private static makeOption(key: TypedT) {
-		return applyLocalizedBuilder(new SlashCommandStringOption(), key, LanguageKeys.Commands.Poll.OptionsValueDescription);
+		return applyLocalizedBuilder(new SlashCommandStringOption(), key, Root.OptionsValueDescription);
 	}
 }
 

@@ -6,18 +6,19 @@ import { envIsDefined, envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { MessageFlags, type LocaleString } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
+
+const Root = LanguageKeys.Commands.Price;
 
 @RegisterCommand((builder) =>
-	applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.RootName, LanguageKeys.Commands.Price.RootDescription)
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) =>
 			// T - SAFEMOON
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.OptionsFrom).setMinLength(1).setMaxLength(8).setRequired(true)
+			applyLocalizedBuilder(builder, Root.OptionsFrom).setMinLength(1).setMaxLength(8).setRequired(true)
 		)
-		.addStringOption((builder) =>
-			applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.OptionsTo).setMinLength(3).setMaxLength(500).setRequired(true)
-		)
-		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Price.OptionsAmount).setMinValue(0))
+		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsTo).setMinLength(3).setMaxLength(500).setRequired(true))
+		.addNumberOption((builder) => applyLocalizedBuilder(builder, Root.OptionsAmount).setMinValue(0))
 )
 export class UserCommand extends Command {
 	public constructor(context: Command.LoaderContext) {
@@ -43,15 +44,13 @@ export class UserCommand extends Command {
 	}
 
 	private handleFetchError(interaction: Command.ChatInputInteraction, error: FetchError) {
-		const key = isAbortError(error)
-			? LanguageKeys.Commands.Price.AbortError
-			: (this.container.logger.error(error), LanguageKeys.Commands.Price.UnknownServerError);
+		const key = isAbortError(error) ? Root.AbortError : (this.container.logger.error(error), Root.UnknownServerError);
 		return interaction.reply({ content: resolveUserKey(interaction, key), flags: MessageFlags.Ephemeral });
 	}
 
 	private handleFetchOk(interaction: Command.ChatInputInteraction, result: CryptoCompareResult, amount: number, from: string) {
 		if (result.Response === 'Error') {
-			const content = resolveUserKey(interaction, LanguageKeys.Commands.Price.Error);
+			const content = resolveUserKey(interaction, Root.Error);
 			return interaction.reply({ content, flags: MessageFlags.Ephemeral });
 		}
 
@@ -63,7 +62,7 @@ export class UserCommand extends Command {
 
 		const embed = new EmbedBuilder() //
 			.setColor(BrandingColors.Primary)
-			.setDescription(t(LanguageKeys.Commands.Price.Result, { from: this.format(t, from, amount), amounts }))
+			.setDescription(t(Root.Result, { from: this.format(t, from, amount), amounts }))
 			.setTimestamp();
 		return interaction.reply({ embeds: [embed.toJSON()] });
 	}

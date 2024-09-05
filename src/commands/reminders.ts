@@ -29,12 +29,15 @@ import {
 	resolveKey,
 	resolveUserKey
 } from '@skyra/http-framework-i18n';
-import { ButtonStyle, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
+import { ButtonStyle, InteractionContextType, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
 import { DateTime, Duration } from 'luxon';
 
 const Root = LanguageKeys.Commands.Reminders;
 
-@RegisterCommand((builder) => applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription))
+@RegisterCommand((builder) =>
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+)
 export class UserCommand extends Command {
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: AutoCompleteOptions) {
 		const userId = BigInt(interaction.user.id);

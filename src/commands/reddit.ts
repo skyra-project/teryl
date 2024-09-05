@@ -18,11 +18,14 @@ import {
 	type RedditError
 } from '@skyra/reddit-helpers';
 import { isAbortError, type FetchError } from '@skyra/safe-fetch';
-import { MessageFlags } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Reddit;
 
-@RegisterCommand((builder) => applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription))
+@RegisterCommand((builder) =>
+	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+)
 export class UserCommand extends Command {
 	private readonly forbidden = new Collection<string, { type: ForbiddenType; reason: string }>();
 

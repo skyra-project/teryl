@@ -2,16 +2,17 @@ import { escapeInlineCode } from '#lib/common/escape';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
-import { MessageFlags } from 'discord-api-types/v10';
+import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, LanguageKeys.Commands.Choice.RootName, LanguageKeys.Commands.Choice.RootDescription) //
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Choice.OptionsValues).setMinLength(3).setRequired(true))
 )
 export class UserCommand extends Command {
 	public override chatInputRun(interaction: Command.ChatInputInteraction, args: Options) {
 		const possibles = args.values
-			.split(/[,\|\-]+/)
+			.split(/[,|-]+/)
 			.map((s) => s.trim())
 			.filter((s) => s.length > 0);
 		if (possibles.length === 1) {

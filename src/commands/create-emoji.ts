@@ -17,6 +17,7 @@ import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch, type FetchResult } from '@skyra/safe-fetch';
 import {
+	InteractionContextType,
 	MessageFlags,
 	PermissionFlagsBits,
 	RESTJSONErrorCodes,
@@ -46,7 +47,7 @@ const EmojiRoot = LanguageKeys.Commands.Emoji;
 				createSelectMenuChoiceName(EmojiRoot.OptionsVariantWhatsApp, { value: EmojiSource.WhatsApp })
 			)
 		)
-		.setDMPermission(false)
+		.setContexts(InteractionContextType.Guild)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuildExpressions)
 )
 export class UserCommand extends Command {
@@ -214,11 +215,7 @@ export class UserCommand extends Command {
 	}
 
 	private sanitizeName(name: string) {
-		return name
-			.split('.', 1)[0]
-			.replaceAll(/[^\d\w]/g, '_')
-			.padEnd(2, '_')
-			.slice(0, 32);
+		return name.split('.', 1)[0].replaceAll(/[^\w]/g, '_').padEnd(2, '_').slice(0, 32);
 	}
 
 	private getOptimalUrl(file: NonNullable<Options['file']>) {
@@ -278,7 +275,7 @@ export class UserCommand extends Command {
 		return image.byteLength > UserCommand.MaximumUploadSize ? err(Root.ContentLengthTooBig) : ok({ image, contentType: 'image/webp' });
 	}
 
-	private static readonly NameValidatorRegExp = /^[0-9a-zA-Z_]{2,32}$/;
+	private static readonly NameValidatorRegExp = /^\w{2,32}$/;
 	private static readonly MaximumUploadSize = 256 * 1024;
 }
 
