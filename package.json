@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@discordjs/builders": "^1.9.0",
 		"@discordjs/collection": "^2.1.1",
-		"@napi-rs/canvas": "^0.1.54",
+		"@napi-rs/canvas": "^0.1.55",
 		"@napi-rs/image": "^1.9.2",
 		"@prisma/client": "^5.19.1",
 		"@sapphire/async-queue": "^1.5.3",
@@ -48,7 +48,7 @@
 		"@vladfrangu/async_event_emitter": "^2.4.6",
 		"canvas-constructor": "^7.0.2",
 		"culori": "^4.0.1",
-		"discord-api-types": "^0.37.99",
+		"discord-api-types": "^0.37.100",
 		"gradient-string": "^2.0.2",
 		"he": "^1.2.0",
 		"ioredis": "^5.4.1",
@@ -67,7 +67,7 @@
 		"@types/gradient-string": "^1.1.6",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.16.4",
+		"@types/node": "^20.16.5",
 		"@typescript-eslint/eslint-plugin": "^7.18.0",
 		"@typescript-eslint/parser": "^7.18.0",
 		"@vitest/coverage-v8": "^2.0.5",
@@ -85,7 +85,7 @@
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
-		"discord-api-types": "^0.37.98",
+		"discord-api-types": "^0.37.100",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
