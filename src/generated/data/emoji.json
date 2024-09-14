@@ -228,6 +228,10 @@
 		"name": "sleeping face"
 	},
 	{
+		"id": "1fae9",
+		"name": "face with bags under eyes"
+	},
+	{
 		"id": "1f637",
 		"name": "face with medical mask"
 	},
@@ -5409,27 +5413,27 @@
 	},
 	{
 		"id": "1f9d1-200d-1f384",
-		"name": "mx claus"
+		"name": "Mx Claus"
 	},
 	{
 		"id": "1f9d1-1f3fb-200d-1f384",
-		"name": "mx claus: light skin tone"
+		"name": "Mx Claus: light skin tone"
 	},
 	{
 		"id": "1f9d1-1f3fc-200d-1f384",
-		"name": "mx claus: medium-light skin tone"
+		"name": "Mx Claus: medium-light skin tone"
 	},
 	{
 		"id": "1f9d1-1f3fd-200d-1f384",
-		"name": "mx claus: medium skin tone"
+		"name": "Mx Claus: medium skin tone"
 	},
 	{
 		"id": "1f9d1-1f3fe-200d-1f384",
-		"name": "mx claus: medium-dark skin tone"
+		"name": "Mx Claus: medium-dark skin tone"
 	},
 	{
 		"id": "1f9d1-1f3ff-200d-1f384",
-		"name": "mx claus: dark skin tone"
+		"name": "Mx Claus: dark skin tone"
 	},
 	{
 		"id": "1f9b8",
@@ -9712,6 +9716,10 @@
 		"name": "footprints"
 	},
 	{
+		"id": "1fac6",
+		"name": "fingerprint"
+	},
+	{
 		"id": "1f435",
 		"name": "monkey face"
 	},
@@ -10148,6 +10156,26 @@
 		"name": "jellyfish"
 	},
 	{
+		"id": "1f980",
+		"name": "crab"
+	},
+	{
+		"id": "1f99e",
+		"name": "lobster"
+	},
+	{
+		"id": "1f990",
+		"name": "shrimp"
+	},
+	{
+		"id": "1f991",
+		"name": "squid"
+	},
+	{
+		"id": "1f9aa",
+		"name": "oyster"
+	},
+	{
 		"id": "1f40c",
 		"name": "snail"
 	},
@@ -10324,6 +10352,10 @@
 		"name": "mushroom"
 	},
 	{
+		"id": "1fabe",
+		"name": "leafless tree"
+	},
+	{
 		"id": "1f347",
 		"name": "grapes"
 	},
@@ -10474,6 +10506,10 @@
 	{
 		"id": "1f344-200d-1f7eb",
 		"name": "brown mushroom"
+	},
+	{
+		"id": "1fadc",
+		"name": "root vegetable"
 	},
 	{
 		"id": "1f35e",
@@ -10678,26 +10714,6 @@
 	{
 		"id": "1f961",
 		"name": "takeout box"
-	},
-	{
-		"id": "1f980",
-		"name": "crab"
-	},
-	{
-		"id": "1f99e",
-		"name": "lobster"
-	},
-	{
-		"id": "1f990",
-		"name": "shrimp"
-	},
-	{
-		"id": "1f991",
-		"name": "squid"
-	},
-	{
-		"id": "1f9aa",
-		"name": "oyster"
 	},
 	{
 		"id": "1f366",
@@ -12380,6 +12396,10 @@
 		"name": "flute"
 	},
 	{
+		"id": "1fa89",
+		"name": "harp"
+	},
+	{
 		"id": "1f4f1",
 		"name": "mobile phone"
 	},
@@ -12930,6 +12950,10 @@
 	{
 		"id": "1fa9c",
 		"name": "ladder"
+	},
+	{
+		"id": "1fa8f",
+		"name": "shovel"
 	},
 	{
 		"id": "2697-fe0f",
@@ -13672,6 +13696,10 @@
 		"name": "trade mark"
 	},
 	{
+		"id": "1fadf",
+		"name": "splatter"
+	},
+	{
 		"id": "0023-fe0f-20e3",
 		"name": "keycap: #"
 	},
@@ -14250,6 +14278,10 @@
 	{
 		"id": "1f1e8-1f1f5",
 		"name": "flag: Clipperton Island"
+	},
+	{
+		"id": "1f1e8-1f1f6",
+		"name": "flag: Sark"
 	},
 	{
 		"id": "1f1e8-1f1f7",
