@@ -58,8 +58,8 @@
 		"tslib": "^2.7.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.4.1",
-		"@commitlint/config-conventional": "^19.4.1",
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
 		"@sapphire/eslint-config": "^5.0.5",
 		"@sapphire/prettier-config": "^2.0.0",
 		"@sapphire/ts-config": "^5.0.1",
@@ -70,7 +70,7 @@
 		"@types/node": "^20.16.5",
 		"@typescript-eslint/eslint-plugin": "^7.18.0",
 		"@typescript-eslint/parser": "^7.18.0",
-		"@vitest/coverage-v8": "^2.0.5",
+		"@vitest/coverage-v8": "^2.1.1",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
@@ -81,7 +81,7 @@
 		"rimraf": "^6.0.1",
 		"tar": "^7.4.3",
 		"typescript": "~5.4.5",
-		"vitest": "^2.0.5"
+		"vitest": "^2.1.1"
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
@@ -112,7 +112,7 @@
 			"@typescript-eslint/no-base-to-string": "off"
 		}
 	},
-	"packageManager": "yarn@4.4.1",
+	"packageManager": "yarn@4.5.0",
 	"volta": {
 		"node": "20.17.0"
 	}
