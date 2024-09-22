@@ -5,12 +5,13 @@ import type { Tag } from '@prisma/client';
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments, type TransformedArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
-import { InteractionContextType, MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags, type APIAllowedMentions } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Tag;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
 		.setContexts(InteractionContextType.Guild)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsName).setAutocomplete(true).setRequired(true))
 		.addBooleanOption((builder) => applyLocalizedBuilder(builder, Root.OptionsHide))

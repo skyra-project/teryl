@@ -11,7 +11,7 @@ import { Command, RegisterCommand, RegisterSubcommand, type AutocompleteInteract
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey, type TypedFT, type TypedT, type Value } from '@skyra/http-framework-i18n';
 import { isAbortError } from '@skyra/safe-fetch';
 import { rgb } from 'culori';
-import { InteractionContextType, MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags, PermissionFlagsBits, TextInputStyle } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.ManageTag;
 
@@ -33,6 +33,7 @@ const MaximumContentLength = 4096;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
 		.setContexts(InteractionContextType.Guild)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 )
