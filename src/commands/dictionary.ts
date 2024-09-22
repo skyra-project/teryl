@@ -7,13 +7,14 @@ import { Result, none, some } from '@sapphire/result';
 import { Command, RegisterCommand, type MessageResponseOptions } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 import { readFile } from 'node:fs/promises';
 
 const Root = LanguageKeys.Commands.Dictionary;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsInput).setMinLength(2).setMaxLength(45).setRequired(true))
 )

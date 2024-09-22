@@ -23,12 +23,13 @@ import {
 } from '@skyra/http-framework-i18n';
 import { getWeatherData, getWeatherName, type CurrentCondition, type ValueWrapper, type Weather } from '@skyra/weather-helpers';
 import { Canvas } from 'canvas-constructor/napi-rs';
-import { InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Weather;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsPlace).setMinLength(3).setMaxLength(85).setRequired(true))
 		.addStringOption((builder) =>

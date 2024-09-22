@@ -29,13 +29,21 @@ import {
 	resolveKey,
 	resolveUserKey
 } from '@skyra/http-framework-i18n';
-import { ButtonStyle, InteractionContextType, MessageFlags, Routes, type RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10';
+import {
+	ApplicationIntegrationType,
+	ButtonStyle,
+	InteractionContextType,
+	MessageFlags,
+	Routes,
+	type RESTPatchAPIChannelMessageJSONBody
+} from 'discord-api-types/v10';
 import { DateTime, Duration } from 'luxon';
 
 const Root = LanguageKeys.Commands.Reminders;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 )
 export class UserCommand extends Command {

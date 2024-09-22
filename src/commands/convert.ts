@@ -4,12 +4,13 @@ import { Units, renderUnit, sanitizeUnit, searchUnits } from '#lib/utilities/con
 import { isNullish } from '@sapphire/utilities';
 import { Command, RegisterCommand, type AutocompleteInteractionArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedUserLanguageT, resolveUserKey } from '@skyra/http-framework-i18n';
-import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Convert;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addNumberOption((builder) => applyLocalizedBuilder(builder, LanguageKeys.Commands.Convert.Amount).setRequired(true))
 		.addStringOption((builder) => applyLocalizedBuilder(builder, Root.From).setAutocomplete(true).setRequired(true).setMaxLength(100))

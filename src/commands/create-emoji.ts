@@ -17,6 +17,7 @@ import { Command, RegisterCommand } from '@skyra/http-framework';
 import { applyLocalizedBuilder, createSelectMenuChoiceName, resolveKey, resolveUserKey } from '@skyra/http-framework-i18n';
 import { safeTimedFetch, type FetchResult } from '@skyra/safe-fetch';
 import {
+	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
 	PermissionFlagsBits,
@@ -47,6 +48,7 @@ const EmojiRoot = LanguageKeys.Commands.Emoji;
 				createSelectMenuChoiceName(EmojiRoot.OptionsVariantWhatsApp, { value: EmojiSource.WhatsApp })
 			)
 		)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
 		.setContexts(InteractionContextType.Guild)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuildExpressions)
 )

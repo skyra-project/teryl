@@ -6,12 +6,13 @@ import { envIsDefined, envParseString } from '@skyra/env-utilities';
 import { Command, RegisterCommand, type MakeArguments } from '@skyra/http-framework';
 import { applyLocalizedBuilder, getSupportedLanguageT, resolveUserKey, type TFunction } from '@skyra/http-framework-i18n';
 import { Json, isAbortError, safeTimedFetch, type FetchError } from '@skyra/safe-fetch';
-import { InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags, type LocaleString } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Price;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 		.addStringOption((builder) =>
 			// T - SAFEMOON
