@@ -11,12 +11,13 @@ import {
 	type TFunction,
 	type TypedT
 } from '@skyra/http-framework-i18n';
-import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Unicode;
 
 @RegisterCommand((builder) =>
 	applyLocalizedBuilder(builder, Root.RootName, Root.RootDescription) //
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 )
 export class UserCommand extends Command {

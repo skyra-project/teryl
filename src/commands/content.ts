@@ -4,11 +4,12 @@ import { codeBlock } from '@discordjs/builders';
 import type { RawFile } from '@discordjs/rest';
 import { Command, RegisterMessageCommand, RegisterUserCommand, type TransformedArguments } from '@skyra/http-framework';
 import { applyNameLocalizedBuilder } from '@skyra/http-framework-i18n';
-import { InteractionContextType, MessageFlags } from 'discord-api-types/v10';
+import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 export class UserCommand extends Command {
 	@RegisterMessageCommand((builder) =>
 		applyNameLocalizedBuilder(builder, LanguageKeys.Commands.Content.MessageJsonName) //
+			.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 			.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 	)
 	public message(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
@@ -17,6 +18,7 @@ export class UserCommand extends Command {
 
 	@RegisterUserCommand((builder) =>
 		applyNameLocalizedBuilder(builder, LanguageKeys.Commands.Content.UserJsonName) //
+			.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
 			.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 	)
 	public user(interaction: Command.UserInteraction, options: TransformedArguments.User) {
