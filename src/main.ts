@@ -4,7 +4,7 @@ import { Client, container } from '@skyra/http-framework';
 import { init, load } from '@skyra/http-framework-i18n';
 import { registerCommands } from '@skyra/shared-http-pieces';
 import { createBanner } from '@skyra/start-banner';
-import gradient from 'gradient-string';
+import { vice } from 'gradient-string';
 
 setup();
 
@@ -32,7 +32,7 @@ await client.listen({ address, port });
 container.reminders.start();
 
 console.log(
-	gradient.vice.multiline(
+	vice.multiline(
 		createBanner({
 			logo: [
 				String.raw`   ╱╲  ╱╲  ╱╲ `,
