@@ -28,9 +28,9 @@
 	"dependencies": {
 		"@discordjs/builders": "^1.9.0",
 		"@discordjs/collection": "^2.1.1",
-		"@napi-rs/canvas": "^0.1.56",
+		"@napi-rs/canvas": "^0.1.58",
 		"@napi-rs/image": "^1.9.2",
-		"@prisma/client": "^5.19.1",
+		"@prisma/client": "^5.21.1",
 		"@sapphire/async-queue": "^1.5.3",
 		"@sapphire/duration": "^1.1.2",
 		"@sapphire/result": "^2.6.6",
@@ -55,7 +55,7 @@
 		"jsbd": "^0.0.11",
 		"luxon": "^3.5.0",
 		"nanoid": "^5.0.7",
-		"tslib": "^2.7.0"
+		"tslib": "^2.8.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.5.0",
@@ -67,21 +67,21 @@
 		"@types/gradient-string": "^1.1.6",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.16.5",
+		"@types/node": "^20.16.13",
 		"@typescript-eslint/eslint-plugin": "^7.18.0",
 		"@typescript-eslint/parser": "^7.18.0",
-		"@vitest/coverage-v8": "^2.1.1",
+		"@vitest/coverage-v8": "^2.1.3",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
 		"lint-staged": "^15.2.10",
 		"prettier": "^3.3.3",
-		"prisma": "^5.19.1",
+		"prisma": "^5.21.1",
 		"rimraf": "^6.0.1",
 		"tar": "^7.4.3",
 		"typescript": "~5.4.5",
-		"vitest": "^2.1.1"
+		"vitest": "^2.1.3"
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
@@ -112,8 +112,8 @@
 			"@typescript-eslint/no-base-to-string": "off"
 		}
 	},
-	"packageManager": "yarn@4.5.0",
+	"packageManager": "yarn@4.5.1",
 	"volta": {
-		"node": "20.17.0"
+		"node": "20.18.0"
 	}
 }
