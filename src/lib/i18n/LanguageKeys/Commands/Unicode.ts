@@ -24,6 +24,8 @@ export const InformationComment = FT<{ value: string }>('commands/unicode:inform
 export const TooManyCharacters = T('commands/unicode:tooManyCharacters');
 export const UnknownCharacter = T('commands/unicode:unknownCharacter');
 
+export const SelectMenuOptionLabel = FT<{ page: number; characters: string }>('commands/unicode:selectMenuOptionLabel');
+
 export const CategoryControl = T('commands/unicode:categoryControl');
 export const CategoryFormat = T('commands/unicode:categoryFormat');
 export const CategoryPrivateUse = T('commands/unicode:categoryPrivateUse');
