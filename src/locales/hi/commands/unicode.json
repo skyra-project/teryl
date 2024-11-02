@@ -13,7 +13,6 @@
 	"optionsBidirectionalCategoryDescription": "फ़िल्टर करने के लिए यूनिकोड द्विदिशात्मक श्रेणी, यदि कोई हो",
 	"optionsClassName": "वर्ग",
 	"optionsClassDescription": "फ़िल्टर करने के लिए यूनिकोड श्रेणी, यदि कोई हो",
-	"tooManyCharacters": "बहुत अधिक वर्ण हैं, केवल पहले 10 प्रदर्शित किए जाएंगे।",
 	"unknownCharacter": "मैं इस वर्ण के लिए यूनिकोड जानकारी प्राप्त नहीं कर सका।",
 	"informationBasic": "**नाम**: `{{name}}` ({{category}})\n**द्विदिश **: {{bidirectionalCategory}}\n**कक्षा**: {{class}}",
 	"informationValue": "**मूल**:`{{value, number}}`",
