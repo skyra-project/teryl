@@ -13,7 +13,6 @@
 	"optionsBidirectionalCategoryDescription": "La categoría bidireccional Unicode a filtrar, si es definida",
 	"optionsClassName": "clase",
 	"optionsClassDescription": "La clase Unicode a filtrar, si es definida",
-	"tooManyCharacters": "Hay demasiados caracteres, solo se mostrarán los 10 primeros.",
 	"unknownCharacter": "No pude recuperar la información de Unicode para este carácter.",
 	"informationBasic": "**Nombre**: `{{name}}` ({{category}})\n**Bidireccional**: {{bidirectionalCategory}}\n**Clase**: {{class}}",
 	"informationValue": "**Valor**: `{{value, number}}`",
