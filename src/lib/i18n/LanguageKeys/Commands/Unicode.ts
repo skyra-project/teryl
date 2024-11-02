@@ -4,6 +4,8 @@ import { FT, T } from '@skyra/http-framework-i18n';
 export const RootName = T('commands/unicode:name');
 export const RootDescription = T('commands/unicode:description');
 
+export const InspectMessageCharactersName = T('commands/unicode:inspectMessageCharactersName');
+
 export const Inspect = 'commands/unicode:inspect';
 export const Search = 'commands/unicode:search';
 
