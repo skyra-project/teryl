@@ -9,8 +9,8 @@ import {
 	getUnicodeInformationEmbeds,
 	searchUnicode
 } from '#lib/unicode';
-import { Command, RegisterCommand, RegisterSubcommand } from '@skyra/http-framework';
-import { applyLocalizedBuilder, createSelectMenuChoiceName, getSupportedUserLanguageT } from '@skyra/http-framework-i18n';
+import { Command, RegisterCommand, RegisterMessageCommand, RegisterSubcommand, type TransformedArguments } from '@skyra/http-framework';
+import { applyLocalizedBuilder, applyNameLocalizedBuilder, createSelectMenuChoiceName, getSupportedUserLanguageT } from '@skyra/http-framework-i18n';
 import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Unicode;
@@ -21,19 +21,21 @@ const Root = LanguageKeys.Commands.Unicode;
 		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
 )
 export class UserCommand extends Command {
+	@RegisterMessageCommand((builder) =>
+		applyNameLocalizedBuilder(builder, Root.InspectMessageCharactersName) //
+			.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
+			.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+	)
+	public message(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
+		return this.shared(interaction, options.message.content);
+	}
+
 	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, Root.Inspect) //
 			.addStringOption((builder) => applyLocalizedBuilder(builder, Root.OptionsCharacter).setRequired(true))
 	)
-	public async inspect(interaction: Command.ChatInputInteraction, options: InspectOptions) {
-		const ids = [...options.character];
-		const t = getSupportedUserLanguageT(interaction);
-		const content = ids.length > 250 ? t(Root.TooManyCharacters) : '';
-		const characters = ids.slice(0, 250);
-
-		const components = characters.length > 10 ? getSelectMenuComponents(t, characters) : undefined;
-		const embeds = getUnicodeInformationEmbeds(t, characters.slice(0, 10));
-		return interaction.reply({ content, embeds, components, flags: MessageFlags.Ephemeral });
+	public inspect(interaction: Command.ChatInputInteraction, options: InspectOptions) {
+		return this.shared(interaction, options.character);
 	}
 
 	@RegisterSubcommand((builder) =>
@@ -76,7 +78,7 @@ export class UserCommand extends Command {
 			)
 	)
 	public search(interaction: Command.ChatInputInteraction, options: SearchOptions) {
-		return this.inspect(interaction, { character: options.character });
+		return this.shared(interaction, options.character);
 	}
 
 	public override async autocompleteRun(interaction: Command.AutocompleteInteraction, options: Command.AutocompleteArguments<SearchOptions>) {
@@ -93,6 +95,17 @@ export class UserCommand extends Command {
 				value: String.fromCodePoint(entry.value.id)
 			}))
 		});
+	}
+
+	private shared(interaction: Command.ChatInputInteraction | Command.MessageInteraction, input: string) {
+		const ids = [...input];
+		const t = getSupportedUserLanguageT(interaction);
+		const content = ids.length > 250 ? t(Root.TooManyCharacters) : '';
+		const characters = ids.slice(0, 250);
+
+		const components = characters.length > 10 ? getSelectMenuComponents(t, characters) : undefined;
+		const embeds = getUnicodeInformationEmbeds(t, characters.slice(0, 10));
+		return interaction.reply({ content, embeds, components, flags: MessageFlags.Ephemeral });
 	}
 }
 
