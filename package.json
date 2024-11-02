@@ -8,8 +8,9 @@
 	"main": "dist/main.js",
 	"type": "module",
 	"imports": {
-		"#lib/*": "./dist/lib/*.js",
 		"#lib/structures": "./dist/lib/structures/index.js",
+		"#lib/unicode": "./dist/lib/utilities/unicode/index.js",
+		"#lib/*": "./dist/lib/*.js",
 		"#generated/*": "./src/generated/*"
 	},
 	"scripts": {

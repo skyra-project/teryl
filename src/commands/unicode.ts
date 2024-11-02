@@ -1,16 +1,16 @@
-import { EmbedColors } from '#lib/common/constants';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
-import { BidirectionalCategory, Category, Class, SearchCategory, getUnicode, searchUnicode } from '#lib/utilities/unicode';
-import { EmbedBuilder, bold, inlineCode, italic } from '@discordjs/builders';
-import { isNullish } from '@sapphire/utilities';
-import { Command, RegisterCommand, RegisterSubcommand } from '@skyra/http-framework';
 import {
-	applyLocalizedBuilder,
-	createSelectMenuChoiceName,
-	getSupportedUserLanguageT,
-	type TFunction,
-	type TypedT
-} from '@skyra/http-framework-i18n';
+	BidirectionalCategory,
+	Class,
+	SearchCategory,
+	UnicodeBidirectionalCategoryKeyMapper,
+	UnicodeClassKeyMapper,
+	getSelectMenuComponents,
+	getUnicodeInformationEmbeds,
+	searchUnicode
+} from '#lib/unicode';
+import { Command, RegisterCommand, RegisterSubcommand } from '@skyra/http-framework';
+import { applyLocalizedBuilder, createSelectMenuChoiceName, getSupportedUserLanguageT } from '@skyra/http-framework-i18n';
 import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
 
 const Root = LanguageKeys.Commands.Unicode;
@@ -28,9 +28,12 @@ export class UserCommand extends Command {
 	public async inspect(interaction: Command.ChatInputInteraction, options: InspectOptions) {
 		const ids = [...options.character];
 		const t = getSupportedUserLanguageT(interaction);
-		const content = ids.length > 10 ? t(Root.TooManyCharacters) : '';
-		const embeds = ids.slice(0, 10).map((id) => this.getInformation(t, id));
-		return interaction.reply({ content, embeds, flags: MessageFlags.Ephemeral });
+		const content = ids.length > 250 ? t(Root.TooManyCharacters) : '';
+		const characters = ids.slice(0, 250);
+
+		const components = characters.length > 10 ? getSelectMenuComponents(t, characters) : undefined;
+		const embeds = getUnicodeInformationEmbeds(t, characters.slice(0, 10));
+		return interaction.reply({ content, embeds, components, flags: MessageFlags.Ephemeral });
 	}
 
 	@RegisterSubcommand((builder) =>
@@ -61,13 +64,13 @@ export class UserCommand extends Command {
 			)
 			.addNumberOption((builder) =>
 				applyLocalizedBuilder(builder, Root.OptionsBidirectionalCategory).setChoices(
-					...Object.entries(UserCommand.UnicodeBidirectionalCategoryKeyMapper) //
+					...Object.entries(UnicodeBidirectionalCategoryKeyMapper) //
 						.map(([key, value]) => createSelectMenuChoiceName(value, { value: Number(key) }))
 				)
 			)
 			.addNumberOption((builder) =>
 				applyLocalizedBuilder(builder, Root.OptionsClass).setChoices(
-					...Object.entries(UserCommand.UnicodeClassKeyMapper) //
+					...Object.entries(UnicodeClassKeyMapper) //
 						.map(([key, value]) => createSelectMenuChoiceName(value, { value: Number(key) }))
 				)
 			)
@@ -91,165 +94,6 @@ export class UserCommand extends Command {
 			}))
 		});
 	}
-
-	private getInformation(t: TFunction, character: string) {
-		const id = character.codePointAt(0)!;
-		const unicode = getUnicode(id);
-		const embed = new EmbedBuilder();
-		const lines = [bold(`${inlineCode(character)} — ${id.toString(16).toUpperCase().padStart(4, '0')}`)] as string[];
-
-		if (isNullish(unicode)) {
-			embed.setColor(EmbedColors.Error);
-			lines.push(t(Root.UnknownCharacter));
-		} else {
-			embed.setColor(UserCommand.UnicodeCategoryColorMapper[unicode.category]);
-			lines.push(
-				t(Root.InformationBasic, {
-					name: unicode.unicodeName || unicode.name,
-					category: t(UserCommand.UnicodeCategoryKeyMapper[unicode.category]),
-					bidirectionalCategory: t(UserCommand.UnicodeBidirectionalCategoryKeyMapper[unicode.bidirectionalCategory]),
-					class:
-						unicode.class >= Class.CCC10 && unicode.class <= Class.CCC132
-							? Class[unicode.class]
-							: t(UserCommand.UnicodeClassKeyMapper[unicode.class as keyof typeof UserCommand.UnicodeClassKeyMapper])
-				})
-			);
-			if (unicode.value) lines.push(t(Root.InformationValue, { value: unicode.value }));
-			if (unicode.mirrored) lines.push(t(Root.InformationMirrored));
-			if (unicode.mapping.base) {
-				lines.push(t(Root.InformationMappingBase, { value: this.parseMapping(unicode.mapping.base) }));
-			}
-			if (unicode.mapping.lowercase) {
-				lines.push(t(Root.InformationMappingLowercase, { value: this.parseMapping(unicode.mapping.lowercase) }));
-			}
-			if (unicode.mapping.uppercase) {
-				lines.push(t(Root.InformationMappingUppercase, { value: this.parseMapping(unicode.mapping.uppercase) }));
-			}
-			if (unicode.comment) lines.push(t(Root.InformationComment, { value: unicode.comment }));
-		}
-
-		return embed.setDescription(lines.join('\n')).toJSON();
-	}
-
-	private parseMapping(mapping: string) {
-		return mapping
-			.split(' ')
-			.map((part) => (part.startsWith('<') ? italic(part) : `${inlineCode(String.fromCodePoint(parseInt(part, 16)))} ${italic(part)}`))
-			.join(' + ');
-	}
-
-	private static readonly UnicodeCategoryColorMapper = {
-		[Category.Control]: 0x607d8b,
-		[Category.Format]: 0x9e9e9e,
-		[Category.PrivateUse]: 0x9e9e9e,
-		[Category.Surrogate]: 0x795548,
-		[Category.LowercaseLetter]: 0x03a9f4,
-		[Category.ModifierLetter]: 0x03a9f4,
-		[Category.OtherLetter]: 0x03a9f4,
-		[Category.TitlecaseLetter]: 0x03a9f4,
-		[Category.UppercaseLetter]: 0x03a9f4,
-		[Category.SpacingMark]: 0x009688,
-		[Category.EnclosingMark]: 0x009688,
-		[Category.NonspacingMark]: 0x009688,
-		[Category.DecimalNumber]: 0x3f51b5,
-		[Category.LetterNumber]: 0x3f51b5,
-		[Category.OtherNumber]: 0x3f51b5,
-		[Category.ConnectorPunctuation]: 0x4caf50,
-		[Category.DashPunctuation]: 0x4caf50,
-		[Category.ClosePunctuation]: 0x4caf50,
-		[Category.FinalPunctuation]: 0x4caf50,
-		[Category.InitialPunctuation]: 0x4caf50,
-		[Category.OtherPunctuation]: 0x4caf50,
-		[Category.OpenPunctuation]: 0x4caf50,
-		[Category.CurrencySymbol]: 0xffeb3b,
-		[Category.ModifierSymbol]: 0xffeb3b,
-		[Category.MathSymbol]: 0xffeb3b,
-		[Category.OtherSymbol]: 0xffeb3b,
-		[Category.LineSeparator]: 0xff9800,
-		[Category.ParagraphSeparator]: 0xff9800,
-		[Category.SpaceSeparator]: 0xff9800
-	} satisfies Record<Category, number>;
-
-	private static readonly UnicodeCategoryKeyMapper = {
-		[Category.Control]: Root.CategoryControl,
-		[Category.Format]: Root.CategoryFormat,
-		[Category.PrivateUse]: Root.CategoryPrivateUse,
-		[Category.Surrogate]: Root.CategorySurrogate,
-		[Category.LowercaseLetter]: Root.CategoryLowercaseLetter,
-		[Category.ModifierLetter]: Root.CategoryModifierLetter,
-		[Category.OtherLetter]: Root.CategoryOtherLetter,
-		[Category.TitlecaseLetter]: Root.CategoryTitlecaseLetter,
-		[Category.UppercaseLetter]: Root.CategoryUppercaseLetter,
-		[Category.SpacingMark]: Root.CategorySpacingMark,
-		[Category.EnclosingMark]: Root.CategoryEnclosingMark,
-		[Category.NonspacingMark]: Root.CategoryNonspacingMark,
-		[Category.DecimalNumber]: Root.CategoryDecimalNumber,
-		[Category.LetterNumber]: Root.CategoryLetterNumber,
-		[Category.OtherNumber]: Root.CategoryOtherNumber,
-		[Category.ConnectorPunctuation]: Root.CategoryConnectorPunctuation,
-		[Category.DashPunctuation]: Root.CategoryDashPunctuation,
-		[Category.ClosePunctuation]: Root.CategoryClosePunctuation,
-		[Category.FinalPunctuation]: Root.CategoryFinalPunctuation,
-		[Category.InitialPunctuation]: Root.CategoryInitialPunctuation,
-		[Category.OtherPunctuation]: Root.CategoryOtherPunctuation,
-		[Category.OpenPunctuation]: Root.CategoryOpenPunctuation,
-		[Category.CurrencySymbol]: Root.CategoryCurrencySymbol,
-		[Category.ModifierSymbol]: Root.CategoryModifierSymbol,
-		[Category.MathSymbol]: Root.CategoryMathSymbol,
-		[Category.OtherSymbol]: Root.CategoryOtherSymbol,
-		[Category.LineSeparator]: Root.CategoryLineSeparator,
-		[Category.ParagraphSeparator]: Root.CategoryParagraphSeparator,
-		[Category.SpaceSeparator]: Root.CategorySpaceSeparator
-	} satisfies Record<Category, TypedT>;
-
-	private static readonly UnicodeBidirectionalCategoryKeyMapper = {
-		[BidirectionalCategory.ArabicLetter]: Root.CategoryBidirectionalArabicLetter,
-		[BidirectionalCategory.ArabicNumber]: Root.CategoryBidirectionalArabicNumber,
-		[BidirectionalCategory.ParagraphSeparator]: Root.CategoryBidirectionalParagraphSeparator,
-		[BidirectionalCategory.BoundaryNeutral]: Root.CategoryBidirectionalBoundaryNeutral,
-		[BidirectionalCategory.CommonSeparator]: Root.CategoryBidirectionalCommonSeparator,
-		[BidirectionalCategory.EuropeanNumber]: Root.CategoryBidirectionalEuropeanNumber,
-		[BidirectionalCategory.EuropeanSeparator]: Root.CategoryBidirectionalEuropeanSeparator,
-		[BidirectionalCategory.EuropeanTerminator]: Root.CategoryBidirectionalEuropeanTerminator,
-		[BidirectionalCategory.FirstStrongIsolate]: Root.CategoryBidirectionalFirstStrongIsolate,
-		[BidirectionalCategory.LeftToRight]: Root.CategoryBidirectionalLeftToRight,
-		[BidirectionalCategory.LeftToRightEmbedding]: Root.CategoryBidirectionalLeftToRightEmbedding,
-		[BidirectionalCategory.LeftToRightIsolate]: Root.CategoryBidirectionalLeftToRightIsolate,
-		[BidirectionalCategory.LeftToRightOverride]: Root.CategoryBidirectionalLeftToRightOverride,
-		[BidirectionalCategory.NonSpacingMark]: Root.CategoryBidirectionalNonSpacingMark,
-		[BidirectionalCategory.OtherNeutral]: Root.CategoryBidirectionalOtherNeutral,
-		[BidirectionalCategory.PopDirectionalFormat]: Root.CategoryBidirectionalPopDirectionalFormat,
-		[BidirectionalCategory.PopDirectionalIsolate]: Root.CategoryBidirectionalPopDirectionalIsolate,
-		[BidirectionalCategory.RightToLeft]: Root.CategoryBidirectionalRightToLeft,
-		[BidirectionalCategory.RightToLeftEmbedding]: Root.CategoryBidirectionalRightToLeftEmbedding,
-		[BidirectionalCategory.RightToLeftIsolate]: Root.CategoryBidirectionalRightToLeftIsolate,
-		[BidirectionalCategory.RightToLeftOverride]: Root.CategoryBidirectionalRightToLeftOverride,
-		[BidirectionalCategory.SegmentSeparator]: Root.CategoryBidirectionalSegmentSeparator,
-		[BidirectionalCategory.WhiteSpace]: Root.CategoryBidirectionalWhiteSpace
-	} satisfies Record<BidirectionalCategory, TypedT>;
-
-	private static readonly UnicodeClassKeyMapper = {
-		[Class.NotReordered]: Root.ClassNotReordered,
-		[Class.Overlay]: Root.ClassOverlay,
-		[Class.Unnamed]: Root.ClassUnnamed,
-		[Class.Nukta]: Root.ClassNukta,
-		[Class.KanaVoicing]: Root.ClassKanaVoicing,
-		[Class.Virama]: Root.ClassVirama,
-		[Class.AttachedBelow]: Root.ClassAttachedBelow,
-		[Class.AttachedAbove]: Root.ClassAttachedAbove,
-		[Class.AttachedAboveRight]: Root.ClassAttachedAboveRight,
-		[Class.BelowLeft]: Root.ClassBelowLeft,
-		[Class.Below]: Root.ClassBelow,
-		[Class.BelowRight]: Root.ClassBelowRight,
-		[Class.Left]: Root.ClassLeft,
-		[Class.Right]: Root.ClassRight,
-		[Class.AboveLeft]: Root.ClassAboveLeft,
-		[Class.Above]: Root.ClassAbove,
-		[Class.AboveRight]: Root.ClassAboveRight,
-		[Class.DoubleBelow]: Root.ClassDoubleBelow,
-		[Class.DoubleAbove]: Root.ClassDoubleAbove,
-		[Class.IotaSubscript]: Root.ClassIotaSubscript
-	};
 }
 
 interface InspectOptions {
