@@ -38,7 +38,11 @@ export class UserCommand extends Command {
 			: this.getDiscordResponse(interaction, data);
 	}
 
-	@RegisterMessageCommand((builder) => applyNameLocalizedBuilder(builder, Root.ExtractEmojisName))
+	@RegisterMessageCommand((builder) =>
+		applyNameLocalizedBuilder(builder, Root.ExtractEmojisName)
+			.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
+			.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+	)
 	public onMessageContext(interaction: Command.MessageInteraction, options: TransformedArguments.Message) {
 		if (isNullishOrEmpty(options.message.content) && isNullishOrEmpty(options.message.reactions)) {
 			const content = resolveUserKey(interaction, Root.NoContent);
