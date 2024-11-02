@@ -5,7 +5,6 @@
 	"optionsCharacterName": "символ",
 	"optionsCharacterDescription": "Символ, о котором нужно получить информацию",
 	"optionsCategoryName": "категория",
-	"tooManyCharacters": "Слишком много символов, будут показаны только первые 10.",
 	"unknownCharacter": "Мне не удалось получить информацию об этом символе.",
 	"informationBasic": "**Название**: `{{name}}` ({{category}})\n**Двунаправленный**: {{bidirectionalCategory}}\n**Класс**: {{class}}",
 	"informationValue": "**Значение **: `{{value, number}}`",
