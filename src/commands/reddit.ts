@@ -1,3 +1,4 @@
+import { ansi8Foreground } from '#lib/common/ansi';
 import { LanguageKeys } from '#lib/i18n/LanguageKeys';
 import { isNsfwChannel } from '#lib/utilities/discord-utilities';
 import { inlineCode, unorderedList } from '@discordjs/builders';
@@ -19,6 +20,7 @@ import {
 } from '@skyra/reddit-helpers';
 import { isAbortError, type FetchError } from '@skyra/safe-fetch';
 import { ApplicationIntegrationType, InteractionContextType, MessageFlags } from 'discord-api-types/v10';
+import { inspect } from 'node:util';
 
 const Root = LanguageKeys.Commands.Reddit;
 
@@ -29,6 +31,7 @@ const Root = LanguageKeys.Commands.Reddit;
 )
 export class UserCommand extends Command {
 	private readonly forbidden = new Collection<string, { type: ForbiddenType; reason: string }>();
+	private readonly LogPrefix = ansi8Foreground(202, '[\uf281 REDDIT]');
 
 	@RegisterSubcommand((builder) =>
 		applyLocalizedBuilder(builder, Root.Subreddit) //
@@ -107,33 +110,44 @@ export class UserCommand extends Command {
 		return { content: this.handleErrorGetContent(interaction, reddit, error), flags: MessageFlags.Ephemeral };
 	}
 
-	private handleErrorGetContent(interaction: Command.ChatInputInteraction, reddit: string, error: FetchError | RedditParseException) {
+	private handleErrorGetContent(interaction: Command.ChatInputInteraction, reddit: string, error: FetchError | RedditParseException): string {
 		if (isAbortError(error)) return resolveUserKey(interaction, Root.AbortError);
 
 		if (error instanceof RedditParseException) {
 			return resolveUserKey(interaction, Root.ParsePostException);
 		}
 
-		const parsed = error.jsonBody as RedditError;
-		switch (parsed.error) {
+		let errorBody: RedditError;
+		try {
+			errorBody = error.jsonBody as RedditError;
+		} catch (parseError) {
+			this.container.logger.error(`${this.LogPrefix} [${error.code}] ${error.url}\nBody: ${red(error.body)}\nError: ${inspect(parseError)}`);
+			return resolveUserKey(interaction, Root.UnknownError);
+		}
+
+		return this.handleRedditError(interaction, reddit, errorBody);
+	}
+
+	private handleRedditError(interaction: Command.ChatInputInteraction, reddit: string, errorBody: RedditError): string {
+		switch (errorBody.error) {
 			case 403: {
-				if (parsed.reason === 'private') return resolveUserKey(interaction, Root.UnavailableErrorPrivate);
-				if (parsed.reason === 'gold_only') return resolveUserKey(interaction, Root.UnavailableErrorGoldOnly);
-				if (parsed.reason === 'quarantined') {
-					const reason = this.forbid(reddit, ForbiddenType.Quarantined, parsed.quarantine_message);
+				if (errorBody.reason === 'private') return resolveUserKey(interaction, Root.UnavailableErrorPrivate);
+				if (errorBody.reason === 'gold_only') return resolveUserKey(interaction, Root.UnavailableErrorGoldOnly);
+				if (errorBody.reason === 'quarantined') {
+					const reason = this.forbid(reddit, ForbiddenType.Quarantined, errorBody.quarantine_message);
 					return resolveUserKey(interaction, Root.UnavailableErrorQuarantined, { reason });
 				}
-				if (parsed.reason === 'gated') {
-					const reason = this.forbid(reddit, ForbiddenType.Quarantined, parsed.interstitial_warning_message);
+				if (errorBody.reason === 'gated') {
+					const reason = this.forbid(reddit, ForbiddenType.Quarantined, errorBody.interstitial_warning_message);
 					return resolveUserKey(interaction, Root.UnavailableErrorGated, { reason });
 				}
 				break;
 			}
 			case 404: {
-				if (!Reflect.has(parsed, 'reason')) {
+				if (!Reflect.has(errorBody, 'reason')) {
 					return resolveUserKey(interaction, Root.UnavailableErrorNotFound);
 				}
-				if (Reflect.get(parsed, 'reason') === 'banned') {
+				if (Reflect.get(errorBody, 'reason') === 'banned') {
 					return resolveUserKey(interaction, Root.UnavailableErrorBanned);
 				}
 				break;
@@ -146,14 +160,14 @@ export class UserCommand extends Command {
 			}
 		}
 
-		this.container.logger.error('[Reddit] Unknown Error', parsed);
+		this.container.logger.error(`${this.LogPrefix} Unknown Error`, errorBody);
 		return resolveUserKey(interaction, Root.UnknownError);
 	}
 
 	private forbid(reddit: string, type: ForbiddenType, reason: string) {
 		// Some messages send with 2 empty lines, where some *may* contain an empty whitespace.
 		reason = reason.replaceAll(/(?:\s*\n){3,}/g, '\n\n');
-		this.container.logger.info(`[REDDIT] Forbidding ${red(reddit)}. Reason: ${gray(reason.replaceAll('\n', '\\n'))}`);
+		this.container.logger.info(`${this.LogPrefix} Forbidding ${red(reddit)}. Reason: ${gray(reason.replaceAll('\n', '\\n'))}`);
 		this.forbidden.set(reddit, { type, reason });
 		return reason;
 	}
