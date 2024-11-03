@@ -48,7 +48,7 @@ export function getDiscordEmojiData(emoji: string): DiscordEmoji | null {
 }
 
 export function getDiscordEmojiUrl(emoji: DiscordEmoji): string {
-	return container.rest.cdn.emoji(emoji.id, emoji.animated ? 'gif' : 'png');
+	return container.rest.cdn.emoji(emoji.id, { extension: emoji.animated ? 'gif' : 'png' });
 }
 
 export enum EmojiSource {
