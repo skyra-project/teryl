@@ -56,19 +56,21 @@ export enum EmojiSource {
 	Facebook = 'facebook',
 	Google = 'google',
 	Microsoft = 'microsoft',
+	MicrosoftFluent = 'microsoft-3D-fluent',
 	Samsung = 'samsung',
 	Twitter = 'twitter',
 	WhatsApp = 'whatsapp'
 }
 
 const EmojipediaCodes = {
-	[EmojiSource.Apple]: '354',
+	[EmojiSource.Apple]: '391',
 	[EmojiSource.Facebook]: '355',
-	[EmojiSource.Google]: '350',
-	[EmojiSource.Microsoft]: '319',
-	[EmojiSource.Samsung]: '349',
-	[EmojiSource.Twitter]: '351',
-	[EmojiSource.WhatsApp]: '352'
+	[EmojiSource.Google]: '412',
+	[EmojiSource.Microsoft]: '407',
+	[EmojiSource.MicrosoftFluent]: '406',
+	[EmojiSource.Samsung]: '405',
+	[EmojiSource.Twitter]: '408',
+	[EmojiSource.WhatsApp]: '401'
 } as const satisfies Record<EmojiSource, string>;
 
 export interface DiscordEmoji {

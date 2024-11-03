@@ -24,6 +24,7 @@ const Root = LanguageKeys.Commands.Emoji;
 				createSelectMenuChoiceName(Root.OptionsVariantFacebook, { value: EmojiSource.Facebook }),
 				createSelectMenuChoiceName(Root.OptionsVariantGoogle, { value: EmojiSource.Google }),
 				createSelectMenuChoiceName(Root.OptionsVariantMicrosoft, { value: EmojiSource.Microsoft }),
+				createSelectMenuChoiceName(Root.OptionsVariantMicrosoftFluent, { value: EmojiSource.MicrosoftFluent }),
 				createSelectMenuChoiceName(Root.OptionsVariantSamsung, { value: EmojiSource.Samsung }),
 				createSelectMenuChoiceName(Root.OptionsVariantTwitter, { value: EmojiSource.Twitter }),
 				createSelectMenuChoiceName(Root.OptionsVariantWhatsApp, { value: EmojiSource.WhatsApp })

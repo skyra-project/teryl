@@ -11,6 +11,7 @@ export const OptionsVariantApple = T('commands/emoji:optionsVariantApple');
 export const OptionsVariantFacebook = T('commands/emoji:optionsVariantFacebook');
 export const OptionsVariantGoogle = T('commands/emoji:optionsVariantGoogle');
 export const OptionsVariantMicrosoft = T('commands/emoji:optionsVariantMicrosoft');
+export const OptionsVariantMicrosoftFluent = T('commands/emoji:optionsVariantMicrosoftFluent');
 export const OptionsVariantSamsung = T('commands/emoji:optionsVariantSamsung');
 export const OptionsVariantTwitter = T('commands/emoji:optionsVariantTwitter');
 export const OptionsVariantWhatsApp = T('commands/emoji:optionsVariantWhatsApp');
