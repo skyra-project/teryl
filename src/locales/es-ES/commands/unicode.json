@@ -1,6 +1,7 @@
 {
 	"name": "unicode",
 	"description": "Provee la información de Unicode para el carácter dado",
+	"inspectMessageCharactersName": "Inspeccionar Caracteres",
 	"inspectName": "inspeccionar",
 	"inspectDescription": "Provee la información de Unicode para el carácter dado",
 	"searchName": "buscar",
