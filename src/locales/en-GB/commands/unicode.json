@@ -1,6 +1,7 @@
 {
 	"name": "unicode",
 	"description": "Get the unicode information for the given character",
+	"inspectMessageCharactersName": "Inspect Message Characters",
 	"inspectName": "inspect",
 	"inspectDescription": "Get the Unicode information for the given character",
 	"searchName": "search",
