@@ -3,7 +3,6 @@
 	"description": "Krijg de unicode informatie voor het opgegeven karakter",
 	"optionsCharacterName": "karakter",
 	"optionsCharacterDescription": "Het karakter om informatie van te krijgen",
-	"tooManyCharacters": "Er zijn te veel karakters, alleen de eerste 10 worden weergegeven.",
 	"unknownCharacter": "Ik kon geen unicode informatie ophalen van dit karakter.",
 	"informationBasic": "**Naam**: `{{name}}` ({{category}})\n**Bidirectioneel**: {{bidirectionalCategory}}\n**Klasse**: {{class}}",
 	"informationValue": "**Waarde**: `{{value, number}}`",

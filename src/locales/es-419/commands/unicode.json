@@ -1,6 +1,7 @@
 {
 	"name": "unicode",
 	"description": "Provee la información de Unicode para el carácter dado",
+	"inspectMessageCharactersName": "Inspeccionar Caracteres",
 	"inspectName": "inspeccionar",
 	"inspectDescription": "Provee la información de Unicode para el carácter dado",
 	"searchName": "buscar",
@@ -13,8 +14,9 @@
 	"optionsBidirectionalCategoryDescription": "La categoría bidireccional Unicode a filtrar, si es definida",
 	"optionsClassName": "clase",
 	"optionsClassDescription": "La clase Unicode a filtrar, si es definida",
-	"tooManyCharacters": "Hay demasiados caracteres, solo se mostrarán los 10 primeros.",
+	"tooManyCharacters": "Hay demasiados caracteres, sólo se mostrarán las primeras 10 páginas (250 caracteres).",
 	"unknownCharacter": "No pude recuperar la información de Unicode para este carácter.",
+	"selectMenuOptionLabel": "Página {{page, number}} ({{characters}})",
 	"informationBasic": "**Nombre**: `{{name}}` ({{category}})\n**Bidireccional**: {{bidirectionalCategory}}\n**Clase**: {{class}}",
 	"informationValue": "**Valor**: `{{value, number}}`",
 	"informationMirrored": "**Reflejo**",
