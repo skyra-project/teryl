@@ -1300,6 +1300,7 @@
 	{
 		"codes": [
 			"SG",
+			"AQ",
 			"MY"
 		],
 		"name": "Asia/Singapore"
@@ -1342,7 +1343,8 @@
 	},
 	{
 		"codes": [
-			"JP"
+			"JP",
+			"AU"
 		],
 		"name": "Asia/Tokyo"
 	},
