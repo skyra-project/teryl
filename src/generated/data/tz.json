@@ -351,6 +351,12 @@
 	},
 	{
 		"codes": [
+			"CL"
+		],
+		"name": "America/Coyhaique"
+	},
+	{
+		"codes": [
 			"BR"
 		],
 		"name": "America/Cuiaba"
