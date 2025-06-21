@@ -18,6 +18,7 @@
 		"dev": "yarn build && yarn start",
 		"watch": "tsc -b src -w",
 		"prisma:generate": "yarn prisma generate",
+		"prisma:migrate": "yarn prisma migrate deploy",
 		"clean": "rimraf dist/",
 		"start": "node --enable-source-maps dist/main.js",
 		"test": "vitest run",
