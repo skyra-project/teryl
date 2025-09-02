@@ -64,7 +64,7 @@
 		"@sapphire/eslint-config": "^5.0.5",
 		"@sapphire/prettier-config": "^2.0.0",
 		"@sapphire/ts-config": "^5.0.1",
-		"@types/culori": "^2.1.1",
+		"@types/culori": "^4.0.1",
 		"@types/gradient-string": "^1.1.6",
 		"@types/he": "^1.2.3",
 		"@types/luxon": "^3.4.2",
