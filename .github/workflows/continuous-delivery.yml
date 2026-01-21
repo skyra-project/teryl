@@ -8,6 +8,7 @@ on:
     paths:
       - 'src/**'
       - 'Dockerfile'
+      - 'Dockerfile.dbmigrate'
       - '.github/workflows/continuous-delivery.yml'
       - 'package.json'
 
@@ -34,3 +35,27 @@ jobs:
           push: true
           context: .
           tags: ghcr.io/skyra-project/teryl:latest
+
+  PublishDbMigrate:
+    name: Publish Teryl's DB Migration image to container registries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3.3.0
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Teryl Docker image
+        uses: docker/build-push-action@v5.3.0
+        with:
+          push: true
+          context: .
+          file: ./Dockerfile.dbmigrate
+          tags: ghcr.io/skyra-project/teryl-dbmigrate:latest
