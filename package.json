@@ -31,7 +31,7 @@
 		"@discordjs/collection": "^2.1.1",
 		"@napi-rs/canvas": "^0.1.58",
 		"@napi-rs/image": "^1.9.2",
-		"@prisma/client": "^5.21.1",
+		"@prisma/client": "^7.10.0",
 		"@sapphire/async-queue": "^1.5.3",
 		"@sapphire/duration": "^1.1.2",
 		"@sapphire/result": "^2.6.6",
