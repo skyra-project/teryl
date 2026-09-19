@@ -44,6 +44,10 @@
 		"name": "melting face"
 	},
 	{
+		"id": "1faeb",
+		"name": "cracking face"
+	},
+	{
 		"id": "1f609",
 		"name": "winking face"
 	},
@@ -1378,6 +1382,54 @@
 	{
 		"id": "1f44e-1f3ff",
 		"name": "thumbs down: dark skin tone"
+	},
+	{
+		"id": "1faf9",
+		"name": "leftwards thumb sign"
+	},
+	{
+		"id": "1faf9-1f3fb",
+		"name": "leftwards thumb sign: light skin tone"
+	},
+	{
+		"id": "1faf9-1f3fc",
+		"name": "leftwards thumb sign: medium-light skin tone"
+	},
+	{
+		"id": "1faf9-1f3fd",
+		"name": "leftwards thumb sign: medium skin tone"
+	},
+	{
+		"id": "1faf9-1f3fe",
+		"name": "leftwards thumb sign: medium-dark skin tone"
+	},
+	{
+		"id": "1faf9-1f3ff",
+		"name": "leftwards thumb sign: dark skin tone"
+	},
+	{
+		"id": "1fafa",
+		"name": "rightwards thumb sign"
+	},
+	{
+		"id": "1fafa-1f3fb",
+		"name": "rightwards thumb sign: light skin tone"
+	},
+	{
+		"id": "1fafa-1f3fc",
+		"name": "rightwards thumb sign: medium-light skin tone"
+	},
+	{
+		"id": "1fafa-1f3fd",
+		"name": "rightwards thumb sign: medium skin tone"
+	},
+	{
+		"id": "1fafa-1f3fe",
+		"name": "rightwards thumb sign: medium-dark skin tone"
+	},
+	{
+		"id": "1fafa-1f3ff",
+		"name": "rightwards thumb sign: dark skin tone"
 	},
 	{
 		"id": "270a",
@@ -10824,6 +10876,10 @@
 		"name": "butterfly"
 	},
 	{
+		"id": "1facc",
+		"name": "monarch butterfly"
+	},
+	{
 		"id": "1f41b",
 		"name": "bug"
 	},
@@ -11106,6 +11162,10 @@
 	{
 		"id": "1f952",
 		"name": "cucumber"
+	},
+	{
+		"id": "1fadd",
+		"name": "pickle"
 	},
 	{
 		"id": "1f96c",
@@ -11988,6 +12048,10 @@
 		"name": "construction"
 	},
 	{
+		"id": "1f6d9",
+		"name": "lighthouse"
+	},
+	{
 		"id": "2693",
 		"name": "anchor"
 	},
@@ -12382,6 +12446,10 @@
 	{
 		"id": "2604-fe0f",
 		"name": "comet"
+	},
+	{
+		"id": "1fa8b",
+		"name": "meteor"
 	},
 	{
 		"id": "1f525",
@@ -13384,6 +13452,10 @@
 		"name": "memo"
 	},
 	{
+		"id": "1fa8c",
+		"name": "eraser"
+	},
+	{
 		"id": "1f4bc",
 		"name": "briefcase"
 	},
@@ -13498,6 +13570,10 @@
 	{
 		"id": "1f5dd-fe0f",
 		"name": "old key"
+	},
+	{
+		"id": "1fa8d",
+		"name": "net with handle"
 	},
 	{
 		"id": "1f528",
@@ -15133,7 +15209,7 @@
 	},
 	{
 		"id": "1f1ed-1f1f2",
-		"name": "flag: Heard & McDonald Islands"
+		"name": "flag: Heard Island & McDonald Islands"
 	},
 	{
 		"id": "1f1ed-1f1f3",
@@ -15549,7 +15625,7 @@
 	},
 	{
 		"id": "1f1f8-1f1ed",
-		"name": "flag: St. Helena"
+		"name": "flag: St. Helena, Ascension & Tristan da Cunha"
 	},
 	{
 		"id": "1f1f8-1f1ee",
@@ -15621,7 +15697,7 @@
 	},
 	{
 		"id": "1f1f9-1f1eb",
-		"name": "flag: French Southern Territories"
+		"name": "flag: French Southern and Antarctic Lands"
 	},
 	{
 		"id": "1f1f9-1f1ec",
