@@ -1428,7 +1428,7 @@ __metadata:
     "@skyra/start-banner": "npm:^2.0.1"
     "@skyra/twitch-helpers": "npm:^2.0.1"
     "@skyra/weather-helpers": "npm:^1.1.0"
-    "@types/culori": "npm:^2.1.1"
+    "@types/culori": "npm:^4.0.1"
     "@types/gradient-string": "npm:^1.1.6"
     "@types/he": "npm:^1.2.3"
     "@types/luxon": "npm:^3.4.2"
@@ -1501,10 +1501,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/culori@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@types/culori@npm:2.1.1"
-  checksum: 10/b8b8066bd6996fc4c323f0bad3bb923a6082b17f26aade28c309dcfd98f65ef1800fcf7c2f532b8a670f126b8f70cba68f5c2915a96730e80ff5f967de8492f2
+"@types/culori@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@types/culori@npm:4.0.1"
+  checksum: 10/34240fce795cdcbeefbbb4ec1fd6adec1c7edafa949131586176649c21d912236d151bf7af53de161454a6c2fa259a4ddd54f204c66e67e8b9ecfd90b9021c68
   languageName: node
   linkType: hard
 
